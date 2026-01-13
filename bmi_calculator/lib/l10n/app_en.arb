@@ -1,0 +1,43 @@
+{
+  "appTitle": "BMI Calculator",
+  "calculator": "Calculator",
+  "history": "History",
+  "evolution": "Evolution",
+  "weight": "Weight (kg)",
+  "height": "Height (cm)",
+  "calculate": "Calculate",
+  "save": "Save Result",
+  "result": "Result",
+  "yourBmi": "Your BMI is {bmi}",
+  "@yourBmi": {
+    "placeholders": {
+      "bmi": {
+        "type": "String"
+      }
+    }
+  },
+  "category": "Category: {category}",
+  "@category": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+  "infoTitle": "BMI Information",
+  "infoDescription": "Body Mass Index (BMI) is a measure of body fat based on height and weight that applies to adult men and women.",
+  "source": "Source: World Health Organization (WHO)",
+  "underweight": "Underweight",
+  "normal": "Normal weight",
+  "overweight": "Overweight",
+  "obesity1": "Obesity Class I",
+  "obesity2": "Obesity Class II",
+  "obesity3": "Obesity Class III",
+  "delete": "Delete",
+  "noHistory": "No history yet",
+  "evolutionGraph": "Evolution Graph",
+  "needTwoEntries": "Keep tracking! You need at least 2 entries to see evolution.",
+  "bmiEvolutionTitle": "BMI Evolution",
+  "reset": "Reset",
+  "resultSaved": "Result saved!"
+}
