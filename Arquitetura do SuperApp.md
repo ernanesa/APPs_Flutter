@@ -766,3 +766,18 @@ Para automação do Google Play Console, criar um agente dedicado:
 **Fim do Planejamento v4.0.** Mantenha o foco. Codifique uma feature, termine, valide, commite. Não deixe pontas soltas.
 
 *"Da Fundação ao SuperApp: Um Bloco de Cada Vez."*
+
+---
+
+## **20\. Toolkit de Produtividade (VS Code + Scripts)**
+
+Para reduzir atrito e aumentar assertividade (menos “erros bobos” que travam build/publicação), padronize:
+
+- **VS Code Tasks:** `.vscode/tasks.json` (inputs por app) para rodar `pub get`, `gen-l10n`, `analyze`, `test`, `build aab`.
+- **Guardrails:**
+  - `tools/check_l10n.ps1` para garantir que todos os `.arb` estão sincronizados com `app_en.arb`.
+  - `tools/check_store_assets.ps1` para validar `icon_512.png`, `feature_1024x500.png` e mínimo de screenshots.
+
+Workflow recomendado antes de release:
+1) `Flutter: Validate (l10n+analyze+test)`
+2) `Assets: Check Store Assets`

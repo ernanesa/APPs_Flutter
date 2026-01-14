@@ -1,0 +1,141 @@
+{
+    "version": "2.0.0",
+    "inputs": [
+        {
+            "id": "appPath",
+            "type": "promptString",
+            "description": "Relative path to the Flutter app folder",
+            "default": "app_name"
+        }
+    ],
+    "tasks": [
+        {
+            "label": "Android: ADB Devices",
+            "type": "shell",
+            "command": "pwsh",
+            "args": [
+                "-NoProfile",
+                "-Command",
+                "adb devices"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Flutter: Pub Get",
+            "type": "shell",
+            "command": "pwsh",
+            "args": [
+                "-NoProfile",
+                "-Command",
+                "flutter pub get"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}\\${input:appPath}"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Flutter: Gen L10n",
+            "type": "shell",
+            "command": "pwsh",
+            "args": [
+                "-NoProfile",
+                "-Command",
+                "flutter gen-l10n"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}\\${input:appPath}"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Flutter: Analyze",
+            "type": "shell",
+            "command": "pwsh",
+            "args": [
+                "-NoProfile",
+                "-Command",
+                "flutter analyze"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}\\${input:appPath}"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Flutter: Test",
+            "type": "shell",
+            "command": "pwsh",
+            "args": [
+                "-NoProfile",
+                "-Command",
+                "flutter test"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}\\${input:appPath}"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Flutter: Build AAB (release)",
+            "type": "shell",
+            "command": "pwsh",
+            "args": [
+                "-NoProfile",
+                "-Command",
+                "flutter build appbundle --release"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}\\${input:appPath}"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Guardrail: Check L10n Keys",
+            "type": "shell",
+            "command": "pwsh",
+            "args": [
+                "-NoProfile",
+                "-ExecutionPolicy",
+                "Bypass",
+                "-File",
+                "${workspaceFolder}\\tools\\check_l10n.ps1",
+                "-AppPath",
+                "${workspaceFolder}\\${input:appPath}"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Assets: Check Store Assets",
+            "type": "shell",
+            "command": "pwsh",
+            "args": [
+                "-NoProfile",
+                "-ExecutionPolicy",
+                "Bypass",
+                "-File",
+                "${workspaceFolder}\\tools\\check_store_assets.ps1",
+                "-AssetsDir",
+                "${workspaceFolder}\\DadosPublicacao\\${input:appPath}\\store_assets"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Flutter: Validate (l10n+analyze+test)",
+            "type": "shell",
+            "dependsOn": [
+                "Guardrail: Check L10n Keys",
+                "Flutter: Gen L10n",
+                "Flutter: Analyze",
+                "Flutter: Test"
+            ],
+            "command": "pwsh",
+            "args": [
+                "-NoProfile",
+                "-Command",
+                "Write-Host 'OK: validate finished'"
+            ],
+            "problemMatcher": []
+        }
+    ]
+}

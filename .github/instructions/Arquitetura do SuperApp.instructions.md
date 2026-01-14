@@ -140,4 +140,15 @@ adb exec-out screencap -p > screenshot.png
 - [ ] 11 idiomas traduzidos
 - [ ] AAB gerado com `flutter build appbundle --release`
 
+## **8\. Toolkit de Produtividade (RECOMENDADO)**
+
+Para desenvolvimento mais rápido e com menos erros, padronize o workflow com:
+
+1. **VS Code Tasks:** usar `.vscode/tasks.json` para rodar `pub get`, `gen-l10n`, `analyze`, `test`, `build aab` por app.
+2. **Guardrails (scripts):**
+   - `tools/check_l10n.ps1` (garante que todos os `.arb` tenham as mesmas chaves)
+   - `tools/check_store_assets.ps1` (valida dimensões mínimas dos assets da Play Store)
+
+Padrão recomendado: **antes de qualquer release**, rodar `Flutter: Validate (l10n+analyze+test)` e `Assets: Check Store Assets`.
+
 **Fim do Planejamento.** Mantenha o foco. Codifique uma feature, termine, valide, commite. Não deixe pontas soltas.

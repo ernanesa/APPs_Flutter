@@ -2158,5 +2158,73 @@ flutter run --profile -d emulator-5554
 
 ---
 
+## **31\. Turbo Mode (Velocidade com Zero Erros)**
+
+Esta seção transforma o workflow em **1 clique** no VS Code (Tasks) + **scripts de validação**.
+
+### **31.1. VS Code Tasks (Recomendado)**
+
+Crie/Use o arquivo `.vscode/tasks.json` na raiz para rodar comandos com **input de appPath**.
+
+**Uso:** VS Code → `Terminal: Run Task` → escolha a task.
+
+**Tasks recomendadas:**
+- `Flutter: Pub Get`
+- `Flutter: Gen L10n`
+- `Flutter: Analyze`
+- `Flutter: Test`
+- `Flutter: Validate (l10n+analyze+test)`
+- `Flutter: Build AAB (release)`
+- `Android: ADB Devices`
+- `Assets: Check Store Assets`
+
+### **31.2. Regra de Ouro (Fast Feedback Loop)**
+
+Para qualquer mudança de UI/strings/ads:
+1. `Flutter: Gen L10n`
+2. `Flutter: Analyze`
+3. `Flutter: Test`
+4. `flutter run` (hot reload)
+
+---
+
+## **32\. Guardrails Automáticos (Precisão e Consistência)**
+
+### **32.1. Validador de Chaves i18n (OBRIGATÓRIO)**
+
+**Objetivo:** impedir o erro clássico “funciona em EN, quebra em JA/RU/AR”.
+
+Script sugerido: `tools/check_l10n.ps1`
+
+```powershell
+# Exemplo (na raiz do monorepo)
+pwsh -File .\tools\check_l10n.ps1 -AppPath .\bmi_calculator
+```
+
+### **32.2. Validador de Assets da Play Store (OBRIGATÓRIO antes do upload)**
+
+**Objetivo:** evitar perda de tempo com “dimensões inválidas” e “faltam screenshots”.
+
+Script sugerido: `tools/check_store_assets.ps1`
+
+```powershell
+pwsh -File .\tools\check_store_assets.ps1 -AssetsDir .\DadosPublicacao\bmi_calculator\store_assets
+```
+
+---
+
+## **33\. Loop de Release (1 Comando, Sem Surpresas)**
+
+**Padrão recomendado (local):**
+```powershell
+Set-Location -Path "C:\Users\Ernane\Personal\APPs_Flutter\<app_name>";
+flutter clean;
+flutter pub get;
+flutter gen-l10n;
+flutter analyze;
+flutter test;
+flutter build appbundle --release
+```
+
 **Fim do Protocolo Beast Mode Flutter v7.0**
 *"Da Ideia ao Google Play: Sem Desculpas, Só Execução."*
