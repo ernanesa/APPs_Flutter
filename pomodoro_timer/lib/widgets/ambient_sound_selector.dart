@@ -11,46 +11,30 @@ class AmbientSoundSelector extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedSound = ref.watch(selectedAmbientSoundProvider);
-    final l10n = AppLocalizations.of(context)!;
-    final theme = Theme.of(context);
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          child: Text(
-            l10n.ambientSounds,
-            style: theme.textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        SizedBox(
-          height: 100,
-          child: ListView.builder(
+    return SizedBox(
+      height: 110,
+      child: ListView.builder(
             scrollDirection: Axis.horizontal,
             padding: const EdgeInsets.symmetric(horizontal: 12),
             itemCount: AmbientSounds.all.length,
-            itemBuilder: (context, index) {
-              final sound = AmbientSounds.all[index];
-              final isSelected = selectedSound.id == sound.id;
-              
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 4),
-                child: _SoundItem(
-                  sound: sound,
-                  isSelected: isSelected,
-                  onTap: () {
-                    ref.read(selectedAmbientSoundProvider.notifier)
-                        .selectSound(sound);
-                  },
-                ),
-              );
-            },
-          ),
+          itemBuilder: (context, index) {
+            final sound = AmbientSounds.all[index];
+            final isSelected = selectedSound.id == sound.id;
+            
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+              child: _SoundItem(
+                sound: sound,
+                isSelected: isSelected,
+                onTap: () {
+                  ref.read(selectedAmbientSoundProvider.notifier)
+                      .selectSound(sound);
+                },
+              ),
+            );
+          },
         ),
-      ],
     );
   }
 }
