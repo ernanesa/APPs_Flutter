@@ -5,6 +5,13 @@ plugins {
     id "dev.flutter.flutter-gradle-plugin"
 }
 
+// Carregar key.properties para release signing
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('key.properties')
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
 android {
     namespace = "sa.rezende.bmi_calculator"
     compileSdk = flutter.compileSdkVersion
@@ -21,30 +28,57 @@ android {
 
     defaultConfig {
         applicationId = "sa.rezende.bmi_calculator"
-        minSdk = 21
-        targetSdk = flutter.targetSdkVersion
+        minSdkVersion = flutter.minSdkVersion  // Android 5.0 Lollipop
+        targetSdk = 35  // Android 15 (requirement 2025)
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+        
+        // Suporte a múltiplas densidades de tela
+        resConfigs "en", "pt", "es", "zh", "hi", "ar", "bn", "ru", "ja", "de", "fr"
+    }
+
+    signingConfigs {
+        release {
+            if (keystorePropertiesFile.exists()) {
+                keyAlias keystoreProperties['keyAlias']
+                keyPassword keystoreProperties['keyPassword']
+                storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+                storePassword keystoreProperties['storePassword']
+            }
+        }
     }
 
     buildTypes {
         debug {
-            // Debug optimizations
             shrinkResources false
             minifyEnabled false
         }
         release {
-            signingConfig = signingConfigs.debug
+            // Usar signing de release se configurado, senão usar debug
+            signingConfig = keystorePropertiesFile.exists() ? signingConfigs.release : signingConfigs.debug
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
     
-    // Optimization for faster builds
+    // Optimization for faster builds and smaller APK
     packagingOptions {
         resources {
             excludes += ['META-INF/NOTICE.txt', 'META-INF/LICENSE.txt', 'META-INF/DEPENDENCIES']
+        }
+    }
+
+    // Dividir APKs por ABI para menor tamanho (opcional para AAB)
+    bundle {
+        language {
+            enableSplit = true
+        }
+        density {
+            enableSplit = true
+        }
+        abi {
+            enableSplit = true
         }
     }
 }

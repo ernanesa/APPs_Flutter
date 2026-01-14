@@ -1,0 +1,12 @@
+# app-ads.txt - BMI Calculator
+# ============================================
+#
+# Este arquivo deve ser publicado em:
+# https://rezende.dev/app-ads.txt
+#
+# Ele declara que você está autorizado a monetizar
+# seu app através do Google AdMob.
+#
+# ============================================
+
+google.com, pub-9691622617864549, DIRECT, f08c47fec0942fa0

@@ -1,0 +1,23 @@
+# ============================================
+# KEY.PROPERTIES - BMI Calculator
+# ============================================
+# 
+# Este arquivo contém as credenciais de assinatura do app.
+# NÃO COMMITE ESTE ARQUIVO NO GIT!
+#
+# Instruções:
+# 1. Gere a keystore: 
+#    keytool -genkey -v -keystore ~/bmi-upload-keystore.jks -keyalg RSA -keysize 2048 -validity 10000 -alias upload
+#
+# 2. Preencha os valores abaixo:
+#
+# 3. Copie este arquivo para: android/key.properties
+#
+# 4. Adicione ao .gitignore: android/key.properties
+#
+# ============================================
+
+storePassword=<SUA_SENHA_AQUI>
+keyPassword=<SUA_SENHA_AQUI>
+keyAlias=upload
+storeFile=/home/ernane/bmi-upload-keystore.jks

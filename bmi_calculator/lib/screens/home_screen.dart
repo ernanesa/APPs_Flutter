@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../l10n/app_localizations.dart';
 import 'calculator_screen.dart';
 import 'history_screen.dart';
 import 'evolution_screen.dart';
@@ -26,7 +26,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final currentLocale = ref.watch(localeProvider);
 
     return Scaffold(
       appBar: AppBar(

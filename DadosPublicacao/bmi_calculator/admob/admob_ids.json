@@ -1,0 +1,33 @@
+{
+  "app_name": "BMI Calculator",
+  "package_name": "sa.rezende.bmi_calculator",
+  "admob_app_id": "ca-app-pub-9691622617864549~7285917043",
+  "ad_units": {
+    "banner": {
+      "name": "BMI Banner",
+      "id": "ca-app-pub-9691622617864549/5123837659",
+      "format": "BANNER",
+      "status": "ACTIVE"
+    },
+    "interstitial": {
+      "name": "BMI Interstitial",
+      "id": "ca-app-pub-9691622617864549/7287816621",
+      "format": "INTERSTITIAL",
+      "status": "ACTIVE"
+    },
+    "app_open": {
+      "name": "BMI App Open",
+      "id": "ca-app-pub-9691622617864549/5938225872",
+      "format": "APP_OPEN",
+      "status": "ACTIVE"
+    }
+  },
+  "test_ids": {
+    "banner": "ca-app-pub-3940256099942544/6300978111",
+    "interstitial": "ca-app-pub-3940256099942544/1033173712",
+    "app_open": "ca-app-pub-3940256099942544/9257395921",
+    "rewarded": "ca-app-pub-3940256099942544/5224354917"
+  },
+  "created_at": "2026-01-13",
+  "notes": "IDs de produção. Use test_ids durante desenvolvimento."
+}

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../l10n/app_localizations.dart';
 import 'package:uuid/uuid.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import '../logic/bmi_logic.dart';
@@ -60,10 +60,7 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
     );
     _bannerAd?.load();
   }
-  
-  void _updateSlidersFromText() {
-    // Helper if needed, but logic is inline currently
-  }
+
 
   @override
   void dispose() {
@@ -117,7 +114,6 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final colorScheme = Theme.of(context).colorScheme;
 
     return SingleChildScrollView(
       child: Padding(
