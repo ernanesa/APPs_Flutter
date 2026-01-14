@@ -89,4 +89,9 @@ class SettingsNotifier extends StateNotifier<PomodoroSettings> {
     state = state.copyWith(darkMode: !state.darkMode);
     _saveSettings();
   }
+
+  void toggleColorfulMode() {
+    state = state.copyWith(colorfulMode: !state.colorfulMode);
+    _saveSettings();
+  }
 }

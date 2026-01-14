@@ -152,5 +152,9 @@
   "quote14Text": "Cuanto más trabajas, más suerte tienes.",
   "quote14Author": "Gary Player",
   "quote15Text": "Haz hoy algo que tu yo futuro te agradecerá.",
-  "quote15Author": "Desconocido"
+  "quote15Author": "Desconocido",
+
+  "appearance": "Apariencia",
+  "colorfulMode": "Modo Colorido",
+  "colorfulModeDesc": "Usa colores vibrantes y diseño animado"
 }

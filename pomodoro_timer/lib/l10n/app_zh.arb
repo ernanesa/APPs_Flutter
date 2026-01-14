@@ -152,5 +152,9 @@
   "quote14Text": "你越努力，你就越幸运。",
   "quote14Author": "加里·普莱耶",
   "quote15Text": "今天做一些你未来的自己会感谢的事。",
-  "quote15Author": "佚名"
+  "quote15Author": "佚名",
+
+  "appearance": "外观",
+  "colorfulMode": "多彩模式",
+  "colorfulModeDesc": "使用鲜艳的颜色和动画布局"
 }

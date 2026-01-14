@@ -10,6 +10,7 @@ class PomodoroSettings {
   final bool autoStartFocus;
   final bool notificationsEnabled;
   final bool darkMode;
+  final bool colorfulMode;
 
   const PomodoroSettings({
     this.focusDurationMinutes = 25,
@@ -22,6 +23,7 @@ class PomodoroSettings {
     this.autoStartFocus = false,
     this.notificationsEnabled = true,
     this.darkMode = false,
+    this.colorfulMode = false,
   });
 
   /// Creates settings from JSON.
@@ -37,6 +39,7 @@ class PomodoroSettings {
       autoStartFocus: json['autoStartFocus'] as bool? ?? false,
       notificationsEnabled: json['notificationsEnabled'] as bool? ?? true,
       darkMode: json['darkMode'] as bool? ?? false,
+      colorfulMode: json['colorfulMode'] as bool? ?? false,
     );
   }
 
@@ -53,6 +56,7 @@ class PomodoroSettings {
       'autoStartFocus': autoStartFocus,
       'notificationsEnabled': notificationsEnabled,
       'darkMode': darkMode,
+      'colorfulMode': colorfulMode,
     };
   }
 
@@ -68,6 +72,7 @@ class PomodoroSettings {
     bool? autoStartFocus,
     bool? notificationsEnabled,
     bool? darkMode,
+    bool? colorfulMode,
   }) {
     return PomodoroSettings(
       focusDurationMinutes: focusDurationMinutes ?? this.focusDurationMinutes,
@@ -80,6 +85,7 @@ class PomodoroSettings {
       autoStartFocus: autoStartFocus ?? this.autoStartFocus,
       notificationsEnabled: notificationsEnabled ?? this.notificationsEnabled,
       darkMode: darkMode ?? this.darkMode,
+      colorfulMode: colorfulMode ?? this.colorfulMode,
     );
   }
 }

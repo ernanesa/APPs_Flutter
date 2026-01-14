@@ -152,5 +152,9 @@
   "quote14Text": "Plus vous travaillez dur, plus vous avez de chance.",
   "quote14Author": "Gary Player",
   "quote15Text": "Faites aujourd'hui quelque chose dont votre futur vous remerciera.",
-  "quote15Author": "Inconnu"
+  "quote15Author": "Inconnu",
+
+  "appearance": "Apparence",
+  "colorfulMode": "Mode Coloré",
+  "colorfulModeDesc": "Utilisez des couleurs vibrantes et une mise en page animée"
 }

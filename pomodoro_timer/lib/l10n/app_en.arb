@@ -179,5 +179,9 @@
   "quote14Text": "The harder you work, the luckier you get.",
   "quote14Author": "Gary Player",
   "quote15Text": "Do something today that your future self will thank you for.",
-  "quote15Author": "Unknown"
+  "quote15Author": "Unknown",
+
+  "appearance": "Appearance",
+  "colorfulMode": "Colorful Mode",
+  "colorfulModeDesc": "Use vibrant colors and animated layout"
 }

@@ -152,5 +152,9 @@
   "quote14Text": "努力すればするほど、幸運になる。",
   "quote14Author": "ゲーリー・プレーヤー",
   "quote15Text": "未来の自分が感謝することを今日やれ。",
-  "quote15Author": "作者不明"
+  "quote15Author": "作者不明",
+
+  "appearance": "外観",
+  "colorfulMode": "カラフルモード",
+  "colorfulModeDesc": "鮮やかな色とアニメーションレイアウトを使用"
 }

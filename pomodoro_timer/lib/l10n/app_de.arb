@@ -152,5 +152,9 @@
   "quote14Text": "Je härter du arbeitest, desto mehr Glück hast du.",
   "quote14Author": "Gary Player",
   "quote15Text": "Tu heute etwas, wofür dein zukünftiges Ich dir danken wird.",
-  "quote15Author": "Unbekannt"
+  "quote15Author": "Unbekannt",
+
+  "appearance": "Erscheinungsbild",
+  "colorfulMode": "Bunter Modus",
+  "colorfulModeDesc": "Verwende lebendige Farben und animiertes Layout"
 }
