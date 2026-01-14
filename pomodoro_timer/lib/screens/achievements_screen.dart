@@ -3,7 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../l10n/app_localizations.dart';
 import '../models/achievement.dart';
 import '../providers/achievements_provider.dart';
+import '../providers/settings_provider.dart';
 import '../widgets/achievement_badge.dart';
+import '../widgets/pomodoro_scaffold.dart';
+import '../widgets/glass_container.dart';
 
 /// Screen displaying all achievements.
 class AchievementsScreen extends ConsumerWidget {
@@ -12,9 +15,11 @@ class AchievementsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final achievements = ref.watch(achievementsProvider);
+    final settings = ref.watch(settingsProvider);
     final unlockedCount = achievements.where((a) => a.isUnlocked).length;
     final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
+    final isColorful = settings.colorfulMode;
 
     // Group achievements by category
     final sessionAchievements = achievements
@@ -30,7 +35,7 @@ class AchievementsScreen extends ConsumerWidget {
         .where((a) => a.category == AchievementCategory.special)
         .toList();
 
-    return Scaffold(
+    return PomodoroScaffold(
       appBar: AppBar(
         title: Text(l10n.achievements),
         centerTitle: true,
@@ -47,6 +52,7 @@ class AchievementsScreen extends ConsumerWidget {
               achievements.length,
               l10n,
               theme,
+              isColorful,
             ),
             const SizedBox(height: 24),
 
@@ -57,9 +63,10 @@ class AchievementsScreen extends ConsumerWidget {
                 l10n.categorySession,
                 Icons.timer,
                 theme,
+                isColorful,
               ),
               const SizedBox(height: 12),
-              _buildAchievementGrid(sessionAchievements),
+              _buildAchievementGrid(sessionAchievements, isColorful),
               const SizedBox(height: 24),
             ],
 
@@ -70,9 +77,10 @@ class AchievementsScreen extends ConsumerWidget {
                 l10n.categoryStreak,
                 Icons.local_fire_department,
                 theme,
+                isColorful,
               ),
               const SizedBox(height: 12),
-              _buildAchievementGrid(streakAchievements),
+              _buildAchievementGrid(streakAchievements, isColorful),
               const SizedBox(height: 24),
             ],
 
@@ -83,9 +91,10 @@ class AchievementsScreen extends ConsumerWidget {
                 l10n.categoryTime,
                 Icons.schedule,
                 theme,
+                isColorful,
               ),
               const SizedBox(height: 12),
-              _buildAchievementGrid(timeAchievements),
+              _buildAchievementGrid(timeAchievements, isColorful),
               const SizedBox(height: 24),
             ],
 
@@ -96,9 +105,10 @@ class AchievementsScreen extends ConsumerWidget {
                 l10n.categorySpecial,
                 Icons.star,
                 theme,
+                isColorful,
               ),
               const SizedBox(height: 12),
-              _buildAchievementGrid(specialAchievements),
+              _buildAchievementGrid(specialAchievements, isColorful),
             ],
 
             const SizedBox(height: 32),
@@ -114,9 +124,75 @@ class AchievementsScreen extends ConsumerWidget {
     int total,
     AppLocalizations l10n,
     ThemeData theme,
+    bool isColorful,
   ) {
     final progress = total > 0 ? unlocked / total : 0.0;
     
+    if (isColorful) {
+      return GlassContainer(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(
+                  Icons.emoji_events,
+                  color: Colors.white,
+                  size: 32,
+                ),
+                const SizedBox(width: 12),
+                Text(
+                  l10n.achievementsProgress(unlocked, total),
+                  style: theme.textTheme.headlineSmall?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            // Progress bar
+            Stack(
+              children: [
+                Container(
+                  height: 10,
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.3),
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                ),
+                FractionallySizedBox(
+                  widthFactor: progress,
+                  child: Container(
+                    height: 10,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(5),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.white.withOpacity(0.5),
+                          blurRadius: 10,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Text(
+              '${(progress * 100).toInt()}%',
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -195,22 +271,25 @@ class AchievementsScreen extends ConsumerWidget {
     String title,
     IconData icon,
     ThemeData theme,
+    bool isColorful,
   ) {
+    final color = isColorful ? Colors.white : theme.colorScheme.primary;
     return Row(
       children: [
-        Icon(icon, color: theme.colorScheme.primary, size: 24),
+        Icon(icon, color: color, size: 24),
         const SizedBox(width: 8),
         Text(
           title,
           style: theme.textTheme.titleMedium?.copyWith(
             fontWeight: FontWeight.bold,
+            color: color,
           ),
         ),
       ],
     );
   }
 
-  Widget _buildAchievementGrid(List<Achievement> achievements) {
+  Widget _buildAchievementGrid(List<Achievement> achievements, bool isColorful) {
     return GridView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
@@ -226,10 +305,12 @@ class AchievementsScreen extends ConsumerWidget {
         return AchievementBadge(
           achievement: achievement,
           onTap: () => _showAchievementDetails(context, achievement),
+          // We can optionally pass isColorful to badge if we update it
         );
       },
     );
   }
+
 
   void _showAchievementDetails(BuildContext context, Achievement achievement) {
     final l10n = AppLocalizations.of(context)!;

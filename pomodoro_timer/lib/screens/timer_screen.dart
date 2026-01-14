@@ -19,6 +19,8 @@ import '../widgets/streak_widget.dart';
 import '../widgets/daily_goal_progress.dart';
 import '../widgets/motivational_quote.dart';
 import '../widgets/achievement_badge.dart';
+import '../widgets/pomodoro_scaffold.dart';
+import '../widgets/glass_container.dart';
 import 'settings_screen.dart';
 import 'statistics_screen.dart';
 import 'achievements_screen.dart';
@@ -59,6 +61,7 @@ class _TimerScreenState extends ConsumerState<TimerScreen>
   }
 
   void _onSessionComplete(SessionType type, bool wasCompleted) {
+    // ...existing code...
     final settings = ref.read(settingsProvider);
     
     // Play sound and vibrate
@@ -132,30 +135,6 @@ class _TimerScreenState extends ConsumerState<TimerScreen>
     }
   }
 
-  // Cores vibrantes para o modo colorido
-  Color _getColorfulSessionColor(SessionType type) {
-    switch (type) {
-      case SessionType.focus:
-        return const Color(0xFFE74C3C); // Vermelho tomate vibrante
-      case SessionType.shortBreak:
-        return const Color(0xFF27AE60); // Verde fresco
-      case SessionType.longBreak:
-        return const Color(0xFF3498DB); // Azul relaxante
-    }
-  }
-
-  // Gradientes para o modo colorido
-  List<Color> _getColorfulGradient(SessionType type) {
-    switch (type) {
-      case SessionType.focus:
-        return [const Color(0xFFE74C3C), const Color(0xFFC0392B)];
-      case SessionType.shortBreak:
-        return [const Color(0xFF27AE60), const Color(0xFF1E8449)];
-      case SessionType.longBreak:
-        return [const Color(0xFF3498DB), const Color(0xFF2980B9)];
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
@@ -164,11 +143,9 @@ class _TimerScreenState extends ConsumerState<TimerScreen>
     final settings = ref.watch(settingsProvider);
     final isColorful = settings.colorfulMode;
     
-    final sessionColor = isColorful 
-        ? _getColorfulSessionColor(timerState.currentSessionType)
-        : _getSessionColor(timerState.currentSessionType, theme);
+    final sessionColor = _getSessionColor(timerState.currentSessionType, theme);
 
-    return Scaffold(
+    return PomodoroScaffold(
       appBar: AppBar(
         title: Text(
           l10n.appTitle,
@@ -178,7 +155,6 @@ class _TimerScreenState extends ConsumerState<TimerScreen>
         centerTitle: true,
         leadingWidth: 48,
         leading: const StreakBadge(),
-        backgroundColor: isColorful ? sessionColor.withOpacity(0.1) : null,
         actions: [
           IconButton(
             icon: const Icon(Icons.emoji_events_outlined, size: 22),
@@ -312,7 +288,7 @@ class _TimerScreenState extends ConsumerState<TimerScreen>
     );
   }
 
-  // Layout colorido (novo - estilo BMI Calculator)
+  // Layout colorido (v2 - Glassmorphism)
   Widget _buildColorfulBody(
     BuildContext context,
     dynamic timerState,
@@ -321,37 +297,26 @@ class _TimerScreenState extends ConsumerState<TimerScreen>
     AppLocalizations l10n,
     ThemeData theme,
   ) {
-    final gradientColors = _getColorfulGradient(timerState.currentSessionType);
+    final isRunning = timerState.isRunning && !timerState.isPaused;
+    final whiteColor = Colors.white;
     
     return SingleChildScrollView(
       child: Column(
         children: [
           const SizedBox(height: 16),
-          // Card do timer principal
+          // Timer Card (Glass)
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Container(
+            child: GlassContainer(
               padding: const EdgeInsets.all(24),
-              decoration: BoxDecoration(
-                color: theme.colorScheme.surface,
-                borderRadius: BorderRadius.circular(24),
-                boxShadow: [
-                  BoxShadow(
-                    color: sessionColor.withOpacity(0.2),
-                    blurRadius: 20,
-                    offset: const Offset(0, 8),
-                  ),
-                ],
-              ),
               child: Column(
                 children: [
-                  // Session type com chip colorido
+                  // Session type indicator
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                     decoration: BoxDecoration(
-                      color: sessionColor.withOpacity(0.15),
+                      color: whiteColor.withOpacity(0.2),
                       borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: sessionColor.withOpacity(0.3)),
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
@@ -360,14 +325,14 @@ class _TimerScreenState extends ConsumerState<TimerScreen>
                           timerState.currentSessionType == SessionType.focus 
                               ? Icons.psychology 
                               : Icons.coffee,
-                          color: sessionColor,
+                          color: whiteColor,
                           size: 20,
                         ),
                         const SizedBox(width: 8),
                         Text(
                           _getSessionTypeName(timerState.currentSessionType, l10n),
                           style: TextStyle(
-                            color: sessionColor,
+                            color: whiteColor,
                             fontWeight: FontWeight.bold,
                             fontSize: 14,
                           ),
@@ -382,7 +347,7 @@ class _TimerScreenState extends ConsumerState<TimerScreen>
                     totalSeconds: timerState.totalSeconds,
                     isFocusSession: timerState.isFocusSession,
                     isRunning: timerState.isRunning,
-                    primaryColor: sessionColor,
+                    primaryColor: whiteColor, // White text for glass
                   ),
                   const SizedBox(height: 20),
                   // Session indicators
@@ -395,91 +360,80 @@ class _TimerScreenState extends ConsumerState<TimerScreen>
               ),
             ),
           ),
+          
           const SizedBox(height: 16),
-          // Card do progresso diário
+          
+          // Daily Goal Card (Glass)
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Container(
+            child: GlassContainer(
               padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: theme.colorScheme.surface,
-                borderRadius: BorderRadius.circular(20),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
-                    blurRadius: 10,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
-              ),
               child: const DailyGoalProgress(compact: false),
             ),
           ),
-          const SizedBox(height: 24),
-          // Botões de controle com gradiente
+          
+          const SizedBox(height: 32),
+          
+          // Control Buttons
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: _buildColorfulControlButtons(timerState, sessionColor, gradientColors),
-          ),
-          const SizedBox(height: 24),
-          // Card de resultado/status
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(24),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: gradientColors,
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _buildGlassButton(
+                  icon: Icons.refresh,
+                  onTap: () {
+                    SoundService.instance.vibrateMedium();
+                    ref.read(timerProvider.notifier).reset();
+                  },
                 ),
-                borderRadius: BorderRadius.circular(24),
-                boxShadow: [
-                  BoxShadow(
-                    color: sessionColor.withOpacity(0.4),
-                    blurRadius: 20,
-                    offset: const Offset(0, 8),
-                  ),
-                ],
-              ),
-              child: Column(
-                children: [
-                  Text(
-                    l10n.todayStats,
-                    style: const TextStyle(
-                      color: Colors.white70,
-                      fontSize: 14,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    '${timerState.completedPomodoros}',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 48,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                const SizedBox(width: 24),
+                GestureDetector(
+                  onTap: () {
+                    SoundService.instance.vibrateOnPress();
+                    if (!timerState.isRunning) {
+                      ref.read(timerProvider.notifier).start();
+                    } else if (timerState.isPaused) {
+                      ref.read(timerProvider.notifier).resume();
+                    } else {
+                      ref.read(timerProvider.notifier).pause();
+                    }
+                  },
+                  child: Container(
+                    width: 88,
+                    height: 88,
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.2),
-                      borderRadius: BorderRadius.circular(20),
+                      color: whiteColor,
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.1),
+                          blurRadius: 15,
+                          offset: const Offset(0, 6),
+                        ),
+                      ],
                     ),
-                    child: Text(
-                      l10n.sessionsCompleted,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                      ),
+                    child: Icon(
+                      isRunning ? Icons.pause : Icons.play_arrow,
+                      color: sessionColor, // Use theme color for the main button
+                      size: 44,
                     ),
                   ),
-                ],
-              ),
+                ),
+                const SizedBox(width: 24),
+                _buildGlassButton(
+                  icon: Icons.skip_next,
+                  onTap: () {
+                    SoundService.instance.vibrateMedium();
+                    ref.read(timerProvider.notifier).skip();
+                  },
+                ),
+              ],
             ),
           ),
-          const SizedBox(height: 16),
+          
+          const SizedBox(height: 32),
+          
           // Quote
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 16),
@@ -491,90 +445,22 @@ class _TimerScreenState extends ConsumerState<TimerScreen>
     );
   }
 
-  Widget _buildColorfulControlButtons(dynamic timerState, Color sessionColor, List<Color> gradientColors) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        // Reset button
-        _buildCircularButton(
-          icon: Icons.refresh,
-          color: Colors.grey,
-          onTap: () {
-            SoundService.instance.vibrateMedium();
-            ref.read(timerProvider.notifier).reset();
-          },
-        ),
-        const SizedBox(width: 16),
-        // Main play/pause button with gradient
-        GestureDetector(
-          onTap: () {
-            SoundService.instance.vibrateOnPress();
-            if (!timerState.isRunning) {
-              ref.read(timerProvider.notifier).start();
-            } else if (timerState.isPaused) {
-              ref.read(timerProvider.notifier).resume();
-            } else {
-              ref.read(timerProvider.notifier).pause();
-            }
-          },
-          child: Container(
-            width: 80,
-            height: 80,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(colors: gradientColors),
-              shape: BoxShape.circle,
-              boxShadow: [
-                BoxShadow(
-                  color: sessionColor.withOpacity(0.4),
-                  blurRadius: 15,
-                  offset: const Offset(0, 6),
-                ),
-              ],
-            ),
-            child: Icon(
-              timerState.isRunning && !timerState.isPaused
-                  ? Icons.pause
-                  : Icons.play_arrow,
-              color: Colors.white,
-              size: 40,
-            ),
-          ),
-        ),
-        const SizedBox(width: 16),
-        // Skip button
-        _buildCircularButton(
-          icon: Icons.skip_next,
-          color: Colors.grey,
-          onTap: () {
-            SoundService.instance.vibrateMedium();
-            ref.read(timerProvider.notifier).skip();
-          },
-        ),
-      ],
-    );
-  }
-
-  Widget _buildCircularButton({
+  Widget _buildGlassButton({
     required IconData icon,
-    required Color color,
     required VoidCallback onTap,
   }) {
     return GestureDetector(
       onTap: onTap,
-      child: Container(
-        width: 50,
-        height: 50,
-        decoration: BoxDecoration(
-          color: color.withOpacity(0.1),
-          shape: BoxShape.circle,
-          border: Border.all(color: color.withOpacity(0.3)),
-        ),
-        child: Icon(icon, color: color, size: 24),
+      child: GlassContainer(
+        borderRadius: BorderRadius.circular(30), // Circle-ish
+        padding: const EdgeInsets.all(12),
+        child: Icon(icon, color: Colors.white, size: 28),
       ),
     );
   }
 
   String _getSessionTypeName(SessionType type, AppLocalizations l10n) {
+
     switch (type) {
       case SessionType.focus:
         return l10n.focusSession;
@@ -584,3 +470,4 @@ class _TimerScreenState extends ConsumerState<TimerScreen>
         return l10n.longBreak;
     }
   }
+}
