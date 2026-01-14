@@ -211,8 +211,7 @@ class DailyGoalSetter extends ConsumerWidget {
         Icons.flag,
         color: theme.colorScheme.primary,
       ),
-      title: Text(l10n.dailyGoalTarget),
-      subtitle: Text(l10n.sessionsPerDay(dailyGoal.targetSessions)),
+      title: Text(l10n.sessionsPerDay(dailyGoal.targetSessions)),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [

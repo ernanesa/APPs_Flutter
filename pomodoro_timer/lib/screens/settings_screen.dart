@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../l10n/app_localizations.dart';
 import '../providers/settings_provider.dart';
 import '../providers/locale_provider.dart';
+import '../providers/achievements_provider.dart';
 import '../services/consent_service.dart';
 import '../widgets/theme_selector.dart';
 import '../widgets/ambient_sound_selector.dart';
@@ -148,7 +149,7 @@ class SettingsScreen extends ConsumerWidget {
           _buildGroup(
             context,
             isColorful,
-            title: l10n.language, // Using Language key for Appearance section as closest match or just header
+            title: l10n.appearance,
             children: [
               // Language selector
               ListTile(
@@ -239,19 +240,24 @@ class SettingsScreen extends ConsumerWidget {
             isColorful,
             title: l10n.achievements,
             children: [
-              ListTile(
-                leading: const Icon(Icons.emoji_events_outlined),
-                title: Text(l10n.achievements),
-                trailing: const Icon(Icons.chevron_right),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const AchievementsScreen(),
-                    ),
-                  );
-                },
-              ),
+              Builder(builder: (context) {
+                final achievements = ref.watch(achievementsProvider);
+                final unlocked = achievements.where((a) => a.unlockedAt != null).length;
+                final total = achievements.length;
+                return ListTile(
+                  leading: const Icon(Icons.emoji_events_outlined),
+                  title: Text(l10n.achievementsProgress(unlocked, total)),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const AchievementsScreen(),
+                      ),
+                    );
+                  },
+                );
+              }),
             ],
           ),
 
