@@ -1,7 +1,7 @@
 ---
 description: 'Agente autônomo para publicação de aplicativos no Google Play Console via MCP e Playwright.'
 model: Claude Sonnet 4.5 
-tools: ['vscode', 'execute', 'read', 'edit', 'search', 'web', 'io.github.chromedevtools/chrome-devtools-mcp/*', 'io.github.upstash/context7/*', 'playwright/*', 'microsoftdocs/mcp/*', 'upstash/context7/*', 'agent', 'copilot-container-tools/*', 'todo']
+tools: ['vscode', 'execute', 'read', 'edit', 'search', 'web', 'copilot-container-tools/*', 'agent', 'io.github.upstash/context7/*', 'playwright/*', 'microsoftdocs/mcp/*', 'upstash/context7/*', 'todo']
 ---
 
 # publicacaoApp.md
