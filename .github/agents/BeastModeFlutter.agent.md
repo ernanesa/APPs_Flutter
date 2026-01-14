@@ -1152,6 +1152,31 @@ Recomendado para minimizar riscos:
 
 ---
 
+### **17.5. Armadilhas Reais (Aprendidas na Publicação)**
+
+**Estas são as causas mais comuns de “não consigo salvar / enviar para revisão” mesmo com o app ok.**
+
+1. **Idiomas (Ficha da loja) bloqueiam “Salvar”**
+  - Se você adicionou idiomas na ficha, o Console exige **todos os campos obrigatórios** em **cada idioma**.
+  - Padrão seguro: **salvar um idioma por vez**.
+  - Se travar, estratégia de emergência: remover idiomas extras temporariamente, salvar o idioma principal, e depois re-adicionar e preencher.
+
+2. **Limites de texto (validação silenciosa)**
+  - **Título:** até 30 caracteres.
+  - **Descrição curta:** até 80 caracteres.
+  - **Descrição completa:** até 4000.
+
+3. **URL de Política de Privacidade precisa resolver (DNS/HTTPS)**
+  - Erro comum: URL “bonita” mas com DNS falhando / não acessível.
+  - Use URL pública e estável (ex: Google Sites) e teste em navegação anônima.
+
+4. **Notas da versão (release notes) e tags de idioma**
+  - Evite editar notas em múltiplos idiomas na primeira submissão.
+  - Alguns fluxos exigem tags específicas (ex: `en-US`) e podem falhar com validação confusa.
+  - Padrão: manter release notes no idioma padrão e só localizar quando o fluxo estiver estável.
+
+---
+
 ## **18\. Política de Privacidade e Conformidade Legal**
 
 ### **18.1. Template de Política de Privacidade (Apps com AdMob)**
@@ -1222,6 +1247,24 @@ Onde `pub-XXXXXXXXXXXXXXXX` é seu Publisher ID do AdMob.
 No Play Console > Monetização > Configurações de anúncios:
 - Inserir URL do app-ads.txt
 - Aguardar verificação (pode levar 24-48h)
+
+---
+
+### **18.4. UE/EEA/UK: Consentimento (GDPR) para Anúncios (OBRIGATÓRIO)**
+
+Se o app usa **AdMob** (ou qualquer ads SDK), o caminho mais robusto para UE/EEA/UK é integrar o **UMP (User Messaging Platform)**.
+
+**Regras práticas (produção):**
+- **Consent-first:** coletar consentimento antes de inicializar/carregar ads.
+- **Gating:** só solicitar anúncios quando `canRequestAds == true`.
+- **Fail-safe:** se não puder solicitar ads, desabilitar ads (app continua funcionando).
+- **Privacy options:** disponibilizar “Opções de privacidade” quando o UMP exigir.
+
+**Checklist mínimo (antes do AAB de produção):**
+- [ ] Consent flow implementado e testado em device (UE).
+- [ ] Ads só carregam após consentimento permitir.
+- [ ] Botão/entrada para “Opções de privacidade” existe quando requerido.
+- [ ] Play Console: marcar corretamente que o app contém anúncios.
 
 ---
 
@@ -1652,19 +1695,34 @@ Get-ChildItem "DadosPublicacao\*\store_assets\*.png" | ForEach-Object {
   "$($_.Name): $($img.Width)x$($img.Height)"
   $img.Dispose()
 }
+
+---
+
+### **24.4. Fast Lane (Windows PowerShell) — 1 Comando, Tudo**
+
+Use para reduzir atrito e padronizar o loop “editar → validar → gerar AAB”.
+
+```powershell
+Set-Location -Path "C:\Users\Ernane\Personal\APPs_Flutter\<app_name>";
+flutter clean;
+flutter pub get;
+flutter gen-l10n;
+flutter analyze;
+flutter test;
+flutter build appbundle --release
+```
 ```
 
 ---
 
 ## **25\. Idiomas Obrigatórios e Traduções Base**
 
-### **25.1. Lista de 12 Idiomas Globais**
+### **25.1. Lista de Idiomas (Base 11 + Opcionais para Loja)**
 
 | Código | Idioma | Cobertura |
 |--------|--------|-----------|
 | en-US | Inglês (EUA) | 🌍 Global (Default) |
 | pt-BR | Português (Brasil) | 🇧🇷 Brasil |
-| pt-PT | Português (Portugal) | 🇵🇹 Portugal |
 | es-419 | Espanhol (Latam) | 🌎 América Latina |
 | zh-CN | Chinês Simplificado | 🇨🇳 China |
 | hi-IN | Hindi | 🇮🇳 Índia |
@@ -1674,6 +1732,8 @@ Get-ChildItem "DadosPublicacao\*\store_assets\*.png" | ForEach-Object {
 | de-DE | Alemão | 🇩🇪 Alemanha |
 | fr-FR | Francês | 🇫🇷 França |
 | ru-RU | Russo | 🇷🇺 Rússia |
+
+**Nota:** `pt-PT` é opcional (bom para loja), mas só adicione se você realmente for preencher e validar.
 
 ### **25.2. Template de Tradução (Exemplo BMI Calculator)**
 

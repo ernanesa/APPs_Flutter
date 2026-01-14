@@ -26,6 +26,7 @@ Mesmo para o primeiro app simples, a estrutura deve ser pensada como um monorepo
      /core_logic (Auth, Gerenciamento de Estado Base, Networking)
      /feature_ads (Lógica centralizada do AdMob - MUITO IMPORTANTE)
      /feature_i18n (Traduções compartilhadas)
+      /feature_privacy (Consentimento UE/EEA/UK via UMP + opções de privacidade)
   /DadosPublicacao (Chaves, certificados, assets de loja por app)
 ```
 
@@ -83,6 +84,7 @@ org.gradle.parallel=true
 2. **Lógica de Ads Centralizada:** O pacote feature_ads controla os IDs dos blocos de anúncios. Você configura a lógica de "Native Ad" uma vez e replica em todos os apps.
 3. **Migração Zero:** Quando for criar o SuperApp, você apenas adiciona as dependências dos apps individuais (que estarão modularizados) dentro dele.
 4. **Conformidade Automática:** Atualizações de requisitos (como 16KB) são feitas uma vez nos packages compartilhados.
+5. **Conformidade UE (Ads):** O fluxo UMP (consent-first) pode virar um package reutilizável e ser aplicado em todos os apps com AdMob.
 
 ---
 
@@ -219,6 +221,7 @@ Crie o app [NOME] seguindo o Beast Mode Flutter v4.0:
 - [ ] Data Safety form preenchido
 - [ ] app-ads.txt no site do desenvolvedor
 - [ ] Classificação de conteúdo definida
+- [ ] UE/EEA/UK (se usar ads): Consentimento via UMP implementado + “opções de privacidade” quando requerido
 
 ### **8.5. Monitoramento Pós-Lançamento**
 

@@ -16,7 +16,7 @@ Mesmo para o primeiro app simples, a estrutura deve ser pensada como um monorepo
 ```
 /root_project  
   /apps (ou diretório raiz para apps individuais)
-     /bmi_calculator (sa.rezende.calculadora)  
+     /bmi_calculator (sa.rezende.bmi_calculator)  
      /todo_app (sa.rezende.todo)  
      /super_app (sa.rezende.superapp)  
   /packages (Módulos Reutilizáveis)  
@@ -24,10 +24,12 @@ Mesmo para o primeiro app simples, a estrutura deve ser pensada como um monorepo
      /core_logic (Auth, Gerenciamento de Estado Base, Networking)  
      /feature_ads (Lógica centralizada do AdMob - MUITO IMPORTANTE)  
      /feature_i18n (Traduções compartilhadas)
+     /feature_privacy (Consentimento UE/EEA/UK via UMP + entrypoint de opções)  
   /DadosPublicacao (Chaves, certificados, assets de loja por app)
      /<app_name>/keys/
      /<app_name>/store_assets/
      /<app_name>/policies/
+     /<app_name>/play_console/ (backups das respostas: Data Safety, ads, notas)
 ```
 
 ## **2\. Benefícios desta Estrutura**
@@ -46,6 +48,7 @@ Mesmo para o primeiro app simples, a estrutura deve ser pensada como um monorepo
 | **Banco Local** | Isar ou Hive | NoSQL super rápido |
 | **Injeção de Dependência** | get\_it + injectable | Padrão enterprise |
 | **Ads** | google_mobile_ads 5.3+ | Banner, Interstitial, App Open |
+| **Consent (UE/EEA/UK)** | UMP via google_mobile_ads | GDPR: consent-first + privacy options |
 | **Build** | AGP 8.5.1+ | Compatibilidade 16KB page size |
 
 ## **4\. O Agente de IA e a Geração de Código**
