@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import '../l10n/app_localizations.dart';
+import '../services/consent_service.dart';
 
 class InfoDialog extends StatelessWidget {
   const InfoDialog({super.key});
@@ -36,6 +38,22 @@ class InfoDialog extends StatelessWidget {
         ),
       ),
       actions: [
+        FutureBuilder(
+          future: ConsentService.privacyOptionsRequirementStatus(),
+          builder: (context, snapshot) {
+            final status = snapshot.data;
+            if (status != PrivacyOptionsRequirementStatus.required) {
+              return const SizedBox.shrink();
+            }
+
+            return TextButton(
+              onPressed: () async {
+                await ConsentService.showPrivacyOptionsForm();
+              },
+              child: const Text('Privacy options'),
+            );
+          },
+        ),
         TextButton(
           onPressed: () => Navigator.pop(context),
           child: const Text("OK"),

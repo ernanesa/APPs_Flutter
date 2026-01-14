@@ -5,18 +5,27 @@ import 'l10n/app_localizations.dart';
 import 'screens/home_screen.dart';
 import 'providers/locale_provider.dart';
 import 'services/ad_service.dart';
+import 'services/consent_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
-  // Inicializar AdMob SDK
-  await AdService.initialize();
-  
-  // Pré-carregar App Open Ad em background
-  AdService.loadAppOpenAd();
-  
-  // Pré-carregar Interstitial Ad
-  AdService.preloadInterstitialAd();
+
+  // GDPR/UE: coletar consentimento antes de inicializar/carregar anúncios.
+  await ConsentService.gatherConsent();
+  final canRequestAds = await ConsentService.canRequestAds();
+
+  if (canRequestAds) {
+    // Inicializar AdMob SDK
+    await AdService.initialize();
+
+    // Pré-carregar App Open Ad em background
+    AdService.loadAppOpenAd();
+
+    // Pré-carregar Interstitial Ad
+    AdService.preloadInterstitialAd();
+  } else {
+    AdService.disableAds();
+  }
   
   runApp(
     const ProviderScope(

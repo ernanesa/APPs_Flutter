@@ -46,6 +46,8 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
   }
 
   void _loadAd() {
+    if (!AdService.adsEnabled) return;
+
     _bannerAd = AdService.createBannerAd(
       onAdLoaded: (ad) {
         if (mounted) {

@@ -9,6 +9,15 @@ class AdService {
   factory AdService() => _instance;
   AdService._internal();
 
+  static bool _adsEnabled = false;
+
+  static bool get adsEnabled => _adsEnabled;
+
+  static void disableAds() {
+    _adsEnabled = false;
+    dispose();
+  }
+
   // ============================================================================
   // AD UNIT IDs - PRODUÇÃO
   // ============================================================================
@@ -62,10 +71,12 @@ class AdService {
   /// Inicializa o SDK do Mobile Ads
   static Future<void> initialize() async {
     await MobileAds.instance.initialize();
+    _adsEnabled = true;
   }
 
   /// Carrega um App Open Ad em background
   static Future<void> loadAppOpenAd() async {
+    if (!_adsEnabled) return;
     if (_appOpenAd != null) return; // Já carregado
     if (!Platform.isAndroid) return;
 
@@ -89,6 +100,7 @@ class AdService {
   /// Mostra o App Open Ad se disponível e não expirado
   /// Não mostra nas primeiras 2 aberturas do app (melhor UX)
   static void showAppOpenAdIfAvailable() {
+    if (!_adsEnabled) return;
     _appOpenCount++;
 
     // Não mostrar nas primeiras aberturas (deixar user interagir primeiro)
@@ -142,6 +154,7 @@ class AdService {
 
   /// Pré-carrega um Interstitial Ad
   static void preloadInterstitialAd() {
+    if (!_adsEnabled) return;
     if (_interstitialAd != null) return; // Já carregado
     if (!Platform.isAndroid) return;
 
@@ -163,6 +176,7 @@ class AdService {
 
   /// Mostra o Interstitial Ad carregado
   static void _showInterstitialAd() {
+    if (!_adsEnabled) return;
     if (_interstitialAd == null) return;
 
     _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
@@ -183,6 +197,7 @@ class AdService {
 
   /// Método legado para compatibilidade - mostra intersticial imediatamente
   static Future<void> showInterstitialAd() async {
+    if (!_adsEnabled) return;
     incrementActionAndShowIfNeeded();
   }
 
@@ -191,10 +206,13 @@ class AdService {
   // ============================================================================
 
   /// Cria um Banner Ad de tamanho fixo (FullBanner)
-  static BannerAd createBannerAd({
+  static BannerAd? createBannerAd({
     Function(Ad)? onAdLoaded,
     Function(Ad, LoadAdError)? onAdFailedToLoad,
   }) {
+    if (!_adsEnabled) return null;
+    if (!Platform.isAndroid) return null;
+
     return BannerAd(
       adUnitId: bannerAdUnitId,
       size: AdSize.fullBanner,
@@ -219,6 +237,7 @@ class AdService {
     Function(Ad)? onAdLoaded,
     Function(Ad, LoadAdError)? onAdFailedToLoad,
   }) async {
+    if (!_adsEnabled) return null;
     if (!Platform.isAndroid) return null;
 
     final size = await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(width);

@@ -1,0 +1,225 @@
+### Open tabs
+- 0: (current) [Preparar versão | BMI Calculator - Health] (https://play.google.com/console/u/0/developers/4710261638140419429/app/4972163917837428959/tracks/4697501564160384413/releases/1/prepare)
+- 1: [] (about:blank)
+
+### Page state
+- Page URL: https://play.google.com/console/u/0/developers/4710261638140419429/app/4972163917837428959/tracks/4697501564160384413/releases/1/prepare
+- Page Title: Preparar versão | BMI Calculator - Health
+- Page Snapshot:
+```yaml
+- generic [ref=e1]:
+  - generic:
+    - generic:
+      - img
+      - progressbar
+      - generic: Carregando o Google Play Console
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e6]:
+        - link "Logotipo do Google Play Console" [ref=e7] [cursor=pointer]:
+          - /url: /console/u/0/developers/4710261638140419429/app-list
+          - button "Logotipo do Google Play Console" [ref=e8]
+        - generic [ref=e9]:
+          - button "Notificações não lidas Abrir central de notificações" [ref=e46]:
+            - img [ref=e51]: notifications_unread
+            - generic [ref=e53]: Notificações não lidas
+          - generic [ref=e10]:
+            - button "BMI Calculator - Health" [ref=e61] [cursor=pointer]:
+              - generic [ref=e65]:
+                - img [ref=e67]
+                - generic [ref=e71]: BMI Calculator - Health
+            - button "Trocar de conta de desenvolvedor" [ref=e15] [cursor=pointer]:
+              - img "Trocar de conta de desenvolvedor" [ref=e17]
+    - navigation [ref=e74]:
+      - link "Todos os apps" [ref=e75] [cursor=pointer]:
+        - /url: /console/u/0/developers/4710261638140419429/app-list
+        - img [ref=e77]: keyboard_backspace
+        - generic [ref=e78]: Todos os apps
+      - list [ref=e79]:
+        - listitem "Painel" [ref=e82]:
+          - button "Painel" [ref=e83] [cursor=pointer]:
+            - img [ref=e86]: dashboard
+            - generic [ref=e87]: Painel
+        - listitem "Estatísticas" [ref=e90]:
+          - button "Estatísticas" [ref=e91] [cursor=pointer]:
+            - img [ref=e94]: bar_chart
+            - generic [ref=e95]: Estatísticas
+        - listitem "Visão geral da publicação" [ref=e98]:
+          - button "Visão geral da publicação" [ref=e99] [cursor=pointer]:
+            - img [ref=e102]: overview
+            - generic [ref=e103]: Visão geral da publicação
+        - listitem "Testar e lançar" [ref=e106]:
+          - button "Testar e lançar" [ref=e107] [cursor=pointer]:
+            - img [ref=e110]: rocket_launch
+            - generic [ref=e111]: Testar e lançar
+          - list [ref=e756]:
+            - generic [ref=e758]:
+              - listitem "Lançamentos e pacotes mais recentes" [ref=e760]:
+                - button "Lançamentos e pacotes mais recentes" [ref=e761] [cursor=pointer]:
+                  - generic [ref=e762]: Lançamentos e pacotes mais recentes
+              - listitem "Produção" [ref=e764]:
+                - button "Produção" [ref=e765] [cursor=pointer]:
+                  - generic [ref=e766]: Produção
+              - listitem "Teste" [ref=e768]:
+                - button "Teste" [ref=e769] [cursor=pointer]:
+                  - generic [ref=e770]: Teste
+                  - img [ref=e772]: expand_more
+              - listitem "Pré-cadastro" [ref=e774]:
+                - button "Pré-cadastro" [ref=e775] [cursor=pointer]:
+                  - generic [ref=e776]: Pré-cadastro
+              - listitem "Integridade do app" [ref=e778]:
+                - button "Integridade do app" [ref=e779] [cursor=pointer]:
+                  - generic [ref=e780]: Integridade do app
+              - listitem "Configurações avançadas" [ref=e782]:
+                - button "Configurações avançadas" [ref=e783] [cursor=pointer]:
+                  - generic [ref=e784]: Configurações avançadas
+        - listitem "Monitorar e aprimorar" [ref=e114]:
+          - button "Monitorar e aprimorar" [ref=e115] [cursor=pointer]:
+            - img [ref=e118]: vital_signs
+            - generic [ref=e119]: Monitorar e aprimorar
+        - listitem "Aumentar número de usuários" [ref=e122]:
+          - button "Aumentar número de usuários" [ref=e123] [cursor=pointer]:
+            - img [ref=e126]: finance_mode
+            - generic [ref=e127]: Aumentar número de usuários
+        - listitem "Monetizar com o Google Play" [ref=e130]:
+          - button "Monetizar com o Google Play" [ref=e131] [cursor=pointer]:
+            - img [ref=e134]: sell
+            - generic [ref=e135]: Monetizar com o Google Play
+    - generic [ref=e23]:
+      - generic [ref=e4667]:
+        - generic [ref=e4668]:
+          - generic [ref=e4674]:
+            - heading "Criar versão de produção" [level=1] [ref=e4680]
+            - generic [ref=e4685]: As versões de produção ficam disponíveis para todos os usuários nos países selecionados
+          - generic [ref=e4689]:
+            - img [ref=e4692]: info
+            - generic [ref=e4695]: Sua escolha de chave de assinatura do app será corrigida quando você publicar em uma faixa aberta
+        - generic [ref=e4696]:
+          - generic [ref=e4700]:
+            - tablist [ref=e4701]:
+              - tab "Etapa 1 de 2, Criar versão" [selected] [ref=e4702]:
+                - generic [ref=e4705]: "1"
+                - generic [ref=e4707]: Criar versão
+              - tab "Etapa 2 de 2, Visualizar e confirmar" [disabled] [ref=e4709]:
+                - generic [ref=e4712]: "2"
+                - generic [ref=e4714]: Visualizar e confirmar
+            - generic:
+              - tabpanel
+          - button "Descartar versão de rascunho" [ref=e4719]:
+            - generic [ref=e4721]: Descartar versão de rascunho
+        - generic [ref=e4724]:
+          - heading "Integridade do app" [level=2] [ref=e4733]
+          - generic [ref=e4738]:
+            - list [ref=e4740]:
+              - listitem [ref=e4741]:
+                - generic [ref=e4742]:
+                  - img [ref=e4746]: check_circle
+                  - generic [ref=e4748]: A proteção automática está ativada
+              - listitem [ref=e4749]:
+                - generic [ref=e4750]:
+                  - img [ref=e4754]: check_circle
+                  - generic [ref=e4756]: Versões assinadas pelo Google Play
+            - paragraph [ref=e4757]: As ferramentas de integridade ajudam a garantir que os usuários aproveitem seus apps e jogos da maneira que você pretendeu
+            - generic [ref=e4760]:
+              - button "Gerenciar a proteção da integridade" [ref=e4762]:
+                - generic [ref=e4765]: Gerenciar a proteção da integridade
+              - button "Mudar chave de assinatura" [ref=e4767]:
+                - generic [ref=e4770]: Mudar chave de assinatura
+        - generic [ref=e4772]:
+          - heading "Pacotes de apps" [level=2] [ref=e4781]
+          - generic [ref=e4782]:
+            - generic [ref=e4789]:
+              - img [ref=e4794]
+              - generic [ref=e4795]: Solte os pacotes de apps aqui para fazer upload
+              - generic [ref=e4797]:
+                - button "Enviar" [ref=e4798]:
+                  - generic [ref=e4801]: file_upload
+                  - generic [ref=e4802]: Enviar
+                - button "Adicionar da biblioteca" [ref=e4803]:
+                  - generic [ref=e4806]: add_to_photos
+                  - text: Adicionar da biblioteca
+            - grid "Artefatos" [ref=e4816]:
+              - row "Tipo de arquivo Versão Níveis de API SDK de destino Layouts da tela Interfaces binárias de aplicativo (ABIs, na sigla em inglês) Recursos obrigatórios" [ref=e4817]:
+                - columnheader "Tipo de arquivo" [ref=e4818] [cursor=pointer]
+                - columnheader "Versão" [ref=e4819] [cursor=pointer]
+                - columnheader "Níveis de API" [ref=e4820] [cursor=pointer]
+                - columnheader "SDK de destino" [ref=e4821] [cursor=pointer]
+                - columnheader "Layouts da tela" [ref=e4822] [cursor=pointer]
+                - columnheader "Interfaces binárias de aplicativo (ABIs, na sigla em inglês)" [ref=e4823] [cursor=pointer]
+                - columnheader "Recursos obrigatórios" [ref=e4824] [cursor=pointer]
+                - cell [ref=e4825]
+                - cell [ref=e4826]
+              - 'row "Célula da tabela com um pop-up 1 (1.0.0) 24 ou superior 35 4 3 1 Gerenciar artefatos Mais detalhes sobre Pacote de apps: 1 (1.0.0)" [ref=e4827]':
+                - gridcell "Célula da tabela com um pop-up" [ref=e4828]:
+                  - generic "Célula da tabela com um pop-up" [ref=e4831]:
+                    - generic [ref=e4832]:
+                      - generic [ref=e4833]: App bundle
+                      - 'img "Este artefato (app bundle) tem os seguintes anexos: arquivo de mapeamento ReTrace e símbolos de depuração nativos" [ref=e4837]': attachment
+                - gridcell "1 (1.0.0)" [ref=e4838]:
+                  - generic [ref=e4839]: 1 (1.0.0)
+                - gridcell "24 ou superior" [ref=e4840]:
+                  - generic [ref=e4841]: 24 ou superior
+                - gridcell "35" [ref=e4842]:
+                  - generic [ref=e4843]: "35"
+                - gridcell "4" [ref=e4844]:
+                  - generic [ref=e4845]: "4"
+                - gridcell "3" [ref=e4846]:
+                  - generic [ref=e4847]: "3"
+                - gridcell "1" [ref=e4848]:
+                  - generic [ref=e4849]: "1"
+                - gridcell "Gerenciar artefatos" [ref=e4850]:
+                  - button "Gerenciar artefatos" [ref=e4854] [cursor=pointer]:
+                    - img [ref=e4856]: more_vert
+                - 'gridcell "Mais detalhes sobre Pacote de apps: 1 (1.0.0)" [ref=e4857]':
+                  - 'button "Mais detalhes sobre Pacote de apps: 1 (1.0.0)" [ref=e4859]':
+                    - 'button "Mais detalhes sobre Pacote de apps: 1 (1.0.0)" [ref=e4860] [cursor=pointer]':
+                      - img [ref=e4863]: arrow_right_alt
+        - generic [ref=e4865]:
+          - heading "Detalhes da versão" [level=2] [ref=e4874]
+          - generic [ref=e4878]:
+            - generic [ref=e4879]:
+              - group "Nome da versão" [ref=e4881]:
+                - generic [ref=e4884]: Nome da versão *
+                - generic [ref=e4887]:
+                  - textbox "Nome da versão" [ref=e4889]: 1 (1.0.0)
+                  - generic [ref=e4890]:
+                    - paragraph [ref=e4891]
+                    - generic [ref=e4892]:
+                      - generic [ref=e4893]: 9 / 50
+                      - generic [ref=e4894]: O texto tem 9 caracteres de 50
+              - group "Notas da versão" [ref=e4896]:
+                - generic [ref=e4899]: Notas da versão
+                - generic [ref=e4901]:
+                  - button "Copiar de uma versão anterior" [ref=e4905]:
+                    - generic [ref=e4907]: Copiar de uma versão anterior
+                  - generic [ref=e4908]:
+                    - textbox "Notas da versão" [active] [ref=e4911]: <en-US> Initial release. - Calculate BMI - Track history - View progress </en-US> <pt-BR> Primeira versão. - Calcular IMC - Salvar histórico - Ver evolução </pt-BR> <es-ES> Lanzamiento inicial. - Calcular IMC - Guardar historial - Ver progreso </es-ES> <fr-FR> Première version. - Calculer l'IMC - Enregistrer l'historique - Voir la progression </fr-FR> <de-DE> Erstveröffentlichung. - BMI berechnen - Verlauf speichern - Fortschritt ansehen </de-DE> <ru-RU> Первый релиз. - Расчет ИМТ - История измерений - Просмотр прогресса </ru-RU> <zh-CN> 首个版本。 - 计算 BMI - 保存历史记录 - 查看进度 </zh-CN> <ja-JP> 初回リリース。 - BMIを計算 - 履歴を保存 - 推移を確認 </ja-JP> <hi-IN> पहला रिलीज़। - BMI गणना - इतिहास सहेजें - प्रगति देखें </hi-IN> <bn-BD> প্রথম রিলিজ। - BMI গণনা - ইতিহাস সংরক্ষণ - অগ্রগতি দেখুন </bn-BD> <ar> الإصدار الأولي. - حساب مؤشر كتلة الجسم - حفظ السجل - عرض التطور </ar>
+                    - alert [ref=e4930]: "Linha 1: há texto fora das tags de idioma."
+                  - generic [ref=e4914]: Foram enviadas notas da versão em 1de 11 idiomas
+                  - generic [ref=e4915]: Explique aos usuários o que está incluído na versão. Insira as notas em cada idioma nas tags correspondentes.
+            - generic [ref=e4923]:
+              - button "Cancelar alterações" [ref=e4932]:
+                - generic [ref=e4934]: Cancelar alterações
+              - generic:
+                - button "Salvar como rascunho" [disabled]:
+                  - generic: Salvar como rascunho
+              - generic:
+                - button "Próximo" [disabled]:
+                  - generic: Próximo
+      - generic [ref=e31]:
+        - generic [ref=e747]:
+          - link "Atualizações de produtos" [ref=e748] [cursor=pointer]:
+            - /url: https://play.google.com/console/about/whats-new/
+          - link "Painel de status" [ref=e749] [cursor=pointer]:
+            - /url: https://status.play.google.com/
+          - link "Ajuda" [ref=e750] [cursor=pointer]:
+            - /url: /console/u/0/developers/4710261638140419429/help-and-support?app=4972163917837428959
+        - generic [ref=e751]:
+          - generic [ref=e752]: © 2026 Google
+          - link "Privacidade" [ref=e753] [cursor=pointer]:
+            - /url: https://www.google.com/policies/privacy/
+          - link "Contrato de distribuição do desenvolvedor" [ref=e754] [cursor=pointer]:
+            - /url: https://play.google.com/about/developer-distribution-agreement.html
+          - link "Termos de Serviço" [ref=e755] [cursor=pointer]:
+            - /url: https://play.google.com/about/console/terms-of-service/
+```
