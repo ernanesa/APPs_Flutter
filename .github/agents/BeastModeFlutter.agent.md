@@ -1422,5 +1422,275 @@ flutter run --profile --trace-startup
 
 ---
 
-**Fim do Protocolo Beast Mode Flutter v5.0**
+## **23\. Automação do Google Play Console (Lições Aprendidas)**
+
+Esta seção documenta técnicas de automação testadas em produção real.
+
+### **23.1. Estrutura de Assets para Upload Automático**
+
+**Dimensões EXATAS exigidas pelo Google Play (Janeiro 2026):**
+
+| Asset | Dimensão | Formato | Tamanho Máx |
+|-------|----------|---------|-------------|
+| Ícone do App | 512x512px | PNG/JPEG | 1 MB |
+| Feature Graphic | 1024x500px | PNG/JPEG | 15 MB |
+| Screenshots (Phone) | 1080x1920px (9:16) | PNG/JPEG | 8 MB cada |
+| Screenshots (Tablet 7") | 1080x1920px (9:16) | PNG/JPEG | 8 MB cada |
+| Screenshots (Tablet 10") | 1080x1920px (9:16) | PNG/JPEG | 8 MB cada |
+
+**⚠️ CRÍTICO:** Dimensões incorretas resultam em erro de validação. Sempre verificar:
+```powershell
+# Verificar dimensões de imagem (PowerShell)
+$p = "caminho/imagem.png"
+Add-Type -AssemblyName System.Drawing
+$img = [System.Drawing.Image]::FromFile($p)
+"$($img.Width)x$($img.Height)"
+$img.Dispose()
+```
+
+### **23.2. Geração de Assets via Playwright (Técnica Canvas)**
+
+Para gerar assets sem dependências externas:
+
+```javascript
+// Gerar ícone 512x512 via Canvas no navegador
+async (page) => {
+  await page.setContent(`
+    <div id="icon" style="
+      width: 512px; height: 512px;
+      background: linear-gradient(135deg, #4CAF50 0%, #2196F3 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 200px; font-weight: bold; color: white;
+      font-family: Arial, sans-serif; border-radius: 100px;
+    ">BMI</div>
+  `);
+  await page.locator('#icon').screenshot({ path: 'icon_512.png' });
+}
+```
+
+### **23.3. Estratégia de Seleção de Idiomas (Multi-Language)**
+
+O Google Play Console usa dropdowns customizados. Técnica resiliente:
+
+```javascript
+// Técnica de seleção via digitação (mais confiável que clique)
+await page.locator('button[aria-haspopup="listbox"]').click();
+await page.waitForTimeout(1000);
+await page.keyboard.type('pt-BR'); // Digitar o código foca o item
+await page.keyboard.press('Enter');
+await page.waitForTimeout(2000);
+```
+
+### **23.4. Preenchimento de Formulários (Textboxes)**
+
+Para formulários do Play Console, usar seleção por ordem de aparição:
+
+```javascript
+const inputs = await page.locator('input[type="inputType"]').all();
+const textareas = await page.locator('textarea').all();
+
+if (inputs.length >= 2) {
+  await inputs[0].fill('Nome do App');       // Campo 1: Nome
+  await inputs[1].fill('Breve descrição');   // Campo 2: Descrição curta
+}
+if (textareas.length >= 1) {
+  await textareas[0].fill('Descrição completa...'); // Textarea: Descrição longa
+}
+```
+
+### **23.5. Upload de Assets da Biblioteca**
+
+O Play Console mantém uma biblioteca de recursos. Para vincular:
+
+```javascript
+const addBtns = await page.getByRole('button', { name: 'Adicionar recursos' }).all();
+const assetMap = [
+  ["icon_512.png"],
+  ["feature_1024x500.png"],
+  ["phone1_1080x1920.png", "phone2_1080x1920.png"]
+];
+
+for (let i = 0; i < Math.min(addBtns.length, 3); i++) {
+  await addBtns[i].click();
+  await page.waitForTimeout(1500);
+  
+  for (const file of assetMap[i]) {
+    const item = page.locator(`li:has-text("${file}")`).first();
+    if (await item.isVisible()) {
+      const cb = item.locator('input[type="checkbox"]');
+      if (!(await cb.isChecked())) await item.click();
+    }
+  }
+  
+  const confirm = page.getByRole('button', { name: 'Adicionar', exact: true }).last();
+  if (await confirm.isVisible()) {
+    await confirm.click();
+    await page.waitForTimeout(800);
+  }
+}
+```
+
+### **23.6. Multi-Language Automation (12 Idiomas)**
+
+Para preencher 12 idiomas de forma eficiente:
+
+```javascript
+const translations = {
+  'en-US': { name: 'BMI Calculator', short: '...', full: '...' },
+  'pt-BR': { name: 'Calculadora IMC', short: '...', full: '...' },
+  'es-419': { name: 'Calculadora IMC', short: '...', full: '...' },
+  // ... demais idiomas
+};
+
+for (const [langCode, data] of Object.entries(translations)) {
+  // 1. Selecionar idioma
+  await page.locator('button[aria-haspopup="listbox"]').click();
+  await page.keyboard.type(langCode);
+  await page.keyboard.press('Enter');
+  await page.waitForTimeout(2000);
+  
+  // 2. Preencher campos
+  const inputs = await page.locator('input[type="inputType"]').all();
+  await inputs[0].fill(data.name);
+  await inputs[1].fill(data.short);
+  
+  const textareas = await page.locator('textarea').all();
+  await textareas[0].fill(data.full);
+  
+  // 3. Salvar IMEDIATAMENTE (evita perda de dados)
+  const save = page.getByRole('button', { name: 'Salvar' }).last();
+  if (await save.isEnabled()) {
+    await save.click();
+    await page.waitForTimeout(4000);
+  }
+}
+```
+
+### **23.7. Tratamento de Erros Comum**
+
+| Erro | Causa | Solução |
+|------|-------|---------|
+| `scrollIntoViewIfNeeded timeout` | Dropdown não abriu | Aumentar wait para 1500ms+ |
+| `strict mode violation: 2 elements` | Label duplicado | Usar `getByRole('textbox')` |
+| Asset não aparece na biblioteca | Filtro ativo | Limpar filtros ou usar nome exato |
+| Idioma não selecionado | Texto diferente do esperado | Usar `keyboard.type()` + `Enter` |
+| Save button disabled | Campos obrigatórios vazios | Verificar todos os idiomas adicionados |
+
+### **23.8. Diretório de Assets Recomendado**
+
+Estrutura para automação:
+```
+/DadosPublicacao/<nome_app>/
+  /store_assets/
+    icon_512.png           (512x512)
+    feature_1024x500.png   (1024x500)
+    phone1_1080x1920.png   (1080x1920)
+    phone2_1080x1920.png   (1080x1920)
+  /keys/
+    upload-keystore.jks
+    key.properties
+  /policies/
+    privacy_policy.md
+    app-ads.txt
+  app-release.aab
+```
+
+---
+
+## **24\. Workflow Integrado: Dev → Publicação (Automatizado)**
+
+### **24.1. Passo a Passo Completo (Beast Mode)**
+
+```powershell
+# FASE 1: Build
+Set-Location -Path "C:\Users\Ernane\Personal\APPs_Flutter\<app_name>"
+flutter clean
+flutter pub get
+flutter gen-l10n
+flutter analyze
+flutter test
+flutter build appbundle --release
+
+# FASE 2: Copiar AAB para pasta de publicação
+$aabPath = "build\app\outputs\bundle\release\app-release.aab"
+$destPath = "..\DadosPublicacao\<app_name>\"
+Copy-Item $aabPath $destPath
+
+# FASE 3: Ativar agente de publicação
+# (Usar publicacaoApp.agent.md via VS Code Copilot)
+```
+
+### **24.2. Checklist Pré-Publicação Automatizada**
+
+1. \[ \] AAB gerado com sucesso (`flutter build appbundle --release`)
+2. \[ \] IDs de AdMob em PRODUÇÃO (não teste!)
+3. \[ \] Assets com dimensões corretas verificadas
+4. \[ \] Todos os 12 idiomas traduzidos
+5. \[ \] Política de privacidade URL acessível
+6. \[ \] Keystore configurado corretamente
+
+### **24.3. Comandos de Verificação Rápida**
+
+```powershell
+# Verificar se AAB foi gerado
+Test-Path "build\app\outputs\bundle\release\app-release.aab"
+
+# Verificar assinatura do AAB (requer bundletool)
+java -jar bundletool.jar validate --bundle=app-release.aab
+
+# Listar assets e verificar dimensões
+Get-ChildItem "DadosPublicacao\*\store_assets\*.png" | ForEach-Object {
+  Add-Type -AssemblyName System.Drawing
+  $img = [System.Drawing.Image]::FromFile($_.FullName)
+  "$($_.Name): $($img.Width)x$($img.Height)"
+  $img.Dispose()
+}
+```
+
+---
+
+## **25\. Idiomas Obrigatórios e Traduções Base**
+
+### **25.1. Lista de 12 Idiomas Globais**
+
+| Código | Idioma | Cobertura |
+|--------|--------|-----------|
+| en-US | Inglês (EUA) | 🌍 Global (Default) |
+| pt-BR | Português (Brasil) | 🇧🇷 Brasil |
+| pt-PT | Português (Portugal) | 🇵🇹 Portugal |
+| es-419 | Espanhol (Latam) | 🌎 América Latina |
+| zh-CN | Chinês Simplificado | 🇨🇳 China |
+| hi-IN | Hindi | 🇮🇳 Índia |
+| ar | Árabe | 🌍 Oriente Médio |
+| bn-BD | Bengali | 🇧🇩 Bangladesh |
+| ja-JP | Japonês | 🇯🇵 Japão |
+| de-DE | Alemão | 🇩🇪 Alemanha |
+| fr-FR | Francês | 🇫🇷 França |
+| ru-RU | Russo | 🇷🇺 Rússia |
+
+### **25.2. Template de Tradução (Exemplo BMI Calculator)**
+
+```json
+{
+  "en-US": {
+    "name": "BMI Calculator",
+    "short": "Calculate your BMI quickly, accurately and monitor your health.",
+    "full": "BMI Calculator is the essential tool for those looking to monitor weight and health.\n\nWith a simple and straightforward interface, you enter your weight and height to get an immediate calculation of your Body Mass Index.\n\nIdeal for tracking diets and workouts."
+  },
+  "pt-BR": {
+    "name": "Calculadora IMC",
+    "short": "Calcule seu IMC de forma rápida, precisa e monitore sua saúde.",
+    "full": "O BMI Calculator é a ferramenta essencial para quem busca monitorar o peso e a saúde.\n\nCom uma interface simples e direta, você insere seu peso e altura para obter o cálculo imediato do seu Índice de Massa Corporal.\n\nIdeal para acompanhamento de dietas e treinos."
+  },
+  "de-DE": {
+    "name": "BMI Rechner",
+    "short": "Berechnen Sie Ihren BMI schnell und genau und überwachen Sie Ihre Gesundheit.",
+    "full": "BMI Rechner ist das unverzichtbare Tool für alle, die Gewicht und Gesundheit überwachen möchten.\n\nMit einer einfachen und direkten Benutzeroberfläche geben Sie Ihr Gewicht und Ihre Größe ein, um sofort Ihren Body-Mass-Index zu berechnen.\n\nIdeal zur Verfolgung von Diäten und Workouts."
+  }
+}
+```
+
+---
+
+**Fim do Protocolo Beast Mode Flutter v6.0**
 *"Da Ideia ao Google Play: Sem Desculpas, Só Execução."*

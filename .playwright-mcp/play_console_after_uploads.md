@@ -1,0 +1,289 @@
+### Page state
+- Page URL: https://play.google.com/console/u/0/developers/4710261638140419429/app/4972163917837428959/main-store-listing
+- Page Title: Página "Detalhes do app" padrão | BMI Calculator
+- Page Snapshot:
+```yaml
+- generic [active] [ref=e1]:
+  - generic:
+    - generic:
+      - img
+      - progressbar
+      - generic: Carregando o Google Play Console
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e6]:
+        - link "Logotipo do Google Play Console" [ref=e7] [cursor=pointer]:
+          - /url: /console/u/0/developers/4710261638140419429/app-list
+          - button "Logotipo do Google Play Console" [ref=e8]
+        - generic [ref=e9]:
+          - button "Notificações Abrir central de notificações" [ref=e46]:
+            - img [ref=e51]: notifications
+            - generic [ref=e53]: Notificações
+          - generic [ref=e10]:
+            - button "BMI Calculator" [ref=e525] [cursor=pointer]:
+              - generic [ref=e529]:
+                - img [ref=e531]
+                - generic [ref=e535]: BMI Calculator
+            - button "Trocar de conta de desenvolvedor" [ref=e15] [cursor=pointer]:
+              - img "Trocar de conta de desenvolvedor" [ref=e17]
+    - navigation [ref=e55]:
+      - link "Todos os apps" [ref=e537] [cursor=pointer]:
+        - /url: /console/u/0/developers/4710261638140419429/app-list
+        - img [ref=e539]: keyboard_backspace
+        - generic [ref=e540]: Todos os apps
+      - list [ref=e56]:
+        - listitem "Painel" [ref=e543]:
+          - button "Painel" [ref=e544] [cursor=pointer]:
+            - img [ref=e547]: dashboard
+            - generic [ref=e548]: Painel
+        - listitem "Estatísticas" [ref=e551]:
+          - button "Estatísticas" [ref=e552] [cursor=pointer]:
+            - img [ref=e555]: bar_chart
+            - generic [ref=e556]: Estatísticas
+        - listitem "Visão geral da publicação" [ref=e559]:
+          - button "Visão geral da publicação" [ref=e560] [cursor=pointer]:
+            - img [ref=e563]: overview
+            - generic [ref=e564]: Visão geral da publicação
+        - listitem "Testar e lançar" [ref=e567]:
+          - button "Testar e lançar" [ref=e568] [cursor=pointer]:
+            - img [ref=e571]: rocket_launch
+            - generic [ref=e572]: Testar e lançar
+        - listitem "Monitorar e aprimorar" [ref=e575]:
+          - button "Monitorar e aprimorar" [ref=e576] [cursor=pointer]:
+            - img [ref=e579]: vital_signs
+            - generic [ref=e580]: Monitorar e aprimorar
+        - listitem "Aumentar número de usuários" [ref=e583]:
+          - button "Aumentar número de usuários" [ref=e584] [cursor=pointer]:
+            - img [ref=e587]: finance_mode
+            - generic [ref=e588]: Aumentar número de usuários
+          - list [ref=e1017]:
+            - generic [ref=e1019]:
+              - listitem "Presença na loja" [ref=e1021]:
+                - button "Presença na loja" [ref=e1022] [cursor=pointer]:
+                  - generic [ref=e1023]: Presença na loja
+                  - img [ref=e1025]: expand_less
+                - list [ref=e1026]:
+                  - generic [ref=e1028]:
+                    - listitem "Páginas de detalhes do app" [ref=e1030]:
+                      - button "Páginas de detalhes do app" [ref=e1031] [cursor=pointer]:
+                        - generic [ref=e1032]: Páginas de detalhes do app
+                    - listitem "Experimentos na página Detalhes do app" [ref=e1034]:
+                      - button "Experimentos na página Detalhes do app" [ref=e1035] [cursor=pointer]:
+                        - generic [ref=e1036]: Experimentos na página Detalhes do app
+                    - listitem "Configurações da loja" [ref=e1038]:
+                      - button "Configurações da loja" [ref=e1039] [cursor=pointer]:
+                        - generic [ref=e1040]: Configurações da loja
+              - listitem "Desempenho na loja" [ref=e1042]:
+                - button "Desempenho na loja" [ref=e1043] [cursor=pointer]:
+                  - generic [ref=e1044]: Desempenho na loja
+                  - img [ref=e1046]: expand_more
+              - listitem "Traduções" [ref=e1048]:
+                - button "Traduções" [ref=e1049] [cursor=pointer]:
+                  - generic [ref=e1050]: Traduções
+                  - img [ref=e1052]: expand_more
+              - listitem "Links diretos" [ref=e1054]:
+                - button "Links diretos" [ref=e1055] [cursor=pointer]:
+                  - generic [ref=e1056]: Links diretos
+        - listitem "Monetizar com o Google Play" [ref=e591]:
+          - button "Monetizar com o Google Play" [ref=e592] [cursor=pointer]:
+            - img [ref=e595]: sell
+            - generic [ref=e596]: Monetizar com o Google Play
+    - generic [ref=e23]:
+      - generic [ref=e1059]:
+        - generic [ref=e1063]:
+          - generic:
+            - generic:
+              - link "Voltar para Páginas de detalhes do app":
+                - /url: /console/u/0/developers/4710261638140419429/app/4972163917837428959/store-listings
+                - img [ref=e1070] [cursor=pointer]: keyboard_backspace
+                - generic [ref=e1071] [cursor=pointer]: Páginas de detalhes do app
+          - heading "Criar página \"Detalhes do app\" padrão" [level=1] [ref=e1080]
+        - generic [ref=e1089]:
+          - generic [ref=e1093]:
+            - generic [ref=e1096]: Padrão – Português (Brasil) – pt-BR
+            - button "Gerenciar traduções" [ref=e1100] [cursor=pointer]:
+              - generic [ref=e1103]: Gerenciar traduções
+              - img [ref=e1105]: arrow_drop_down
+          - paragraph [ref=e1108]: "* – Campos obrigatórios. Insira todos os campos em Português (Brasil) – pt-BR"
+          - generic [ref=e1110]:
+            - heading "Recursos da página de detalhes" [level=2] [ref=e1122]
+            - paragraph [ref=e1126]:
+              - generic [ref=e1128]:
+                - text: Confira a
+                - link "Política de metadados" [ref=e1129] [cursor=pointer]:
+                  - /url: https://play.google.com/about/storelisting-promotional/metadata
+                - text: e as
+                - link "orientações da Central de Ajuda" [ref=e1130] [cursor=pointer]:
+                  - /url: https://support.google.com/googleplay/android-developer/answer/9866151
+                - text: para evitar problemas comuns com a página "Detalhes do app". Leia todas as
+                - link "políticas do programa" [ref=e1131] [cursor=pointer]:
+                  - /url: https://play.google.com/about/developer-content-policy
+                - text: antes de enviar o app.
+                - text: Caso você se qualifique para
+                - link "enviar avisos com antecedência" [ref=e1132] [cursor=pointer]:
+                  - /url: https://support.google.com/googleplay/android-developer/answer/6320428
+                - text: à equipe de revisão de apps do Google Play, entre em contato antes de publicar a página "Detalhes do app".
+            - generic [ref=e1136]:
+              - group "Nome do app" [ref=e1138]:
+                - generic [ref=e1141]: Nome do app *
+                - generic [ref=e1147]:
+                  - textbox "Nome do app" [ref=e1149]: BMI Calculator
+                  - generic [ref=e1150]:
+                    - paragraph [ref=e1151]: É assim que seu app aparecerá no Google Play
+                    - generic [ref=e1152]:
+                      - generic [ref=e1153]: 14 / 30
+                      - generic [ref=e1154]: O texto tem 14 caracteres de 30
+              - group "Breve descrição" [ref=e1156]:
+                - generic [ref=e1159]: Breve descrição *
+                - generic [ref=e1165]:
+                  - textbox "Breve descrição do app" [ref=e1167]: Calcule seu IMC de forma rápida, precisa e monitore sua saúde.
+                  - generic [ref=e1168]:
+                    - alert [ref=e1521]: Adicione a descrição curta do seu app
+                    - generic [ref=e1170]:
+                      - generic [ref=e1171]: 62 / 80
+                      - generic [ref=e1172]: O texto tem 62 caracteres de 80
+              - group "Descrição completa" [ref=e1174]:
+                - generic [ref=e1177]: Descrição completa *
+                - generic [ref=e1183]:
+                  - textbox "Descrição completa do app" [ref=e1186]: O BMI Calculator é a ferramenta essencial para quem busca monitorar o peso e a saúde. Com uma interface simples e direta, você insere seu peso e altura para obter o cálculo imediato do seu Índice de Massa Corporal. Ideal para acompanhamento de dietas e treinos.
+                  - generic [ref=e1187]:
+                    - paragraph [ref=e1188]
+                    - generic [ref=e1189]:
+                      - generic [ref=e1190]: 263 / 4000
+                      - generic [ref=e1191]: O texto tem 263 caracteres de 4000
+            - heading "Elementos gráficos" [level=2] [ref=e1203]
+            - paragraph [ref=e1207]:
+              - generic [ref=e1209]:
+                - text: Gerencie o ícone, as capturas de tela e os vídeos para promover o app no Google Play. Consulte as
+                - link "diretrizes de conteúdo" [ref=e1210] [cursor=pointer]:
+                  - /url: https://support.google.com/googleplay/android-developer/answer/9866151#zippy=%2Capp-icon
+                - text: antes de fazer upload de novos elementos gráficos. Se você adicionar traduções da página "Detalhes do app" sem elementos gráficos localizados, usaremos os do idioma padrão.
+            - generic [ref=e1214]:
+              - group "Ícone do aplicativo" [ref=e1216]:
+                - generic [ref=e1219]: Ícone do aplicativo *
+                - generic [ref=e1224]:
+                  - button "Adicionar recursos" [ref=e1229]:
+                    - generic [ref=e1232]: Adicionar recursos
+                  - paragraph [ref=e1234]:
+                    - generic [ref=e1236]:
+                      - text: O ícone do app precisa ser um PNG ou JPEG de até 1 MB e 512 × 512px, além de obedecer às
+                      - link "especificações de design" [ref=e1237] [cursor=pointer]:
+                        - /url: https://developer.android.com/google-play/resources/icon-design-specifications
+                      - text: e à
+                      - link "política de metadados" [ref=e1238] [cursor=pointer]:
+                        - /url: https://support.google.com/googleplay/android-developer/answer/9898842
+              - group "Recurso gráfico" [ref=e1240]:
+                - generic [ref=e1243]: Recurso gráfico *
+                - generic [ref=e1248]:
+                  - button "Adicionar recursos" [ref=e1253]:
+                    - generic [ref=e1256]: Adicionar recursos
+                  - paragraph [ref=e1258]:
+                    - generic [ref=e1259]: O recurso gráfico precisa ser uma imagem PNG ou JPEG de até 15 MB e 1024px × 500px
+              - group "Vídeo" [ref=e1261]:
+                - generic [ref=e1264]: Vídeo
+                - generic [ref=e1270]:
+                  - generic [ref=e1271]:
+                    - generic:
+                      - generic:
+                        - generic: https://www.youtube.com/watch?v=
+                    - textbox "URL do vídeo promocional do app no YouTube" [ref=e1272]
+                  - paragraph [ref=e1274]: Insira um URL do YouTube para adicionar um vídeo. Ele precisa ser público ou não listado, estar com os anúncios desativados e não ter restrição de idade.
+            - heading "Telefone" [level=3] [ref=e1286]
+            - group "Capturas de tela do telefone" [ref=e1292]:
+              - generic [ref=e1295]: Capturas de tela do telefone *
+              - generic [ref=e1297]:
+                - generic [ref=e1300]:
+                  - button "Adicionar recursos" [ref=e1305]:
+                    - generic [ref=e1308]: Adicionar recursos
+                  - paragraph [ref=e1310]:
+                    - generic [ref=e1311]: Faça upload de 2 a 8 capturas de tela de smartphone. As capturas precisam ser imagens PNG ou JPEG de até 8 MB cada com proporção 16:9 ou 9:16 e cada lado medindo entre 320 e 3.840 px
+                - generic [ref=e1312]:
+                  - img [ref=e1315]: info
+                  - generic [ref=e1318]: Para se qualificar à promoção, inclua pelo menos quatro capturas de tela com, no mínimo, 1.080 px de cada lado.
+                  - link "Ver diretrizes de conteúdo sobre capturas de tela de smartphone" [ref=e1325] [cursor=pointer]:
+                    - /url: https://support.google.com/googleplay/android-developer/answer/9866151#screenshots
+                    - generic [ref=e1328]: Ver diretrizes de conteúdo
+            - heading "Tablet" [level=3] [ref=e1340]
+            - generic [ref=e1344]:
+              - group "Capturas de tela do tablet de 7 pol." [ref=e1346]:
+                - generic [ref=e1349]: Capturas de tela do tablet de 7 pol. *
+                - generic [ref=e1354]:
+                  - button "Adicionar recursos" [ref=e1359]:
+                    - generic [ref=e1362]: Adicionar recursos
+                  - paragraph [ref=e1364]:
+                    - generic [ref=e1365]: Faça upload de até 8 capturas de tela em tablets de 7 polegadas. As capturas precisam ser imagens PNG ou JPEG de até 8 MB cada com proporção 16:9 ou 9:16 e cada lado medindo entre 320 e 3.840 px
+              - group "Capturas de tela de tablet de 10\"" [ref=e1367]:
+                - generic [ref=e1370]: Capturas de tela de tablet de 10" *
+                - generic [ref=e1375]:
+                  - button "Adicionar recursos" [ref=e1380]:
+                    - generic [ref=e1383]: Adicionar recursos
+                  - paragraph [ref=e1385]:
+                    - generic [ref=e1386]: Faça upload de até 8 capturas de tela em tablets de 10 polegadas. As capturas precisam ser imagens PNG ou JPEG de até 8 MB cada com proporção 16:9 ou 9:16 e cada lado medindo entre 1080 e 7680px
+            - heading "Chromebook" [level=3] [ref=e1398]
+            - group "Capturas de tela do Chromebook" [ref=e1404]:
+              - generic [ref=e1407]: Capturas de tela do Chromebook
+              - generic [ref=e1412]:
+                - button "Adicionar recursos" [ref=e1417]:
+                  - generic [ref=e1420]: Adicionar recursos
+                - paragraph [ref=e1422]:
+                  - generic [ref=e1423]: Faça upload de 4 a 8 capturas de tela. As capturas precisam ser imagens PNG ou JPEG de até 8 MB cada com proporção 16:9 ou 9:16 e cada lado medindo entre 1.080 e 7.680 px
+            - heading "Android XR" [level=3] [ref=e1435]
+            - generic [ref=e1439]:
+              - group "Capturas de tela do Android XR" [ref=e1441]:
+                - generic [ref=e1444]: Capturas de tela do Android XR
+                - generic [ref=e1449]:
+                  - button "Adicionar recursos" [ref=e1454]:
+                    - generic [ref=e1457]: Adicionar recursos
+                  - paragraph [ref=e1459]:
+                    - generic [ref=e1460]: Faça upload de 4 a 8 capturas de tela. As capturas precisam ser imagens PNG ou JPEG de até 15 MB cada com proporção 16:9 ou 9:16 e cada lado medindo entre 720 e 7.680 px
+              - group "Vídeo de XR espacial" [ref=e1462]:
+                - generic [ref=e1465]: Vídeo de XR espacial
+                - generic [ref=e1470]:
+                  - generic [ref=e1472]:
+                    - generic:
+                      - generic:
+                        - generic: https://www.youtube.com/watch?v=
+                    - textbox "https://www.youtube.com/watch?v=" [ref=e1473]
+                  - paragraph [ref=e1475]:
+                    - generic [ref=e1477]:
+                      - text: Para deixar a visualização dos seus recursos imersiva, adicione um
+                      - link "vídeo de XR espacial" [ref=e1478] [cursor=pointer]:
+                        - /url: https://support.google.com/googleplay/android-developer/answer/9866151#zippy=%2Cpreview-video
+                      - text: . É só inserir um URL do YouTube. O vídeo precisa ser em 360°, 180° ou 3D, estar público ou não listado, ter os anúncios desativados e não possuir restrição de idade.
+              - group "Vídeo de XR não espacial" [ref=e1480]:
+                - generic [ref=e1483]: Vídeo de XR não espacial
+                - generic [ref=e1488]:
+                  - generic [ref=e1490]:
+                    - generic:
+                      - generic:
+                        - generic: https://www.youtube.com/watch?v=
+                    - textbox "https://www.youtube.com/watch?v=" [ref=e1491]
+                  - paragraph [ref=e1493]:
+                    - generic [ref=e1494]: Insira um URL do YouTube para adicionar um vídeo XR não espacial. Ele precisa ser público ou não listado, estar com os anúncios desativados e não ter restrição de idade.
+        - generic [ref=e1498]:
+          - generic [ref=e1522]: Se as mudanças forem salvas, elas vão ficar na seção "Visão geral da publicação" prontas para o envio à revisão
+          - generic [ref=e1501]:
+            - button "Descartar" [ref=e1524]:
+              - generic [ref=e1527]: Descartar
+            - generic [ref=e1508]:
+              - button "Salvar como rascunho" [ref=e1529]:
+                - generic [ref=e1532]: Salvar como rascunho
+              - button "Salvar" [ref=e1534]:
+                - generic [ref=e1537]: Salvar
+      - generic [ref=e31]:
+        - generic [ref=e1008]:
+          - link "Atualizações de produtos" [ref=e1009] [cursor=pointer]:
+            - /url: https://play.google.com/console/about/whats-new/
+          - link "Painel de status" [ref=e1010] [cursor=pointer]:
+            - /url: https://status.play.google.com/
+          - link "Ajuda" [ref=e1011] [cursor=pointer]:
+            - /url: /console/u/0/developers/4710261638140419429/help-and-support?app=4972163917837428959
+        - generic [ref=e1012]:
+          - generic [ref=e1013]: © 2026 Google
+          - link "Privacidade" [ref=e1014] [cursor=pointer]:
+            - /url: https://www.google.com/policies/privacy/
+          - link "Contrato de distribuição do desenvolvedor" [ref=e1015] [cursor=pointer]:
+            - /url: https://play.google.com/about/developer-distribution-agreement.html
+          - link "Termos de Serviço" [ref=e1016] [cursor=pointer]:
+            - /url: https://play.google.com/about/console/terms-of-service/
+```

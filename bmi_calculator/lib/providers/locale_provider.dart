@@ -7,7 +7,7 @@ final localeProvider = StateNotifierProvider<LocaleNotifier, Locale>((ref) {
 });
 
 class LocaleNotifier extends StateNotifier<Locale> {
-  LocaleNotifier() : super(const Locale('pt')) {
+  LocaleNotifier() : super(const Locale('en')) {
     _loadLocale();
   }
 
