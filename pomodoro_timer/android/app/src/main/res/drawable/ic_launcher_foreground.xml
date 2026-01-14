@@ -1,0 +1,41 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <group android:translateX="18" android:translateY="18">
+        <!-- Background circle -->
+        <path
+            android:pathData="M36,36m-32,0a32,32 0,1 1,64 0a32,32 0,1 1,-64 0"
+            android:fillColor="#FFFFFF"/>
+        <!-- Timer arc -->
+        <path
+            android:pathData="M36,8 A28,28 0 1,1 8,36"
+            android:strokeWidth="4"
+            android:strokeColor="#673AB7"
+            android:fillColor="#00000000"
+            android:strokeLineCap="round"/>
+        <!-- Clock hands -->
+        <path
+            android:pathData="M36,36 L36,18"
+            android:strokeWidth="3"
+            android:strokeColor="#673AB7"
+            android:strokeLineCap="round"/>
+        <path
+            android:pathData="M36,36 L48,36"
+            android:strokeWidth="3"
+            android:strokeColor="#9575CD"
+            android:strokeLineCap="round"/>
+        <!-- Center dot -->
+        <path
+            android:pathData="M36,36m-3,0a3,3 0,1 1,6 0a3,3 0,1 1,-6 0"
+            android:fillColor="#673AB7"/>
+        <!-- Tomato leaf -->
+        <path
+            android:pathData="M36,8 Q42,2 48,8"
+            android:strokeWidth="3"
+            android:strokeColor="#4CAF50"
+            android:fillColor="#00000000"
+            android:strokeLineCap="round"/>
+    </group>
+</vector>

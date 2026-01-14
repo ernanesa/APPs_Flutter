@@ -1,22 +1,22 @@
 ---
 description: This custom agent creates an advanced Flutter development protocol focused on Android optimization, internationalization, and monetization strategies.
 model: Claude Opus 4.5 (copilot)
-tools: ['vscode', 'execute', 'read', 'agent', 'edit', 'search', 'web', 'microsoftdocs/mcp/*', 'todo']
+tools: ['vscode', 'execute', 'read', 'edit', 'search', 'web', 'copilot-container-tools/*', 'io.github.upstash/context7/*', 'playwright/*', 'microsoftdocs/mcp/*', 'upstash/context7/*', 'agent', 'todo']
 ---
 
 # **BEAST MODE FLUTTER: Protocolo de Desenvolvimento de Elite**
 
-Versão do Protocolo: 7.0 (Android Focus / Global Scale / AI-Optimized / Production-Ready / Play Store Certified / Emulator Optimized)  
-Data de Atualização: Janeiro 2026 (Atualizado com experiência completa de publicação + troubleshooting de ambiente)  
+Versão do Protocolo: 8.1 (Android Focus / Global Scale / AI-Optimized / Production-Ready / Play Store Certified / Gamification-Ready)  
+Data de Atualização: Janeiro 2026 (Atualizado com experiência Pomodoro Timer + padrões de gamificação + lições de integração)  
 Namespace Base: sa.rezende.\<nome\_do\_app\>  
-Filosofia: "Código Limpo, Performance Brutal, Lucro Inteligente."
+Filosofia: "Código Limpo, Performance Brutal, Lucro Inteligente, Usuário Engajado."
 
-**Novidades v7.0:**
-- Seções 26-30: Configuração completa de Emulador Android com GPU
-- Troubleshooting de ADB (emulador offline)
-- Captura de screenshots reais via ADB
-- Automação avançada do Play Console (Playwright)
-- Erros comuns expandidos com soluções testadas
+**Novidades v8.1:**
+- Seções 41-44: Checklist de Integração UI, Templates i18n, Troubleshooting Windows, Padrões de Eficiência
+- Lição crítica: Criar features NÃO é suficiente, é preciso INTEGRAR na UI
+- Template de callbacks para gamificação completa
+- Workflow de adição em lote de strings i18n (~80 chaves por idioma)
+- Soluções para problemas comuns de PATH no Windows
 
 ---
 
@@ -50,15 +50,29 @@ Estas regras são **OBRIGATÓRIAS** para garantir desenvolvimento ágil e sem er
 * **SEMPRE** usar `AppLocalizations.of(context)!.chaveDoTexto`.
 * **REGRA DOS 11 IDIOMAS:** Ao adicionar uma nova chave, adicionar em TODOS os arquivos .arb simultaneamente (EN, PT, ES, ZH, DE, FR, AR, BN, HI, JA, RU).
 * Use `multi_replace_string_in_file` para editar múltiplos .arb de uma vez.
+* **ORGANIZAÇÃO:** Agrupar chaves por categoria com comentários (`"_ACHIEVEMENTS": "=== ACHIEVEMENTS ==="`)
 
-### **0.5. Android-Only (Limpeza Obrigatória)**
+### **0.5. TODO List (Gestão de Tarefas Complexas)**
+* Para tarefas com múltiplos passos, **SEMPRE** usar `manage_todo_list` para:
+  * Planejar antes de executar
+  * Marcar progresso em tempo real
+  * Garantir visibilidade ao usuário
+* **REGRA:** Marcar TODO como `in-progress` ANTES de começar, e `completed` IMEDIATAMENTE após terminar.
+* **LIMITE:** Apenas 1 TODO em `in-progress` por vez.
+
+### **0.6. Android-Only (Limpeza Obrigatória)**
 * **REMOVER** pastas: `/ios`, `/web`, `/linux`, `/macos`, `/windows` no momento da criação.
 * **MANTER APENAS:** `/android`, `/lib`, `/test`, `/l10n`.
 * Isso reduz tamanho do projeto e evita erros de build cruzado.
 
-### **0.6. Testes desde o Dia 1**
+### **0.7. Testes desde o Dia 1**
 * Criar `/test/unit_test.dart` com testes básicos de lógica de negócio.
 * Executar `flutter test` antes de considerar qualquer task completa.
+
+### **0.8. Eficiência de Edição (NOVO)**
+* Para criar múltiplos arquivos similares (models, providers), usar `create_file` em paralelo.
+* Para editar múltiplos arquivos .arb, usar `multi_replace_string_in_file`.
+* **NUNCA** fazer edições sequenciais quando paralelas são possíveis.
 
 ---
 
@@ -2226,5 +2240,659 @@ flutter test;
 flutter build appbundle --release
 ```
 
-**Fim do Protocolo Beast Mode Flutter v7.0**
+---
+
+## **34. Gamificação e Engagement (Padrões Reutilizáveis)**
+
+Aprendemos que features de gamificação aumentam significativamente o engajamento e retenção. Estes padrões devem ser considerados em TODOS os apps.
+
+### **34.1. Features de Engagement Recomendadas**
+
+| Feature | Complexidade | Impacto no Engagement | Prioridade |
+|---------|--------------|----------------------|------------|
+| **Streak Counter** | Baixa | ⭐⭐⭐⭐⭐ Alto | Obrigatório |
+| **Achievements/Badges** | Média | ⭐⭐⭐⭐⭐ Alto | Obrigatório |
+| **Daily Goals** | Baixa | ⭐⭐⭐⭐ Médio-Alto | Recomendado |
+| **Motivational Quotes** | Baixa | ⭐⭐⭐ Médio | Opcional |
+| **Custom Themes** | Média | ⭐⭐⭐⭐ Médio-Alto | Recomendado |
+| **Ambient Sounds** | Média | ⭐⭐⭐ Médio | Para apps de foco/produtividade |
+| **Android Widget** | Alta | ⭐⭐⭐⭐ Médio-Alto | Diferencial |
+
+### **34.2. Estrutura de Models para Gamificação**
+
+```dart
+// lib/models/streak_data.dart
+class StreakData {
+  final int currentStreak;
+  final int bestStreak;
+  final DateTime? lastActiveDate;
+  
+  const StreakData({
+    this.currentStreak = 0,
+    this.bestStreak = 0,
+    this.lastActiveDate,
+  });
+  
+  bool get isActiveToday {
+    if (lastActiveDate == null) return false;
+    final now = DateTime.now();
+    return lastActiveDate!.year == now.year &&
+           lastActiveDate!.month == now.month &&
+           lastActiveDate!.day == now.day;
+  }
+  
+  StreakData copyWith({int? currentStreak, int? bestStreak, DateTime? lastActiveDate}) {
+    return StreakData(
+      currentStreak: currentStreak ?? this.currentStreak,
+      bestStreak: bestStreak ?? this.bestStreak,
+      lastActiveDate: lastActiveDate ?? this.lastActiveDate,
+    );
+  }
+}
+```
+
+```dart
+// lib/models/achievement.dart
+enum AchievementCategory { sessions, streak, time, special }
+
+class Achievement {
+  final String id;
+  final String titleKey; // i18n key
+  final String descriptionKey; // i18n key
+  final String icon;
+  final AchievementCategory category;
+  final int requirement;
+  final bool isUnlocked;
+  final DateTime? unlockedAt;
+
+  const Achievement({
+    required this.id,
+    required this.titleKey,
+    required this.descriptionKey,
+    required this.icon,
+    required this.category,
+    required this.requirement,
+    this.isUnlocked = false,
+    this.unlockedAt,
+  });
+}
+```
+
+### **34.3. Provider Pattern para Streaks**
+
+```dart
+// lib/providers/streak_provider.dart
+class StreakNotifier extends StateNotifier<StreakData> {
+  final SharedPreferences _prefs;
+  
+  StreakNotifier(this._prefs) : super(const StreakData()) {
+    _loadFromPrefs();
+  }
+  
+  void _loadFromPrefs() {
+    final currentStreak = _prefs.getInt('streak_current') ?? 0;
+    final bestStreak = _prefs.getInt('streak_best') ?? 0;
+    final lastActiveMs = _prefs.getInt('streak_lastActive');
+    
+    state = StreakData(
+      currentStreak: currentStreak,
+      bestStreak: bestStreak,
+      lastActiveDate: lastActiveMs != null 
+          ? DateTime.fromMillisecondsSinceEpoch(lastActiveMs) 
+          : null,
+    );
+  }
+  
+  Future<void> recordActivity() async {
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    
+    if (state.isActiveToday) return; // Já registrou hoje
+    
+    int newStreak = 1;
+    if (state.lastActiveDate != null) {
+      final lastDate = DateTime(
+        state.lastActiveDate!.year,
+        state.lastActiveDate!.month,
+        state.lastActiveDate!.day,
+      );
+      final difference = today.difference(lastDate).inDays;
+      
+      if (difference == 1) {
+        newStreak = state.currentStreak + 1; // Consecutivo
+      } else if (difference > 1) {
+        newStreak = 1; // Quebrou a sequência
+      }
+    }
+    
+    final newBest = newStreak > state.bestStreak ? newStreak : state.bestStreak;
+    
+    state = StreakData(
+      currentStreak: newStreak,
+      bestStreak: newBest,
+      lastActiveDate: now,
+    );
+    
+    await _saveToPrefs();
+  }
+  
+  Future<void> _saveToPrefs() async {
+    await _prefs.setInt('streak_current', state.currentStreak);
+    await _prefs.setInt('streak_best', state.bestStreak);
+    if (state.lastActiveDate != null) {
+      await _prefs.setInt('streak_lastActive', state.lastActiveDate!.millisecondsSinceEpoch);
+    }
+  }
+}
+```
+
+### **34.4. Template de Achievements (14 Badges Padrão)**
+
+```dart
+static const List<Achievement> defaultAchievements = [
+  // Sessions
+  Achievement(id: 'first_session', titleKey: 'achievementFirstSession', ...),
+  Achievement(id: 'sessions_10', titleKey: 'achievement10Sessions', requirement: 10, ...),
+  Achievement(id: 'sessions_50', titleKey: 'achievement50Sessions', requirement: 50, ...),
+  Achievement(id: 'sessions_100', titleKey: 'achievement100Sessions', requirement: 100, ...),
+  Achievement(id: 'sessions_500', titleKey: 'achievement500Sessions', requirement: 500, ...),
+  // Streaks
+  Achievement(id: 'streak_3', titleKey: 'achievementStreak3', requirement: 3, ...),
+  Achievement(id: 'streak_7', titleKey: 'achievementStreak7', requirement: 7, ...),
+  Achievement(id: 'streak_30', titleKey: 'achievementStreak30', requirement: 30, ...),
+  // Time-based
+  Achievement(id: 'time_1h', titleKey: 'achievement1Hour', requirement: 60, ...),
+  Achievement(id: 'time_10h', titleKey: 'achievement10Hours', requirement: 600, ...),
+  Achievement(id: 'time_100h', titleKey: 'achievement100Hours', requirement: 6000, ...),
+  // Special
+  Achievement(id: 'early_bird', titleKey: 'achievementEarlyBird', ...),
+  Achievement(id: 'night_owl', titleKey: 'achievementNightOwl', ...),
+  Achievement(id: 'weekend_warrior', titleKey: 'achievementWeekendWarrior', ...),
+];
+```
+
+---
+
+## **35. Padrões de Edição em Lote de i18n (Eficiência Máxima)**
+
+Para adicionar novas chaves em todos os 11 arquivos .arb de forma eficiente:
+
+### **35.1. Estratégia de Edição Paralela**
+
+Usar `multi_replace_string_in_file` para editar múltiplos .arb simultaneamente:
+
+```
+// Prompt para IA:
+"Adicione as seguintes chaves em todos os 11 arquivos .arb:
+- achievementFirstSession: 'First Session' (EN), 'Primeira Sessão' (PT), etc.
+- achievementStreak3: '3-Day Streak' (EN), 'Sequência de 3 Dias' (PT), etc.
+Use multi_replace_string_in_file para máxima eficiência."
+```
+
+### **35.2. Organização de Chaves por Categoria**
+
+Organizar chaves no .arb por funcionalidade:
+
+```json
+{
+  "@@locale": "en",
+  
+  "_GENERAL": "=== GENERAL ===",
+  "appTitle": "App Name",
+  "settings": "Settings",
+  
+  "_ACHIEVEMENTS": "=== ACHIEVEMENTS ===",
+  "achievementFirstSession": "First Session",
+  "achievementFirstSessionDesc": "Complete your first session",
+  
+  "_STREAKS": "=== STREAKS ===",
+  "currentStreak": "Current Streak",
+  "bestStreak": "Best Streak",
+  
+  "_DAILY_GOALS": "=== DAILY GOALS ===",
+  "dailyGoal": "Daily Goal",
+  "sessionsCompleted": "{count} sessions completed"
+}
+```
+
+### **35.3. Checklist de Tradução (11 Idiomas)**
+
+| Chave EN | PT | ES | ZH | DE | FR | AR | BN | HI | JA | RU |
+|----------|----|----|----|----|----|----|----|----|----|----|----|
+| First Session | Primeira Sessão | Primera Sesión | 首次会话 | Erste Sitzung | Première Session | الجلسة الأولى | প্রথম সেশন | पहला सत्र | 最初のセッション | Первая сессия |
+
+---
+
+## **36. Consent Service (GDPR/UMP) - Template Completo**
+
+### **36.1. ConsentService Reutilizável**
+
+```dart
+// lib/services/consent_service.dart
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+
+class ConsentService {
+  static bool _canRequestAds = false;
+  static bool _isPrivacyOptionsRequired = false;
+  
+  static bool get canRequestAds => _canRequestAds;
+  static bool get isPrivacyOptionsRequired => _isPrivacyOptionsRequired;
+  
+  static Future<void> gatherConsent({bool forceReset = false}) async {
+    final params = ConsentRequestParameters();
+    
+    if (forceReset) {
+      ConsentInformation.instance.reset();
+    }
+    
+    ConsentInformation.instance.requestConsentInfoUpdate(
+      params,
+      () async {
+        if (await ConsentInformation.instance.isConsentFormAvailable()) {
+          await _loadAndShowConsentForm();
+        }
+        _updateCanRequestAds();
+      },
+      (error) {
+        debugPrint('Consent error: ${error.message}');
+        _canRequestAds = true; // Fallback: allow ads
+      },
+    );
+  }
+  
+  static Future<void> _loadAndShowConsentForm() async {
+    ConsentForm.loadConsentForm(
+      (form) async {
+        final status = await ConsentInformation.instance.getConsentStatus();
+        if (status == ConsentStatus.required) {
+          form.show((error) => _updateCanRequestAds());
+        }
+      },
+      (error) => debugPrint('Form error: ${error.message}'),
+    );
+  }
+  
+  static Future<void> _updateCanRequestAds() async {
+    _canRequestAds = await ConsentInformation.instance.canRequestAds();
+    _isPrivacyOptionsRequired = await ConsentInformation.instance
+        .getPrivacyOptionsRequirementStatus() == 
+        PrivacyOptionsRequirementStatus.required;
+  }
+  
+  static Future<void> showPrivacyOptions() async {
+    ConsentForm.showPrivacyOptionsForm((error) {
+      if (error != null) debugPrint('Privacy options error: ${error.message}');
+    });
+  }
+}
+```
+
+### **36.2. Integração no main.dart**
+
+```dart
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  
+  // 1. Consent FIRST (GDPR)
+  await ConsentService.gatherConsent();
+  
+  // 2. Initialize ads ONLY if allowed
+  if (ConsentService.canRequestAds) {
+    await AdService.initialize();
+    AdService.loadAppOpenAd();
+  }
+  
+  runApp(const ProviderScope(child: MyApp()));
+}
+```
+
+---
+
+## **37. Audio Service para Ambient Sounds**
+
+### **37.1. Template de AmbientSoundService**
+
+```dart
+// lib/services/ambient_sound_service.dart
+import 'package:audioplayers/audioplayers.dart';
+
+enum AmbientSound {
+  silence('silence', null),
+  rain('rain', 'assets/sounds/rain.mp3'),
+  forest('forest', 'assets/sounds/forest.mp3'),
+  ocean('ocean', 'assets/sounds/ocean.mp3'),
+  cafe('cafe', 'assets/sounds/cafe.mp3'),
+  fireplace('fireplace', 'assets/sounds/fireplace.mp3'),
+  whiteNoise('white_noise', 'assets/sounds/white_noise.mp3');
+  
+  final String id;
+  final String? assetPath;
+  const AmbientSound(this.id, this.assetPath);
+}
+
+class AmbientSoundService {
+  final AudioPlayer _player = AudioPlayer();
+  AmbientSound _currentSound = AmbientSound.silence;
+  double _volume = 0.5;
+  bool _isPlaying = false;
+  
+  AmbientSound get currentSound => _currentSound;
+  bool get isPlaying => _isPlaying;
+  double get volume => _volume;
+  
+  Future<void> play(AmbientSound sound) async {
+    if (sound == AmbientSound.silence) {
+      await stop();
+      return;
+    }
+    
+    _currentSound = sound;
+    await _player.setReleaseMode(ReleaseMode.loop);
+    await _player.setVolume(_volume);
+    await _player.play(AssetSource(sound.assetPath!.replaceFirst('assets/', '')));
+    _isPlaying = true;
+  }
+  
+  Future<void> stop() async {
+    await _player.stop();
+    _currentSound = AmbientSound.silence;
+    _isPlaying = false;
+  }
+  
+  Future<void> setVolume(double volume) async {
+    _volume = volume.clamp(0.0, 1.0);
+    await _player.setVolume(_volume);
+  }
+  
+  void dispose() {
+    _player.dispose();
+  }
+}
+```
+
+### **37.2. Assets de Som (pubspec.yaml)**
+
+```yaml
+flutter:
+  assets:
+    - assets/sounds/
+```
+
+---
+
+## **38. Sistema de Temas Dinâmicos**
+
+### **38.1. Model de Tema**
+
+```dart
+// lib/models/app_theme.dart
+import 'package:flutter/material.dart';
+
+enum AppThemeType {
+  tomato(Color(0xFFE74C3C), Color(0xFFC0392B)),
+  ocean(Color(0xFF3498DB), Color(0xFF2980B9)),
+  forest(Color(0xFF27AE60), Color(0xFF1E8449)),
+  lavender(Color(0xFF9B59B6), Color(0xFF8E44AD)),
+  sunset(Color(0xFFE67E22), Color(0xFFD35400)),
+  midnight(Color(0xFF2C3E50), Color(0xFF1A252F)),
+  rose(Color(0xFFE91E63), Color(0xFFC2185B)),
+  mint(Color(0xFF1ABC9C), Color(0xFF16A085));
+  
+  final Color primaryColor;
+  final Color secondaryColor;
+  const AppThemeType(this.primaryColor, this.secondaryColor);
+}
+```
+
+### **38.2. ThemeProvider**
+
+```dart
+// lib/providers/theme_provider.dart
+final themeProvider = StateNotifierProvider<ThemeNotifier, AppThemeType>((ref) {
+  final prefs = ref.watch(sharedPreferencesProvider);
+  return ThemeNotifier(prefs);
+});
+
+class ThemeNotifier extends StateNotifier<AppThemeType> {
+  final SharedPreferences _prefs;
+  
+  ThemeNotifier(this._prefs) : super(AppThemeType.tomato) {
+    _loadTheme();
+  }
+  
+  void _loadTheme() {
+    final themeId = _prefs.getString('app_theme') ?? 'tomato';
+    state = AppThemeType.values.firstWhere(
+      (t) => t.name == themeId,
+      orElse: () => AppThemeType.tomato,
+    );
+  }
+  
+  Future<void> setTheme(AppThemeType theme) async {
+    state = theme;
+    await _prefs.setString('app_theme', theme.name);
+  }
+}
+
+// Gerar ThemeData a partir do tema selecionado
+final lightThemeDataProvider = Provider<ThemeData>((ref) {
+  final theme = ref.watch(themeProvider);
+  return ThemeData(
+    colorScheme: ColorScheme.fromSeed(
+      seedColor: theme.primaryColor,
+      brightness: Brightness.light,
+    ),
+    useMaterial3: true,
+  );
+});
+```
+
+---
+
+## **39. Estrutura de Pastas Padrão para Apps com Gamificação**
+
+```
+/lib
+  /l10n                    # Traduções (11 idiomas)
+  /logic                   # Lógica de negócio pura
+  /models
+    achievement.dart
+    streak_data.dart
+    daily_goal.dart
+    app_theme.dart
+    ambient_sound.dart     # Se aplicável
+  /providers
+    achievements_provider.dart
+    streak_provider.dart
+    daily_goal_provider.dart
+    theme_provider.dart
+    ambient_sound_provider.dart
+  /screens
+    home_screen.dart
+    settings_screen.dart
+    achievements_screen.dart
+  /services
+    ad_service.dart
+    consent_service.dart
+    ambient_sound_service.dart
+  /widgets
+    streak_widget.dart
+    achievement_badge.dart
+    daily_goal_progress.dart
+    theme_selector.dart
+    motivational_quote.dart
+/test
+  unit_test.dart
+  widget_test.dart
+```
+
+---
+
+## **40. Checklist de Feature Completa**
+
+Antes de considerar uma feature como "completa":
+
+### **40.1. Código**
+- [ ] Model criado com copyWith e fromJson/toJson se necessário
+- [ ] Provider criado com persistência (SharedPreferences)
+- [ ] Widget(s) criados com `const` onde possível
+- [ ] Integração na tela principal/settings
+
+### **40.2. i18n**
+- [ ] Todas as strings têm chaves no app_en.arb
+- [ ] Chaves traduzidas nos 10 outros arquivos .arb
+- [ ] `flutter gen-l10n` executado sem erros
+- [ ] Strings usam `AppLocalizations.of(context)!.chave`
+
+### **40.3. Testes**
+- [ ] Teste unitário da lógica de negócio
+- [ ] `flutter test` passa
+- [ ] `flutter analyze` sem warnings
+
+### **40.4. UX**
+- [ ] Funciona em modo claro e escuro
+- [ ] Responsivo (celular e tablet)
+- [ ] Feedback tátil em ações importantes
+- [ ] Estados de loading/empty/error tratados
+
+---
+
+## **41. Checklist de Integração de UI (CRÍTICO - Lição Pomodoro Timer)**
+
+**ERRO COMUM:** Criar models/providers/widgets mas ESQUECER de integrar na UI principal.
+
+### **41.1. Pontos de Integração Obrigatórios**
+
+| Feature | Local de Integração | Código Necessário |
+|---------|---------------------|-------------------|
+| **Theme dinâmico** | `main.dart` | `ref.watch(selectedThemeProvider)` no ColorScheme |
+| **Streak Badge** | `AppBar.leading` da tela principal | `StreakBadge()` widget |
+| **Achievements** | `AppBar.actions` | `IconButton` navegando para `AchievementsScreen` |
+| **Daily Goal** | Tela principal (abaixo do timer/conteúdo) | `DailyGoalProgress()` widget |
+| **Theme Selector** | `SettingsScreen` | `ThemeSelector()` widget |
+| **Sound Selector** | `SettingsScreen` | `AmbientSoundSelector()` widget |
+| **Goal Setter** | `SettingsScreen` | `DailyGoalSetter()` widget |
+
+### **41.2. Callbacks de Conclusão de Ação**
+
+Sempre que uma ação principal for concluída (ex: sessão de foco, cálculo, tarefa):
+
+```dart
+void _onActionComplete() {
+  // 1. Registrar atividade para streak
+  ref.read(streakProvider.notifier).recordActivity();
+  
+  // 2. Incrementar progresso diário
+  ref.read(dailyGoalProvider.notifier).incrementCompletedSessions();
+  
+  // 3. Verificar achievements
+  final newAchievements = ref.read(achievementsProvider.notifier).checkAndUnlock(
+    totalSessions: totalSessions,
+    currentStreak: currentStreak,
+    totalMinutes: totalMinutes,
+  );
+  
+  // 4. Mostrar diálogo se desbloqueou algo
+  if (newAchievements.isNotEmpty) {
+    _showAchievementDialog(newAchievements.first);
+  }
+  
+  // 5. Parar sons ambiente (se aplicável)
+  ref.read(ambientSoundProvider.notifier).stop();
+}
+```
+
+---
+
+## **42. Template de Strings i18n para Gamificação**
+
+**Total aproximado: ~80 chaves por idioma para gamificação completa**
+
+### **42.1. Categorias de Strings**
+
+| Categoria | Quantidade | Exemplo de Chaves |
+|-----------|------------|-------------------|
+| Streaks | 4 | `streakDays`, `currentStreak`, `bestStreak`, `days` |
+| Achievements Core | 6 | `achievements`, `achievementUnlocked`, `close` |
+| Achievement Items | 28 | `achievementFirstSession`, `achievementFirstSessionDesc` (x14) |
+| Categories | 4 | `categorySession`, `categoryStreak`, `categoryTime`, `categorySpecial` |
+| Ambient Sounds | 9 | `ambientSounds`, `soundRain`, `soundForest`, etc. |
+| Themes | 9 | `colorTheme`, `themeTomato`, `themeOcean`, etc. |
+| Daily Goals | 6 | `dailyGoal`, `goalReached`, `sessionsProgress` |
+| Quotes | 31 | `newQuote`, `quote1Text`, `quote1Author` (x15) |
+
+### **42.2. Workflow de Adição em Lote**
+
+```powershell
+# 1. Adicionar strings no app_en.arb (template)
+# 2. Usar multi_replace_string_in_file para os outros 10 idiomas
+# 3. Executar gen-l10n
+C:\dev\flutter\bin\flutter gen-l10n
+
+# 4. Verificar erros
+C:\dev\flutter\bin\flutter analyze
+```
+
+---
+
+## **43. Ambiente Windows - Troubleshooting Comum**
+
+### **43.1. Flutter não reconhecido no PATH**
+
+**Sintoma:**
+```
+flutter: The term 'flutter' is not recognized as a name of a cmdlet...
+```
+
+**Solução:**
+```powershell
+# Usar caminho completo
+C:\dev\flutter\bin\flutter gen-l10n
+C:\dev\flutter\bin\flutter analyze
+C:\dev\flutter\bin\flutter test
+```
+
+### **43.2. Emulador Offline**
+
+```powershell
+adb kill-server
+adb start-server
+adb devices
+# Se persistir:
+emulator -avd <AVD_NAME> -no-snapshot-load -gpu host
+```
+
+### **43.3. Erro de Substituição em .arb**
+
+**Causa:** Caracteres especiais ou formatação diferente do esperado.
+
+**Solução:** Ler o arquivo primeiro com `read_file` para ver o conteúdo exato, depois usar o texto exato no `oldString`.
+
+---
+
+## **44. Padrões de Eficiência para IA**
+
+### **44.1. Edições Paralelas**
+- Usar `create_file` em paralelo para criar múltiplos arquivos independentes
+- Usar `multi_replace_string_in_file` para editar múltiplos .arb simultaneamente
+- **NUNCA** fazer edições sequenciais quando paralelas são possíveis
+
+### **44.2. Leitura Inteligente**
+- Ler arquivos grandes em chunks relevantes, não linha por linha
+- Usar `grep_search` para encontrar padrões antes de editar
+- Verificar estrutura existente ANTES de criar novos arquivos
+
+### **44.3. Validação Contínua**
+- Após cada bloco de edições de .arb: `flutter gen-l10n`
+- Após cada mudança de código: `flutter analyze`
+- Antes de considerar completo: `flutter test`
+
+### **44.4. TODO List Discipline**
+- Marcar `in-progress` ANTES de começar cada task
+- Marcar `completed` IMEDIATAMENTE após terminar
+- Máximo 1 task `in-progress` por vez
+
+---
+
+**Fim do Protocolo Beast Mode Flutter v8.1**
 *"Da Ideia ao Google Play: Sem Desculpas, Só Execução."*

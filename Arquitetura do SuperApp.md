@@ -1,9 +1,9 @@
 # **Plano de Arquitetura: Do App Simples ao SuperApp (Modular)**
 
-Versão: 4.0  
+Versão: 5.1  
 Data de Atualização: Janeiro 2026  
 Compatibilidade: Android 15+ (API 35), Flutter 3.32+  
-**Nota v4.0:** Atualizado com experiência completa de publicação (BMI Calculator), troubleshooting de ambiente Android, e workflow de captura de screenshots reais
+**Nota v5.1:** Atualizado com experiência Pomodoro Timer, padrões de gamificação (Streaks, Achievements), templates de serviços reutilizáveis, e lições de integração de UI
 
 Para cumprir o requisito de criar apps individuais que depois serão agregados, NÃO podemos usar uma estrutura monolítica comum (lib/main.dart cheio de tudo).
 
@@ -18,16 +18,19 @@ Mesmo para o primeiro app simples, a estrutura deve ser pensada como um monorepo
 ```
 /root_project
   /apps
-     /app_individual_01 (sa.rezende.calculadora)
-     /app_individual_02 (sa.rezende.todo)
+     /bmi_calculator (sa.rezende.bmi_calculator)
+     /pomodoro_timer (sa.rezende.pomodoro_timer)
+     /todo_app (sa.rezende.todo)
      /super_app_agregador (sa.rezende.superapp)
   /packages (Módulos Reutilizáveis)
      /core_ui (Design System: Cores, Tipografia, Botões Padrão)
      /core_logic (Auth, Gerenciamento de Estado Base, Networking)
      /feature_ads (Lógica centralizada do AdMob - MUITO IMPORTANTE)
      /feature_i18n (Traduções compartilhadas)
-      /feature_privacy (Consentimento UE/EEA/UK via UMP + opções de privacidade)
+     /feature_privacy (Consentimento UE/EEA/UK via UMP + opções de privacidade)
+     /feature_gamification (Streaks, Achievements, Daily Goals - NOVO)
   /DadosPublicacao (Chaves, certificados, assets de loja por app)
+  /tools (Scripts de validação: check_l10n.ps1, check_store_assets.ps1)
 ```
 
 ---
@@ -85,19 +88,21 @@ org.gradle.parallel=true
 3. **Migração Zero:** Quando for criar o SuperApp, você apenas adiciona as dependências dos apps individuais (que estarão modularizados) dentro dele.
 4. **Conformidade Automática:** Atualizações de requisitos (como 16KB) são feitas uma vez nos packages compartilhados.
 5. **Conformidade UE (Ads):** O fluxo UMP (consent-first) pode virar um package reutilizável e ser aplicado em todos os apps com AdMob.
+6. **Gamificação Reutilizável:** Streaks, Achievements e Daily Goals podem ser compartilhados entre apps, aumentando engajamento com código mínimo.
 
 ---
 
 ## **4\. Stack Tecnológica Recomendada (2025-2026)**
 
-| Categoria                  | Tecnologia             | Justificativa                            |
-| -------------------------- | ---------------------- | ---------------------------------------- |
-| **Gerência de Estado**     | Riverpod 2.x           | Mais testável e modular que Bloc         |
-| **Navegação**              | GoRouter               | Deep Linking essencial para SuperApp     |
-| **Banco Local**            | Isar ou Hive           | NoSQL super rápido                       |
-| **Injeção de Dependência** | get_it + injectable    | Padrão enterprise                        |
-| **Ads**                    | google_mobile_ads 5.3+ | Banner, Interstitial, App Open, Rewarded |
-| **Analytics**              | Firebase Analytics     | Gratuito e integrado                     |
+| Categoria              | Tecnologia                | Justificativa                            |
+| ---------------------- | ------------------------- | ---------------------------------------- |
+| **Gerência de Estado** | Riverpod 2.x              | Mais testável e modular que Bloc         |
+| **Navegação**          | GoRouter                  | Deep Linking essencial para SuperApp     |
+| **Banco Local**        | SharedPreferences/Hive    | Persistência simples e rápida            |
+| **Áudio**              | audioplayers ^6.4.0       | Para ambient sounds e feedback sonoro    |
+| **Ads**                | google_mobile_ads 5.3+    | Banner, Interstitial, App Open, Rewarded |
+| **Analytics**          | Firebase Analytics        | Gratuito e integrado                     |
+| **Consent (GDPR)**     | UMP via google_mobile_ads | Consentimento consent-first              |
 
 ---
 
@@ -170,17 +175,20 @@ Para maximizar alcance global, todo app deve nascer com 11 idiomas:
 Quando você solicitar à IA para criar um app, use este prompt de arquitetura:
 
 ```
-Crie o app [NOME] seguindo o Beast Mode Flutter v4.0:
+Crie o app [NOME] seguindo o Beast Mode Flutter v5.0:
 
 1. Namespace: sa.rezende.[nome]
-2. Estrutura: /lib/screens, /lib/providers, /lib/services, /lib/widgets, /lib/l10n
+2. Estrutura: /lib/screens, /lib/providers, /lib/services, /lib/widgets, /lib/l10n, /lib/models
 3. State Management: Riverpod 2.x
-4. i18n: 11 idiomas desde o início
+4. i18n: 11 idiomas desde o início (EN, PT, ES, ZH, DE, FR, AR, BN, HI, JA, RU)
 5. AdMob: Banner + Interstitial + App Open Ads
-6. Android-only: Remover /ios, /web, /linux, /macos, /windows
-7. Otimização: AGP 8.5.1+, minifyEnabled true, shrinkResources true
-8. Compatibilidade: 16KB page size, Target SDK 35
-9. Testes: Criar /test/unit_test.dart
+6. Consent: ConsentService para GDPR/UMP
+7. Android-only: Remover /ios, /web, /linux, /macos, /windows
+8. Otimização: AGP 8.5.1+, minifyEnabled true, shrinkResources true
+9. Compatibilidade: 16KB page size, Target SDK 35
+10. Gamificação: Streak Counter, Achievements, Daily Goals
+11. Testes: Criar /test/unit_test.dart
+12. Usar multi_replace_string_in_file para editar múltiplos .arb simultaneamente
 ```
 
 ---
@@ -582,23 +590,115 @@ class AdService {
 
 ### **16.1. Pipeline de Desenvolvimento**
 
-| App             | Status          | Prioridade |
-| --------------- | --------------- | ---------- |
-| BMI Calculator  | ✅ Em publicação | -          |
-| Todo App        | 🔲 Planejado     | Alta       |
-| Expense Tracker | 🔲 Planejado     | Média      |
-| Habit Tracker   | 🔲 Planejado     | Média      |
+| App             | Status               | Prioridade |
+| --------------- | -------------------- | ---------- |
+| BMI Calculator  | ✅ Publicado          | -          |
+| Pomodoro Timer  | ✅ Em desenvolvimento | Alta       |
+| Todo App        | 🔲 Planejado          | Média      |
+| Expense Tracker | 🔲 Planejado          | Média      |
+| Habit Tracker   | 🔲 Planejado          | Média      |
 
-### **16.2. Componentes Reutilizáveis do BMI Calculator**
+### **16.2. Componentes Reutilizáveis Extraídos**
 
-Após o BMI Calculator estar publicado, extrair para `/packages`:
+Após o BMI Calculator e Pomodoro Timer, extrair para `/packages`:
 
-| Componente               | Package Destino          |
-| ------------------------ | ------------------------ |
-| AdService                | `/packages/feature_ads`  |
-| Temas Material 3         | `/packages/core_ui`      |
-| i18n base (11 idiomas)   | `/packages/feature_i18n` |
-| Data persistence helpers | `/packages/core_logic`   |
+| Componente             | Package Destino                  | Status |
+| ---------------------- | -------------------------------- | ------ |
+| AdService              | `/packages/feature_ads`          | 🔲      |
+| ConsentService         | `/packages/feature_privacy`      | 🔲      |
+| Temas Material 3       | `/packages/core_ui`              | 🔲      |
+| i18n base (11 idiomas) | `/packages/feature_i18n`         | 🔲      |
+| Streak/Achievements    | `/packages/feature_gamification` | 🔲      |
+| AmbientSoundService    | `/packages/feature_audio`        | 🔲      |
+
+---
+
+## **NOVO: 16.3. Features de Gamificação Obrigatórias**
+
+Todo app deve incluir features de engagement para aumentar retenção:
+
+| Feature                 | Complexidade | Impacto | Prioridade        |
+| ----------------------- | ------------ | ------- | ----------------- |
+| **Streak Counter**      | Baixa        | ⭐⭐⭐⭐⭐   | Obrigatório       |
+| **Achievements/Badges** | Média        | ⭐⭐⭐⭐⭐   | Obrigatório       |
+| **Daily Goals**         | Baixa        | ⭐⭐⭐⭐    | Recomendado       |
+| **Custom Themes**       | Média        | ⭐⭐⭐⭐    | Recomendado       |
+| **Motivational Quotes** | Baixa        | ⭐⭐⭐     | Opcional          |
+| **Ambient Sounds**      | Média        | ⭐⭐⭐     | Para apps de foco |
+
+### **Estrutura de Models**
+
+```
+/lib/models/
+  streak_data.dart      # currentStreak, bestStreak, lastActiveDate
+  achievement.dart      # id, titleKey, descriptionKey, category, requirement
+  daily_goal.dart       # targetSessions, completedSessions, date
+  app_theme.dart        # primaryColor, secondaryColor, name
+```
+
+### **Estrutura de Providers**
+
+```
+/lib/providers/
+  streak_provider.dart       # StateNotifier<StreakData>
+  achievements_provider.dart # StateNotifier<List<Achievement>>
+  daily_goal_provider.dart   # StateNotifier<DailyGoal>
+  theme_provider.dart        # StateNotifier<AppThemeType>
+```
+
+---
+
+## **CRÍTICO: 16.4. Checklist de Integração de Features na UI**
+
+**LIÇÃO APRENDIDA (Pomodoro Timer):** Criar models, providers e widgets NÃO é suficiente. O erro mais comum é criar toda a infraestrutura mas esquecer de INTEGRAR na UI principal.
+
+### **Pontos de Integração Obrigatórios:**
+
+| Feature            | Onde Integrar                      | Como Integrar                                                 |
+| ------------------ | ---------------------------------- | ------------------------------------------------------------- |
+| **Theme dinâmico** | `main.dart`                        | `ref.watch(selectedThemeProvider)` → `ColorScheme.fromSeed()` |
+| **Streak Badge**   | `AppBar.leading` da tela principal | Widget `StreakBadge()`                                        |
+| **Achievements**   | `AppBar.actions`                   | `IconButton` → `AchievementsScreen`                           |
+| **Daily Goal**     | Tela principal                     | Widget `DailyGoalProgress()`                                  |
+| **Theme Selector** | `SettingsScreen`                   | Widget `ThemeSelector()`                                      |
+| **Sound Selector** | `SettingsScreen`                   | Widget `AmbientSoundSelector()`                               |
+| **Goal Setter**    | `SettingsScreen`                   | Widget `DailyGoalSetter()`                                    |
+| **Quotes**         | Tela principal                     | Widget `MotivationalQuote()`                                  |
+
+### **Template de Callback de Conclusão:**
+
+```dart
+void _onActionComplete() {
+  // 1. Streak
+  ref.read(streakProvider.notifier).recordActivity();
+  
+  // 2. Daily Goal
+  ref.read(dailyGoalProvider.notifier).incrementCompletedSessions();
+  
+  // 3. Achievements
+  final newAchievements = ref.read(achievementsProvider.notifier).checkAndUnlock(...);
+  
+  // 4. Feedback
+  if (newAchievements.isNotEmpty) {
+    _showAchievementDialog(newAchievements.first);
+  }
+}
+```
+
+---
+
+## **16.5. Template de Strings i18n para Gamificação**
+
+**Total: ~80 chaves por idioma**
+
+| Categoria    | Qtd | Exemplos                                                                    |
+| ------------ | --- | --------------------------------------------------------------------------- |
+| Streaks      | 4   | `streakDays`, `currentStreak`, `bestStreak`, `days`                         |
+| Achievements | 34  | `achievements`, `achievementFirstSession`, `achievementFirstSessionDesc`... |
+| Sounds       | 9   | `ambientSounds`, `soundRain`, `soundForest`...                              |
+| Themes       | 9   | `colorTheme`, `themeTomato`, `themeOcean`...                                |
+| Daily Goals  | 6   | `dailyGoal`, `goalReached`, `sessionsProgress`...                           |
+| Quotes       | 31  | `newQuote`, `quote1Text`, `quote1Author`... (x15)                           |
 
 ---
 
@@ -763,9 +863,133 @@ Para automação do Google Play Console, criar um agente dedicado:
 
 ---
 
-**Fim do Planejamento v4.0.** Mantenha o foco. Codifique uma feature, termine, valide, commite. Não deixe pontas soltas.
+**Fim do Planejamento v5.0.** Mantenha o foco. Codifique uma feature, termine, valide, commite. Não deixe pontas soltas.
 
 *"Da Fundação ao SuperApp: Um Bloco de Cada Vez."*
+
+---
+
+## **NOVO: 21. Padrões de Edição i18n (Eficiência Máxima)**
+
+### **21.1. Regra de Ouro: Edição em Lote**
+
+Ao adicionar novas strings, **SEMPRE** usar `multi_replace_string_in_file` para editar todos os 11 arquivos .arb simultaneamente:
+
+```
+// Prompt eficiente:
+"Adicione a chave 'achievementFirstSession' em todos os 11 arquivos .arb:
+EN: 'First Session', PT: 'Primeira Sessão', ES: 'Primera Sesión', 
+ZH: '首次会话', DE: 'Erste Sitzung', FR: 'Première Session',
+AR: 'الجلسة الأولى', BN: 'প্রথম সেশন', HI: 'पहला सत्र',
+JA: '最初のセッション', RU: 'Первая сессия'"
+```
+
+### **21.2. Organização de Chaves**
+
+Organizar por categoria com comentários:
+
+```json
+{
+  "@@locale": "en",
+  "_GENERAL": "=== GENERAL ===",
+  "appTitle": "App Name",
+  
+  "_ACHIEVEMENTS": "=== ACHIEVEMENTS ===",
+  "achievementFirstSession": "First Session",
+  
+  "_STREAKS": "=== STREAKS ===",
+  "currentStreak": "Current Streak"
+}
+```
+
+### **21.3. Checklist Pós-Edição**
+
+1. Verificar que todos os 11 .arb têm a nova chave
+2. Executar `flutter gen-l10n`
+3. Verificar imports no código (`AppLocalizations.of(context)!.chave`)
+
+---
+
+## **NOVO: 22. ConsentService Template (GDPR/UMP)**
+
+### **22.1. Implementação Padrão**
+
+```dart
+// lib/services/consent_service.dart
+class ConsentService {
+  static bool _canRequestAds = false;
+  static bool _isPrivacyOptionsRequired = false;
+  
+  static bool get canRequestAds => _canRequestAds;
+  static bool get isPrivacyOptionsRequired => _isPrivacyOptionsRequired;
+  
+  static Future<void> gatherConsent({bool forceReset = false}) async {
+    final params = ConsentRequestParameters();
+    
+    if (forceReset) ConsentInformation.instance.reset();
+    
+    ConsentInformation.instance.requestConsentInfoUpdate(
+      params,
+      () async {
+        if (await ConsentInformation.instance.isConsentFormAvailable()) {
+          await _loadAndShowConsentForm();
+        }
+        _updateCanRequestAds();
+      },
+      (error) => _canRequestAds = true, // Fallback
+    );
+  }
+  
+  static Future<void> showPrivacyOptions() async {
+    ConsentForm.showPrivacyOptionsForm((error) {});
+  }
+}
+```
+
+### **22.2. Integração no main.dart**
+
+```dart
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  
+  // 1. Consent FIRST
+  await ConsentService.gatherConsent();
+  
+  // 2. Ads ONLY if allowed
+  if (ConsentService.canRequestAds) {
+    await AdService.initialize();
+  }
+  
+  runApp(const ProviderScope(child: MyApp()));
+}
+```
+
+---
+
+## **NOVO: 23. Checklist de Feature Completa**
+
+Antes de considerar uma feature "pronta":
+
+### **Código**
+- [ ] Model com copyWith
+- [ ] Provider com persistência (SharedPreferences)
+- [ ] Widget(s) com `const` onde possível
+- [ ] Integração na UI principal
+
+### **i18n**
+- [ ] Chaves em app_en.arb
+- [ ] Traduzido nos 10 outros .arb
+- [ ] `flutter gen-l10n` sem erros
+
+### **Testes**
+- [ ] Teste unitário da lógica
+- [ ] `flutter test` passa
+- [ ] `flutter analyze` sem warnings
+
+### **UX**
+- [ ] Funciona em modo claro/escuro
+- [ ] Responsivo (celular/tablet)
+- [ ] Estados de loading/empty/error tratados
 
 ---
 
@@ -781,3 +1005,66 @@ Para reduzir atrito e aumentar assertividade (menos “erros bobos” que travam
 Workflow recomendado antes de release:
 1) `Flutter: Validate (l10n+analyze+test)`
 2) `Assets: Check Store Assets`
+
+---
+
+## **21\. Ambiente Windows - Troubleshooting (NOVO v5.1)**
+
+### **21.1. Flutter não reconhecido no PATH**
+
+**Sintoma:**
+```
+flutter: The term 'flutter' is not recognized as a name of a cmdlet...
+```
+
+**Solução - Usar caminho completo:**
+```powershell
+C:\dev\flutter\bin\flutter gen-l10n
+C:\dev\flutter\bin\flutter analyze
+C:\dev\flutter\bin\flutter test
+C:\dev\flutter\bin\flutter build appbundle --release
+```
+
+### **21.2. Configuração Permanente de PATH**
+
+Adicionar ao PATH do sistema:
+- `C:\dev\flutter\bin`
+- `C:\dev\android-sdk\platform-tools`
+- `C:\dev\android-sdk\emulator`
+
+### **21.3. Emulador Offline no ADB**
+
+```powershell
+adb kill-server
+adb start-server
+adb devices
+
+# Se persistir:
+emulator -avd <AVD_NAME> -no-snapshot-load -gpu host
+```
+
+### **21.4. Erro de Substituição em arquivos .arb**
+
+**Causa:** Caracteres especiais, encoding ou formatação diferente.
+
+**Solução:** Sempre ler o arquivo com `read_file` primeiro para ver o conteúdo exato antes de editar.
+
+---
+
+## **22\. Padrões de Eficiência para Desenvolvimento**
+
+### **22.1. Edições Paralelas**
+- Usar `create_file` em paralelo para criar múltiplos arquivos independentes
+- Usar `multi_replace_string_in_file` para editar múltiplos .arb simultaneamente
+
+### **22.2. Validação Contínua**
+- Após cada bloco de edições .arb: `flutter gen-l10n`
+- Após cada mudança de código: `flutter analyze`
+- Antes de considerar completo: `flutter test`
+
+### **22.3. Workflow Otimizado de i18n**
+
+1. Adicionar strings em `app_en.arb` (template)
+2. Editar os outros 10 .arb em lote
+3. Executar `flutter gen-l10n`
+4. Verificar com `flutter analyze`
