@@ -1,9 +1,9 @@
 # **Plano de Arquitetura: Do App Simples ao SuperApp (Modular)**
 
-Versão: 3.0  
+Versão: 4.0  
 Data de Atualização: Janeiro 2026  
 Compatibilidade: Android 15+ (API 35), Flutter 3.32+  
-**Nota v3.0:** Atualizado com experiência real de publicação (BMI Calculator) e processo completo de Data Safety
+**Nota v4.0:** Atualizado com experiência completa de publicação (BMI Calculator), troubleshooting de ambiente Android, e workflow de captura de screenshots reais
 
 Para cumprir o requisito de criar apps individuais que depois serão agregados, NÃO podemos usar uma estrutura monolítica comum (lib/main.dart cheio de tudo).
 
@@ -37,13 +37,13 @@ Mesmo para o primeiro app simples, a estrutura deve ser pensada como um monorepo
 
 A partir de **1º de novembro de 2025**, todos os apps que targetam Android 15 (API 35)+ **DEVEM** suportar tamanhos de página de memória de 16KB.
 
-| Requisito | Versão Mínima |
-|-----------|---------------|
+| Requisito                       | Versão Mínima        |
+| ------------------------------- | -------------------- |
 | **Android Gradle Plugin (AGP)** | 8.5.1+ (OBRIGATÓRIO) |
-| **NDK** | r28+ (recomendado) |
-| **Flutter SDK** | 3.32+ |
-| **Target SDK** | 35 (Android 15) |
-| **Min SDK** | 21 (Android 5.0) |
+| **NDK**                         | r28+ (recomendado)   |
+| **Flutter SDK**                 | 3.32+                |
+| **Target SDK**                  | 35 (Android 15)      |
+| **Min SDK**                     | 21 (Android 5.0)     |
 
 ### **2.2. Configuração settings.gradle**
 
@@ -69,11 +69,11 @@ org.gradle.parallel=true
 
 ### **2.4. Datas Limites**
 
-| Data | Requisito |
-|------|-----------|
+| Data       | Requisito                                      |
+| ---------- | ---------------------------------------------- |
 | 31/08/2025 | Novos apps devem targetar Android 15 (API 35)+ |
-| 01/11/2025 | Suporte a 16KB page size obrigatório |
-| 31/05/2026 | Deadline estendido (via Play Console) |
+| 01/11/2025 | Suporte a 16KB page size obrigatório           |
+| 31/05/2026 | Deadline estendido (via Play Console)          |
 
 ---
 
@@ -88,14 +88,14 @@ org.gradle.parallel=true
 
 ## **4\. Stack Tecnológica Recomendada (2025-2026)**
 
-| Categoria | Tecnologia | Justificativa |
-|-----------|------------|---------------|
-| **Gerência de Estado** | Riverpod 2.x | Mais testável e modular que Bloc |
-| **Navegação** | GoRouter | Deep Linking essencial para SuperApp |
-| **Banco Local** | Isar ou Hive | NoSQL super rápido |
-| **Injeção de Dependência** | get_it + injectable | Padrão enterprise |
-| **Ads** | google_mobile_ads 5.3+ | Banner, Interstitial, App Open, Rewarded |
-| **Analytics** | Firebase Analytics | Gratuito e integrado |
+| Categoria                  | Tecnologia             | Justificativa                            |
+| -------------------------- | ---------------------- | ---------------------------------------- |
+| **Gerência de Estado**     | Riverpod 2.x           | Mais testável e modular que Bloc         |
+| **Navegação**              | GoRouter               | Deep Linking essencial para SuperApp     |
+| **Banco Local**            | Isar ou Hive           | NoSQL super rápido                       |
+| **Injeção de Dependência** | get_it + injectable    | Padrão enterprise                        |
+| **Ads**                    | google_mobile_ads 5.3+ | Banner, Interstitial, App Open, Rewarded |
+| **Analytics**              | Firebase Analytics     | Gratuito e integrado                     |
 
 ---
 
@@ -103,12 +103,12 @@ org.gradle.parallel=true
 
 ### **5.1. Formatos Recomendados por Tipo de App**
 
-| Tipo de App | Banner | Interstitial | App Open | Rewarded | Nativo |
-|-------------|--------|--------------|----------|----------|--------|
-| Utilitário (Calculadora) | ✅ Topo | ✅ A cada 3 ações | ✅ No foreground | ❌ | ❌ |
-| Jogo Casual | ✅ Rodapé | ✅ Entre fases | ✅ | ✅ Vidas/Power-ups | ❌ |
-| App de Conteúdo | ✅ Adaptativo | ❌ | ✅ | ❌ | ✅ A cada 5 itens |
-| Produtividade | ✅ | ✅ Após salvar | ✅ | ✅ Premium temp | ❌ |
+| Tipo de App              | Banner       | Interstitial     | App Open        | Rewarded          | Nativo           |
+| ------------------------ | ------------ | ---------------- | --------------- | ----------------- | ---------------- |
+| Utilitário (Calculadora) | ✅ Topo       | ✅ A cada 3 ações | ✅ No foreground | ❌                 | ❌                |
+| Jogo Casual              | ✅ Rodapé     | ✅ Entre fases    | ✅               | ✅ Vidas/Power-ups | ❌                |
+| App de Conteúdo          | ✅ Adaptativo | ❌                | ✅               | ❌                 | ✅ A cada 5 itens |
+| Produtividade            | ✅            | ✅ Após salvar    | ✅               | ✅ Premium temp    | ❌                |
 
 ### **5.2. IDs de Teste (Desenvolvimento)**
 
@@ -134,19 +134,19 @@ static const testRewardedId = 'ca-app-pub-3940256099942544/5224354917';
 
 Para maximizar alcance global, todo app deve nascer com 11 idiomas:
 
-| Código | Idioma | % Cobertura Mundial |
-|--------|--------|---------------------|
-| en | English | 17% |
-| zh | 中文 (Chinese) | 15% |
-| hi | हिन्दी (Hindi) | 8% |
-| es | Español | 7% |
-| ar | العربية (Arabic) | 5% |
-| bn | বাংলা (Bengali) | 4% |
-| pt | Português | 3% |
-| ru | Русский (Russian) | 3% |
-| ja | 日本語 (Japanese) | 2% |
-| de | Deutsch (German) | 2% |
-| fr | Français (French) | 2% |
+| Código | Idioma            | % Cobertura Mundial |
+| ------ | ----------------- | ------------------- |
+| en     | English           | 17%                 |
+| zh     | 中文 (Chinese)    | 15%                 |
+| hi     | हिन्दी (Hindi)       | 8%                  |
+| es     | Español           | 7%                  |
+| ar     | العربية (Arabic)  | 5%                  |
+| bn     | বাংলা (Bengali)      | 4%                  |
+| pt     | Português         | 3%                  |
+| ru     | Русский (Russian) | 3%                  |
+| ja     | 日本語 (Japanese) | 2%                  |
+| de     | Deutsch (German)  | 2%                  |
+| fr     | Français (French) | 2%                  |
 
 **Total: ~68% da população mundial coberta**
 
@@ -222,11 +222,11 @@ Crie o app [NOME] seguindo o Beast Mode Flutter v4.0:
 
 ### **8.5. Monitoramento Pós-Lançamento**
 
-| Métrica | Limite Aceitável |
-|---------|------------------|
-| ANR Rate | < 0.47% |
-| Crash Rate | < 1.09% |
-| Excessive Wake-ups | < 10/hora |
+| Métrica            | Limite Aceitável |
+| ------------------ | ---------------- |
+| ANR Rate           | < 0.47%          |
+| Crash Rate         | < 1.09%          |
+| Excessive Wake-ups | < 10/hora        |
 
 ---
 
@@ -284,24 +284,24 @@ Esta seção documenta o aprendizado prático do primeiro app publicado.
 
 ### **11.1. Cronograma Real de Publicação**
 
-| Etapa | Tempo Estimado | Tempo Real |
-|-------|----------------|------------|
-| Configuração inicial do Console | 30 min | 45 min |
-| Preenchimento de metadados | 1 hora | 2 horas |
-| Data Safety form | 30 min | 1.5 horas |
-| Upload e testes internos | 30 min | 45 min |
-| **Total** | **2.5 horas** | **5 horas** |
+| Etapa                           | Tempo Estimado | Tempo Real  |
+| ------------------------------- | -------------- | ----------- |
+| Configuração inicial do Console | 30 min         | 45 min      |
+| Preenchimento de metadados      | 1 hora         | 2 horas     |
+| Data Safety form                | 30 min         | 1.5 horas   |
+| Upload e testes internos        | 30 min         | 45 min      |
+| **Total**                       | **2.5 horas**  | **5 horas** |
 
 **Lição:** O processo leva mais tempo que o esperado. Planeje um dia inteiro para a primeira publicação.
 
 ### **11.2. Obstáculos Encontrados**
 
-| Problema | Solução |
-|----------|---------|
-| Import de localizações falhando | Usar `synthetic-package: false` no l10n.yaml |
-| AGP incompatível com 16KB | Atualizar para 8.5.1+ no settings.gradle |
-| App Open Ad não aparecia | Implementar lógica de expiração (4h) e skip nas primeiras aberturas |
-| Data Safety form complexo | Seguir guia detalhado do BeastModeFlutter.agent.md |
+| Problema                        | Solução                                                             |
+| ------------------------------- | ------------------------------------------------------------------- |
+| Import de localizações falhando | Usar `synthetic-package: false` no l10n.yaml                        |
+| AGP incompatível com 16KB       | Atualizar para 8.5.1+ no settings.gradle                            |
+| App Open Ad não aparecia        | Implementar lógica de expiração (4h) e skip nas primeiras aberturas |
+| Data Safety form complexo       | Seguir guia detalhado do BeastModeFlutter.agent.md                  |
 
 ### **11.3. Otimizações Aplicadas**
 
@@ -323,11 +323,11 @@ Apps que coletam dados de saúde (peso, altura, IMC) requerem declarações espe
 
 ### **12.1. Tipos de Dados a Declarar**
 
-| Categoria | Dados | Coletado | Compartilhado |
-|-----------|-------|----------|---------------|
-| **Saúde e fitness** | Peso, altura, IMC | ✅ | ❌ (local only) |
-| **Identificadores** | Device ID (AdMob) | ✅ | ✅ |
-| **Diagnóstico** | Crash logs | ✅ | ✅ |
+| Categoria           | Dados             | Coletado | Compartilhado  |
+| ------------------- | ----------------- | -------- | -------------- |
+| **Saúde e fitness** | Peso, altura, IMC | ✅        | ❌ (local only) |
+| **Identificadores** | Device ID (AdMob) | ✅        | ✅              |
+| **Diagnóstico**     | Crash logs        | ✅        | ✅              |
 
 ### **12.2. Respostas Padrão para Apps Utilitários**
 
@@ -341,11 +341,11 @@ Login externo: Não
 
 ### **12.3. Propósitos por Tipo de Dado**
 
-| Tipo de Dado | Propósito de Coleta | Propósito de Compartilhamento |
-|--------------|---------------------|-------------------------------|
-| Saúde/Fitness | Funcionalidade do app | N/A |
-| Device ID | Publicidade, Análise | Publicidade |
-| Crash logs | Análise | Análise |
+| Tipo de Dado  | Propósito de Coleta   | Propósito de Compartilhamento |
+| ------------- | --------------------- | ----------------------------- |
+| Saúde/Fitness | Funcionalidade do app | N/A                           |
+| Device ID     | Publicidade, Análise  | Publicidade                   |
+| Crash logs    | Análise               | Análise                       |
 
 ---
 
@@ -579,26 +579,187 @@ class AdService {
 
 ### **16.1. Pipeline de Desenvolvimento**
 
-| App | Status | Prioridade |
-|-----|--------|------------|
-| BMI Calculator | ✅ Em publicação | - |
-| Todo App | 🔲 Planejado | Alta |
-| Expense Tracker | 🔲 Planejado | Média |
-| Habit Tracker | 🔲 Planejado | Média |
+| App             | Status          | Prioridade |
+| --------------- | --------------- | ---------- |
+| BMI Calculator  | ✅ Em publicação | -          |
+| Todo App        | 🔲 Planejado     | Alta       |
+| Expense Tracker | 🔲 Planejado     | Média      |
+| Habit Tracker   | 🔲 Planejado     | Média      |
 
 ### **16.2. Componentes Reutilizáveis do BMI Calculator**
 
 Após o BMI Calculator estar publicado, extrair para `/packages`:
 
-| Componente | Package Destino |
-|------------|-----------------|
-| AdService | `/packages/feature_ads` |
-| Temas Material 3 | `/packages/core_ui` |
-| i18n base (11 idiomas) | `/packages/feature_i18n` |
-| Data persistence helpers | `/packages/core_logic` |
+| Componente               | Package Destino          |
+| ------------------------ | ------------------------ |
+| AdService                | `/packages/feature_ads`  |
+| Temas Material 3         | `/packages/core_ui`      |
+| i18n base (11 idiomas)   | `/packages/feature_i18n` |
+| Data persistence helpers | `/packages/core_logic`   |
 
 ---
 
-**Fim do Planejamento v3.0.** Mantenha o foco. Codifique uma feature, termine, valide, commite. Não deixe pontas soltas.
+## **17\. Ambiente de Desenvolvimento Android (NOVO v4.0)**
+
+Esta seção documenta a configuração correta do ambiente de desenvolvimento.
+
+### **17.1. Estrutura de Diretórios Recomendada (Windows)**
+
+```
+C:\dev\
+  flutter\           # Flutter SDK
+  android-sdk\       # Android SDK
+    platform-tools\  # ADB
+    emulator\        # Emulador
+    
+C:\Users\<USER>\.android\
+  avd\              # Configurações dos AVDs
+```
+
+### **17.2. Configuração de Path (PowerShell)**
+
+```powershell
+# Adicionar ao Profile do PowerShell ou executar antes de trabalhar
+$env:Path = "C:\dev\flutter\bin;C:\dev\android-sdk\platform-tools;C:\dev\android-sdk\emulator;" + $env:Path
+```
+
+### **17.3. Otimização do Emulador Android**
+
+**Configurar GPU no AVD (config.ini):**
+
+```ini
+# Localização: C:\Users\<USER>\.android\avd\<AVD_NAME>.avd\config.ini
+hw.gpu.enabled=yes
+hw.gpu.mode=host      # Usa GPU do computador (NVIDIA/AMD/Intel)
+hw.ramSize=4096       # 4GB RAM para o emulador
+```
+
+**Comando de inicialização otimizado:**
+
+```powershell
+emulator -avd <AVD_NAME> -gpu host -memory 4096
+```
+
+### **17.4. Troubleshooting: Emulador "Offline" no ADB**
+
+**Problema comum:** `adb devices` mostra `emulator-5554 offline`
+
+**Soluções em ordem:**
+
+```powershell
+# 1. Reiniciar ADB server
+adb kill-server
+adb start-server
+adb devices
+
+# 2. Reconectar offline
+adb reconnect offline
+
+# 3. Cold boot do emulador (sem snapshot)
+emulator -avd <AVD_NAME> -no-snapshot-load -gpu host
+
+# 4. Wipe data completo (último recurso)
+emulator -avd <AVD_NAME> -wipe-data
+```
+
+### **17.5. Workflow de Desenvolvimento**
+
+```powershell
+# 1. Verificar ambiente
+flutter doctor -v
+adb devices
+
+# 2. Navegar para o app
+Set-Location -Path "C:\Users\Ernane\Personal\APPs_Flutter\<app_name>"
+
+# 3. Limpar e preparar
+flutter clean
+flutter pub get
+flutter gen-l10n
+
+# 4. Rodar no emulador
+flutter run -d emulator-5554
+```
+
+---
+
+## **18\. Captura de Screenshots para Play Store (NOVO v4.0)**
+
+### **18.1. Por que Screenshots Reais?**
+
+- Google Play valoriza screenshots autênticos
+- Placeholders genéricos não representam o app
+- Screenshots reais aumentam conversão de downloads
+
+### **18.2. Dimensões Obrigatórias**
+
+| Tipo       | Dimensão  | Mínimo        |
+| ---------- | --------- | ------------- |
+| Phone      | 1080x1920 | 2 screenshots |
+| Tablet 7"  | 1200x1920 | Opcional      |
+| Tablet 10" | 1600x2560 | Opcional      |
+
+### **18.3. Workflow de Captura via ADB**
+
+```powershell
+# 1. Rodar app no emulador
+flutter run -d emulator-5554
+
+# 2. Navegar para a tela desejada no app
+
+# 3. Capturar screenshot
+adb exec-out screencap -p > screenshot.png
+
+# 4. Ou salvar no device e puxar
+adb shell screencap -p /sdcard/screen1.png
+adb pull /sdcard/screen1.png ./store_assets/phone_1.png
+```
+
+### **18.4. Organização de Assets**
+
+```
+/DadosPublicacao/<app_name>/store_assets/
+  icon_512.png           # 512x512 (obrigatório)
+  feature_1024x500.png   # 1024x500 (obrigatório)
+  phone_1.png            # Screenshot 1
+  phone_2.png            # Screenshot 2
+  tablet7_1.png          # Opcional
+  tablet10_1.png         # Opcional
+```
+
+---
+
+## **19\. Automação do Play Console (NOVO v4.0)**
+
+### **19.1. Agente de Publicação**
+
+Para automação do Google Play Console, criar um agente dedicado:
+
+**Arquivo:** `.github/agents/publicacaoApp.agent.md`
+
+### **19.2. Dados Necessários por App**
+
+```json
+{
+  "appName": "BMI Calculator",
+  "shortDescription": "Calculate your BMI quickly and accurately.",
+  "fullDescription": "Full description up to 4000 chars...",
+  "privacyPolicyUrl": "https://yoursite.com/privacy/bmi",
+  "supportEmail": "support@yoursite.com",
+  "category": "Health & Fitness"
+}
+```
+
+### **19.3. Checklist de Upload Automatizado**
+
+1. [ ] Assets com dimensões corretas verificados
+2. [ ] Traduções para 12 idiomas preparadas
+3. [ ] AAB gerado e assinado
+4. [ ] Política de privacidade URL acessível
+5. [ ] IDs de AdMob de produção no app
+
+---
+
+**Fim do Planejamento v4.0.** Mantenha o foco. Codifique uma feature, termine, valide, commite. Não deixe pontas soltas.
 
 *"Da Fundação ao SuperApp: Um Bloco de Cada Vez."*

@@ -6,10 +6,17 @@ tools: ['vscode', 'execute', 'read', 'agent', 'edit', 'search', 'web', 'microsof
 
 # **BEAST MODE FLUTTER: Protocolo de Desenvolvimento de Elite**
 
-Versão do Protocolo: 5.0 (Android Focus / Global Scale / AI-Optimized / Production-Ready / Play Store Certified)  
-Data de Atualização: Janeiro 2026 (Atualizado com experiência de publicação real)  
+Versão do Protocolo: 7.0 (Android Focus / Global Scale / AI-Optimized / Production-Ready / Play Store Certified / Emulator Optimized)  
+Data de Atualização: Janeiro 2026 (Atualizado com experiência completa de publicação + troubleshooting de ambiente)  
 Namespace Base: sa.rezende.\<nome\_do\_app\>  
 Filosofia: "Código Limpo, Performance Brutal, Lucro Inteligente."
+
+**Novidades v7.0:**
+- Seções 26-30: Configuração completa de Emulador Android com GPU
+- Troubleshooting de ADB (emulador offline)
+- Captura de screenshots reais via ADB
+- Automação avançada do Play Console (Playwright)
+- Erros comuns expandidos com soluções testadas
 
 ---
 
@@ -1692,5 +1699,404 @@ Get-ChildItem "DadosPublicacao\*\store_assets\*.png" | ForEach-Object {
 
 ---
 
-**Fim do Protocolo Beast Mode Flutter v6.0**
+## **26\. Ambiente Android: Emulador e ADB (Troubleshooting Completo)**
+
+Esta seção documenta problemas reais encontrados e suas soluções.
+
+### **26.1. Configuração de Paths do Android SDK (Windows PowerShell)**
+
+```powershell
+# Configurar variáveis de ambiente temporárias
+$env:Path = "C:\dev\flutter\bin;C:\dev\android-sdk\platform-tools;C:\dev\android-sdk\emulator;" + $env:Path
+
+# Verificar instalação
+flutter doctor -v
+adb version
+emulator -list-avds
+```
+
+### **26.2. Localização dos Componentes (Windows)**
+
+| Componente | Caminho Típico |
+|------------|----------------|
+| Flutter SDK | `C:\dev\flutter\bin` |
+| Android SDK | `C:\dev\android-sdk` |
+| ADB | `C:\dev\android-sdk\platform-tools\adb.exe` |
+| Emulator | `C:\dev\android-sdk\emulator\emulator.exe` |
+| AVD Configs | `C:\Users\<USER>\.android\avd\` |
+
+### **26.3. Comandos Essenciais do Emulador**
+
+```powershell
+# Listar emuladores disponíveis
+emulator -list-avds
+
+# Iniciar emulador com GPU host (RECOMENDADO)
+emulator -avd <AVD_NAME> -gpu host
+
+# Iniciar sem snapshot (cold boot)
+emulator -avd <AVD_NAME> -no-snapshot-load -gpu host
+
+# Iniciar com mais RAM
+emulator -avd <AVD_NAME> -memory 4096 -gpu host
+
+# Verificar GPU em uso
+emulator -avd <AVD_NAME> -gpu host -verbose 2>&1 | Select-String -Pattern "gpu"
+```
+
+### **26.4. Otimização de Emulador com GPU**
+
+**Configuração do AVD (arquivo config.ini):**
+
+Localização: `C:\Users\<USER>\.android\avd\<AVD_NAME>.avd\config.ini`
+
+```ini
+# Habilitar GPU acelerada
+hw.gpu.enabled=yes
+hw.gpu.mode=host
+
+# Aumentar RAM (em MB)
+hw.ramSize=4096
+
+# Aumentar heap da VM
+vm.heapSize=576
+
+# Usar x86_64 para melhor performance
+abi.type=x86_64
+
+# Desativar snapshot para boot mais limpo (opcional)
+fastboot.forceChosenSnapshotBoot=no
+fastboot.forceColdBoot=yes
+```
+
+**Modos de GPU disponíveis:**
+
+| Modo | Descrição | Performance |
+|------|-----------|-------------|
+| `host` | Usa GPU do host (NVIDIA/AMD/Intel) | ⭐⭐⭐⭐⭐ Melhor |
+| `swiftshader_indirect` | Software rendering | ⭐⭐ Mais compatível |
+| `angle_indirect` | ANGLE (Direct3D → OpenGL) | ⭐⭐⭐ Windows |
+| `guest` | GPU emulada | ⭐ Mais lento |
+
+### **26.5. Troubleshooting: Emulador "Offline" no ADB**
+
+**Problema:** `adb devices` mostra `emulator-5554 offline`
+
+**Soluções em ordem de tentativa:**
+
+```powershell
+# 1. Reiniciar ADB server
+adb kill-server
+adb start-server
+adb devices
+
+# 2. Reconectar emulador offline
+adb reconnect offline
+adb devices
+
+# 3. Conectar manualmente
+adb connect 127.0.0.1:5555
+adb connect localhost:5554
+
+# 4. Matar processos e reiniciar
+taskkill /F /IM adb.exe
+taskkill /F /IM qemu-system-x86_64.exe
+# Reiniciar emulador
+
+# 5. Cold boot do emulador
+emulator -avd <AVD_NAME> -no-snapshot-load -wipe-data
+```
+
+**Causas comuns:**
+
+| Causa | Solução |
+|-------|---------|
+| Emulador iniciou antes do ADB | Iniciar ADB primeiro: `adb start-server` |
+| Snapshot corrompido | Usar `-no-snapshot-load` ou `-wipe-data` |
+| Porta em uso | Fechar outros emuladores/instâncias |
+| Driver de GPU incompatível | Usar `-gpu swiftshader_indirect` |
+| Hyper-V conflito | Desabilitar Hyper-V ou usar WHPX |
+
+### **26.6. Verificação de Ambiente Completo**
+
+```powershell
+# Checklist de verificação
+Write-Host "=== Flutter ==="
+flutter --version
+
+Write-Host "=== ADB ==="
+adb version
+
+Write-Host "=== Emuladores ==="
+emulator -list-avds
+
+Write-Host "=== Devices Conectados ==="
+adb devices
+
+Write-Host "=== Page Size (se device conectado) ==="
+adb shell getconf PAGE_SIZE
+```
+
+---
+
+## **27\. Captura de Screenshots Reais do App (Via ADB)**
+
+Para screenshots autênticos do app (necessários para Play Store):
+
+### **27.1. Workflow Completo de Captura**
+
+```powershell
+# 1. Verificar emulador conectado
+adb devices
+
+# 2. Instalar/rodar o app
+Set-Location -Path "C:\Users\Ernane\Personal\APPs_Flutter\<app_name>"
+flutter run -d emulator-5554
+
+# 3. Aguardar app abrir e navegar para tela desejada
+
+# 4. Capturar screenshot
+$timestamp = Get-Date -Format "yyyyMMdd_HHmmss"
+adb exec-out screencap -p > "screenshot_$timestamp.png"
+
+# 5. Ou salvar direto no device e puxar
+adb shell screencap -p /sdcard/screen1.png
+adb pull /sdcard/screen1.png "./store_assets/phone_1.png"
+```
+
+### **27.2. Script de Captura Múltipla**
+
+```powershell
+# Criar pasta de destino
+$assetsDir = "DadosPublicacao\<app_name>\store_assets\screenshots"
+New-Item -ItemType Directory -Force -Path $assetsDir
+
+# Capturar série de screenshots
+for ($i = 1; $i -le 4; $i++) {
+    Write-Host "Navegue para a tela $i e pressione Enter..."
+    Read-Host
+    
+    $filename = "$assetsDir\phone_$i.png"
+    adb exec-out screencap -p > $filename
+    Write-Host "Capturado: $filename"
+}
+
+Write-Host "Screenshots capturados em: $assetsDir"
+```
+
+### **27.3. Dimensões Corretas para Play Store**
+
+| Tipo | Dimensão | Aspect Ratio |
+|------|----------|--------------|
+| Phone | 1080x1920 ou 1080x2340 | 9:16 ou taller |
+| Tablet 7" | 1200x1920 | 10:16 |
+| Tablet 10" | 1600x2560 | 10:16 |
+| Chromebook | 1920x1080 | 16:9 |
+
+### **27.4. Redimensionar Screenshots (PowerShell)**
+
+```powershell
+# Usando ImageMagick (instalar via winget install ImageMagick)
+magick convert input.png -resize 1080x1920! output.png
+
+# Ou usando Python/Pillow
+python -c "from PIL import Image; Image.open('input.png').resize((1080,1920)).save('output.png')"
+```
+
+### **27.5. Verificar Dimensões de Imagem**
+
+```powershell
+# PowerShell nativo
+Add-Type -AssemblyName System.Drawing
+$img = [System.Drawing.Image]::FromFile("C:\path\to\image.png")
+Write-Host "Dimensões: $($img.Width)x$($img.Height)"
+$img.Dispose()
+```
+
+---
+
+## **28\. Automação Avançada do Play Console (Playwright MCP)**
+
+Lições aprendidas na automação real do Google Play Console.
+
+### **28.1. Estrutura de Arquivos para Automação**
+
+```
+/DadosPublicacao/<app_name>/
+  /store_assets/
+    icon_512.png           # Exatamente 512x512
+    feature_1024x500.png   # Exatamente 1024x500
+    phone_1.png            # 1080x1920 (mínimo)
+    phone_2.png            # 1080x1920 (mínimo)
+    tablet7_1.png          # Para tablet 7"
+    tablet10_1.png         # Para tablet 10"
+  /translations/
+    store_listing.json     # Todas as traduções
+  app-release.aab
+```
+
+### **28.2. Template de Traduções para Automação**
+
+```json
+{
+  "translations": {
+    "en-US": {
+      "title": "App Name",
+      "shortDescription": "Short description up to 80 chars.",
+      "fullDescription": "Full description..."
+    },
+    "pt-BR": {
+      "title": "Nome do App",
+      "shortDescription": "Descrição curta até 80 caracteres.",
+      "fullDescription": "Descrição completa..."
+    }
+  }
+}
+```
+
+### **28.3. Seletores Resilientes para Play Console**
+
+```javascript
+// ❌ EVITAR: Seletores frágeis
+page.locator('input[name="something"]') // Muda frequentemente
+
+// ✅ PREFERIR: Seletores por role/texto
+page.getByRole('button', { name: 'Salvar' })
+page.getByRole('textbox').first()
+page.locator('textarea').nth(0)
+
+// ✅ Dropdowns customizados
+page.locator('button[aria-haspopup="listbox"]').click()
+page.keyboard.type('pt-BR') // Digitar filtra a lista
+page.keyboard.press('Enter')
+```
+
+### **28.4. Padrões de Espera (Crítico para SPAs)**
+
+```javascript
+// Após clique em dropdown
+await page.waitForTimeout(1500); // SPAs precisam de tempo
+
+// Após salvar
+await page.waitForTimeout(4000); // Google salva de forma assíncrona
+
+// Verificar se salvou
+await page.waitForSelector('text="Alterações salvas"', { timeout: 10000 });
+```
+
+### **28.5. Upload de Assets via Input File**
+
+```javascript
+// Encontrar input file (geralmente escondido)
+const fileInput = page.locator('input[type="file"]');
+
+// Upload único
+await fileInput.setInputFiles('./store_assets/icon_512.png');
+
+// Upload múltiplo
+await fileInput.setInputFiles([
+  './store_assets/phone_1.png',
+  './store_assets/phone_2.png'
+]);
+```
+
+### **28.6. Tratamento de Erros Comuns**
+
+| Erro | Causa | Solução |
+|------|-------|---------|
+| "Dimensões incorretas" | Imagem fora do padrão | Verificar dimensões exatas |
+| "Alguns idiomas têm erros" | Campo obrigatório vazio | Preencher todos os idiomas adicionados |
+| "scrollIntoViewIfNeeded timeout" | Elemento não visível | Rolar página: `element.scrollIntoViewIfNeeded()` |
+| "strict mode violation" | Múltiplos elementos | Usar `.first()`, `.nth(0)`, `.last()` |
+| Assets não salvam | Timeout insuficiente | Aumentar wait após clique em "Salvar" |
+
+---
+
+## **29\. Flutter Run no Emulador: Checklist Rápido**
+
+### **29.1. Antes de Rodar**
+
+```powershell
+# 1. Verificar emulador rodando e conectado
+adb devices  # Deve mostrar "emulator-5554 device" (não "offline")
+
+# 2. Navegar para o diretório do app
+Set-Location -Path "C:\Users\Ernane\Personal\APPs_Flutter\<app_name>"
+
+# 3. Limpar builds anteriores (se necessário)
+flutter clean
+flutter pub get
+
+# 4. Gerar traduções
+flutter gen-l10n
+```
+
+### **29.2. Rodar o App**
+
+```powershell
+# Rodar em modo debug (hot reload)
+flutter run -d emulator-5554
+
+# Rodar em modo release (performance real)
+flutter run --release -d emulator-5554
+
+# Rodar com profile (para análise de performance)
+flutter run --profile -d emulator-5554
+```
+
+### **29.3. Durante o Desenvolvimento**
+
+| Atalho | Ação |
+|--------|------|
+| `r` | Hot reload (atualiza UI) |
+| `R` | Hot restart (reinicia app) |
+| `q` | Sair |
+| `p` | Toggle performance overlay |
+| `o` | Toggle plataforma (iOS/Android) |
+| `s` | Screenshot |
+
+---
+
+## **30\. Erros Comuns e Soluções (Expandido)**
+
+### **30.1. Ambiente e Configuração**
+
+| Erro | Causa | Solução |
+|------|-------|---------|
+| `flutter: command not found` | Path não configurado | Adicionar Flutter ao PATH |
+| `adb: command not found` | Path não configurado | Adicionar platform-tools ao PATH |
+| `No connected devices` | Emulador não rodando | Iniciar emulador ou conectar device |
+| `emulator-5554 offline` | ADB não conectou | Ver Seção 26.5 (Troubleshooting) |
+| `INSTALL_FAILED_INSUFFICIENT_STORAGE` | Emulador sem espaço | Usar `-wipe-data` ou aumentar storage do AVD |
+
+### **30.2. Build e Compilação**
+
+| Erro | Causa | Solução |
+|------|-------|---------|
+| `Execution failed for task ':app:mergeReleaseResources'` | Recursos corrompidos | `flutter clean && flutter pub get` |
+| `The SDK directory does not exist` | SDK path errado | Verificar `local.properties` |
+| `Gradle build failed` | Versão incompatível | Atualizar AGP no `settings.gradle` |
+| `R8 transformation error` | ProGuard rules faltando | Adicionar rules para libraries usadas |
+
+### **30.3. AdMob e Monetização**
+
+| Erro | Causa | Solução |
+|------|-------|---------|
+| `MobileAds.initialize() not called` | Init não executado | Chamar no main() antes de runApp() |
+| `Ad failed to load: 3` | No fill (normal em teste) | Ignorar em dev, OK em prod |
+| `Invalid Application ID` | ID errado no Manifest | Verificar APPLICATION_ID |
+| Banner não aparece | Emulador x86 | Normal, funciona em device real |
+
+### **30.4. Play Console**
+
+| Erro | Causa | Solução |
+|------|-------|---------|
+| "O app não segmenta o Android 15" | Target SDK < 35 | Atualizar `targetSdk = 35` |
+| "Compatibilidade 16KB não atendida" | AGP antigo | Atualizar AGP para 8.5.1+ |
+| "Política de privacidade obrigatória" | URL não fornecida | Hospedar e adicionar URL |
+| "Capturas de tela obrigatórias" | Menos de 2 screenshots | Adicionar mínimo 2 por device type |
+
+---
+
+**Fim do Protocolo Beast Mode Flutter v7.0**
 *"Da Ideia ao Google Play: Sem Desculpas, Só Execução."*
