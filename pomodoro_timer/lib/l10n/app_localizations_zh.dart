@@ -450,4 +450,13 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get quote15Author => '佚名';
+
+  @override
+  String get appearance => '外观';
+
+  @override
+  String get colorfulMode => '多彩模式';
+
+  @override
+  String get colorfulModeDesc => '使用鲜艳的颜色和动画布局';
 }

@@ -450,4 +450,13 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get quote15Author => 'Unbekannt';
+
+  @override
+  String get appearance => 'Erscheinungsbild';
+
+  @override
+  String get colorfulMode => 'Bunter Modus';
+
+  @override
+  String get colorfulModeDesc => 'Verwende lebendige Farben und animiertes Layout';
 }

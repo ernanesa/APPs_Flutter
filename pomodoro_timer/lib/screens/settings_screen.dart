@@ -150,6 +150,21 @@ class SettingsScreen extends ConsumerWidget {
               ref.read(settingsProvider.notifier).toggleDarkMode();
             },
           ),
+          SwitchListTile(
+            secondary: Icon(
+              Icons.palette_outlined,
+              color: settings.colorfulMode ? theme.colorScheme.primary : null,
+            ),
+            title: Text(l10n.colorfulMode),
+            subtitle: Text(
+              l10n.colorfulModeDesc,
+              style: theme.textTheme.bodySmall,
+            ),
+            value: settings.colorfulMode,
+            onChanged: (_) {
+              ref.read(settingsProvider.notifier).toggleColorfulMode();
+            },
+          ),
           const Divider(height: 32),
           // Theme section
           _buildSectionHeader(context, l10n.colorTheme),

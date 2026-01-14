@@ -450,4 +450,13 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get quote15Author => 'مجهول';
+
+  @override
+  String get appearance => 'المظهر';
+
+  @override
+  String get colorfulMode => 'الوضع الملون';
+
+  @override
+  String get colorfulModeDesc => 'استخدم ألواناً نابضة بالحياة وتخطيطاً متحركاً';
 }

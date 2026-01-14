@@ -450,4 +450,13 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get quote15Author => 'अज्ञात';
+
+  @override
+  String get appearance => 'दिखावट';
+
+  @override
+  String get colorfulMode => 'रंगीन मोड';
+
+  @override
+  String get colorfulModeDesc => 'जीवंत रंग और एनिमेटेड लेआउट का उपयोग करें';
 }

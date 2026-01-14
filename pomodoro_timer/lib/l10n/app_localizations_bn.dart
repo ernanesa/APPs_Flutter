@@ -450,4 +450,13 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get quote15Author => 'অজানা';
+
+  @override
+  String get appearance => 'চেহারা';
+
+  @override
+  String get colorfulMode => 'রঙিন মোড';
+
+  @override
+  String get colorfulModeDesc => 'প্রাণবন্ত রঙ এবং অ্যানিমেটেড লেআউট ব্যবহার করুন';
 }

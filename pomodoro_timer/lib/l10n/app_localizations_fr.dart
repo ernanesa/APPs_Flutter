@@ -450,4 +450,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get quote15Author => 'Inconnu';
+
+  @override
+  String get appearance => 'Apparence';
+
+  @override
+  String get colorfulMode => 'Mode Coloré';
+
+  @override
+  String get colorfulModeDesc => 'Utilisez des couleurs vibrantes et une mise en page animée';
 }

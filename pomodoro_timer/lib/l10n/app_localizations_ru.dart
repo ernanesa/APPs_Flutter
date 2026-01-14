@@ -450,4 +450,13 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get quote15Author => 'Неизвестен';
+
+  @override
+  String get appearance => 'Внешний вид';
+
+  @override
+  String get colorfulMode => 'Красочный режим';
+
+  @override
+  String get colorfulModeDesc => 'Используйте яркие цвета и анимированный макет';
 }

@@ -450,4 +450,13 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get quote15Author => 'Desconhecido';
+
+  @override
+  String get appearance => 'Aparência';
+
+  @override
+  String get colorfulMode => 'Modo Colorido';
+
+  @override
+  String get colorfulModeDesc => 'Use cores vibrantes e layout animado';
 }

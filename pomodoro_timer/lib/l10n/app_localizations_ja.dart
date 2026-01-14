@@ -450,4 +450,13 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get quote15Author => '作者不明';
+
+  @override
+  String get appearance => '外観';
+
+  @override
+  String get colorfulMode => 'カラフルモード';
+
+  @override
+  String get colorfulModeDesc => '鮮やかな色とアニメーションレイアウトを使用';
 }

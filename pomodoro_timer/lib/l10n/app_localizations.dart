@@ -982,6 +982,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Unknown'**
   String get quote15Author;
+
+  /// No description provided for @appearance.
+  ///
+  /// In en, this message translates to:
+  /// **'Appearance'**
+  String get appearance;
+
+  /// No description provided for @colorfulMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Colorful Mode'**
+  String get colorfulMode;
+
+  /// No description provided for @colorfulModeDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Use vibrant colors and animated layout'**
+  String get colorfulModeDesc;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
