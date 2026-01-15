@@ -1,8 +1,9 @@
 # **Plano de Arquitetura: Do App Simples ao SuperApp (Modular)**
 
-Versão: 5.4  
+Versão: 5.5  
 Data de Atualização: Janeiro 2026  
 Compatibilidade: Android 15+ (API 35), Flutter 3.32+  
+**Nota v5.5:** Atualizado com crop 9:16 obrigatório, validação i18n automatizada, workflow swap-and-remove para screenshots
 **Nota v5.4:** Atualizado com workflow de assets para publicação, regra do ícone real, e lições do Pomodoro Timer
 **Nota v5.3:** Atualizado com teste funcional de UI via ADB, estrutura de testes unitários, fast lane de publicação
 **Nota v5.2:** Atualizado com otimização de performance (R8 full mode, ProGuard 7 passes), assinatura de produção, e testes pré-publicação

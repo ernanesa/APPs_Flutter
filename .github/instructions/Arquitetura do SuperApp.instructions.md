@@ -3,7 +3,7 @@ applyTo: '**'
 ---
 # **Plano de Arquitetura: Do App Simples ao SuperApp (Modular)**
 
-Versão: 5.4 | Janeiro 2026 | Inclui lições de publicação real + padrões de gamificação + workflow otimizado + otimização de performance + teste funcional de UI + workflow de assets
+Versão: 5.5 | Janeiro 2026 | Inclui lições de publicação real + padrões de gamificação + workflow otimizado + otimização de performance + teste funcional de UI + workflow de assets + crop 9:16 obrigatório + validação i18n automatizada
 
 Para cumprir o requisito de criar apps individuais que depois serão agregados, NÃO podemos usar uma estrutura monolítica comum (lib/main.dart cheio de tudo).
 
@@ -496,6 +496,33 @@ if (Test-Path $aab) {
 | AAB Size | < 30 MB | PowerShell |
 | i18n Keys | Sincronizados | `check_l10n.ps1` |
 | UI Tests | Todas as telas | ADB uiautomator |
+| Screenshot Ratio | 9:16 exato | PowerShell |
+
+## **19.1. Validação Automatizada de i18n (NOVO v5.5)**
+
+```powershell
+# Validar sincronização de chaves i18n
+pwsh -NoProfile -ExecutionPolicy Bypass -File "C:\Users\Ernane\Personal\APPs_Flutter\tools\check_l10n.ps1" -AppPath "C:\Users\Ernane\Personal\APPs_Flutter\<app>"
+
+# Output esperado:
+# Template keys: 148
+# OK: all ARB files match template keys.
+```
+
+## **19.2. Validação de Aspect Ratio de Screenshots (NOVO v5.5)**
+
+```powershell
+# Verificar se todos os screenshots são 9:16
+Get-ChildItem "DadosPublicacao\<app>\store_assets\screenshots\*.png" | ForEach-Object {
+    Add-Type -AssemblyName System.Drawing
+    $img = [System.Drawing.Image]::FromFile($_.FullName)
+    $ratio = [math]::Round($img.Width / $img.Height, 4)
+    $expected = [math]::Round(9/16, 4)  # 0.5625
+    $status = if ($ratio -eq $expected) { "✅" } else { "❌ ($ratio)" }
+    Write-Host "$($_.Name): $($img.Width)x$($img.Height) $status"
+    $img.Dispose()
+}
+```
 ---
 
 ## **20. Workflow de Assets para Publicação (NOVO v5.4)**
@@ -553,6 +580,7 @@ DadosPublicacao/<app>/store_assets/
 
 | Versão | Data | Mudanças |
 |--------|------|----------|
+| 5.5 | Janeiro 2026 | Crop 9:16 obrigatório, validação i18n automatizada, workflow swap-and-remove |
 | 5.4 | Janeiro 2026 | Workflow de Assets, regra do ícone real |
 | 5.3 | Janeiro 2026 | Teste funcional UI, Fast Lane, Métricas |
 | 5.2 | Janeiro 2026 | Otimização R8, ProGuard, Assinatura |

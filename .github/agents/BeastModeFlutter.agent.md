@@ -6,10 +6,17 @@ tools: ['vscode', 'execute', 'read', 'edit', 'search', 'web', 'copilot-container
 
 # **BEAST MODE FLUTTER: Protocolo de Desenvolvimento de Elite**
 
-Versão do Protocolo: 8.4 (Android Focus / Global Scale / AI-Optimized / Production-Ready / Play Store Certified / Gamification-Ready / Performance-Tuned / UI-Tested / Asset-Workflow)  
-Data de Atualização: Janeiro 2026 (Atualizado com workflow de assets para publicação + ícone real obrigatório + screenshots sem ads)  
+Versão do Protocolo: 8.5 (Android Focus / Global Scale / AI-Optimized / Production-Ready / Play Store Certified / Gamification-Ready / Performance-Tuned / UI-Tested / Asset-Workflow / Screenshot-Validation)  
+Data de Atualização: Janeiro 2026 (Atualizado com crop 9:16 obrigatório + validação automatizada de assets + workflow swap-and-remove no Play Console)  
 Namespace Base: sa.rezende.\<nome\_do\_app\>  
 Filosofia: "Código Limpo, Performance Brutal, Lucro Inteligente, Usuário Engajado."
+
+**Novidades v8.5:**
+- Seção 53: Validação de Aspect Ratio de Screenshots (9:16 obrigatório)
+- Seção 54: Workflow swap-and-remove para limite de 8 screenshots no Play Console
+- Script PowerShell para crop automatizado de screenshots para 9:16
+- Validação i18n automatizada via check_l10n.ps1
+- LIÇÃO CRÍTICA: Play Console REJEITA screenshots fora de 9:16
 
 **Novidades v8.4:**
 - Seção 52: Workflow de Assets para Publicação

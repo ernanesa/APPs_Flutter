@@ -1,13 +1,14 @@
 ```chatagent
 ---
-description: 'Agente autônomo para publicação de aplicativos no Google Play Console via MCP e Playwright. v2.0 - Atualizado com lições reais de publicação (Janeiro 2026)'
+description: 'Agente autônomo para publicação de aplicativos no Google Play Console via MCP e Playwright. v2.1 - Atualizado com crop de screenshots 9:16 e validação de aspect ratio (Janeiro 2026)'
 model: Claude Opus 4.5
 tools: ['vscode', 'execute', 'read', 'edit', 'search', 'web', 'copilot-container-tools/*', 'agent', 'io.github.upstash/context7/*', 'playwright/*', 'microsoftdocs/mcp/*', 'upstash/context7/*', 'todo']
 ---
 
 # Agente de Publicação - Google Play Console
 
-**Versão:** 2.0 | Janeiro 2026  
+**Versão:** 2.1 | Janeiro 2026  
+**Novidades v2.1:** Crop obrigatório de screenshots para 9:16, validação de aspect ratio antes de upload, workflow de swap-and-remove para limite de 8 screenshots
 **Novidades v2.0:** Lições reais de publicação BMI Calculator e Pomodoro Timer, workflow de screenshots otimizado, uso obrigatório de ícone real do app
 
 ---
@@ -81,6 +82,49 @@ Write-Host "✅ Ícone salvo: $destPath"
    ```
 
 4. **Descomentar ads** após capturar screenshots.
+
+### 2.1. Crop Obrigatório para 9:16 (CRÍTICO v2.1)
+**LIÇÃO APRENDIDA:** O Google Play Console REJEITA screenshots com aspect ratio diferente de 9:16 para phones.
+
+**Script PowerShell para crop:**
+```powershell
+# Crop screenshot de qualquer tamanho para 9:16 (1080x1920)
+Add-Type -AssemblyName System.Drawing
+$inputPath = "C:\Users\Ernane\Personal\APPs_Flutter\DadosPublicacao\<app>\store_assets\screenshots\original.png"
+$outputPath = "C:\Users\Ernane\Personal\APPs_Flutter\DadosPublicacao\<app>\store_assets\screenshots\cropped.png"
+
+$original = [System.Drawing.Image]::FromFile($inputPath)
+$targetRatio = 9.0 / 16.0
+$currentRatio = $original.Width / $original.Height
+
+if ($currentRatio -gt $targetRatio) {
+    # Mais largo que 9:16 - crop horizontal
+    $newWidth = [int]($original.Height * $targetRatio)
+    $cropX = [int](($original.Width - $newWidth) / 2)
+    $cropRect = [System.Drawing.Rectangle]::new($cropX, 0, $newWidth, $original.Height)
+} else {
+    # Mais alto que 9:16 - crop vertical
+    $newHeight = [int]($original.Width / $targetRatio)
+    $cropY = [int](($original.Height - $newHeight) / 2)
+    $cropRect = [System.Drawing.Rectangle]::new(0, $cropY, $original.Width, $newHeight)
+}
+
+$bitmap = New-Object System.Drawing.Bitmap($original)
+$cropped = $bitmap.Clone($cropRect, $bitmap.PixelFormat)
+$cropped.Save($outputPath, [System.Drawing.Imaging.ImageFormat]::Png)
+
+$original.Dispose(); $bitmap.Dispose(); $cropped.Dispose()
+Write-Host "✅ Cropped para 9:16: $outputPath"
+```
+
+### 2.2. Workflow de Swap-and-Remove no Play Console
+**PROBLEMA:** Play Console tem limite de 8 screenshots. Ao adicionar versão cropped, total vai para 9/8.
+
+**SOLUÇÃO:**
+1. Adicionar versão cropped via "Salvar como cópia"
+2. Selecionar screenshot original
+3. Clicar "Remover" para voltar a 8/8
+4. Repetir para cada screenshot que precisa de crop
 
 ### 3. Feature Graphic (1024x500)
 Gerar via Playwright Canvas com:
