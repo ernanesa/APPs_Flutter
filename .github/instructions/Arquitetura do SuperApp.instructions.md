@@ -3,7 +3,7 @@ applyTo: '**'
 ---
 # **Plano de Arquitetura: Do App Simples ao SuperApp (Modular)**
 
-Versão: 5.3 | Janeiro 2026 | Inclui lições de publicação real + padrões de gamificação + workflow otimizado + otimização de performance + teste funcional de UI
+Versão: 5.4 | Janeiro 2026 | Inclui lições de publicação real + padrões de gamificação + workflow otimizado + otimização de performance + teste funcional de UI + workflow de assets
 
 Para cumprir o requisito de criar apps individuais que depois serão agregados, NÃO podemos usar uma estrutura monolítica comum (lib/main.dart cheio de tudo).
 
@@ -496,3 +496,65 @@ if (Test-Path $aab) {
 | AAB Size | < 30 MB | PowerShell |
 | i18n Keys | Sincronizados | `check_l10n.ps1` |
 | UI Tests | Todas as telas | ADB uiautomator |
+---
+
+## **20. Workflow de Assets para Publicação (NOVO v5.4)**
+
+**Lição Crítica:** NUNCA gerar ícones via Canvas/HTML. Usar SEMPRE o ícone real do app.
+
+### **20.1. Ícone 512x512 (OBRIGATÓRIO usar ícone real)**
+
+```powershell
+# Upscale do ícone real de 192x192 para 512x512
+Add-Type -AssemblyName System.Drawing
+$appPath = "C:\Users\Ernane\Personal\APPs_Flutter\<app_name>"
+$sourcePath = "$appPath\android\app\src\main\res\mipmap-xxxhdpi\ic_launcher.png"
+$destPath = "C:\Users\Ernane\Personal\APPs_Flutter\DadosPublicacao\<app_name>\store_assets\icon_512.png"
+
+$sourceImage = [System.Drawing.Image]::FromFile($sourcePath)
+$bitmap = New-Object System.Drawing.Bitmap(512, 512)
+$graphics = [System.Drawing.Graphics]::FromImage($bitmap)
+$graphics.InterpolationMode = [System.Drawing.Drawing2D.InterpolationMode]::HighQualityBicubic
+$graphics.SmoothingMode = [System.Drawing.Drawing2D.SmoothingMode]::HighQuality
+$graphics.PixelOffsetMode = [System.Drawing.Drawing2D.PixelOffsetMode]::HighQuality
+$graphics.DrawImage($sourceImage, 0, 0, 512, 512)
+$bitmap.Save($destPath, [System.Drawing.Imaging.ImageFormat]::Png)
+$graphics.Dispose(); $bitmap.Dispose(); $sourceImage.Dispose()
+```
+
+### **20.2. Workflow de Screenshots (8 telas)**
+
+1. **Comentar AdBannerWidget** antes de tirar screenshots
+2. **Mudar idioma do emulador** para inglês:
+   ```powershell
+   C:\dev\android-sdk\platform-tools\adb.exe shell "setprop persist.sys.locale en-US; setprop ctl.restart zygote"
+   Start-Sleep -Seconds 30  # Aguardar reinício
+   ```
+3. **Capturar screenshots** reais via ADB:
+   ```powershell
+   C:\dev\android-sdk\platform-tools\adb.exe exec-out screencap -p > screenshot.png
+   ```
+4. **Descomentar AdBannerWidget** após capturar
+
+### **20.3. Estrutura de Assets**
+
+```
+DadosPublicacao/<app>/store_assets/
+├── icon_512.png           # Ícone REAL upscaled
+├── feature_graphic.png    # 1024x500
+└── screenshots/
+    ├── 01_home.png
+    └── ... (até 08_extra.png)
+```
+
+---
+
+## **21. Versão do Documento**
+
+| Versão | Data | Mudanças |
+|--------|------|----------|
+| 5.4 | Janeiro 2026 | Workflow de Assets, regra do ícone real |
+| 5.3 | Janeiro 2026 | Teste funcional UI, Fast Lane, Métricas |
+| 5.2 | Janeiro 2026 | Otimização R8, ProGuard, Assinatura |
+| 5.1 | Janeiro 2026 | Gamificação, Templates i18n |
+| 5.0 | Dezembro 2025 | Estrutura modular inicial |
