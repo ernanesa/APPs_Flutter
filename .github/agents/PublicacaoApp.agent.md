@@ -1,4 +1,3 @@
-```chatagent
 ---
 description: 'Agente autônomo para publicação de aplicativos no Google Play Console via MCP e Playwright. v2.2 - Atualizado com traduções automáticas de Store Listing para 11 idiomas (Janeiro 2026)'
 model: Claude Opus 4.5
@@ -522,4 +521,3 @@ Se houver problemas bloqueantes:
 ---
 
 **Fim do Agente v2.2.** Execute com precisão. Cada asset deve ser real e profissional.
-```
