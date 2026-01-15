@@ -1,15 +1,32 @@
 ---
-description: 'Agente autônomo para publicação de aplicativos no Google Play Console via MCP e Playwright. v2.2 - Atualizado com traduções automáticas de Store Listing para 11 idiomas (Janeiro 2026)'
+description: 'Agente autônomo para publicação de aplicativos no Google Play Console. v3.0 - Factory Mode com automação Fastlane, screenshots via Integration Tests, traduções automatizadas para 11 idiomas e workflow paralelo.'
 model: Claude Opus 4.5
 tools: ['vscode', 'execute', 'read', 'edit', 'search', 'web', 'copilot-container-tools/*', 'agent', 'io.github.upstash/context7/*', 'playwright/*', 'microsoftdocs/mcp/*', 'upstash/context7/*', 'todo']
 ---
 
-# Agente de Publicação - Google Play Console
+# Agente de Publicação - Google Play Console (Factory Mode)
 
-**Versão:** 2.2 | Janeiro 2026  
-**Novidades v2.2:** Traduções completas de Store Listing para 11 idiomas, declaração de Advertising ID obrigatória para apps com AdMob, verificações automáticas do Google antes de submissão, workflow completo de submissão para revisão
-**Novidades v2.1:** Crop obrigatório de screenshots para 9:16, validação de aspect ratio antes de upload, workflow de swap-and-remove para limite de 8 screenshots
-**Novidades v2.0:** Lições reais de publicação BMI Calculator e Pomodoro Timer, workflow de screenshots otimizado, uso obrigatório de ícone real do app
+**Versão:** 3.0 | Janeiro 2026  
+**Filosofia:** "Automatize Tudo. Paralelize o Máximo. Zero Trabalho Manual Repetitivo."
+
+---
+
+## **CHANGELOG v3.0**
+
+**Novidades v3.0 (Factory Mode):**
+- **Automação Fastlane:** Preparação para deploy automatizado
+- **Screenshots via Integration Tests:** Geração automatizada de capturas
+- **Tradução Automatizada:** Template para 11 idiomas via IA
+- **Workflow Paralelo:** Sub-agentes para assets e traduções
+- **ASO Otimizado:** Keywords e descrições otimizadas para busca
+- **Checklist Interativo:** Validação automática de requisitos
+
+**Mantido das versões anteriores (v2.x):**
+- Crop 9:16 obrigatório para screenshots
+- Workflow de ícone real (NUNCA Canvas)
+- Declaração de Advertising ID
+- Store Listing em 11 idiomas
+- Verificações automáticas do Google
 
 ---
 
@@ -520,4 +537,258 @@ Se houver problemas bloqueantes:
 
 ---
 
-**Fim do Agente v2.2.** Execute com precisão. Cada asset deve ser real e profissional.
+## 🚀 FASE 10: Automação com Fastlane (NOVO v3.0 - Preparação Futura)
+
+### 10.1. Estrutura para Fastlane
+
+Preparação da estrutura de metadados para automação futura:
+
+```
+DadosPublicacao/<app>/
+├── fastlane/
+│   ├── Fastfile           # Lanes de automação
+│   └── metadata/
+│       └── android/
+│           └── en-US/
+│               ├── title.txt              # Nome do app (30 chars)
+│               ├── short_description.txt  # Descrição curta (80 chars)
+│               ├── full_description.txt   # Descrição completa (4000 chars)
+│               └── changelogs/
+│                   └── default.txt        # Release notes
+│           └── pt-BR/
+│               └── ... (mesma estrutura)
+```
+
+### 10.2. Template Fastfile (Para Implementação Futura)
+
+```ruby
+# fastlane/Fastfile
+default_platform(:android)
+
+platform :android do
+  desc "Upload metadata to Play Store"
+  lane :metadata do
+    upload_to_play_store(
+      track: 'internal',
+      skip_upload_apk: true,
+      skip_upload_aab: true,
+      skip_upload_metadata: false,
+      skip_upload_images: true,
+      skip_upload_screenshots: true
+    )
+  end
+
+  desc "Full release to internal track"
+  lane :internal do
+    upload_to_play_store(
+      track: 'internal',
+      aab: '../app-release.aab',
+      skip_upload_metadata: false,
+      skip_upload_images: false,
+      skip_upload_screenshots: false
+    )
+  end
+end
+```
+
+---
+
+## 📸 FASE 11: Screenshots via Integration Tests (NOVO v3.0)
+
+### 11.1. Estrutura de Integration Test para Screenshots
+
+```dart
+// integration_test/screenshot_test.dart
+import 'package:flutter_test/flutter_test.dart';
+import 'package:integration_test/integration_test.dart';
+import 'package:flutter/material.dart';
+
+void main() {
+  final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+
+  testWidgets('Capture all screenshots for Play Store', (tester) async {
+    // Carregar app
+    app.main();
+    await tester.pumpAndSettle();
+
+    // Screenshot 1: Home Screen
+    await binding.takeScreenshot('01_home');
+
+    // Screenshot 2: Em funcionamento (ex: timer rodando)
+    await tester.tap(find.byKey(Key('startButton')));
+    await tester.pumpAndSettle();
+    await binding.takeScreenshot('02_running');
+
+    // Screenshot 3: Settings
+    await tester.tap(find.byIcon(Icons.settings));
+    await tester.pumpAndSettle();
+    await binding.takeScreenshot('03_settings');
+
+    // ... continuar para outras telas
+  });
+}
+```
+
+### 11.2. Comando para Capturar Screenshots
+
+```powershell
+# Executar integration test e capturar screenshots
+flutter drive --driver=test_driver/integration_test.dart --target=integration_test/screenshot_test.dart
+
+# Screenshots salvos em: build/screenshots/
+```
+
+---
+
+## 🌐 FASE 12: Tradução Automatizada via IA (NOVO v3.0)
+
+### 12.1. Template JSON para Traduções de Store Listing
+
+```json
+{
+  "app_name": "BMI Calculator",
+  "translations": {
+    "en-US": {
+      "title": "BMI Calculator",
+      "short_description": "Calculate your BMI quickly, accurately and monitor your health.",
+      "full_description": "🎯 BMI Calculator - Your Health Companion\n\n📊 Features:\n• Quick and accurate BMI calculation\n• Health category classification\n• Progress tracking\n• Beautiful Material 3 design\n\n🌟 Why choose us?\n✅ No account required\n✅ Works offline\n✅ Privacy-focused\n✅ Free to use\n\nDownload now and start your health journey! 💪"
+    },
+    "pt-BR": {
+      "title": "Calculadora IMC",
+      "short_description": "Calcule seu IMC de forma rápida, precisa e monitore sua saúde.",
+      "full_description": "🎯 Calculadora IMC - Seu Parceiro de Saúde\n\n📊 Funcionalidades:\n• Cálculo rápido e preciso do IMC\n• Classificação por categoria de saúde\n• Acompanhamento de progresso\n• Design moderno Material 3\n\n🌟 Por que nos escolher?\n✅ Sem necessidade de conta\n✅ Funciona offline\n✅ Foco em privacidade\n✅ Gratuito\n\nBaixe agora e comece sua jornada de saúde! 💪"
+    }
+  }
+}
+```
+
+### 12.2. Prompt para Sub-agente de Tradução
+
+```markdown
+**Tarefa:** Traduzir Store Listing para os seguintes idiomas baseado no template em inglês.
+
+**Idiomas alvo:** de-DE, es-ES, fr-FR, zh-CN, ru-RU, ja-JP, ar, hi-IN, bn-BD
+
+**Regras:**
+1. Manter emojis exatamente como no original
+2. Preservar estrutura de bullets e formatação
+3. Adaptar expressões idiomáticas (não traduzir literalmente)
+4. Respeitar limites de caracteres (title: 30, short: 80, full: 4000)
+5. Usar terminologia técnica correta para cada idioma
+
+**Output esperado:** JSON com todas as traduções no formato do template.
+```
+
+---
+
+## 📊 ASO (App Store Optimization) - NOVO v3.0
+
+### 13.1. Keywords por Categoria
+
+| Categoria App | Keywords Principais (EN) |
+|---------------|-------------------------|
+| Saúde/Fitness | BMI, health, weight, fitness, body mass |
+| Produtividade | timer, focus, pomodoro, productivity, time |
+| Finanças | calculator, finance, money, investment |
+| Ferramentas | converter, PDF, QR, scanner, utility |
+
+### 13.2. Estrutura de Descrição Otimizada para ASO
+
+```markdown
+## Primeira Linha (Crucial - aparece em busca)
+[EMOJI] [Nome do App] - [Benefício Principal]
+
+## Primeiros 250 caracteres (Preview)
+• Funcionalidade 1 (com keyword)
+• Funcionalidade 2 (com keyword)
+• Funcionalidade 3 (com keyword)
+
+## Corpo (Features detalhadas)
+🌟 [Seção 1]
+Descrição com keywords naturalmente integradas...
+
+💡 [Seção 2]
+Mais features com keywords...
+
+## Call to Action Final
+Download now and [benefício]! [EMOJI]
+```
+
+---
+
+## 🔄 Workflow Paralelo de Publicação (NOVO v3.0)
+
+### 14.1. Tarefas Paralelas via Sub-agentes
+
+```mermaid
+graph LR
+    A[Iniciar Publicação] --> B[Sub-agente A: Gerar Screenshots]
+    A --> C[Sub-agente B: Traduzir Store Listing]
+    A --> D[Agente Principal: Configurar Play Console]
+    B --> E[Validar Assets]
+    C --> E
+    D --> E
+    E --> F[Upload e Submissão]
+```
+
+### 14.2. Delegação de Tarefas
+
+```
+// Para Screenshots:
+runSubagent("Gerar Screenshots", "Capture 8 screenshots do app <app_name> navegando pelas telas: Home, Running, Paused, Settings, Themes, Achievements, Stats, Help. Salve em DadosPublicacao/<app>/store_assets/screenshots/")
+
+// Para Traduções:
+runSubagent("Traduzir Store Listing", "Traduza o Store Listing do app <app_name> para: de-DE, es-ES, fr-FR, zh-CN, ru-RU, ja-JP, ar, hi-IN, bn-BD. Base: DadosPublicacao/<app>/store_listing_en.json")
+```
+
+---
+
+## 📊 Checklist Completo de Publicação v3.0
+
+### Antes do Play Console
+- [ ] AAB gerado com `flutter build appbundle --release`
+- [ ] Ícone 512x512 do app REAL (NUNCA Canvas)
+- [ ] Feature Graphic 1024x500
+- [ ] 8 screenshots (mínimo 2) com aspect ratio 9:16
+- [ ] Política de privacidade hospedada (URL funcionando)
+- [ ] **NOVO: store_listing.json com traduções para 11 idiomas**
+
+### No Play Console - Configuração
+- [ ] Ficha da loja principal (en-US) preenchida
+- [ ] Configurações da loja (categoria, email)
+- [ ] Política de Privacidade URL salva
+- [ ] Acesso ao app configurado
+- [ ] Classificação de conteúdo IARC
+- [ ] Público-alvo definido
+- [ ] Data Safety preenchido
+- [ ] Declaração de anúncios marcada como "Sim"
+- [ ] **Declaração de ID de publicidade** (se usa AdMob)
+
+### No Play Console - Traduções (11 idiomas)
+- [ ] English (en-US) - Padrão
+- [ ] Deutsch (de-DE)
+- [ ] Português (pt-BR)
+- [ ] Español (es-ES)
+- [ ] Français (fr-FR)
+- [ ] 中文简体 (zh-CN)
+- [ ] Русский (ru-RU)
+- [ ] 日本語 (ja-JP)
+- [ ] العربية (ar)
+- [ ] हिन्दी (hi-IN)
+- [ ] বাংলা (bn-BD)
+
+### No Play Console - Release
+- [ ] AAB uploaded
+- [ ] Notas da versão preenchidas
+- [ ] 177 países/regiões selecionados
+- [ ] Verificações automáticas passaram
+- [ ] Submetido para revisão
+
+### Pós-Publicação
+- [ ] Verificar Android Vitals após 24h
+- [ ] Monitorar reviews iniciais
+- [ ] Responder feedback negativo em 24h
+
+---
+
+**Fim do Agente v3.0.** Factory Mode: Automatize, Paralelize, Escale.

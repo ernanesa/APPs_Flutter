@@ -3,15 +3,27 @@ applyTo: '**'
 ---
 # **Plano de Arquitetura: Do App Simples ao SuperApp (Modular)**
 
-Versão: 5.6 | Janeiro 2026 | Inclui lições de publicação real + padrões de gamificação + workflow otimizado + otimização de performance + teste funcional de UI + workflow de assets + crop 9:16 obrigatório + validação i18n automatizada + **traduções de Store Listing obrigatórias**
+Versão: 6.0 | Janeiro 2026 | **Factory Mode** + Clean Architecture + Melos Monorepo + Lições de publicação real + padrões de gamificação + workflow otimizado + otimização de performance + teste funcional de UI + workflow de assets + crop 9:16 obrigatório + validação i18n automatizada + traduções de Store Listing obrigatórias
+
+---
+
+### **📋 Changelog v6.0**
+- ✨ **NOVO:** Clean Architecture obrigatória (Domain/Data/Presentation)
+- ✨ **NOVO:** Configuração Melos para monorepo
+- ✨ **NOVO:** Integration Tests para screenshots automatizados
+- ✨ **NOVO:** Feature-first modularization patterns
+- 🔧 **ATUALIZADO:** Estrutura de pastas com camadas Clean Architecture
+- 🔧 **ATUALIZADO:** Stack tecnológica 2026
+
+---
 
 Para cumprir o requisito de criar apps individuais que depois serão agregados, NÃO podemos usar uma estrutura monolítica comum (lib/main.dart cheio de tudo).
 
-Utilizaremos uma **Arquitetura Modular Baseada em Packages**.
+Utilizaremos uma **Arquitetura Modular Baseada em Packages com Clean Architecture**.
 
 ## **1\. Estrutura de Pastas (O Segredo)**
 
-Mesmo para o primeiro app simples, a estrutura deve ser pensada como um monorepo.
+Mesmo para o primeiro app simples, a estrutura deve ser pensada como um monorepo **com Clean Architecture**.
 
 ```
 /root_project  
@@ -35,6 +47,97 @@ Mesmo para o primeiro app simples, a estrutura deve ser pensada como um monorepo
   /tools (Scripts de validação)
      check_l10n.ps1
      check_store_assets.ps1
+  melos.yaml (NOVO - Configuração do monorepo)
+```
+
+## **1.1. Clean Architecture por App (NOVO v6.0)**
+
+Cada app deve seguir a estrutura de **3 camadas**:
+
+```
+/lib
+  /domain (PURA - Dart puro, sem dependências externas)
+    /entities        # Classes de domínio (BMIResult, TimerSession)
+    /repositories    # Interfaces abstratas (abstract class IBMIRepository)
+    /usecases        # Lógica de negócio (CalculateBMIUseCase)
+  
+  /data (ADAPTADORES - Implementações concretas)
+    /repositories    # Implementações (BMIRepositoryImpl)
+    /datasources     # SharedPreferences, APIs, etc.
+    /models          # DTOs com toJson/fromJson
+  
+  /presentation (UI - Flutter-specific)
+    /providers       # Riverpod providers
+    /screens         # Telas completas
+    /widgets         # Componentes reutilizáveis
+    /state           # StateNotifiers se necessário
+  
+  /services          # Services cross-cutting (AdService, ConsentService)
+  /l10n              # Arquivos .arb de tradução
+  main.dart
+```
+
+### **Regras de Dependência (CRÍTICO)**
+```
+presentation → domain ✅
+presentation → data ✅
+data → domain ✅
+domain → NADA (puro Dart) ✅
+domain → data ❌ PROIBIDO
+domain → presentation ❌ PROIBIDO
+```
+
+## **1.2. Configuração Melos (NOVO v6.0)**
+
+Criar `melos.yaml` na raiz do workspace:
+
+```yaml
+name: superapp_workspace
+repository: https://github.com/usuario/superapp
+
+packages:
+  - apps/*
+  - packages/*
+
+command:
+  bootstrap:
+    usePubspecOverrides: true
+
+scripts:
+  analyze:
+    run: melos exec -- flutter analyze
+    description: Run flutter analyze in all packages
+
+  test:
+    run: melos exec -- flutter test
+    description: Run flutter test in all packages
+
+  gen-l10n:
+    run: melos exec -- flutter gen-l10n
+    description: Generate localizations in all packages
+
+  build:
+    run: melos exec --scope="apps/*" -- flutter build appbundle --release
+    description: Build release AAB for all apps
+
+  clean:
+    run: melos exec -- flutter clean
+    description: Clean all packages
+```
+
+### **Comandos Melos**
+```powershell
+# Instalar Melos globalmente
+dart pub global activate melos
+
+# Bootstrap (pub get em todos os packages)
+melos bootstrap
+
+# Rodar análise em todos os packages
+melos analyze
+
+# Rodar testes em todos os packages
+melos test
 ```
 
 ## **2\. Benefícios desta Estrutura**
@@ -580,9 +683,116 @@ DadosPublicacao/<app>/store_assets/
 
 | Versão | Data | Mudanças |
 |--------|------|----------|
+| 6.0 | Janeiro 2026 | Factory Mode, Clean Architecture obrigatória, Melos monorepo, Integration Tests |
+| 5.6 | Janeiro 2026 | Traduções Store Listing obrigatórias |
 | 5.5 | Janeiro 2026 | Crop 9:16 obrigatório, validação i18n automatizada, workflow swap-and-remove |
 | 5.4 | Janeiro 2026 | Workflow de Assets, regra do ícone real |
 | 5.3 | Janeiro 2026 | Teste funcional UI, Fast Lane, Métricas |
 | 5.2 | Janeiro 2026 | Otimização R8, ProGuard, Assinatura |
 | 5.1 | Janeiro 2026 | Gamificação, Templates i18n |
 | 5.0 | Dezembro 2025 | Estrutura modular inicial |
+
+---
+
+## **22. Integration Tests para Screenshots (NOVO v6.0)**
+
+### **22.1. Configuração**
+
+Adicionar ao `pubspec.yaml`:
+```yaml
+dev_dependencies:
+  integration_test:
+    sdk: flutter
+  flutter_test:
+    sdk: flutter
+```
+
+### **22.2. Estrutura de Arquivos**
+
+```
+/integration_test
+  screenshot_test.dart     # Teste principal de captura
+/test_driver
+  integration_test.dart    # Driver padrão
+```
+
+### **22.3. Template de Screenshot Test**
+
+```dart
+// integration_test/screenshot_test.dart
+import 'package:flutter_test/flutter_test.dart';
+import 'package:integration_test/integration_test.dart';
+import 'package:flutter/material.dart';
+import 'package:seu_app/main.dart' as app;
+
+void main() {
+  final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+
+  testWidgets('Capture Play Store screenshots', (tester) async {
+    app.main();
+    await tester.pumpAndSettle();
+
+    // Screenshot 1: Home
+    await binding.takeScreenshot('01_home');
+
+    // Screenshot 2: Em uso
+    await tester.tap(find.byKey(Key('primaryButton')));
+    await tester.pumpAndSettle();
+    await binding.takeScreenshot('02_in_use');
+
+    // Screenshot 3: Settings
+    await tester.tap(find.byIcon(Icons.settings));
+    await tester.pumpAndSettle();
+    await binding.takeScreenshot('03_settings');
+
+    // Screenshot 4: Achievements
+    await tester.tap(find.byIcon(Icons.emoji_events));
+    await tester.pumpAndSettle();
+    await binding.takeScreenshot('04_achievements');
+  });
+}
+```
+
+### **22.4. Driver File**
+
+```dart
+// test_driver/integration_test.dart
+import 'package:integration_test/integration_test_driver.dart';
+
+Future<void> main() => integrationDriver();
+```
+
+### **22.5. Comando de Execução**
+
+```powershell
+flutter drive --driver=test_driver/integration_test.dart --target=integration_test/screenshot_test.dart -d emulator-5554
+```
+
+---
+
+## **23. Sub-agentes para Tarefas Paralelas (NOVO v6.0)**
+
+### **23.1. Quando Usar Sub-agentes**
+
+| Tarefa | Paralela? | Delegável? |
+|--------|-----------|------------|
+| Tradução de 11 .arb | Sim | ✅ Sub-agente |
+| Captura de screenshots | Sim | ✅ Sub-agente |
+| Tradução Store Listing | Sim | ✅ Sub-agente |
+| Análise de código | Não | ❌ Agente principal |
+| Edição de lógica | Não | ❌ Agente principal |
+
+### **23.2. Template de Delegação**
+
+```
+runSubagent(
+  description: "Traduzir i18n",
+  prompt: "Traduza as seguintes chaves para os idiomas: de, es, fr, zh, ru, ja, ar, hi, bn.
+           Chaves: [lista de chaves e valores em inglês]
+           Retorne um JSON com as traduções organizadas por idioma."
+)
+```
+
+---
+
+**Fim do Documento v6.0.** Factory Mode ativado. Clean Architecture + Melos = Escala Industrial.
