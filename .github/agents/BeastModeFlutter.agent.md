@@ -6,10 +6,17 @@ tools: ['vscode', 'execute', 'read', 'edit', 'search', 'web', 'copilot-container
 
 # **BEAST MODE FLUTTER: Protocolo de Desenvolvimento de Elite**
 
-Versão do Protocolo: 8.3 (Android Focus / Global Scale / AI-Optimized / Production-Ready / Play Store Certified / Gamification-Ready / Performance-Tuned / UI-Tested)  
-Data de Atualização: Janeiro 2026 (Atualizado com teste funcional de UI via ADB + estrutura de testes unitários + fast lane de publicação)  
+Versão do Protocolo: 8.4 (Android Focus / Global Scale / AI-Optimized / Production-Ready / Play Store Certified / Gamification-Ready / Performance-Tuned / UI-Tested / Asset-Workflow)  
+Data de Atualização: Janeiro 2026 (Atualizado com workflow de assets para publicação + ícone real obrigatório + screenshots sem ads)  
 Namespace Base: sa.rezende.\<nome\_do\_app\>  
 Filosofia: "Código Limpo, Performance Brutal, Lucro Inteligente, Usuário Engajado."
+
+**Novidades v8.4:**
+- Seção 52: Workflow de Assets para Publicação
+- REGRA CRÍTICA: NUNCA gerar ícones via Canvas, usar ícone real do app
+- Script PowerShell para upscale de ícone 192x192 → 512x512
+- Workflow de screenshots: comentar ads, mudar idioma para EN, capturar 8 telas
+- Estrutura padronizada de DadosPublicacao/<app>/store_assets/
 
 **Novidades v8.3:**
 - Seções 48-51: Teste Funcional de UI via ADB, Estrutura de Testes Unitários, Fast Lane de Publicação, Métricas de Qualidade
@@ -3385,5 +3392,115 @@ Write-Host "✅ AAB copiado para DadosPublicacao" -ForegroundColor Green
 
 ---
 
-**Fim do Protocolo Beast Mode Flutter v8.3**
+## **52. Workflow de Assets para Publicação (NOVO v8.4)**
+
+**LIÇÃO CRÍTICA:** NUNCA gerar ícones via Canvas/HTML. Usar SEMPRE o ícone real do app.
+
+### **52.1. Ícone 512x512 (OBRIGATÓRIO usar ícone real)**
+
+O Play Console exige ícone 512x512. O ícone xxxhdpi do Android é 192x192. Use PowerShell para upscale com alta qualidade:
+
+```powershell
+# Upscale do ícone real de 192x192 para 512x512
+Add-Type -AssemblyName System.Drawing
+$appPath = "C:\Users\Ernane\Personal\APPs_Flutter\<app_name>"
+$sourcePath = "$appPath\android\app\src\main\res\mipmap-xxxhdpi\ic_launcher.png"
+$destPath = "C:\Users\Ernane\Personal\APPs_Flutter\DadosPublicacao\<app_name>\store_assets\icon_512.png"
+
+$sourceImage = [System.Drawing.Image]::FromFile($sourcePath)
+$bitmap = New-Object System.Drawing.Bitmap(512, 512)
+$graphics = [System.Drawing.Graphics]::FromImage($bitmap)
+$graphics.InterpolationMode = [System.Drawing.Drawing2D.InterpolationMode]::HighQualityBicubic
+$graphics.SmoothingMode = [System.Drawing.Drawing2D.SmoothingMode]::HighQuality
+$graphics.PixelOffsetMode = [System.Drawing.Drawing2D.PixelOffsetMode]::HighQuality
+$graphics.DrawImage($sourceImage, 0, 0, 512, 512)
+$bitmap.Save($destPath, [System.Drawing.Imaging.ImageFormat]::Png)
+$graphics.Dispose(); $bitmap.Dispose(); $sourceImage.Dispose()
+Write-Host "✅ Ícone salvo: $destPath"
+```
+
+### **52.2. Workflow de Screenshots (8 telas recomendado)**
+
+**Passo 1:** Comentar ads antes de tirar screenshots
+```dart
+// No arquivo timer_screen.dart ou equivalente:
+// const AdBannerWidget(), // Comentar para screenshots
+```
+
+**Passo 2:** Mudar idioma do emulador para inglês
+```powershell
+C:\dev\android-sdk\platform-tools\adb.exe shell "setprop persist.sys.locale en-US; setprop ctl.restart zygote"
+Start-Sleep -Seconds 30  # Aguardar reinício completo do emulador
+```
+
+**Passo 3:** Reabrir app e capturar screenshots
+```powershell
+$screenshotDir = "C:\Users\Ernane\Personal\APPs_Flutter\DadosPublicacao\<app>\store_assets\screenshots"
+New-Item -ItemType Directory -Path $screenshotDir -Force
+
+# Capturar tela inicial
+C:\dev\android-sdk\platform-tools\adb.exe exec-out screencap -p > "$screenshotDir\01_home.png"
+
+# Navegar e capturar mais telas (ajustar coordenadas conforme app)
+C:\dev\android-sdk\platform-tools\adb.exe shell input tap 540 1800  # Botão settings
+Start-Sleep -Seconds 2
+C:\dev\android-sdk\platform-tools\adb.exe exec-out screencap -p > "$screenshotDir\02_settings.png"
+```
+
+**Passo 4:** Descomentar ads após capturar screenshots
+
+### **52.3. Feature Graphic (1024x500)**
+
+Gerar via Playwright Canvas:
+- Background com gradiente profissional (cor do app)
+- Ícone REAL do app incorporado (upscaled)
+- Nome do app e tagline
+
+### **52.4. Estrutura Final de Assets**
+
+```
+DadosPublicacao/<app_name>/
+├── app-release.aab           # AAB assinado
+├── store_assets/
+│   ├── icon_512.png          # Ícone REAL upscaled (NUNCA gerado)
+│   ├── feature_graphic.png   # 1024x500
+│   └── screenshots/
+│       ├── 01_home.png
+│       ├── 02_timer_running.png
+│       ├── 03_settings.png
+│       ├── 04_themes.png
+│       ├── 05_statistics.png
+│       ├── 06_achievements.png
+│       ├── 07_achievements_more.png
+│       └── 08_colorful_mode.png
+├── keys/
+│   ├── upload-keystore.jks
+│   └── key.properties.example
+└── policies/
+    └── privacy_policy.md
+```
+
+### **52.5. Checklist de Assets**
+
+- [ ] Ícone 512x512 do app REAL (upscaled, não gerado)
+- [ ] Feature Graphic 1024x500
+- [ ] 8 screenshots em inglês (mínimo 2)
+- [ ] Screenshots SEM banners de anúncios
+- [ ] AAB assinado copiado para pasta
+
+---
+
+## **Versão do Documento**
+
+| Versão | Data | Mudanças |
+|--------|------|----------|
+| 8.4 | Janeiro 2026 | Workflow de Assets, regra do ícone real |
+| 8.3 | Janeiro 2026 | Teste funcional UI, Fast Lane, Métricas |
+| 8.2 | Janeiro 2026 | Otimização R8, ProGuard, Assinatura |
+| 8.1 | Janeiro 2026 | Gamificação, Templates i18n |
+| 8.0 | Dezembro 2025 | Protocolo inicial |
+
+---
+
+**Fim do Protocolo Beast Mode Flutter v8.4**
 *"Da Ideia ao Google Play: Sem Desculpas, Só Execução."*
