@@ -57,7 +57,7 @@ class StatisticsScreen extends ConsumerWidget {
     final titleColor = isColorful ? Colors.white : theme.colorScheme.onSurface;
     final iconColor = isColorful ? Colors.white : theme.colorScheme.primary;
 
-    Widget content = Column(
+    final Widget content = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
@@ -136,7 +136,7 @@ class StatisticsScreen extends ConsumerWidget {
     final titleColor = isColorful ? Colors.white : theme.colorScheme.onSurface;
     final iconColor = isColorful ? Colors.white : theme.colorScheme.primary;
 
-    Widget content = Column(
+    final Widget content = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
@@ -199,7 +199,7 @@ class StatisticsScreen extends ConsumerWidget {
       loading: () => const SizedBox.shrink(),
       error: (_, __) => const SizedBox.shrink(),
       data: (stats) {
-        Widget content = Row(
+        final Widget content = Row(
           children: [
             Expanded(
               child: _buildStatItem(

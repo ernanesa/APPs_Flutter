@@ -11,6 +11,7 @@ import 'screens/timer_screen.dart';
 import 'services/ad_service.dart';
 import 'services/consent_service.dart';
 import 'services/sound_service.dart';
+import 'utils/logger.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -45,7 +46,7 @@ Future<void> _initializeAds() async {
   ConsentService.instance.gatherConsent(
     onConsentComplete: (error) {
       if (error != null) {
-        debugPrint('Consent error: ${error.message}');
+        logDebug('Consent error: ${error.message}');
       }
     },
   );

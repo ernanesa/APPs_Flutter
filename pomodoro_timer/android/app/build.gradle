@@ -5,6 +5,13 @@ plugins {
     id "dev.flutter.flutter-gradle-plugin"
 }
 
+// Load keystore properties
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('key.properties')
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
 android {
     namespace = "sa.rezende.pomodoro_timer"
     compileSdk = 35
@@ -19,12 +26,28 @@ android {
         jvmTarget = JavaVersion.VERSION_1_8
     }
 
+    // Signing configuration
+    signingConfigs {
+        release {
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+            storePassword keystoreProperties['storePassword']
+        }
+    }
+
     defaultConfig {
         applicationId = "sa.rezende.pomodoro_timer"
         minSdk = 21
         targetSdk = 35
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+        
+        // Enable multidex only if needed (minSdk 21+ handles it)
+        multiDexEnabled false
+        
+        // Resource optimization
+        resourceConfigurations += ['en', 'pt', 'es', 'zh', 'de', 'fr', 'ar', 'bn', 'hi', 'ja', 'ru']
     }
 
     buildTypes {
@@ -36,15 +59,47 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            // TODO: Add your own signing config for the release build.
-            signingConfig = signingConfigs.debug
+            
+            // Enable aggressive optimizations
+            crunchPngs true
+            
+            // Production signing
+            signingConfig signingConfigs.release
         }
+    }
+
+    // Disable unused build features
+    buildFeatures {
+        buildConfig = false
+        aidl = false
+        renderScript = false
+        resValues = false
+        shaders = false
     }
 
     packagingOptions {
         resources {
-            excludes += ['META-INF/NOTICE.txt', 'META-INF/LICENSE.txt', 'META-INF/DEPENDENCIES']
+            excludes += [
+                'META-INF/NOTICE.txt',
+                'META-INF/LICENSE.txt',
+                'META-INF/DEPENDENCIES',
+                'META-INF/*.kotlin_module',
+                'META-INF/AL2.0',
+                'META-INF/LGPL2.1',
+                'kotlin/**',
+                '**.properties',
+                'DebugProbesKt.bin'
+            ]
         }
+        jniLibs {
+            useLegacyPackaging = false
+        }
+    }
+    
+    // Lint optimizations
+    lint {
+        checkReleaseBuilds false
+        abortOnError false
     }
 }
 

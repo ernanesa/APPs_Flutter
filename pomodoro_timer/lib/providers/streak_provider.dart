@@ -46,8 +46,8 @@ class StreakNotifier extends StateNotifier<StreakData> {
       return;
     }
 
-    int newStreak;
-    int newTotalDays = state.totalDaysActive + 1;
+    final int newStreak;
+    final newTotalDays = state.totalDaysActive + 1;
 
     if (state.lastActiveDate == null) {
       // First ever session

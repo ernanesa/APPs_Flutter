@@ -36,12 +36,7 @@ class PomodoroScaffold extends ConsumerWidget {
       );
     }
 
-    // In colorful mode, we need to handle the layout differently
-    // to avoid content overlapping with the AppBar
-    final mediaQuery = MediaQuery.of(context);
-    final statusBarHeight = mediaQuery.padding.top;
-    final appBarHeight = appBar != null ? kToolbarHeight : 0.0;
-    final topPadding = statusBarHeight + appBarHeight;
+    // In colorful mode, we wrap with ColorfulBackground
 
     return ColorfulBackground(
       primaryColor: selectedTheme.primaryColor,

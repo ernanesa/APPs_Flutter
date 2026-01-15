@@ -6,10 +6,27 @@ tools: ['vscode', 'execute', 'read', 'edit', 'search', 'web', 'copilot-container
 
 # **BEAST MODE FLUTTER: Protocolo de Desenvolvimento de Elite**
 
-Versão do Protocolo: 8.1 (Android Focus / Global Scale / AI-Optimized / Production-Ready / Play Store Certified / Gamification-Ready)  
-Data de Atualização: Janeiro 2026 (Atualizado com experiência Pomodoro Timer + padrões de gamificação + lições de integração)  
+Versão do Protocolo: 8.3 (Android Focus / Global Scale / AI-Optimized / Production-Ready / Play Store Certified / Gamification-Ready / Performance-Tuned / UI-Tested)  
+Data de Atualização: Janeiro 2026 (Atualizado com teste funcional de UI via ADB + estrutura de testes unitários + fast lane de publicação)  
 Namespace Base: sa.rezende.\<nome\_do\_app\>  
 Filosofia: "Código Limpo, Performance Brutal, Lucro Inteligente, Usuário Engajado."
+
+**Novidades v8.3:**
+- Seções 48-51: Teste Funcional de UI via ADB, Estrutura de Testes Unitários, Fast Lane de Publicação, Métricas de Qualidade
+- Workflow completo de teste funcional usando uiautomator e input tap/swipe
+- Checklist de testes para todas as telas e features
+- Template de unit_test.dart com 19+ testes obrigatórios
+- Comando único para validação completa (Fast Lane)
+- Relatório de qualidade pré-publicação
+
+**Novidades v8.2:**
+- Seções 45-47: Otimização de Performance para Produção, Assinatura de Produção, Testes Pré-Publicação
+- gradle.properties com R8 full mode e build features desabilitadas
+- ProGuard rules agressivo com 7 passes e remoção de logs
+- Logger utility para tree-shaking completo de debug output
+- Redução de até 99% em fontes via tree-shaking de ícones
+- Configuração completa de keystore e signing
+- Checklist de testes obrigatórios antes de publicar
 
 **Novidades v8.1:**
 - Seções 41-44: Checklist de Integração UI, Templates i18n, Troubleshooting Windows, Padrões de Eficiência
@@ -2894,5 +2911,479 @@ emulator -avd <AVD_NAME> -no-snapshot-load -gpu host
 
 ---
 
-**Fim do Protocolo Beast Mode Flutter v8.1**
+## **45. Otimização de Performance para Produção (NOVO v8.2)**
+
+**Lição Pomodoro Timer:** Aplicar estas otimizações ANTES do build de release reduz tamanho do AAB em até 30% e melhora performance significativamente.
+
+### **45.1. gradle.properties Otimizado (OBRIGATÓRIO)**
+
+```properties
+# Build performance
+org.gradle.jvmargs=-Xmx4G -XX:MaxMetaspaceSize=2G -XX:+HeapDumpOnOutOfMemoryError
+org.gradle.caching=true
+org.gradle.parallel=true
+org.gradle.configuration-cache=true
+org.gradle.daemon=true
+
+# Android optimizations
+android.useAndroidX=true
+android.enableJetifier=true
+android.enableR8.fullMode=true
+
+# Disable unused features
+android.defaults.buildfeatures.buildconfig=false
+android.defaults.buildfeatures.aidl=false
+android.defaults.buildfeatures.renderscript=false
+android.defaults.buildfeatures.resvalues=false
+android.defaults.buildfeatures.shaders=false
+```
+
+### **45.2. build.gradle Otimizado (android/app)**
+
+```gradle
+android {
+    // Resource configurations - APENAS idiomas usados
+    defaultConfig {
+        resourceConfigurations += ['en', 'pt', 'es', 'zh', 'de', 'fr', 'ar', 'bn', 'hi', 'ja', 'ru']
+    }
+    
+    // Disable unused build features
+    buildFeatures {
+        buildConfig = false
+        aidl = false
+        renderScript = false
+        resValues = false
+        shaders = false
+    }
+    
+    // Release optimizations
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    
+    // Packaging optimizations
+    packagingOptions {
+        resources {
+            excludes += [
+                'META-INF/NOTICE.txt',
+                'META-INF/LICENSE.txt',
+                'META-INF/DEPENDENCIES',
+                'META-INF/*.kotlin_module',
+                'kotlin/**',
+                'DebugProbesKt.bin'
+            ]
+        }
+    }
+}
+```
+
+### **45.3. ProGuard Rules Agressivo (proguard-rules.pro)**
+
+```proguard
+# === OTIMIZAÇÃO MÁXIMA ===
+-optimizationpasses 7
+-dontusemixedcaseclassnames
+-dontskipnonpubliclibraryclasses
+-verbose
+-allowaccessmodification
+-repackageclasses ''
+-overloadaggressively
+
+# === REMOVER LOGS EM PRODUÇÃO ===
+-assumenosideeffects class android.util.Log {
+    public static boolean isLoggable(java.lang.String, int);
+    public static int v(...);
+    public static int d(...);
+    public static int i(...);
+    public static int w(...);
+}
+
+# === KOTLIN OPTIMIZATIONS ===
+-assumenosideeffects class kotlin.jvm.internal.Intrinsics {
+    public static void checkNotNull(...);
+    public static void checkExpressionValueIsNotNull(...);
+    public static void checkNotNullExpressionValue(...);
+    public static void checkParameterIsNotNull(...);
+    public static void checkNotNullParameter(...);
+    public static void checkReturnedValueIsNotNull(...);
+    public static void checkFieldIsNotNull(...);
+    public static void throwUninitializedPropertyAccessException(...);
+}
+
+# === FLUTTER ===
+-keep class io.flutter.** { *; }
+-keep class io.flutter.plugins.** { *; }
+-dontwarn io.flutter.embedding.**
+
+# === GOOGLE MOBILE ADS ===
+-keep class com.google.android.gms.ads.** { *; }
+-keep class com.google.ads.** { *; }
+
+# === AUDIOPLAYERS (se usado) ===
+-keep class xyz.luan.audioplayers.** { *; }
+
+# === UMP (Consent) ===
+-keep class com.google.android.ump.** { *; }
+```
+
+### **45.4. Logger Utility (Substituir debugPrint)**
+
+**Criar:** `lib/utils/logger.dart`
+
+```dart
+import 'package:flutter/foundation.dart';
+
+/// Logger que é completamente removido em release via tree-shaking
+void logDebug(String message) {
+  if (kDebugMode) {
+    debugPrint(message);
+  }
+}
+
+void logError(String message, [Object? error, StackTrace? stackTrace]) {
+  if (kDebugMode) {
+    debugPrint('ERROR: $message');
+    if (error != null) debugPrint('$error');
+    if (stackTrace != null) debugPrint('$stackTrace');
+  }
+}
+```
+
+**Uso:** Substituir TODOS os `debugPrint()` por `logDebug()` para garantir zero logs em produção.
+
+### **45.5. Resultados Esperados**
+
+| Otimização | Impacto |
+|------------|---------|
+| R8 full mode | ~15-20% menor |
+| 7 passes ProGuard | Código mais compacto |
+| Remove logs | Binário menor, sem debug output |
+| Kotlin intrinsics | Remove null checks em release |
+| Resource configs | Só 11 idiomas incluídos |
+| Tree-shake icons | Até **99%** redução de fontes |
+
+### **45.6. Comando de Build Otimizado**
+
+```powershell
+# Build com tree-shaking de ícones (padrão)
+flutter build appbundle --release
+
+# Verificar tamanho do AAB
+(Get-Item "build\app\outputs\bundle\release\app-release.aab").Length / 1MB
+```
+
+---
+
+## **46. Configuração de Assinatura de Produção (NOVO v8.2)**
+
+### **46.1. Gerar Keystore (Uma vez por app)**
+
+```powershell
+# Navegar para pasta de chaves
+Set-Location -Path "C:\Users\Ernane\Personal\APPs_Flutter\DadosPublicacao\<app_name>\keys"
+
+# Gerar keystore
+keytool -genkey -v -keystore upload-keystore.jks -keyalg RSA -keysize 2048 -validity 10000 -alias upload
+
+# Preencher:
+# - Senha do keystore (guardar em local seguro!)
+# - Nome e Sobrenome
+# - Unidade Organizacional
+# - Organização
+# - Cidade
+# - Estado
+# - Código do país (BR)
+```
+
+### **46.2. Criar key.properties**
+
+**Criar:** `android/key.properties` (NÃO commitar no git!)
+
+```properties
+storePassword=<sua_senha>
+keyPassword=<sua_senha>
+keyAlias=upload
+storeFile=C:/Users/Ernane/Personal/APPs_Flutter/DadosPublicacao/<app_name>/keys/upload-keystore.jks
+```
+
+### **46.3. Configurar build.gradle (android/app)**
+
+```gradle
+// No topo do arquivo, após plugins
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('key.properties')
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
+android {
+    // ... outras configs ...
+    
+    signingConfigs {
+        release {
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+            storePassword keystoreProperties['storePassword']
+        }
+    }
+    
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+```
+
+### **46.4. Adicionar ao .gitignore**
+
+```gitignore
+# Chaves de assinatura
+**/android/key.properties
+**/*.jks
+**/*.keystore
+```
+
+### **46.5. Verificar Assinatura do AAB**
+
+```powershell
+# Verificar se AAB está assinado corretamente
+jarsigner -verify -verbose -certs build\app\outputs\bundle\release\app-release.aab
+```
+
+---
+
+## **47. Testes Adicionais Pré-Publicação (NOVO v8.2)**
+
+### **47.1. Checklist de Testes Obrigatórios**
+
+```powershell
+# 1. Análise estática
+flutter analyze
+
+# 2. Testes unitários
+flutter test
+
+# 3. Build release (verifica compilação)
+flutter build appbundle --release
+
+# 4. Verificar tamanho do AAB
+$aab = "build\app\outputs\bundle\release\app-release.aab"
+Write-Host "Tamanho: $([math]::Round((Get-Item $aab).Length / 1MB, 2)) MB"
+
+# 5. Verificar assinatura
+jarsigner -verify $aab
+```
+
+### **47.2. Teste em Device Real (Recomendado)**
+
+```powershell
+# Instalar em device via bundletool
+java -jar bundletool.jar build-apks --bundle=app-release.aab --output=app.apks --mode=universal
+java -jar bundletool.jar install-apks --apks=app.apks
+```
+
+### **47.3. Verificações Finais**
+
+| Teste | Comando | Esperado |
+|-------|---------|----------|
+| Analyze | `flutter analyze` | 0 issues |
+| Test | `flutter test` | All passed |
+| Build | `flutter build appbundle --release` | ✓ Built |
+| Assinatura | `jarsigner -verify` | jar verified |
+| Tamanho | PowerShell | < 30MB |
+| i18n sync | `tools/check_l10n.ps1` | All synced |
+
+---
+
+## **48. Teste Funcional de UI via ADB (NOVO v8.3)**
+
+**Lição Pomodoro Timer:** Testar TODAS as funcionalidades do app via automação ADB antes de publicar.
+
+### **48.1. Workflow de Teste Funcional**
+
+```powershell
+# 1. Verificar dispositivo conectado
+adb devices
+
+# 2. Capturar hierarquia de UI
+adb shell uiautomator dump /sdcard/ui.xml
+adb shell cat /sdcard/ui.xml
+
+# 3. Clicar em elemento (calcular centro dos bounds)
+# bounds="[100,200][300,400]" → tap (200, 300)
+adb shell input tap 200 300
+
+# 4. Scroll vertical
+adb shell input swipe 540 1500 540 600 300
+
+# 5. Capturar screenshot
+adb exec-out screencap -p > screenshot.png
+```
+
+### **48.2. Checklist de Testes Funcionais**
+
+| Tela/Feature | O que testar | Comando |
+|--------------|--------------|---------|
+| **Home Screen** | Layout, elementos visíveis | `uiautomator dump` |
+| **Timer Controls** | Start, Pause, Reset, Skip | `input tap` em cada botão |
+| **Settings** | Scroll, toggles, sliders | `input swipe` + `input tap` |
+| **Navigation** | Todas as telas acessíveis | Navegar via AppBar actions |
+| **Achievements** | Dialog abre/fecha | Clicar em badge |
+| **Theme Change** | Cor muda corretamente | Selecionar tema diferente |
+| **i18n** | Textos traduzidos | Verificar content-desc |
+| **Ads** | Banner visível | Verificar WebView no dump |
+
+### **48.3. Validação de Resultados**
+
+```powershell
+# Buscar elementos específicos no XML
+adb shell cat /sdcard/ui.xml | Select-String -Pattern "Timer|Start|Settings"
+
+# Verificar se texto está presente
+adb shell cat /sdcard/ui.xml | Select-String -Pattern "content-desc=`"Pausa Curta`""
+```
+
+---
+
+## **49. Estrutura de Testes Unitários Obrigatória (NOVO v8.3)**
+
+### **49.1. Mínimo de 19 Testes para Apps com Gamificação**
+
+| Categoria | Testes | Quantidade |
+|-----------|--------|------------|
+| Timer Logic | formatTime, parseTime, durations | 5 |
+| Achievements | unlock, check, categories | 4 |
+| Streaks | record, reset, consecutive | 4 |
+| Daily Goals | increment, reset, progress | 3 |
+| Quotes | random selection, cycling | 3 |
+
+### **49.2. Template de unit_test.dart**
+
+```dart
+void main() {
+  group('Timer Logic', () {
+    test('formatTime formats correctly', () {
+      expect(formatTime(90), '01:30');
+      expect(formatTime(3600), '60:00');
+    });
+    
+    test('durations are within bounds', () {
+      expect(defaultFocusDuration, inInclusiveRange(1, 60));
+    });
+  });
+  
+  group('Achievements', () {
+    test('first session achievement unlocks', () {
+      final achievements = AchievementsNotifier();
+      achievements.checkAndUnlock(totalSessions: 1);
+      expect(achievements.isUnlocked('first_session'), true);
+    });
+  });
+  
+  group('Streaks', () {
+    test('streak increments on consecutive days', () {
+      // Test logic
+    });
+  });
+}
+```
+
+---
+
+## **50. Fast Lane de Publicação (NOVO v8.3)**
+
+### **50.1. Comando Único para Validação Completa**
+
+```powershell
+# Fast Lane: Validar + Build em um comando
+Set-Location -Path "C:\Users\Ernane\Personal\APPs_Flutter\<app_name>";
+C:\dev\flutter\bin\flutter clean;
+C:\dev\flutter\bin\flutter pub get;
+C:\dev\flutter\bin\flutter gen-l10n;
+C:\dev\flutter\bin\flutter analyze;
+C:\dev\flutter\bin\flutter test;
+C:\dev\flutter\bin\flutter build appbundle --release
+```
+
+### **50.2. Verificação Pós-Build**
+
+```powershell
+# Verificar AAB gerado
+$aab = "build\app\outputs\bundle\release\app-release.aab"
+if (Test-Path $aab) {
+    $size = [math]::Round((Get-Item $aab).Length / 1MB, 2)
+    Write-Host "✅ AAB gerado: $size MB" -ForegroundColor Green
+} else {
+    Write-Host "❌ AAB não encontrado" -ForegroundColor Red
+}
+```
+
+### **50.3. Copiar para DadosPublicacao**
+
+```powershell
+$appName = "pomodoro_timer"
+$source = "build\app\outputs\bundle\release\app-release.aab"
+$dest = "..\DadosPublicacao\$appName\"
+Copy-Item $source $dest -Force
+Write-Host "✅ AAB copiado para DadosPublicacao" -ForegroundColor Green
+```
+
+---
+
+## **51. Métricas de Qualidade de Código (NOVO v8.3)**
+
+### **51.1. Critérios de Aceitação**
+
+| Métrica | Critério | Ferramenta |
+|---------|----------|------------|
+| Analyze Issues | 0 | `flutter analyze` |
+| Test Coverage | > 80% core logic | `flutter test --coverage` |
+| AAB Size | < 30 MB | PowerShell |
+| i18n Keys | 100% sincronizados | `check_l10n.ps1` |
+| UI Tests | Todas as telas | ADB uiautomator |
+
+### **51.2. Relatório de Qualidade Pré-Publicação**
+
+```markdown
+# Relatório de Qualidade - [App Name] v[version]
+
+## Testes Automatizados
+- ✅ flutter analyze: 0 issues
+- ✅ flutter test: X/X passed
+- ✅ i18n sync: 11 idiomas, 148 keys
+
+## Build
+- ✅ AAB Size: XX.X MB
+- ✅ Assinatura: válida
+- ✅ Target SDK: 35
+
+## Testes Funcionais (ADB)
+- ✅ Home Screen
+- ✅ Timer Controls (Start/Pause/Skip/Reset)
+- ✅ Settings Screen
+- ✅ Achievements Screen
+- ✅ Theme Change
+- ✅ Navigation
+
+## Features Verificadas
+- ✅ Streaks: funcionando
+- ✅ Daily Goals: funcionando
+- ✅ Achievements: 14 badges
+- ✅ Themes: 8 opções
+- ✅ Quotes: 15 citações
+- ✅ Banner Ads: carregando
+```
+
+---
+
+**Fim do Protocolo Beast Mode Flutter v8.3**
 *"Da Ideia ao Google Play: Sem Desculpas, Só Execução."*

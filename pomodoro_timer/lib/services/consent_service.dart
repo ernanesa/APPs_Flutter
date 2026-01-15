@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import '../utils/logger.dart';
 import 'ad_service.dart';
 
 /// Service for handling GDPR consent (UMP).
@@ -46,7 +47,7 @@ class ConsentService {
         }
       },
       (FormError error) {
-        debugPrint('Consent info update failed: ${error.message}');
+        logDebug('Consent info update failed: ${error.message}');
         _updateCanRequestAds();
         onConsentComplete(error);
       },
@@ -71,7 +72,7 @@ class ConsentService {
         }
       },
       (FormError error) {
-        debugPrint('Consent form load failed: ${error.message}');
+        logDebug('Consent form load failed: ${error.message}');
         _updateCanRequestAds();
         onConsentComplete(error);
       },

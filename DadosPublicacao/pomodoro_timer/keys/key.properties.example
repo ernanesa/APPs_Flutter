@@ -1,0 +1,8 @@
+# Key properties file for Pomodoro Timer
+# Copy this file to android/key.properties and fill with real values
+# DO NOT COMMIT the real key.properties file!
+
+storePassword=YOUR_STORE_PASSWORD
+keyPassword=YOUR_KEY_PASSWORD
+keyAlias=upload
+storeFile=C:/Users/Ernane/Personal/APPs_Flutter/DadosPublicacao/pomodoro_timer/keys/upload-keystore.jks

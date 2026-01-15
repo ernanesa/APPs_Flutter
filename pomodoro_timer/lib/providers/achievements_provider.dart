@@ -5,7 +5,6 @@ import '../models/achievement.dart';
 import '../models/pomodoro_session.dart';
 import 'settings_provider.dart';
 import 'streak_provider.dart';
-import 'timer_provider.dart';
 
 /// Provider for achievements state.
 final achievementsProvider = StateNotifierProvider<AchievementsNotifier, List<Achievement>>((ref) {

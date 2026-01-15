@@ -3,7 +3,7 @@ applyTo: '**'
 ---
 # **Plano de Arquitetura: Do App Simples ao SuperApp (Modular)**
 
-Versão: 5.1 | Janeiro 2026 | Inclui lições de publicação real + padrões de gamificação + workflow otimizado
+Versão: 5.3 | Janeiro 2026 | Inclui lições de publicação real + padrões de gamificação + workflow otimizado + otimização de performance + teste funcional de UI
 
 Para cumprir o requisito de criar apps individuais que depois serão agregados, NÃO podemos usar uma estrutura monolítica comum (lib/main.dart cheio de tudo).
 
@@ -298,4 +298,201 @@ flutter gen-l10n
 ### **13.3. Configuração Permanente**
 Adicionar `C:\dev\flutter\bin` às variáveis de ambiente do sistema.
 
-**Fim do Planejamento v5.1.** Mantenha o foco. Codifique uma feature, termine, valide, commite. Não deixe pontas soltas.
+---
+
+## **14. Otimização de Performance para Produção (NOVO v5.2)**
+
+### **14.1. Configuração Obrigatória de gradle.properties**
+
+```properties
+# Performance de build
+org.gradle.jvmargs=-Xmx4G -XX:MaxMetaspaceSize=2G -XX:+HeapDumpOnOutOfMemoryError
+org.gradle.caching=true
+org.gradle.parallel=true
+org.gradle.configuration-cache=true
+
+# Otimizações Android
+android.useAndroidX=true
+android.enableJetifier=true
+android.enableR8.fullMode=true
+
+# Desabilitar features não usadas
+android.defaults.buildfeatures.buildconfig=false
+android.defaults.buildfeatures.aidl=false
+android.defaults.buildfeatures.renderscript=false
+android.defaults.buildfeatures.resvalues=false
+android.defaults.buildfeatures.shaders=false
+```
+
+### **14.2. ProGuard Rules Agressivo**
+
+```proguard
+# Otimização máxima
+-optimizationpasses 7
+-allowaccessmodification
+-repackageclasses ''
+
+# Remover logs em produção
+-assumenosideeffects class android.util.Log { *; }
+
+# Remover null checks do Kotlin
+-assumenosideeffects class kotlin.jvm.internal.Intrinsics { *; }
+
+# Manter Flutter e AdMob
+-keep class io.flutter.** { *; }
+-keep class com.google.android.gms.ads.** { *; }
+```
+
+### **14.3. Logger Utility (Zero Logs em Produção)**
+
+Criar `lib/utils/logger.dart`:
+
+```dart
+import 'package:flutter/foundation.dart';
+
+void logDebug(String message) {
+  if (kDebugMode) debugPrint(message);
+}
+```
+
+**Regra:** Substituir TODOS os `debugPrint()` por `logDebug()` - será completamente removido em release via tree-shaking.
+
+### **14.4. Resultados Esperados**
+
+| Otimização | Impacto |
+|------------|---------|
+| R8 full mode | ~15-20% menor |
+| 7 passes ProGuard | Código mais compacto |
+| Remove logs | Zero debug output |
+| Tree-shake icons | Até **99%** redução de fontes |
+
+---
+
+## **15. Assinatura de Produção (NOVO v5.2)**
+
+### **15.1. Estrutura de Chaves**
+
+```
+/DadosPublicacao/<app_name>/keys/
+  upload-keystore.jks     # Keystore de upload
+  key.properties.example  # Template (SEM senhas)
+```
+
+### **15.2. Gerar Keystore**
+
+```powershell
+keytool -genkey -v -keystore upload-keystore.jks -keyalg RSA -keysize 2048 -validity 10000 -alias upload
+```
+
+### **15.3. Configurar key.properties**
+
+Criar `android/key.properties` (NÃO commitar!):
+
+```properties
+storePassword=<senha>
+keyPassword=<senha>
+keyAlias=upload
+storeFile=C:/Users/Ernane/Personal/APPs_Flutter/DadosPublicacao/<app>/keys/upload-keystore.jks
+```
+
+### **15.4. Adicionar ao .gitignore**
+
+```gitignore
+**/android/key.properties
+**/*.jks
+```
+
+---
+
+**Fim do Planejamento v5.3.** Mantenha o foco. Codifique uma feature, termine, valide, commite. Não deixe pontas soltas.
+
+---
+
+## **16. Teste Funcional de UI via ADB (NOVO v5.3)**
+
+**Lição Pomodoro Timer:** Antes de publicar, testar TODAS as funcionalidades via automação ADB.
+
+### **16.1. Comandos Essenciais**
+
+```powershell
+# Capturar hierarquia de UI
+adb shell uiautomator dump /sdcard/ui.xml
+adb shell cat /sdcard/ui.xml
+
+# Clicar em elemento (centro dos bounds)
+adb shell input tap <x> <y>
+
+# Scroll vertical
+adb shell input swipe 540 1500 540 600 300
+
+# Screenshot
+adb exec-out screencap -p > screenshot.png
+```
+
+### **16.2. Checklist de Testes Funcionais**
+
+- [ ] Home Screen: Layout, elementos visíveis
+- [ ] Controles principais: todos os botões respondem
+- [ ] Settings: scroll, toggles, sliders
+- [ ] Navegação: todas as telas acessíveis
+- [ ] Achievements: dialog abre/fecha
+- [ ] Theme Change: cor muda corretamente
+- [ ] i18n: textos traduzidos visíveis
+- [ ] Ads: banner carregando
+
+---
+
+## **17. Estrutura de Testes Unitários (NOVO v5.3)**
+
+### **17.1. Mínimo de Testes por App**
+
+| Tipo de App | Testes Mínimos | Cobertura |
+|-------------|----------------|-----------|
+| Calculadora | 10 | Core logic |
+| Timer/Pomodoro | 19 | Timer + Gamificação |
+| Todo/Lista | 15 | CRUD + Persistência |
+
+### **17.2. Categorias Obrigatórias**
+
+```
+/test/
+  unit_test.dart      # Lógica de negócio
+  widget_test.dart    # Widgets isolados (opcional)
+```
+
+---
+
+## **18. Fast Lane de Publicação (NOVO v5.3)**
+
+### **18.1. Comando Único**
+
+```powershell
+Set-Location -Path "C:\Users\Ernane\Personal\APPs_Flutter\<app>";
+C:\dev\flutter\bin\flutter clean;
+C:\dev\flutter\bin\flutter pub get;
+C:\dev\flutter\bin\flutter gen-l10n;
+C:\dev\flutter\bin\flutter analyze;
+C:\dev\flutter\bin\flutter test;
+C:\dev\flutter\bin\flutter build appbundle --release
+```
+
+### **18.2. Verificação Pós-Build**
+
+```powershell
+$aab = "build\app\outputs\bundle\release\app-release.aab"
+if (Test-Path $aab) {
+    Write-Host "✅ AAB: $([math]::Round((Get-Item $aab).Length / 1MB, 2)) MB"
+}
+```
+
+---
+
+## **19. Métricas de Qualidade (NOVO v5.3)**
+
+| Métrica | Critério | Ferramenta |
+|---------|----------|------------|
+| Analyze Issues | 0 | `flutter analyze` |
+| Tests Passed | 100% | `flutter test` |
+| AAB Size | < 30 MB | PowerShell |
+| i18n Keys | Sincronizados | `check_l10n.ps1` |
+| UI Tests | Todas as telas | ADB uiautomator |

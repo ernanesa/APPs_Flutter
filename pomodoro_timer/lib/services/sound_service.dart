@@ -1,6 +1,6 @@
 import 'package:audioplayers/audioplayers.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import '../utils/logger.dart';
 
 /// Service for managing sound and haptic feedback.
 class SoundService {
@@ -34,7 +34,7 @@ class SoundService {
         volume: 0.8,
       );
     } catch (e) {
-      debugPrint('Error playing sound: $e');
+      logDebug('Error playing sound: $e');
       // Fallback to system sound
       await _playSystemSound();
     }
@@ -50,7 +50,7 @@ class SoundService {
         volume: 0.3,
       );
     } catch (e) {
-      debugPrint('Error playing tick: $e');
+      logDebug('Error playing tick: $e');
     }
   }
 
@@ -87,7 +87,7 @@ class SoundService {
       await Future.delayed(const Duration(milliseconds: 200));
       await HapticFeedback.heavyImpact();
     } catch (e) {
-      debugPrint('Vibration error: $e');
+      logDebug('Vibration error: $e');
     }
   }
 

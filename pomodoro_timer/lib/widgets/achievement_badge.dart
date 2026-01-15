@@ -126,26 +126,6 @@ class AchievementBadge extends StatelessWidget {
     };
     return titles[key] ?? key;
   }
-
-  String _getLocalizedDescription(AppLocalizations l10n, String key) {
-    final Map<String, String> descriptions = {
-      'achievementFirstSessionDesc': l10n.achievementFirstSessionDesc,
-      'achievementSessions10Desc': l10n.achievementSessions10Desc,
-      'achievementSessions50Desc': l10n.achievementSessions50Desc,
-      'achievementSessions100Desc': l10n.achievementSessions100Desc,
-      'achievementSessions500Desc': l10n.achievementSessions500Desc,
-      'achievementStreak3Desc': l10n.achievementStreak3Desc,
-      'achievementStreak7Desc': l10n.achievementStreak7Desc,
-      'achievementStreak30Desc': l10n.achievementStreak30Desc,
-      'achievementTime1hDesc': l10n.achievementTime1hDesc,
-      'achievementTime10hDesc': l10n.achievementTime10hDesc,
-      'achievementTime100hDesc': l10n.achievementTime100hDesc,
-      'achievementEarlyBirdDesc': l10n.achievementEarlyBirdDesc,
-      'achievementNightOwlDesc': l10n.achievementNightOwlDesc,
-      'achievementWeekendWarriorDesc': l10n.achievementWeekendWarriorDesc,
-    };
-    return descriptions[key] ?? key;
-  }
 }
 
 /// Widget for displaying achievement unlock notification.

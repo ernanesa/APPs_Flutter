@@ -298,7 +298,7 @@ class _TimerScreenState extends ConsumerState<TimerScreen>
     ThemeData theme,
   ) {
     final isRunning = timerState.isRunning && !timerState.isPaused;
-    final whiteColor = Colors.white;
+    const whiteColor = Colors.white;
     
     return SingleChildScrollView(
       child: Column(
@@ -331,8 +331,8 @@ class _TimerScreenState extends ConsumerState<TimerScreen>
                         const SizedBox(width: 8),
                         Text(
                           _getSessionTypeName(timerState.currentSessionType, l10n),
-                          style: TextStyle(
-                            color: whiteColor,
+                          style: const TextStyle(
+                            color: Colors.white,
                             fontWeight: FontWeight.bold,
                             fontSize: 14,
                           ),
@@ -364,11 +364,11 @@ class _TimerScreenState extends ConsumerState<TimerScreen>
           const SizedBox(height: 16),
           
           // Daily Goal Card (Glass)
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16),
             child: GlassContainer(
-              padding: const EdgeInsets.all(16),
-              child: const DailyGoalProgress(compact: false),
+              padding: EdgeInsets.all(16),
+              child: DailyGoalProgress(compact: false),
             ),
           ),
           

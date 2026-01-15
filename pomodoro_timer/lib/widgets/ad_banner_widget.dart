@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import '../utils/logger.dart';
 
 /// Widget for displaying adaptive banner ads.
 class AdBannerWidget extends StatefulWidget {
@@ -35,7 +36,7 @@ class _AdBannerWidgetState extends State<AdBannerWidget> {
     );
 
     if (size == null) {
-      debugPrint('Unable to get adaptive banner size');
+      logDebug('Unable to get adaptive banner size');
       return;
     }
 
@@ -52,7 +53,7 @@ class _AdBannerWidgetState extends State<AdBannerWidget> {
           }
         },
         onAdFailedToLoad: (ad, error) {
-          debugPrint('Banner failed to load: ${error.message}');
+          logDebug('Banner failed to load: ${error.message}');
           ad.dispose();
         },
       ),

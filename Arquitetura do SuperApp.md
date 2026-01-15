@@ -1,8 +1,10 @@
 # **Plano de Arquitetura: Do App Simples ao SuperApp (Modular)**
 
-Versão: 5.1  
+Versão: 5.3  
 Data de Atualização: Janeiro 2026  
 Compatibilidade: Android 15+ (API 35), Flutter 3.32+  
+**Nota v5.3:** Atualizado com teste funcional de UI via ADB, estrutura de testes unitários, fast lane de publicação
+**Nota v5.2:** Atualizado com otimização de performance (R8 full mode, ProGuard 7 passes), assinatura de produção, e testes pré-publicação
 **Nota v5.1:** Atualizado com experiência Pomodoro Timer, padrões de gamificação (Streaks, Achievements), templates de serviços reutilizáveis, e lições de integração de UI
 
 Para cumprir o requisito de criar apps individuais que depois serão agregados, NÃO podemos usar uma estrutura monolítica comum (lib/main.dart cheio de tudo).
@@ -593,7 +595,7 @@ class AdService {
 | App             | Status               | Prioridade |
 | --------------- | -------------------- | ---------- |
 | BMI Calculator  | ✅ Publicado          | -          |
-| Pomodoro Timer  | ✅ Em desenvolvimento | Alta       |
+| Pomodoro Timer  | ✅ Pronto para publicar | Alta       |
 | Todo App        | 🔲 Planejado          | Média      |
 | Expense Tracker | 🔲 Planejado          | Média      |
 | Habit Tracker   | 🔲 Planejado          | Média      |
@@ -910,6 +912,191 @@ Organizar por categoria com comentários:
 
 ---
 
+## **NOVO: 24. Otimização de Performance para Produção (v5.2)**
+
+**Lição Pomodoro Timer:** Estas otimizações reduziram o AAB de ~30MB para 24MB com 99.4% de redução nas fontes.
+
+### **24.1. gradle.properties Otimizado**
+
+```properties
+# Build performance
+org.gradle.jvmargs=-Xmx4G -XX:MaxMetaspaceSize=2G -XX:+HeapDumpOnOutOfMemoryError
+org.gradle.caching=true
+org.gradle.parallel=true
+org.gradle.configuration-cache=true
+
+# R8 full mode (CRÍTICO)
+android.enableR8.fullMode=true
+
+# Desabilitar features não usadas
+android.defaults.buildfeatures.buildconfig=false
+android.defaults.buildfeatures.aidl=false
+android.defaults.buildfeatures.renderscript=false
+android.defaults.buildfeatures.resvalues=false
+android.defaults.buildfeatures.shaders=false
+```
+
+### **24.2. build.gradle Otimizado (android/app)**
+
+```gradle
+android {
+    defaultConfig {
+        // APENAS idiomas usados
+        resourceConfigurations += ['en', 'pt', 'es', 'zh', 'de', 'fr', 'ar', 'bn', 'hi', 'ja', 'ru']
+    }
+    
+    buildFeatures {
+        buildConfig = false
+        aidl = false
+        renderScript = false
+        resValues = false
+        shaders = false
+    }
+    
+    packagingOptions {
+        resources {
+            excludes += ['META-INF/*.kotlin_module', 'kotlin/**', 'DebugProbesKt.bin']
+        }
+    }
+}
+```
+
+### **24.3. ProGuard Rules Agressivo**
+
+```proguard
+# 7 passes de otimização
+-optimizationpasses 7
+-allowaccessmodification
+-repackageclasses ''
+
+# Remover logs em produção
+-assumenosideeffects class android.util.Log { *; }
+
+# Remover null checks do Kotlin
+-assumenosideeffects class kotlin.jvm.internal.Intrinsics { *; }
+```
+
+### **24.4. Logger Utility**
+
+**Criar:** `lib/utils/logger.dart`
+
+```dart
+import 'package:flutter/foundation.dart';
+
+void logDebug(String message) {
+  if (kDebugMode) debugPrint(message);
+}
+```
+
+**Substituir** TODOS os `debugPrint()` por `logDebug()` para tree-shaking completo.
+
+### **24.5. Resultados Esperados**
+
+| Métrica    | Antes     | Depois         |
+| ---------- | --------- | -------------- |
+| AAB Size   | ~30MB     | ~24MB          |
+| Icon Fonts | 1.6MB     | 10KB (99.4% ↓) |
+| Debug Logs | Presentes | Removidos      |
+
+---
+
+## **NOVO: 25. Assinatura de Produção (v5.2)**
+
+### **25.1. Estrutura de Chaves**
+
+```
+/DadosPublicacao/<app_name>/keys/
+  upload-keystore.jks
+  key.properties.example  # Template SEM senhas
+```
+
+### **25.2. Gerar Keystore**
+
+```powershell
+keytool -genkey -v -keystore upload-keystore.jks -keyalg RSA -keysize 2048 -validity 10000 -alias upload
+```
+
+### **25.3. Configurar key.properties**
+
+Criar `android/key.properties`:
+
+```properties
+storePassword=<senha>
+keyPassword=<senha>
+keyAlias=upload
+storeFile=C:/Users/Ernane/Personal/APPs_Flutter/DadosPublicacao/<app>/keys/upload-keystore.jks
+```
+
+### **25.4. Configurar build.gradle**
+
+```gradle
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('key.properties')
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
+android {
+    signingConfigs {
+        release {
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+            storePassword keystoreProperties['storePassword']
+        }
+    }
+    
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+        }
+    }
+}
+```
+
+### **25.5. .gitignore**
+
+```gitignore
+**/android/key.properties
+**/*.jks
+```
+
+---
+
+## **NOVO: 26. Testes Pré-Publicação (v5.2)**
+
+### **26.1. Checklist Obrigatório**
+
+```powershell
+# 1. Análise estática
+flutter analyze
+
+# 2. Testes unitários
+flutter test
+
+# 3. Build release
+flutter build appbundle --release
+
+# 4. Verificar tamanho
+$aab = "build\app\outputs\bundle\release\app-release.aab"
+Write-Host "Tamanho: $([math]::Round((Get-Item $aab).Length / 1MB, 2)) MB"
+
+# 5. Verificar assinatura
+jarsigner -verify $aab
+```
+
+### **26.2. Critérios de Aprovação**
+
+| Teste             | Critério                      |
+| ----------------- | ----------------------------- |
+| `flutter analyze` | 0 issues                      |
+| `flutter test`    | 100% passed                   |
+| AAB Size          | < 30MB                        |
+| Assinatura        | jar verified                  |
+| i18n              | Todas as chaves sincronizadas |
+
+---
+
 ## **NOVO: 22. ConsentService Template (GDPR/UMP)**
 
 ### **22.1. Implementação Padrão**
@@ -1068,3 +1255,130 @@ emulator -avd <AVD_NAME> -no-snapshot-load -gpu host
 2. Editar os outros 10 .arb em lote
 3. Executar `flutter gen-l10n`
 4. Verificar com `flutter analyze`
+
+---
+
+## **NOVO: 27. Teste Funcional de UI via ADB (v5.3)**
+
+**Lição Pomodoro Timer:** Antes de publicar, testar TODAS as funcionalidades via automação ADB.
+
+### **27.1. Workflow de Teste**
+
+```powershell
+# 1. Capturar hierarquia de UI
+adb shell uiautomator dump /sdcard/ui.xml
+adb shell cat /sdcard/ui.xml
+
+# 2. Clicar em elementos
+adb shell input tap <x> <y>
+
+# 3. Scroll
+adb shell input swipe 540 1500 540 600 300
+
+# 4. Screenshot
+adb exec-out screencap -p > screenshot.png
+```
+
+### **27.2. Checklist de Testes Funcionais**
+
+| Tela | Testes |
+|------|--------|
+| Home | Layout, timer display, daily goal, streak badge |
+| Controls | Start, Pause, Reset, Skip |
+| Settings | Scroll, toggles, theme selector |
+| Achievements | Dialog, badges, categorias |
+| Navigation | AppBar buttons, back navigation |
+
+---
+
+## **NOVO: 28. Estrutura de Testes Unitários (v5.3)**
+
+### **28.1. Mínimo de Testes**
+
+| Tipo de App | Testes | Cobertura |
+|-------------|--------|-----------|
+| Calculadora | 10 | Core logic |
+| Timer | 19 | Timer + Gamification |
+| Todo | 15 | CRUD + Persistência |
+
+### **28.2. Template**
+
+```dart
+void main() {
+  group('Core Logic', () {
+    test('main function works', () {
+      // Test core functionality
+    });
+  });
+  
+  group('Gamification', () {
+    test('streak increments', () { ... });
+    test('achievements unlock', () { ... });
+    test('daily goal tracks', () { ... });
+  });
+}
+```
+
+---
+
+## **NOVO: 29. Fast Lane de Publicação (v5.3)**
+
+### **29.1. Comando Único**
+
+```powershell
+Set-Location -Path "C:\Users\Ernane\Personal\APPs_Flutter\<app>";
+C:\dev\flutter\bin\flutter clean;
+C:\dev\flutter\bin\flutter pub get;
+C:\dev\flutter\bin\flutter gen-l10n;
+C:\dev\flutter\bin\flutter analyze;
+C:\dev\flutter\bin\flutter test;
+C:\dev\flutter\bin\flutter build appbundle --release
+```
+
+### **29.2. Verificação**
+
+```powershell
+$aab = "build\app\outputs\bundle\release\app-release.aab"
+Write-Host "✅ AAB: $([math]::Round((Get-Item $aab).Length / 1MB, 2)) MB"
+```
+
+---
+
+## **NOVO: 30. Relatório de Qualidade Pré-Publicação (v5.3)**
+
+Template para documentar qualidade antes de publicar:
+
+```markdown
+# Relatório de Qualidade - [App Name] v[version]
+
+## Build
+- ✅ flutter analyze: 0 issues
+- ✅ flutter test: X/X passed
+- ✅ AAB Size: XX.X MB
+- ✅ Assinatura: válida
+
+## i18n
+- ✅ 11 idiomas
+- ✅ XXX chaves sincronizadas
+
+## Testes Funcionais (ADB)
+- ✅ Home Screen
+- ✅ Timer/Main Controls
+- ✅ Settings
+- ✅ Achievements
+- ✅ Theme Change
+- ✅ Navigation
+
+## Features
+- ✅ Streaks
+- ✅ Daily Goals
+- ✅ Achievements
+- ✅ Themes
+- ✅ Ads
+```
+
+---
+
+**Fim do Planejamento v5.3.** Mantenha o foco. Codifique uma feature, termine, valide, commite. Não deixe pontas soltas.
+
+*"Da Fundação ao SuperApp: Um Bloco de Cada Vez."*

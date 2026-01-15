@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import '../utils/logger.dart';
 
 /// Service for managing AdMob advertisements.
 class AdService {
@@ -79,10 +80,10 @@ class AdService {
       request: const AdRequest(),
       listener: BannerAdListener(
         onAdLoaded: (ad) {
-          debugPrint('Banner ad loaded');
+          logDebug('Banner ad loaded');
         },
         onAdFailedToLoad: (ad, error) {
-          debugPrint('Banner ad failed: ${error.message}');
+          logDebug('Banner ad failed: ${error.message}');
           ad.dispose();
           _bannerAd = null;
         },
@@ -103,10 +104,10 @@ class AdService {
       request: const AdRequest(),
       listener: BannerAdListener(
         onAdLoaded: (ad) {
-          debugPrint('Adaptive banner loaded');
+          logDebug('Adaptive banner loaded');
         },
         onAdFailedToLoad: (ad, error) {
-          debugPrint('Adaptive banner failed: ${error.message}');
+          logDebug('Adaptive banner failed: ${error.message}');
           ad.dispose();
         },
       ),
@@ -127,10 +128,10 @@ class AdService {
       adLoadCallback: InterstitialAdLoadCallback(
         onAdLoaded: (ad) {
           _interstitialAd = ad;
-          debugPrint('Interstitial ad loaded');
+          logDebug('Interstitial ad loaded');
         },
         onAdFailedToLoad: (error) {
-          debugPrint('Interstitial ad failed: ${error.message}');
+          logDebug('Interstitial ad failed: ${error.message}');
           _interstitialAd = null;
         },
       ),
@@ -157,7 +158,7 @@ class AdService {
         _loadInterstitialAd();
       },
       onAdFailedToShowFullScreenContent: (ad, error) {
-        debugPrint('Interstitial show failed: ${error.message}');
+        logDebug('Interstitial show failed: ${error.message}');
         ad.dispose();
         _interstitialAd = null;
         _loadInterstitialAd();
@@ -180,10 +181,10 @@ class AdService {
         onAdLoaded: (ad) {
           _appOpenAd = ad;
           _appOpenLoadTime = DateTime.now();
-          debugPrint('App Open ad loaded');
+          logDebug('App Open ad loaded');
         },
         onAdFailedToLoad: (error) {
-          debugPrint('App Open ad failed: ${error.message}');
+          logDebug('App Open ad failed: ${error.message}');
         },
       ),
     );
@@ -216,7 +217,7 @@ class AdService {
         _loadAppOpenAd();
       },
       onAdFailedToShowFullScreenContent: (ad, error) {
-        debugPrint('App Open show failed: ${error.message}');
+        logDebug('App Open show failed: ${error.message}');
         ad.dispose();
         _appOpenAd = null;
         _loadAppOpenAd();
