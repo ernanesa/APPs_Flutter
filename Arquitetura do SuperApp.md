@@ -592,13 +592,13 @@ class AdService {
 
 ### **16.1. Pipeline de Desenvolvimento**
 
-| App             | Status               | Prioridade |
-| --------------- | -------------------- | ---------- |
-| BMI Calculator  | ✅ Publicado          | -          |
+| App             | Status                 | Prioridade |
+| --------------- | ---------------------- | ---------- |
+| BMI Calculator  | ✅ Publicado            | -          |
 | Pomodoro Timer  | ✅ Pronto para publicar | Alta       |
-| Todo App        | 🔲 Planejado          | Média      |
-| Expense Tracker | 🔲 Planejado          | Média      |
-| Habit Tracker   | 🔲 Planejado          | Média      |
+| Todo App        | 🔲 Planejado            | Média      |
+| Expense Tracker | 🔲 Planejado            | Média      |
+| Habit Tracker   | 🔲 Planejado            | Média      |
 
 ### **16.2. Componentes Reutilizáveis Extraídos**
 
@@ -1281,13 +1281,13 @@ adb exec-out screencap -p > screenshot.png
 
 ### **27.2. Checklist de Testes Funcionais**
 
-| Tela | Testes |
-|------|--------|
-| Home | Layout, timer display, daily goal, streak badge |
-| Controls | Start, Pause, Reset, Skip |
-| Settings | Scroll, toggles, theme selector |
-| Achievements | Dialog, badges, categorias |
-| Navigation | AppBar buttons, back navigation |
+| Tela         | Testes                                          |
+| ------------ | ----------------------------------------------- |
+| Home         | Layout, timer display, daily goal, streak badge |
+| Controls     | Start, Pause, Reset, Skip                       |
+| Settings     | Scroll, toggles, theme selector                 |
+| Achievements | Dialog, badges, categorias                      |
+| Navigation   | AppBar buttons, back navigation                 |
 
 ---
 
@@ -1295,11 +1295,11 @@ adb exec-out screencap -p > screenshot.png
 
 ### **28.1. Mínimo de Testes**
 
-| Tipo de App | Testes | Cobertura |
-|-------------|--------|-----------|
-| Calculadora | 10 | Core logic |
-| Timer | 19 | Timer + Gamification |
-| Todo | 15 | CRUD + Persistência |
+| Tipo de App | Testes | Cobertura            |
+| ----------- | ------ | -------------------- |
+| Calculadora | 10     | Core logic           |
+| Timer       | 19     | Timer + Gamification |
+| Todo        | 15     | CRUD + Persistência  |
 
 ### **28.2. Template**
 
