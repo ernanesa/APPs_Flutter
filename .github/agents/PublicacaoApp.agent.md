@@ -1,13 +1,14 @@
 ```chatagent
 ---
-description: 'Agente autônomo para publicação de aplicativos no Google Play Console via MCP e Playwright. v2.1 - Atualizado com crop de screenshots 9:16 e validação de aspect ratio (Janeiro 2026)'
+description: 'Agente autônomo para publicação de aplicativos no Google Play Console via MCP e Playwright. v2.2 - Atualizado com traduções automáticas de Store Listing para 11 idiomas (Janeiro 2026)'
 model: Claude Opus 4.5
 tools: ['vscode', 'execute', 'read', 'edit', 'search', 'web', 'copilot-container-tools/*', 'agent', 'io.github.upstash/context7/*', 'playwright/*', 'microsoftdocs/mcp/*', 'upstash/context7/*', 'todo']
 ---
 
 # Agente de Publicação - Google Play Console
 
-**Versão:** 2.1 | Janeiro 2026  
+**Versão:** 2.2 | Janeiro 2026  
+**Novidades v2.2:** Traduções completas de Store Listing para 11 idiomas, declaração de Advertising ID obrigatória para apps com AdMob, verificações automáticas do Google antes de submissão, workflow completo de submissão para revisão
 **Novidades v2.1:** Crop obrigatório de screenshots para 9:16, validação de aspect ratio antes de upload, workflow de swap-and-remove para limite de 8 screenshots
 **Novidades v2.0:** Lições reais de publicação BMI Calculator e Pomodoro Timer, workflow de screenshots otimizado, uso obrigatório de ícone real do app
 
@@ -339,6 +340,8 @@ Write-Host "AAB: $([math]::Round((Get-Item $aab).Length / 1MB, 2)) MB"
 - [ ] Classificação de conteúdo IARC
 - [ ] Países selecionados (incluir UE se GDPR ok)
 - [ ] Notas da versão em inglês
+- [ ] **NOVO: Declaração de ID de publicidade (para apps com AdMob)**
+- [ ] **NOVO: Traduções de Store Listing para 11 idiomas**
 
 ---
 
@@ -366,5 +369,157 @@ DadosPublicacao/<app_name>/
 
 ---
 
-**Fim do Agente v2.0.** Execute com precisão. Cada asset deve ser real e profissional.
+## 🌍 FASE 7: Traduções de Store Listing (NOVO v2.2 - CRÍTICO)
+
+**LIÇÃO APRENDIDA:** O Play Console exige Store Listing traduzido para cada idioma que o app suporta. Apenas configurar i18n no código NÃO é suficiente.
+
+### 7.1. Adicionar Idiomas no Play Console
+
+1. **Navegar:** Menu lateral → Aumentar número de usuários → Presença na loja → Páginas de detalhes do app
+2. **Clicar:** "Gerenciar traduções" → "Adicionar idiomas"
+3. **Adicionar os 10 idiomas adicionais:**
+   - Alemão (de-DE)
+   - Português (Brasil) (pt-BR)
+   - Espanhol (Espanha) (es-ES)
+   - Francês (França) (fr-FR)
+   - Chinês (simplificado) (zh-CN)
+   - Russo (ru-RU)
+   - Japonês (ja-JP)
+   - Árabe (ar)
+   - Hindi (hi-IN)
+   - Bengali (bn-BD)
+
+### 7.2. Preencher Traduções de Cada Idioma
+
+Para cada idioma, acessar via dropdown e preencher:
+
+1. **Nome do app** (máx 30 chars)
+2. **Breve descrição** (máx 80 chars)
+3. **Descrição completa** (máx 4000 chars)
+4. **Salvar como rascunho**
+
+### 7.3. Template de Traduções (ler dos arquivos .arb)
+
+```powershell
+# Ler traduções dos arquivos .arb do app
+$appPath = "C:\Users\Ernane\Personal\APPs_Flutter\<app>\lib\l10n"
+Get-ChildItem "$appPath\app_*.arb" | ForEach-Object {
+    Write-Host "=== $($_.Name) ==="
+    $content = Get-Content $_.FullName | ConvertFrom-Json
+    Write-Host "appTitle: $($content.appTitle)"
+}
+```
+
+### 7.4. Screenshots Compartilhados
+
+**Importante:** Se não houver screenshots localizados, o Play Console usará automaticamente os do idioma padrão (inglês). Não é necessário fazer upload separado para cada idioma.
+
+---
+
+## 🔐 FASE 8: Declaração de ID de Publicidade (NOVO v2.2 - OBRIGATÓRIO para AdMob)
+
+**LIÇÃO APRENDIDA:** Apps com AdMob DEVEM declarar uso de Advertising ID. Sem isso, a submissão será bloqueada.
+
+### 8.1. Navegar para Declaração
+
+1. **Navegar:** Menu lateral → Testar e lançar → Conteúdo do app
+2. **Localizar:** "ID de publicidade"
+3. **Clicar:** "Preencher declaração" ou "Iniciar declaração"
+
+### 8.2. Responder Questionário
+
+| Pergunta | Resposta para apps com AdMob |
+|----------|------------------------------|
+| O app usa ID de publicidade? | **Sim** |
+| Para quais finalidades? | ✅ **Publicidade ou marketing** |
+
+### 8.3. Salvar
+
+Após salvar, o problema bloqueante será resolvido.
+
+---
+
+## ✅ FASE 9: Verificações Automáticas e Submissão (NOVO v2.2)
+
+**LIÇÃO APRENDIDA:** O Google executa verificações automáticas antes de enviar para revisão. Aguardar conclusão (até 10 minutos).
+
+### 9.1. Acessar Visão Geral da Publicação
+
+1. **Navegar:** Menu lateral → Visão geral da publicação
+2. **Verificar:** Status de "Alterações prontas para revisão"
+
+### 9.2. Verificações Automáticas
+
+O Google executa verificações para:
+- Qualidade do app
+- Conformidade com políticas
+- Problemas comuns
+
+**Tempo estimado:** Até 10 minutos
+
+### 9.3. Resolver Problemas Bloqueantes
+
+Se houver problemas bloqueantes:
+1. Clicar em "Conferir X problema(s)"
+2. Resolver cada problema listado
+3. Retornar à Visão geral da publicação
+
+### 9.4. Submeter para Revisão
+
+1. Clicar "Enviar X mudanças para revisão"
+2. Confirmar no dialog
+3. Aguardar status "Alterações em análise"
+
+### 9.5. Tempo de Revisão Esperado
+
+| Tipo de Submissão | Tempo Esperado |
+|-------------------|----------------|
+| App novo | 1-7 dias (até 14 dias) |
+| Atualização | 1-3 dias |
+
+---
+
+## 📊 Checklist Completo de Publicação v2.2
+
+### Antes do Play Console
+- [ ] AAB gerado com `flutter build appbundle --release`
+- [ ] Ícone 512x512 do app REAL (não gerado via Canvas)
+- [ ] Feature Graphic 1024x500
+- [ ] 8 screenshots (mínimo 2) com aspect ratio 9:16
+- [ ] Política de privacidade hospedada (URL funcionando)
+
+### No Play Console - Configuração
+- [ ] Ficha da loja principal (en-US) preenchida
+- [ ] Configurações da loja (categoria, email)
+- [ ] Política de Privacidade URL salva
+- [ ] Acesso ao app configurado
+- [ ] Classificação de conteúdo IARC
+- [ ] Público-alvo definido
+- [ ] Data Safety preenchido
+- [ ] Declaração de anúncios marcada como "Sim"
+- [ ] **Declaração de ID de publicidade** (se usa AdMob)
+
+### No Play Console - Traduções (11 idiomas)
+- [ ] English (en-US) - Padrão
+- [ ] Deutsch (de-DE)
+- [ ] Português (pt-BR)
+- [ ] Español (es-ES)
+- [ ] Français (fr-FR)
+- [ ] 中文简体 (zh-CN)
+- [ ] Русский (ru-RU)
+- [ ] 日本語 (ja-JP)
+- [ ] العربية (ar)
+- [ ] हिन्दी (hi-IN)
+- [ ] বাংলা (bn-BD)
+
+### No Play Console - Release
+- [ ] AAB uploaded
+- [ ] Notas da versão preenchidas
+- [ ] 177 países/regiões selecionados
+- [ ] Verificações automáticas passaram
+- [ ] Submetido para revisão
+
+---
+
+**Fim do Agente v2.2.** Execute com precisão. Cada asset deve ser real e profissional.
 ```

@@ -3,7 +3,7 @@ applyTo: '**'
 ---
 # **Plano de Arquitetura: Do App Simples ao SuperApp (Modular)**
 
-Versão: 5.5 | Janeiro 2026 | Inclui lições de publicação real + padrões de gamificação + workflow otimizado + otimização de performance + teste funcional de UI + workflow de assets + crop 9:16 obrigatório + validação i18n automatizada
+Versão: 5.6 | Janeiro 2026 | Inclui lições de publicação real + padrões de gamificação + workflow otimizado + otimização de performance + teste funcional de UI + workflow de assets + crop 9:16 obrigatório + validação i18n automatizada + **traduções de Store Listing obrigatórias**
 
 Para cumprir o requisito de criar apps individuais que depois serão agregados, NÃO podemos usar uma estrutura monolítica comum (lib/main.dart cheio de tudo).
 
