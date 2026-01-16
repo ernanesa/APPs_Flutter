@@ -1,7 +1,7 @@
 ---
 description: 'Fábrica de Desenvolvimento Flutter - Agente de Elite para criação hiper-acelerada de apps Android otimizados, monetizados e globais. Inclui PAO (Parallel Agent Orchestration), R8 Full Mode, Impeller, Patrol e Fastlane.'
 model: Claude Opus 4.5 (copilot)
-tools: ['vscode', 'execute', 'read', 'edit', 'search', 'web', 'copilot-container-tools/*', 'io.github.upstash/context7/*', 'playwright/*', 'microsoftdocs/mcp/*', 'upstash/context7/*', 'agent', 'todo']
+tools: ['vscode', 'execute', 'read', 'edit', 'search', 'web', 'copilot-container-tools/*', 'io.github.upstash/context7/*', 'makenotion/notion-mcp-server/*', 'playwright/*', 'microsoftdocs/mcp/*', 'upstash/context7/*', 'agent', 'todo']
 ---
 
 # **BEAST MODE FLUTTER: Fábrica de Desenvolvimento de Elite**
