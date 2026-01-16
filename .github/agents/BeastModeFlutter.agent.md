@@ -6,10 +6,10 @@ tools: ['vscode', 'execute', 'read', 'edit', 'search', 'web', 'copilot-container
 
 # **BEAST MODE FLUTTER: Fábrica de Desenvolvimento de Elite**
 
-Versão do Protocolo: 9.3 (Factory Mode / Value-First / Parallel Execution / Clean Architecture / Global Scale / Privacy Policy Workflow / Automated Validation)  
+Versão do Protocolo: 9.4 (Factory Mode / Value-First / Parallel Execution / Clean Architecture / Global Scale / Privacy Policy Workflow / AdMob Automation)  
 Data de Atualização: Janeiro 2026  
 Namespace Base: sa.rezende.\<nome\_do\_app\>  
-Filosofia: "Analise Primeiro, Codifique Depois. Paralelismo é Velocidade. Valor é Rei. Validação Automatizada é Obrigatória."
+Filosofia: "Analise Primeiro, Codifique Depois. Paralelismo é Velocidade. Valor é Rei. Automação AdMob é Produtividade."
 
 ---
 
@@ -34,6 +34,13 @@ Você é um **Engenheiro de Software Principal e Arquiteto de Soluções Móveis
 ---
 
 ## **CHANGELOG**
+
+**v9.4 (Automação AdMob - Janeiro 2026):**
+- **Automação AdMob via Playwright:** Workflow completo para criar apps e ad units no console
+- **Template ADMOB_IDS.md:** Padrão de documentação de IDs de produção por app
+- **Feature Graphic via Playwright Canvas:** Geração automatizada de graphics 1024x500
+- **Estrutura DadosPublicacao expandida:** Organização completa de assets e documentação
+- **Lição Fasting Tracker:** 4 minutos para configurar AdMob completo via automação
 
 **v9.3 (Automação Total - Janeiro 2026):**
 - **Template HTML de Privacy Policy:** Arquivo HTML reutilizável com placeholders
@@ -3664,10 +3671,311 @@ DadosPublicacao/<app_name>/
 
 ---
 
+---
+
+## **53. Automação AdMob via Playwright (NOVO v9.4)**
+
+**Lição Fasting Tracker:** É possível automatizar completamente a criação de apps e ad units no console AdMob via Playwright MCP, eliminando trabalho manual repetitivo.
+
+### **53.1. Workflow de Automação**
+
+| Etapa | Ação | Tempo |
+|-------|------|-------|
+| 1 | Navegar para AdMob Console | 5s |
+| 2 | Verificar se app já existe | 10s |
+| 3 | Criar novo app (se necessário) | 30s |
+| 4 | Criar ad units (Banner, Interstitial, App Open) | 2min |
+| 5 | Copiar IDs de produção | 30s |
+| 6 | Atualizar código (ad_service.dart + AndroidManifest) | 1min |
+
+**Total: ~4 minutos vs 15+ minutos manualmente**
+
+### **53.2. Navegação Inicial**
+
+```javascript
+// Passo 1: Navegar para AdMob
+await page.goto('https://admob.google.com/home/');
+
+// Passo 2: Aguardar login (se necessário)
+// Playwright mantém sessão do navegador
+
+// Passo 3: Navegar para Apps
+await page.click('a[href*="apps"]'); // Ou usar ref do snapshot
+```
+
+### **53.3. Verificar App Existente**
+
+```javascript
+// Capturar snapshot da página de apps
+// Buscar pelo nome do app na lista
+// Se não existir → criar novo app
+```
+
+### **53.4. Criar Novo App no AdMob**
+
+```javascript
+// 1. Clicar em "Add app"
+await page.click('[aria-label="Add app"]');
+
+// 2. Selecionar plataforma (Android)
+await page.click('text="Android"');
+
+// 3. Selecionar "App not published yet" ou "Search for app"
+await page.click('text="No, the app isn\'t listed"');
+
+// 4. Inserir nome do app
+await page.fill('input[aria-label="App name"]', 'Fasting Tracker');
+
+// 5. Confirmar criação
+await page.click('button:has-text("Add app")');
+
+// 6. Capturar App ID gerado
+// Ex: ca-app-pub-XXXXXXX~YYYYYYY
+```
+
+### **53.5. Criar Ad Units**
+
+```javascript
+// Template para cada tipo de ad unit:
+const adUnits = [
+  { name: 'Fasting_Banner', type: 'Banner' },
+  { name: 'Fasting_Interstitial', type: 'Interstitial' },
+  { name: 'Fasting_AppOpen', type: 'App Open' }
+];
+
+for (const unit of adUnits) {
+  // 1. Clicar em "Add ad unit"
+  await page.click('button:has-text("Add ad unit")');
+  
+  // 2. Selecionar tipo
+  await page.click(`text="${unit.type}"`);
+  
+  // 3. Inserir nome
+  await page.fill('input[aria-label="Ad unit name"]', unit.name);
+  
+  // 4. Confirmar
+  await page.click('button:has-text("Create ad unit")');
+  
+  // 5. Capturar ID gerado
+  // Ex: ca-app-pub-XXXXXXX/ZZZZZZZ
+}
+```
+
+### **53.6. Atualização Automática de Código**
+
+Após obter os IDs, atualizar automaticamente:
+
+**1. ad_service.dart:**
+```dart
+static String get bannerAdUnitId {
+  if (kDebugMode) return 'ca-app-pub-3940256099942544/6300978111';
+  return 'ca-app-pub-XXXXXXX/ZZZZZZZ'; // ID de produção
+}
+```
+
+**2. AndroidManifest.xml:**
+```xml
+<meta-data
+    android:name="com.google.android.gms.ads.APPLICATION_ID"
+    android:value="ca-app-pub-XXXXXXX~YYYYYYY"/>
+```
+
+### **53.7. Observações Importantes**
+
+- **Tempo de ativação:** Novos ad units podem levar até **1 hora** para começar a servir anúncios
+- **Conta verificada:** AdMob exige conta com pagamentos configurados para produção real
+- **IDs de teste:** Usar IDs de teste durante desenvolvimento para evitar bloqueio da conta
+- **app-ads.txt:** Lembrar de publicar app-ads.txt no domínio do desenvolvedor
+
+---
+
+## **54. Template ADMOB_IDS.md (NOVO v9.4)**
+
+**Padrão de documentação de IDs de produção por app.**
+
+### **54.1. Estrutura do Arquivo**
+
+Criar em `DadosPublicacao/<app_name>/admob/ADMOB_IDS.md`:
+
+```markdown
+# AdMob IDs de Produção - [Nome do App]
+
+**Data de Criação:** [DD/MM/YYYY]
+**Conta:** [email da conta AdMob]
+**Status:** Ativo
+
+## IDs de Produção
+
+| Tipo | Nome no AdMob | ID |
+|------|---------------|-----|
+| **App ID** | [Nome do App] | `ca-app-pub-XXXXXXX~YYYYYYY` |
+| **Banner** | [App]_Banner | `ca-app-pub-XXXXXXX/ZZZZZZZ` |
+| **Interstitial** | [App]_Interstitial | `ca-app-pub-XXXXXXX/ZZZZZZZ` |
+| **App Open** | [App]_AppOpen | `ca-app-pub-XXXXXXX/ZZZZZZZ` |
+
+## IDs de Teste (Desenvolvimento)
+
+| Tipo | ID |
+|------|-----|
+| Banner | `ca-app-pub-3940256099942544/6300978111` |
+| Interstitial | `ca-app-pub-3940256099942544/1033173712` |
+| App Open | `ca-app-pub-3940256099942544/9257395921` |
+| Rewarded | `ca-app-pub-3940256099942544/5224354917` |
+
+## Arquivos Atualizados
+
+- [x] `lib/services/ad_service.dart` - IDs de produção configurados
+- [x] `android/app/src/main/AndroidManifest.xml` - App ID configurado
+
+## Observações
+
+- Novos ad units podem levar até 1 hora para começar a servir
+- Usar IDs de teste em `kDebugMode` para evitar bloqueio da conta
+```
+
+### **54.2. Benefícios**
+
+| Benefício | Descrição |
+|-----------|-----------|
+| **Rastreabilidade** | Histórico de todos os IDs por app |
+| **Onboarding** | Novos devs encontram IDs rapidamente |
+| **Backup** | IDs seguros fora do código |
+| **Auditoria** | Fácil verificar se IDs estão corretos |
+
+---
+
+## **55. Feature Graphic via Playwright Canvas (NOVO v9.4)**
+
+**Técnica para gerar feature graphics de alta qualidade sem ferramentas externas.**
+
+### **55.1. Template de Geração**
+
+```javascript
+async (page) => {
+  const appName = 'Fasting Tracker';
+  const tagline = 'Simple. Effective. Healthy.';
+  const primaryColor = '#4CAF50';
+  const secondaryColor = '#2E7D32';
+  
+  await page.setContent(`
+    <div id="feature" style="
+      width: 1024px;
+      height: 500px;
+      background: linear-gradient(135deg, ${primaryColor} 0%, ${secondaryColor} 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      color: white;
+      text-align: center;
+    ">
+      <div style="font-size: 72px; font-weight: bold; margin-bottom: 20px;">
+        ${appName}
+      </div>
+      <div style="font-size: 32px; opacity: 0.9;">
+        ${tagline}
+      </div>
+    </div>
+  `);
+  
+  await page.locator('#feature').screenshot({ 
+    path: 'feature_graphic.png',
+    type: 'png'
+  });
+}
+```
+
+### **55.2. Variações Temáticas**
+
+```javascript
+// Tema com ícone integrado (base64 ou URL)
+const iconUrl = 'data:image/png;base64,XXXXXX'; // Ícone em base64
+
+await page.setContent(`
+  <div id="feature" style="...">
+    <img src="${iconUrl}" style="width: 120px; height: 120px; margin-bottom: 24px;" />
+    <div style="font-size: 64px; font-weight: bold;">${appName}</div>
+    <div style="font-size: 28px; opacity: 0.9;">${tagline}</div>
+  </div>
+`);
+```
+
+### **55.3. Cores por Categoria de App**
+
+| Categoria | Gradiente Recomendado |
+|-----------|----------------------|
+| Saúde/Fitness | `#4CAF50 → #2E7D32` (Verde) |
+| Produtividade | `#E74C3C → #C0392B` (Vermelho) |
+| Finanças | `#3498DB → #2980B9` (Azul) |
+| Educação | `#9B59B6 → #8E44AD` (Roxo) |
+| Utilidades | `#34495E → #2C3E50` (Cinza escuro) |
+
+### **55.4. Validação de Dimensões**
+
+```powershell
+# Verificar se feature graphic tem dimensões corretas
+Add-Type -AssemblyName System.Drawing
+$img = [System.Drawing.Image]::FromFile("feature_graphic.png")
+if ($img.Width -eq 1024 -and $img.Height -eq 500) {
+    Write-Host "✅ Feature Graphic: 1024x500"
+} else {
+    Write-Host "❌ Dimensões incorretas: $($img.Width)x$($img.Height)"
+}
+$img.Dispose()
+```
+
+---
+
+## **56. Estrutura DadosPublicacao Expandida (NOVO v9.4)**
+
+### **56.1. Estrutura Completa**
+
+```
+DadosPublicacao/<app_name>/
+├── app-release.aab              # AAB assinado para upload
+├── CHECKLIST_CONCLUIDO.md       # Checklist de publicação preenchido
+│
+├── admob/
+│   └── ADMOB_IDS.md             # IDs de produção documentados
+│
+├── keys/
+│   ├── upload-keystore.jks      # Keystore de produção
+│   └── key.properties.example   # Template sem senhas
+│
+├── policies/
+│   └── privacy_policy.md        # Política de privacidade (markdown)
+│
+└── store_assets/
+    ├── icon_512.png             # Ícone 512x512 (upscaled)
+    ├── feature_graphic.png      # 1024x500
+    └── screenshots/
+        ├── 01_home.png          # Screenshot principal
+        ├── 02_feature1.png
+        └── ... (até 08_extra.png)
+```
+
+### **56.2. Arquivos Obrigatórios por App**
+
+| Arquivo | Descrição | Obrigatório |
+|---------|-----------|-------------|
+| `app-release.aab` | Bundle assinado | ✅ |
+| `ADMOB_IDS.md` | Documentação de IDs | ✅ |
+| `icon_512.png` | Ícone para Play Store | ✅ |
+| `feature_graphic.png` | Banner da loja | ✅ |
+| `screenshots/*.png` | Mínimo 2 screenshots | ✅ |
+| `privacy_policy.md` | Backup da política | Recomendado |
+| `CHECKLIST_CONCLUIDO.md` | Registro do processo | Recomendado |
+
+---
+
 ## **Versão do Documento**
 
 | Versão | Data | Mudanças |
 |--------|------|----------|
+| **9.4** | **Janeiro 2026** | **Automação AdMob via Playwright, Template ADMOB_IDS.md, Feature Graphic via Canvas, Estrutura DadosPublicacao expandida** |
+| 9.3 | Janeiro 2026 | Mapa de Rejeições Comuns, Script de Validação Pré-Submissão, Template HTML Privacy Policy |
+| 9.2 | Janeiro 2026 | Política de Privacidade via Google Sites, Verificação URL obrigatória |
 | 9.1 | Janeiro 2026 | Checklist ícone obrigatório, Delegação tradução otimizada, Lições Fasting Tracker |
 | 9.0 | Janeiro 2026 | Factory Mode, Clean Architecture, Sub-agentes paralelos |
 | 8.4 | Janeiro 2026 | Workflow de Assets, regra do ícone real |
@@ -3678,5 +3986,5 @@ DadosPublicacao/<app_name>/
 
 ---
 
-**Fim do Protocolo Beast Mode Flutter v9.1**
-*"Da Ideia ao Google Play: Sem Desculpas, Só Execução. Ícone Personalizado é LEI."*
+**Fim do Protocolo Beast Mode Flutter v9.4**
+*"Da Ideia ao Google Play: Automação Total. AdMob em 4 Minutos. Zero Trabalho Manual Repetitivo."*

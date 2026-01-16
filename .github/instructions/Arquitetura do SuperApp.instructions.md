@@ -3,9 +3,15 @@ applyTo: '**'
 ---
 # **Plano de Arquitetura: Do App Simples ao SuperApp (Modular)**
 
-Versão: 6.3 | Janeiro 2026 | **Factory Mode** + Clean Architecture + Melos Monorepo + Lições de publicação real + padrões de gamificação + workflow otimizado + otimização de performance + teste funcional de UI + workflow de assets + crop 9:16 obrigatório + validação i18n automatizada + traduções de Store Listing obrigatórias + **Política de Privacidade via Google Sites** + **Script de Validação Automatizada**
+Versão: 6.4 | Janeiro 2026 | **Factory Mode** + Clean Architecture + Melos Monorepo + Lições de publicação real + padrões de gamificação + workflow otimizado + otimização de performance + teste funcional de UI + workflow de assets + crop 9:16 obrigatório + validação i18n automatizada + traduções de Store Listing obrigatórias + **Política de Privacidade via Google Sites** + **Script de Validação Automatizada** + **Automação AdMob via Playwright**
 
 ---
+
+### **📋 Changelog v6.4**
+- ✨ **NOVO:** Automação AdMob via Playwright MCP (criar apps e ad units automaticamente)
+- ✨ **NOVO:** Template ADMOB_IDS.md para documentação de IDs de produção
+- ✨ **NOVO:** Estrutura DadosPublicacao expandida com pasta admob/
+- 🔧 **LIÇÃO Fasting Tracker:** Automação AdMob reduz tempo de 15+ min para 4 min
 
 ### **📋 Changelog v6.3**
 - ✨ **NOVO:** Mapa de Rejeições Comuns (Top 10 causas e soluções)
@@ -1017,4 +1023,114 @@ pwsh -File "C:\Users\Ernane\Personal\APPs_Flutter\tools\validate_publication.ps1
 
 ---
 
-**Fim do Documento v6.3.** Factory Mode ativado. Clean Architecture + Melos + Validação Automatizada = Zero Rejeições.
+## **26. Automação AdMob via Playwright (NOVO v6.4)**
+
+### **26.1. Workflow Automatizado**
+
+O Playwright MCP permite automatizar completamente a criação de apps e ad units no console AdMob:
+
+| Passo | Ação | Automatizado |
+|-------|------|--------------|
+| 1 | Navegar para AdMob Console | ✅ |
+| 2 | Verificar se app existe | ✅ |
+| 3 | Criar novo app | ✅ |
+| 4 | Criar Banner ad unit | ✅ |
+| 5 | Criar Interstitial ad unit | ✅ |
+| 6 | Criar App Open ad unit | ✅ |
+| 7 | Capturar IDs de produção | ✅ |
+| 8 | Atualizar código fonte | ✅ |
+
+**Resultado:** 4 minutos vs 15+ minutos manualmente.
+
+### **26.2. Template de Documentação ADMOB_IDS.md**
+
+Criar em `DadosPublicacao/<app_name>/admob/ADMOB_IDS.md`:
+
+```markdown
+# AdMob IDs de Produção - [Nome do App]
+
+**Data:** [DD/MM/YYYY]
+**Conta:** [email]
+
+## IDs de Produção
+
+| Tipo | Nome | ID |
+|------|------|-----|
+| **App ID** | [App] | `ca-app-pub-XXXX~YYYY` |
+| **Banner** | [App]_Banner | `ca-app-pub-XXXX/ZZZZ` |
+| **Interstitial** | [App]_Interstitial | `ca-app-pub-XXXX/ZZZZ` |
+| **App Open** | [App]_AppOpen | `ca-app-pub-XXXX/ZZZZ` |
+
+## Arquivos Atualizados
+- [x] lib/services/ad_service.dart
+- [x] android/app/src/main/AndroidManifest.xml
+```
+
+### **26.3. Estrutura DadosPublicacao Expandida**
+
+```
+DadosPublicacao/<app_name>/
+├── app-release.aab
+├── CHECKLIST_CONCLUIDO.md
+├── admob/
+│   └── ADMOB_IDS.md          # NOVO: Documentação de IDs
+├── keys/
+├── policies/
+└── store_assets/
+    ├── icon_512.png
+    ├── feature_graphic.png
+    └── screenshots/
+```
+
+---
+
+## **27. Feature Graphic via Playwright Canvas (NOVO v6.4)**
+
+### **27.1. Geração Automatizada**
+
+```javascript
+await page.setContent(`
+  <div id="feature" style="
+    width: 1024px; height: 500px;
+    background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    font-family: 'Segoe UI', Arial, sans-serif; color: white;">
+    <div style="font-size: 72px; font-weight: bold;">App Name</div>
+    <div style="font-size: 32px; opacity: 0.9;">Tagline here</div>
+  </div>
+`);
+await page.locator('#feature').screenshot({ path: 'feature_graphic.png' });
+```
+
+### **27.2. Cores por Categoria**
+
+| Categoria | Gradiente |
+|-----------|-----------|
+| Saúde/Fitness | `#4CAF50 → #2E7D32` |
+| Produtividade | `#E74C3C → #C0392B` |
+| Finanças | `#3498DB → #2980B9` |
+| Utilidades | `#34495E → #2C3E50` |
+
+---
+
+## **21. Versão do Documento**
+
+| Versão | Data | Mudanças |
+|--------|------|----------|
+| **6.4** | **Janeiro 2026** | **Automação AdMob via Playwright, Template ADMOB_IDS.md, Feature Graphic via Canvas** |
+| 6.3 | Janeiro 2026 | Mapa de Rejeições Comuns, Script de Validação Pré-Submissão, Template HTML de Privacy Policy |
+| 6.2 | Janeiro 2026 | Política de Privacidade via Google Sites, Verificação de URL obrigatória, Lição BMI Calculator |
+| 6.1 | Janeiro 2026 | Templates Health Apps, NotificationService, Repository Pattern, Lições Fasting Tracker |
+| 6.0 | Janeiro 2026 | Factory Mode, Clean Architecture obrigatória, Melos monorepo, Integration Tests |
+| 5.6 | Janeiro 2026 | Traduções Store Listing obrigatórias |
+| 5.5 | Janeiro 2026 | Crop 9:16 obrigatório, validação i18n automatizada, workflow swap-and-remove |
+| 5.4 | Janeiro 2026 | Workflow de Assets, regra do ícone real |
+| 5.3 | Janeiro 2026 | Teste funcional UI, Fast Lane, Métricas |
+| 5.2 | Janeiro 2026 | Otimização R8, ProGuard, Assinatura |
+| 5.1 | Janeiro 2026 | Gamificação, Templates i18n |
+| 5.0 | Dezembro 2025 | Estrutura modular inicial |
+
+---
+
+**Fim do Documento v6.4.** Factory Mode + AdMob Automation = Produtividade Máxima.

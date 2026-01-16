@@ -1,8 +1,9 @@
 # **Plano de Arquitetura: Do App Simples ao SuperApp (Modular)**
 
-Versão: 6.2  
+Versão: 6.3  
 Data de Atualização: Janeiro 2026  
 Compatibilidade: Android 15+ (API 35), Flutter 3.32+  
+**Nota v6.3:** Automação AdMob via Playwright MCP (4 min vs 15+ min), Template ADMOB_IDS.md para documentação de IDs, estrutura DadosPublicacao expandida com pasta admob/
 **Nota v6.2:** Política de Privacidade via Google Sites (workflow completo), verificação obrigatória de URL antes de publicação, lição BMI Calculator (URL 404 = rejeição)
 **Nota v6.0:** Clean Architecture obrigatória (Domain/Data/Presentation), Templates para Health/Wellness Apps, NotificationService, Repository Pattern completo, Entities com estados temporais
 **Nota v5.5:** Crop 9:16 obrigatório, validação i18n automatizada, workflow swap-and-remove para screenshots
@@ -1764,6 +1765,103 @@ Para máxima eficiência ao editar múltiplos arquivos:
 
 ---
 
-**Fim do Planejamento v6.1.** Clean Architecture + Factory Mode + Lições Aprendidas = Velocidade Industrial.
+## **33. Automação AdMob via Playwright (NOVO v6.3)**
 
-*"Da Fundação ao SuperApp: Um Bloco de Cada Vez. Agora com Arquitetura Limpa e Produtividade Máxima."*
+### **33.1. Workflow Automatizado**
+
+O Playwright MCP permite automatizar completamente a criação de apps e ad units no console AdMob:
+
+| Passo | Ação                       | Tempo | Automatizado |
+| ----- | -------------------------- | ----- | ------------ |
+| 1     | Navegar para AdMob Console | 10s   | ✅            |
+| 2     | Verificar se app existe    | 20s   | ✅            |
+| 3     | Criar novo app             | 30s   | ✅            |
+| 4     | Criar Banner ad unit       | 40s   | ✅            |
+| 5     | Criar Interstitial ad unit | 40s   | ✅            |
+| 6     | Criar App Open ad unit     | 40s   | ✅            |
+| 7     | Capturar IDs de produção   | 20s   | ✅            |
+| 8     | Atualizar código fonte     | 60s   | ✅            |
+
+**Total: ~4 minutos** vs 15+ minutos manualmente.
+
+**LIÇÃO Fasting Tracker:** Automação AdMob reduz significativamente o tempo de configuração e elimina erros de digitação de IDs.
+
+### **33.2. Template ADMOB_IDS.md**
+
+Criar em `DadosPublicacao/<app_name>/admob/ADMOB_IDS.md`:
+
+```markdown
+# AdMob IDs de Produção - [Nome do App]
+
+**Data de Criação:** [DD/MM/YYYY]
+**Conta AdMob:** [email]
+
+## IDs de Produção
+
+| Tipo             | Nome no AdMob      | ID Completo            |
+| ---------------- | ------------------ | ---------------------- |
+| **App ID**       | [App Name]         | `ca-app-pub-XXXX~YYYY` |
+| **Banner**       | [App]_Banner       | `ca-app-pub-XXXX/ZZZZ` |
+| **Interstitial** | [App]_Interstitial | `ca-app-pub-XXXX/ZZZZ` |
+| **App Open**     | [App]_AppOpen      | `ca-app-pub-XXXX/ZZZZ` |
+
+## Arquivos Atualizados
+- [x] lib/services/ad_service.dart
+- [x] android/app/src/main/AndroidManifest.xml
+```
+
+### **33.3. Estrutura DadosPublicacao Expandida**
+
+```
+DadosPublicacao/<app_name>/
+├── app-release.aab           # AAB assinado
+├── CHECKLIST_CONCLUIDO.md
+├── admob/                    # NOVO: Documentação AdMob
+│   └── ADMOB_IDS.md          # IDs de produção documentados
+├── keys/
+│   ├── upload-keystore.jks
+│   └── key.properties.example
+├── policies/
+│   └── privacy_policy.html
+└── store_assets/
+    ├── icon_512.png
+    ├── feature_graphic.png
+    └── screenshots/
+```
+
+---
+
+## **34. Feature Graphic via Playwright Canvas (NOVO v6.3)**
+
+### **34.1. Geração Automatizada**
+
+```javascript
+await page.setContent(`
+  <div id="feature" style="
+    width: 1024px; height: 500px;
+    background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    font-family: 'Segoe UI', Arial, sans-serif; color: white;">
+    <div style="font-size: 72px; font-weight: bold;">App Name</div>
+    <div style="font-size: 32px; opacity: 0.9;">Tagline here</div>
+  </div>
+`);
+await page.locator('#feature').screenshot({ path: 'feature_graphic.png' });
+```
+
+### **34.2. Cores por Categoria**
+
+| Categoria     | Gradiente           |
+| ------------- | ------------------- |
+| Saúde/Fitness | `#4CAF50 → #2E7D32` |
+| Produtividade | `#E74C3C → #C0392B` |
+| Finanças      | `#3498DB → #2980B9` |
+| Utilidades    | `#34495E → #2C3E50` |
+| Jogos         | `#9B59B6 → #8E44AD` |
+
+---
+
+**Fim do Planejamento v6.3.** Clean Architecture + Factory Mode + Automação AdMob = Produtividade Máxima.
+
+*"Da Fundação ao SuperApp: Um Bloco de Cada Vez. Agora com Arquitetura Limpa, Automação Total e AdMob em 4 Minutos."*

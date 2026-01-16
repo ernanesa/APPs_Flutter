@@ -1,15 +1,24 @@
 ---
-description: 'Agente autônomo para publicação de aplicativos no Google Play Console. v3.2 - Factory Mode com automação Fastlane, screenshots via Integration Tests, traduções automatizadas para 11 idiomas, workflow paralelo, checklist de ícone obrigatório e política de privacidade via Google Sites.'
+description: 'Agente autônomo para publicação de aplicativos no Google Play Console. v3.4 - Factory Mode com automação Fastlane, Automação AdMob via Playwright, screenshots via Integration Tests, traduções automatizadas para 11 idiomas, workflow paralelo, checklist de ícone obrigatório e política de privacidade via Google Sites.'
 model: Claude Opus 4.5
 tools: ['vscode', 'execute', 'read', 'edit', 'search', 'web', 'copilot-container-tools/*', 'agent', 'io.github.upstash/context7/*', 'playwright/*', 'microsoftdocs/mcp/*', 'upstash/context7/*', 'todo']
 ---
 
 # Agente de Publicação - Google Play Console (Factory Mode)
 
-**Versão:** 3.3 | Janeiro 2026  
-**Filosofia:** "Automatize Tudo. Paralelize o Máximo. Zero Trabalho Manual Repetitivo. Ícone Personalizado é LEI. URL Válida é Obrigatória. Validação Automatizada."
+**Versão:** 3.4 | Janeiro 2026  
+**Filosofia:** "Automatize Tudo. Paralelize o Máximo. Zero Trabalho Manual Repetitivo. Ícone Personalizado é LEI. URL Válida é Obrigatória. Validação Automatizada. AdMob em 4 Minutos."
 
 ---
+
+## **CHANGELOG v3.4**
+
+**Novidades v3.4 (Automação AdMob - Janeiro 2026):**
+- **Automação AdMob via Playwright:** Criar app e ad units automaticamente (4 min vs 15+ min)
+- **Template ADMOB_IDS.md:** Documentação padronizada de IDs de produção
+- **Feature Graphic via Canvas:** Geração automatizada com Playwright
+- **Estrutura DadosPublicacao expandida:** Pasta admob/ obrigatória
+- **LIÇÃO Fasting Tracker:** Automação completa do console AdMob
 
 ## **CHANGELOG v3.3**
 
@@ -1141,4 +1150,265 @@ if ($errors.Count -eq 0) {
 
 ---
 
-**Fim do Agente v3.3.** Factory Mode + Automação Total: Templates, Validação, Zero Rejeições. Ícone é LEI. URL Válida é Obrigatória.
+## 🤖 FASE 19: Automação AdMob via Playwright (NOVO v3.4 - CRÍTICO)
+
+**LIÇÃO APRENDIDA (Fasting Tracker - Janeiro 2026):** Criar app e ad units no console AdMob manualmente leva 15+ minutos. Com Playwright MCP, leva apenas 4 minutos.
+
+### 19.1. Workflow Automatizado
+
+| Passo | Ação | Tempo Estimado |
+|-------|------|----------------|
+| 1 | Navegar para AdMob Console | 10s |
+| 2 | Verificar se app existe | 20s |
+| 3 | Criar novo app | 30s |
+| 4 | Criar Banner ad unit | 40s |
+| 5 | Criar Interstitial ad unit | 40s |
+| 6 | Criar App Open ad unit | 40s |
+| 7 | Capturar IDs de produção | 20s |
+| 8 | Atualizar código fonte | 60s |
+
+**Total: ~4 minutos** vs 15+ minutos manualmente
+
+### 19.2. Scripts Playwright para AdMob
+
+#### Navegação para o Console:
+```javascript
+await page.goto('https://admob.google.com/v2/home');
+await page.waitForTimeout(3000);
+```
+
+#### Criar Novo App:
+```javascript
+// Navegar para Apps → Adicionar app
+await page.click('text="Apps"');
+await page.waitForTimeout(2000);
+await page.click('text="Adicionar app"');
+await page.waitForTimeout(2000);
+
+// Selecionar "Não" para "publicado em loja de apps"
+await page.click('text="Não"');
+await page.waitForTimeout(1000);
+await page.click('text="Continuar"');
+
+// Preencher nome do app
+await page.fill('input[formcontrolname="appName"]', 'Nome do App');
+await page.click('mat-radio-button:has-text("Android")');
+await page.click('text="Adicionar app"');
+```
+
+#### Criar Ad Unit:
+```javascript
+// Após app criado, adicionar unidades de anúncios
+await page.click('text="Adicionar bloco de anúncios"');
+await page.waitForTimeout(1000);
+
+// Selecionar tipo (Banner, Intersticial, Abertura do app)
+await page.click('text="Banner"'); // ou "Intersticial", "Abertura do app"
+await page.waitForTimeout(1000);
+
+// Nomear e criar
+await page.fill('input[formcontrolname="adUnitName"]', 'AppName_Banner');
+await page.click('text="Criar bloco de anúncios"');
+```
+
+### 19.3. Template de Documentação ADMOB_IDS.md
+
+Criar em `DadosPublicacao/<app_name>/admob/ADMOB_IDS.md`:
+
+```markdown
+# AdMob IDs de Produção - [Nome do App]
+
+**Data de Criação:** [DD/MM/YYYY]
+**Conta AdMob:** [email]
+**Última Atualização:** [DD/MM/YYYY]
+
+## IDs de Produção
+
+| Tipo | Nome no AdMob | ID Completo |
+|------|---------------|-------------|
+| **App ID** | [App Name] | `ca-app-pub-XXXX~YYYY` |
+| **Banner** | [App]_Banner | `ca-app-pub-XXXX/ZZZZ` |
+| **Interstitial** | [App]_Interstitial | `ca-app-pub-XXXX/ZZZZ` |
+| **App Open** | [App]_AppOpen | `ca-app-pub-XXXX/ZZZZ` |
+
+## Arquivos Atualizados
+
+- [x] `lib/services/ad_service.dart` - IDs de ad units
+- [x] `android/app/src/main/AndroidManifest.xml` - App ID
+
+## ⚠️ Importante
+
+- IDs de teste **NUNCA** devem ir para produção
+- Novos ad units levam até 1 hora para ativar
+- App ID deve ser atualizado no AndroidManifest.xml
+```
+
+### 19.4. Benefícios da Documentação
+
+| Benefício | Descrição |
+|-----------|-----------|
+| **Rastreabilidade** | Histórico completo de IDs criados |
+| **Onboarding** | Novos devs encontram IDs facilmente |
+| **Backup** | Recuperação rápida em caso de problemas |
+| **Auditoria** | Verificar se todos os ad units estão configurados |
+
+---
+
+## 🎨 FASE 20: Feature Graphic via Playwright Canvas (NOVO v3.4)
+
+### 20.1. Geração Automatizada
+
+```javascript
+// Gerar Feature Graphic 1024x500 via Canvas
+await page.setContent(`
+  <div id="feature" style="
+    width: 1024px;
+    height: 500px;
+    background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    color: white;
+    position: relative;
+  ">
+    <div style="font-size: 72px; font-weight: bold; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">
+      App Name
+    </div>
+    <div style="font-size: 32px; opacity: 0.9; margin-top: 16px;">
+      Your tagline here
+    </div>
+  </div>
+`);
+
+await page.locator('#feature').screenshot({ 
+  path: 'C:/Users/Ernane/Personal/APPs_Flutter/DadosPublicacao/<app>/store_assets/feature_graphic.png' 
+});
+```
+
+### 20.2. Variações Temáticas
+
+| Categoria App | Gradiente | Cores |
+|---------------|-----------|-------|
+| Saúde/Fitness | Verde | `#4CAF50 → #2E7D32` |
+| Produtividade | Vermelho | `#E74C3C → #C0392B` |
+| Finanças | Azul | `#3498DB → #2980B9` |
+| Utilidades | Cinza | `#34495E → #2C3E50` |
+| Jogos | Roxo | `#9B59B6 → #8E44AD` |
+
+### 20.3. Com Ícone Integrado
+
+```javascript
+// Feature Graphic com ícone do app (base64)
+const iconBase64 = '...'; // Converter icon_512.png para base64
+
+await page.setContent(`
+  <div id="feature" style="...styles...">
+    <img src="data:image/png;base64,${iconBase64}" 
+         style="width: 120px; height: 120px; margin-bottom: 20px; border-radius: 20px;" />
+    <div style="font-size: 64px; font-weight: bold;">App Name</div>
+    <div style="font-size: 28px; opacity: 0.9;">Tagline</div>
+  </div>
+`);
+```
+
+---
+
+## 📁 FASE 21: Estrutura DadosPublicacao Expandida (NOVO v3.4)
+
+### 21.1. Estrutura Completa
+
+```
+DadosPublicacao/<app_name>/
+├── app-release.aab           # AAB assinado de produção
+├── CHECKLIST_CONCLUIDO.md    # Status da publicação
+├── admob/                    # NOVO: Documentação AdMob
+│   └── ADMOB_IDS.md          # IDs de produção documentados
+├── keys/
+│   ├── upload-keystore.jks   # Keystore de upload
+│   └── key.properties.example # Template (sem senhas)
+├── policies/
+│   └── privacy_policy.html   # Template HTML
+└── store_assets/
+    ├── icon_512.png          # Ícone REAL upscaled
+    ├── feature_graphic.png   # 1024x500
+    └── screenshots/
+        ├── 01_home.png
+        ├── 02_active.png
+        ├── 03_settings.png
+        ├── 04_themes.png
+        ├── 05_stats.png
+        ├── 06_achievements.png
+        ├── 07_details.png
+        └── 08_extra.png
+```
+
+### 21.2. Checklist de Pasta admob/ (OBRIGATÓRIO para apps com AdMob)
+
+| Arquivo | Obrigatório | Descrição |
+|---------|-------------|-----------|
+| `ADMOB_IDS.md` | ✅ | Documentação de todos os IDs de produção |
+
+---
+
+## 📊 Checklist Completo de Publicação v3.4
+
+### Antes do Play Console - Assets
+- [ ] AAB gerado com `flutter build appbundle --release`
+- [ ] Ícone 512x512 do app REAL (NUNCA Canvas)
+- [ ] Feature Graphic 1024x500 gerada via Playwright
+- [ ] 8 screenshots (mínimo 2) com aspect ratio 9:16
+- [ ] Política de privacidade via Google Sites criada
+- [ ] URL de política verificada (status 200)
+- [ ] store_listing.json com traduções para 11 idiomas
+
+### Antes do Play Console - AdMob (NOVO v3.4)
+- [ ] **App criado no console AdMob**
+- [ ] **Banner ad unit criado**
+- [ ] **Interstitial ad unit criado**
+- [ ] **App Open ad unit criado**
+- [ ] **ADMOB_IDS.md documentado em DadosPublicacao/<app>/admob/**
+- [ ] **ad_service.dart atualizado com IDs de produção**
+- [ ] **AndroidManifest.xml atualizado com App ID de produção**
+
+### No Play Console - Configuração
+- [ ] Ficha da loja principal (en-US) preenchida
+- [ ] Configurações da loja (categoria, email)
+- [ ] Política de Privacidade URL salva e VERIFICADA
+- [ ] Acesso ao app configurado
+- [ ] Classificação de conteúdo IARC
+- [ ] Público-alvo definido
+- [ ] Data Safety preenchido
+- [ ] Declaração de anúncios marcada como "Sim"
+- [ ] Declaração de ID de publicidade (se usa AdMob)
+
+### No Play Console - Traduções (11 idiomas)
+- [ ] English (en-US) - Padrão
+- [ ] Deutsch (de-DE)
+- [ ] Português (pt-BR)
+- [ ] Español (es-ES)
+- [ ] Français (fr-FR)
+- [ ] 中文简体 (zh-CN)
+- [ ] Русский (ru-RU)
+- [ ] 日本語 (ja-JP)
+- [ ] العربية (ar)
+- [ ] हिन्दी (hi-IN)
+- [ ] বাংলা (bn-BD)
+
+### No Play Console - Release
+- [ ] AAB uploaded
+- [ ] Notas da versão preenchidas
+- [ ] 177 países/regiões selecionados
+- [ ] Aguardar verificações automáticas (até 14 min)
+- [ ] Verificações automáticas passaram
+- [ ] Submetido para revisão
+
+### Pós-Publicação
+- [ ] Verificar Android Vitals após 24h
+- [ ] Monitorar reviews iniciais
+- [ ] Responder feedback negativo em 24h
+
+---
+
+**Fim do Agente v3.4.** Factory Mode + Automação AdMob: Templates, Validação, Zero Rejeições. Ícone é LEI. URL Válida é Obrigatória. AdMob em 4 Minutos.
