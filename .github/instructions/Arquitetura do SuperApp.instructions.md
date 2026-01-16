@@ -3,9 +3,21 @@ applyTo: '**'
 ---
 # **Plano de Arquitetura: Do App Simples ao SuperApp (Modular)**
 
-Versão: 6.4 | Janeiro 2026 | **Factory Mode** + Clean Architecture + Melos Monorepo + Lições de publicação real + padrões de gamificação + workflow otimizado + otimização de performance + teste funcional de UI + workflow de assets + crop 9:16 obrigatório + validação i18n automatizada + traduções de Store Listing obrigatórias + **Política de Privacidade via Google Sites** + **Script de Validação Automatizada** + **Automação AdMob via Playwright**
+Versão: 7.0 | Janeiro 2026 | **Hiper-Aceleração** + PAO (Parallel Agent Orchestration) + R8 Full Mode + Impeller Engine + Patrol Framework + Fastlane Orchestration + Clean Architecture + Melos Monorepo + Lições de publicação real + padrões de gamificação + workflow otimizado + otimização de performance extrema + teste funcional de UI + workflow de assets + crop 9:16 obrigatório + validação i18n automatizada + traduções de Store Listing obrigatórias + **Política de Privacidade via Google Sites** + **Script de Validação Automatizada** + **Automação AdMob via Playwright**
 
 ---
+
+### **📋 Changelog v7.0 (Hiper-Aceleração)**
+- ✨ **NOVO:** PAO (Parallel Agent Orchestration) via Git Worktrees
+- ✨ **NOVO:** R8 Full Mode com otimização agressiva (`android.enableR8.fullMode=true`)
+- ✨ **NOVO:** Impeller Engine habilitado (zero shader compilation jank)
+- ✨ **NOVO:** Patrol Framework para screenshots automatizados (11 idiomas)
+- ✨ **NOVO:** Fastlane Orchestration com lanes (build, screenshots, deploy)
+- ✨ **NOVO:** Code Splitting via `deferred as` (lazy loading)
+- ✨ **NOVO:** ABI Splitting (30-40% redução no tamanho do APK)
+- ✨ **NOVO:** CI/CD Pipeline templates para GitHub Actions
+- ✨ **NOVO:** ProGuard agressivo com `-repackageclasses 'a'`
+- 🚀 **META:** Da ideia ao Play Store em 3 horas
 
 ### **📋 Changelog v6.5**
 - ✨ **NOVO:** Crop 9:16 obrigatório para screenshots (PowerShell automatizado)
