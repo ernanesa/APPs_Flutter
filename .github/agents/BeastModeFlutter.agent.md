@@ -35,6 +35,13 @@ Você é um **Engenheiro de Software Principal e Arquiteto de Soluções Móveis
 
 ## **CHANGELOG**
 
+**v9.5 (Validação Automatizada - Janeiro 2026):**
+- **Crop 9:16 Obrigatório:** Script PowerShell para corrigir aspect ratio de screenshots
+- **Validação i18n Automatizada:** Ferramenta check_l10n.ps1 para sincronizar chaves
+- **Workflow Swap-and-Remove:** Técnica para substituir screenshots no Play Console
+- **Traduções de Store Listing:** Template de delegação para sub-agente traduzir 10 idiomas
+- **Lição Fasting Tracker:** Validação completa antes de submeter = zero retrabalho
+
 **v9.4 (Automação AdMob - Janeiro 2026):**
 - **Automação AdMob via Playwright:** Workflow completo para criar apps e ad units no console
 - **Template ADMOB_IDS.md:** Padrão de documentação de IDs de produção por app
@@ -3966,6 +3973,249 @@ DadosPublicacao/<app_name>/
 | `screenshots/*.png` | Mínimo 2 screenshots | ✅ |
 | `privacy_policy.md` | Backup da política | Recomendado |
 | `CHECKLIST_CONCLUIDO.md` | Registro do processo | Recomendado |
+
+---
+
+## **57. Crop de Screenshots para 9:16 (NOVO v9.5 - OBRIGATÓRIO)**
+
+**LIÇÃO CRÍTICA (Fasting Tracker):** O Google Play Console REJEITA screenshots com aspect ratio diferente de 9:16 para phones.
+
+### **57.1. Problema Comum**
+
+Emuladores Android geram screenshots em resoluções variadas:
+- Pixel 6: 1080x2400 (aspect ratio 9:20)
+- Pixel 5: 1080x2340 (aspect ratio 9:19.5)
+- Generic: 1080x1920 (aspect ratio 9:16) ✅
+
+**Play Console aceita APENAS 9:16 exato (1080x1920 ou equivalente).**
+
+### **57.2. Script de Crop Automatizado**
+
+```powershell
+# Crop de screenshot para 9:16 (1080x1920) - Centralizado
+Add-Type -AssemblyName System.Drawing
+$inputPath = "C:\Users\Ernane\Personal\APPs_Flutter\DadosPublicacao\<app>\store_assets\screenshots\original.png"
+$outputPath = "C:\Users\Ernane\Personal\APPs_Flutter\DadosPublicacao\<app>\store_assets\screenshots\cropped.png"
+
+$original = [System.Drawing.Image]::FromFile($inputPath)
+$targetRatio = 9.0 / 16.0  # 0.5625
+$currentRatio = $original.Width / $original.Height
+
+if ($currentRatio -gt $targetRatio) {
+    # Mais largo que 9:16 - crop nas laterais
+    $newWidth = [int]($original.Height * $targetRatio)
+    $cropX = [int](($original.Width - $newWidth) / 2)
+    $cropRect = [System.Drawing.Rectangle]::new($cropX, 0, $newWidth, $original.Height)
+} else {
+    # Mais alto que 9:16 - crop em cima/baixo
+    $newHeight = [int]($original.Width / $targetRatio)
+    $cropY = [int](($original.Height - $newHeight) / 2)
+    $cropRect = [System.Drawing.Rectangle]::new(0, $cropY, $original.Width, $newHeight)
+}
+
+$bitmap = New-Object System.Drawing.Bitmap($original)
+$cropped = $bitmap.Clone($cropRect, $bitmap.PixelFormat)
+$cropped.Save($outputPath, [System.Drawing.Imaging.ImageFormat]::Png)
+
+$original.Dispose(); $bitmap.Dispose(); $cropped.Dispose()
+Write-Host "✅ Cropped para 9:16: $outputPath"
+```
+
+### **57.3. Workflow Swap-and-Remove (Play Console)**
+
+**Problema:** Play Console tem limite de 8 screenshots. Ao adicionar versão cropped, total vai para 9/8.
+
+**Solução:**
+1. **Adicionar versão cropped** via "Salvar como cópia" ou upload
+2. **Selecionar screenshot original** (aspect ratio errado)
+3. **Clicar "Remover"** para voltar a 8/8
+4. **Repetir** para cada screenshot que precisa de crop
+5. **Salvar** rascunho
+
+### **57.4. Validação Automatizada de Aspect Ratio**
+
+```powershell
+# Verificar se todos os screenshots são 9:16
+$dir = "C:\Users\Ernane\Personal\APPs_Flutter\DadosPublicacao\<app>\store_assets\screenshots"
+Get-ChildItem "$dir\*.png" | ForEach-Object {
+    Add-Type -AssemblyName System.Drawing
+    $img = [System.Drawing.Image]::FromFile($_.FullName)
+    $ratio = [math]::Round($img.Width / $img.Height, 4)
+    $expected = [math]::Round(9/16, 4)  # 0.5625
+    $status = if ($ratio -eq $expected) { "✅" } else { "❌ Ratio: $ratio" }
+    Write-Host "$($_.Name): $($img.Width)x$($img.Height) $status"
+    $img.Dispose()
+}
+```
+
+### **57.5. Checklist de Screenshots**
+
+- [ ] Mínimo 2 screenshots capturados
+- [ ] Aspect ratio verificado (deve ser 0.5625 exato)
+- [ ] Cropped para 9:16 se necessário
+- [ ] Versões antigas removidas do Play Console
+- [ ] Rascunho salvo
+
+---
+
+## **58. Validação i18n Automatizada (NOVO v9.5)**
+
+**LIÇÃO:** Chaves dessincronizadas entre arquivos .arb causam erros de compilação difíceis de debugar.
+
+### **58.1. Ferramenta check_l10n.ps1**
+
+**Localização:** `tools/check_l10n.ps1`
+
+```powershell
+param([string]$AppPath)
+
+$l10nDir = "$AppPath\lib\l10n"
+$templateFile = "$l10nDir\app_en.arb"
+
+if (!(Test-Path $templateFile)) {
+    Write-Host "❌ Template app_en.arb não encontrado" -ForegroundColor Red
+    exit 1
+}
+
+$template = Get-Content $templateFile | ConvertFrom-Json
+$templateKeys = $template.PSObject.Properties.Name | Where-Object { $_ -notlike "@@*" -and $_ -notlike "_*" }
+
+Write-Host "Template keys: $($templateKeys.Count)" -ForegroundColor Cyan
+
+$allArbs = Get-ChildItem "$l10nDir\app_*.arb"
+$errors = @()
+
+foreach ($arbFile in $allArbs) {
+    if ($arbFile.Name -eq "app_en.arb") { continue }
+    
+    $content = Get-Content $arbFile.FullName | ConvertFrom-Json
+    $keys = $content.PSObject.Properties.Name | Where-Object { $_ -notlike "@@*" -and $_ -notlike "_*" }
+    
+    $missing = Compare-Object $templateKeys $keys | Where-Object { $_.SideIndicator -eq "<=" }
+    $extra = Compare-Object $templateKeys $keys | Where-Object { $_.SideIndicator -eq "=>" }
+    
+    if ($missing) {
+        $errors += "$($arbFile.Name): Missing keys: $($missing.InputObject -join ', ')"
+    }
+    if ($extra) {
+        $errors += "$($arbFile.Name): Extra keys: $($extra.InputObject -join ', ')"
+    }
+}
+
+if ($errors.Count -eq 0) {
+    Write-Host "✅ OK: all ARB files match template keys." -ForegroundColor Green
+} else {
+    Write-Host "❌ ERRORS found:" -ForegroundColor Red
+    $errors | ForEach-Object { Write-Host "  $_" -ForegroundColor Yellow }
+    exit 1
+}
+```
+
+### **58.2. Uso da Ferramenta**
+
+```powershell
+# Validar i18n antes de gen-l10n
+pwsh -NoProfile -ExecutionPolicy Bypass -File "C:\Users\Ernane\Personal\APPs_Flutter\tools\check_l10n.ps1" -AppPath "C:\Users\Ernane\Personal\APPs_Flutter\fasting_tracker"
+
+# Output esperado:
+# Template keys: 148
+# ✅ OK: all ARB files match template keys.
+```
+
+### **58.3. Integração no Workflow**
+
+```powershell
+# Workflow completo de validação
+Set-Location "C:\Users\Ernane\Personal\APPs_Flutter\<app>";
+pwsh ..\tools\check_l10n.ps1 -AppPath .
+if ($LASTEXITCODE -eq 0) {
+    flutter gen-l10n;
+    flutter analyze;
+    flutter test;
+}
+```
+
+---
+
+## **59. Traduções de Store Listing (NOVO v9.5 - OBRIGATÓRIO)**
+
+**LIÇÃO CRÍTICA:** O Play Console exige Store Listing traduzido para cada idioma que o app suporta. Apenas i18n do código NÃO é suficiente.
+
+### **59.1. Idiomas Obrigatórios para Store**
+
+| Código | Idioma | Campo no Play Console |
+|--------|--------|----------------------|
+| en-US | Inglês (EUA) | Default |
+| pt-BR | Português (Brasil) | Adicionar idioma |
+| es-419 | Espanhol (Latam) | Adicionar idioma |
+| de-DE | Alemão | Adicionar idioma |
+| fr-FR | Francês | Adicionar idioma |
+| zh-CN | Chinês Simplificado | Adicionar idioma |
+| ru-RU | Russo | Adicionar idioma |
+| ja-JP | Japonês | Adicionar idioma |
+| ar | Árabe | Adicionar idioma |
+| hi-IN | Hindi | Adicionar idioma |
+| bn-BD | Bengali | Adicionar idioma |
+
+### **59.2. Template de Traduções**
+
+```json
+{
+  "translations": {
+    "en-US": {
+      "title": "Fasting Tracker - Health",
+      "shortDescription": "Track your intermittent fasting journey with ease and achieve your health goals.",
+      "fullDescription": "🎯 Fasting Tracker - Your Health Companion\n\n📊 Features:\n• Customizable fasting plans (16:8, 18:6, 20:4, custom)\n• Real-time progress tracking\n• Metabolic stage insights\n• Streak counter and achievements\n• Beautiful Material 3 design\n\n🌟 Why choose us?\n✅ No account required\n✅ Works offline\n✅ Privacy-focused\n✅ Free to use\n\nDownload now and start your health journey! 💪"
+    },
+    "pt-BR": {
+      "title": "Rastreador de Jejum - Saúde",
+      "shortDescription": "Acompanhe sua jornada de jejum intermitente com facilidade e alcance seus objetivos.",
+      "fullDescription": "🎯 Rastreador de Jejum - Seu Companheiro de Saúde\n\n📊 Funcionalidades:\n• Planos de jejum personalizáveis (16:8, 18:6, 20:4, customizado)\n• Acompanhamento em tempo real\n• Insights de estágios metabólicos\n• Contador de sequência e conquistas\n• Design moderno Material 3\n\n🌟 Por que nos escolher?\n✅ Sem necessidade de conta\n✅ Funciona offline\n✅ Foco em privacidade\n✅ Gratuito\n\nBaixe agora e comece sua jornada de saúde! 💪"
+    }
+  }
+}
+```
+
+### **59.3. Delegação para Sub-agente**
+
+```markdown
+**Tarefa:** Traduzir Store Listing do Fasting Tracker para 9 idiomas adicionais.
+
+**Base (en-US):**
+- Title: "Fasting Tracker - Health"
+- Short Description: "Track your intermittent fasting journey with ease and achieve your health goals."
+- Full Description: [descrição completa em inglês]
+
+**Idiomas alvo:** de-DE, es-419, fr-FR, zh-CN, ru-RU, ja-JP, ar, hi-IN, bn-BD
+
+**Regras:**
+1. Manter emojis exatamente como no original
+2. Preservar estrutura de bullets e formatação
+3. Adaptar culturalmente (não traduzir literalmente)
+4. Respeitar limites de caracteres (title: 30, short: 80, full: 4000)
+5. Usar terminologia técnica correta ("intermittent fasting" em cada idioma)
+
+**Output esperado:** JSON no formato do template com todas as traduções.
+```
+
+### **59.4. Processo no Play Console**
+
+1. **Navegar:** Presença na loja → Páginas de detalhes do app
+2. **Clicar:** "Gerenciar traduções" → "Adicionar idiomas"
+3. **Para cada idioma:**
+   - Selecionar idioma no dropdown
+   - Preencher: Nome do app, Breve descrição, Descrição completa
+   - **Salvar como rascunho** (não esperar preencher todos)
+4. **Após preencher todos:** Salvar definitivo
+
+### **59.5. Checklist de Store Listing**
+
+- [ ] Traduções geradas via sub-agente
+- [ ] JSON validado (11 idiomas completos)
+- [ ] en-US preenchido e salvo no Play Console
+- [ ] 10 idiomas adicionais preenchidos
+- [ ] Todos os idiomas salvos como rascunho
+- [ ] Verificação final: 11/11 idiomas OK
 
 ---
 

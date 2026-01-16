@@ -11,6 +11,15 @@ tools: ['vscode', 'execute', 'read', 'edit', 'search', 'web', 'copilot-container
 
 ---
 
+## **CHANGELOG v3.5**
+
+**Novidades v3.5 (Validação Total - Janeiro 2026):**
+- **Crop 9:16 Obrigatório:** Script PowerShell para corrigir aspect ratio de screenshots
+- **Workflow Swap-and-Remove:** Técnica documentada para substituir screenshots
+- **Validação i18n Automatizada:** Ferramenta check_l10n.ps1 integrada
+- **Traduções de Store Listing:** Template completo para 11 idiomas via sub-agente
+- **LIÇÃO Fasting Tracker:** Validação completa ANTES de abrir navegador = zero surpresas
+
 ## **CHANGELOG v3.4**
 
 **Novidades v3.4 (Automação AdMob - Janeiro 2026):**
@@ -129,27 +138,32 @@ Write-Host "✅ Ícone salvo: $destPath"
 
 4. **Descomentar ads** após capturar screenshots.
 
-### 2.1. Crop Obrigatório para 9:16 (CRÍTICO v2.1)
-**LIÇÃO APRENDIDA:** O Google Play Console REJEITA screenshots com aspect ratio diferente de 9:16 para phones.
+### 2.1. Crop Obrigatório para 9:16 (CRÍTICO v3.5)
+**LIÇÃO APRENDIDA (Fasting Tracker):** O Google Play Console REJEITA screenshots com aspect ratio diferente de 9:16 para phones.
 
-**Script PowerShell para crop:**
+**Resoluções comuns de emuladores:**
+- Pixel 6: 1080x2400 (aspect ratio 9:20) ❌
+- Pixel 5: 1080x2340 (aspect ratio 9:19.5) ❌
+- Generic: 1080x1920 (aspect ratio 9:16) ✅
+
+**Script PowerShell para crop automático:**
 ```powershell
-# Crop screenshot de qualquer tamanho para 9:16 (1080x1920)
+# Crop screenshot de qualquer tamanho para 9:16 (1080x1920) - Centralizado
 Add-Type -AssemblyName System.Drawing
 $inputPath = "C:\Users\Ernane\Personal\APPs_Flutter\DadosPublicacao\<app>\store_assets\screenshots\original.png"
 $outputPath = "C:\Users\Ernane\Personal\APPs_Flutter\DadosPublicacao\<app>\store_assets\screenshots\cropped.png"
 
 $original = [System.Drawing.Image]::FromFile($inputPath)
-$targetRatio = 9.0 / 16.0
+$targetRatio = 9.0 / 16.0  # 0.5625
 $currentRatio = $original.Width / $original.Height
 
 if ($currentRatio -gt $targetRatio) {
-    # Mais largo que 9:16 - crop horizontal
+    # Mais largo que 9:16 - crop nas laterais (centralizado)
     $newWidth = [int]($original.Height * $targetRatio)
     $cropX = [int](($original.Width - $newWidth) / 2)
     $cropRect = [System.Drawing.Rectangle]::new($cropX, 0, $newWidth, $original.Height)
 } else {
-    # Mais alto que 9:16 - crop vertical
+    # Mais alto que 9:16 - crop em cima/baixo (centralizado)
     $newHeight = [int]($original.Width / $targetRatio)
     $cropY = [int](($original.Height - $newHeight) / 2)
     $cropRect = [System.Drawing.Rectangle]::new(0, $cropY, $original.Width, $newHeight)
@@ -160,7 +174,22 @@ $cropped = $bitmap.Clone($cropRect, $bitmap.PixelFormat)
 $cropped.Save($outputPath, [System.Drawing.Imaging.ImageFormat]::Png)
 
 $original.Dispose(); $bitmap.Dispose(); $cropped.Dispose()
-Write-Host "✅ Cropped para 9:16: $outputPath"
+Write-Host "✅ Cropped para 9:16: $outputPath ($(([System.Drawing.Image]::FromFile($outputPath)).Width)x$(([System.Drawing.Image]::FromFile($outputPath)).Height))"
+```
+
+**Validação de aspect ratio:**
+```powershell
+# Verificar se todos os screenshots são 9:16
+$dir = "C:\Users\Ernane\Personal\APPs_Flutter\DadosPublicacao\<app>\store_assets\screenshots"
+Get-ChildItem "$dir\*.png" | ForEach-Object {
+    Add-Type -AssemblyName System.Drawing
+    $img = [System.Drawing.Image]::FromFile($_.FullName)
+    $ratio = [math]::Round($img.Width / $img.Height, 4)
+    $expected = [math]::Round(9/16, 4)  # 0.5625
+    $status = if ($ratio -eq $expected) { "✅" } else { "❌ Ratio: $ratio (esperado: 0.5625)" }
+    Write-Host "$($_.Name): $($img.Width)x$($img.Height) $status"
+    $img.Dispose()
+}
 ```
 
 ### 2.2. Workflow de Swap-and-Remove no Play Console
@@ -414,7 +443,7 @@ DadosPublicacao/<app_name>/
 
 ---
 
-## 🌍 FASE 7: Traduções de Store Listing (NOVO v2.2 - CRÍTICO)
+## 🌍 FASE 7: Traduções de Store Listing (NOVO v3.5 - CRÍTICO ATUALIZADO)
 
 **LIÇÃO APRENDIDA:** O Play Console exige Store Listing traduzido para cada idioma que o app suporta. Apenas configurar i18n no código NÃO é suficiente.
 
@@ -443,16 +472,56 @@ Para cada idioma, acessar via dropdown e preencher:
 3. **Descrição completa** (máx 4000 chars)
 4. **Salvar como rascunho**
 
-### 7.3. Template de Traduções (ler dos arquivos .arb)
+### 7.3. Template de Traduções (Estrutura JSON Completa)
 
-```powershell
-# Ler traduções dos arquivos .arb do app
-$appPath = "C:\Users\Ernane\Personal\APPs_Flutter\<app>\lib\l10n"
-Get-ChildItem "$appPath\app_*.arb" | ForEach-Object {
-    Write-Host "=== $($_.Name) ==="
-    $content = Get-Content $_.FullName | ConvertFrom-Json
-    Write-Host "appTitle: $($content.appTitle)"
+**NOVO v3.5:** Template padronizado para delegação a sub-agente.
+
+```json
+{
+  "translations": {
+    "en-US": {
+      "title": "App Name",
+      "shortDescription": "Short description up to 80 characters.",
+      "fullDescription": "🎯 App Name - Your Companion\n\n📊 Features:\n• Feature 1\n• Feature 2\n\n🌟 Why choose us?\n✅ Benefit 1\n✅ Benefit 2"
+    },
+    "pt-BR": {
+      "title": "Nome do App",
+      "shortDescription": "Descrição curta até 80 caracteres.",
+      "fullDescription": "🎯 Nome do App - Seu Companheiro\n\n📊 Funcionalidades:\n• Funcionalidade 1\n• Funcionalidade 2\n\n🌟 Por que nos escolher?\n✅ Benefício 1\n✅ Benefício 2"
+    },
+    "de-DE": { "title": "...", "shortDescription": "...", "fullDescription": "..." },
+    "es-419": { "title": "...", "shortDescription": "...", "fullDescription": "..." },
+    "fr-FR": { "title": "...", "shortDescription": "...", "fullDescription": "..." },
+    "zh-CN": { "title": "...", "shortDescription": "...", "fullDescription": "..." },
+    "ru-RU": { "title": "...", "shortDescription": "...", "fullDescription": "..." },
+    "ja-JP": { "title": "...", "shortDescription": "...", "fullDescription": "..." },
+    "ar": { "title": "...", "shortDescription": "...", "fullDescription": "..." },
+    "hi-IN": { "title": "...", "shortDescription": "...", "fullDescription": "..." },
+    "bn-BD": { "title": "...", "shortDescription": "...", "fullDescription": "..." }
+  }
 }
+```
+
+**Prompt para Sub-agente:**
+```markdown
+**Tarefa:** Traduzir Store Listing do [App Name] para 9 idiomas adicionais.
+
+**Base (en-US):**
+- Title: "[App Title]"
+- Short Description: "[80 chars max]"
+- Full Description: "[Descrição completa com emojis e bullets]"
+
+**Idiomas alvo:** de-DE, es-419, fr-FR, zh-CN, ru-RU, ja-JP, ar, hi-IN, bn-BD
+
+**Regras:**
+1. Manter emojis exatamente como no original
+2. Preservar estrutura de bullets e formatação markdown
+3. Adaptar culturalmente (não traduzir literalmente)
+4. Respeitar limites de caracteres (title: 30, short: 80, full: 4000)
+5. Usar terminologia técnica correta para cada idioma
+6. Manter keywords relevantes para ASO (App Store Optimization)
+
+**Output esperado:** JSON no formato do template com todas as traduções completas.
 ```
 
 ### 7.4. Screenshots Compartilhados
@@ -1352,16 +1421,18 @@ DadosPublicacao/<app_name>/
 
 ---
 
-## 📊 Checklist Completo de Publicação v3.4
+## 📊 Checklist Completo de Publicação v3.5
 
 ### Antes do Play Console - Assets
 - [ ] AAB gerado com `flutter build appbundle --release`
 - [ ] Ícone 512x512 do app REAL (NUNCA Canvas)
 - [ ] Feature Graphic 1024x500 gerada via Playwright
-- [ ] 8 screenshots (mínimo 2) com aspect ratio 9:16
+- [ ] **8 screenshots com aspect ratio 9:16 VALIDADO** (script PowerShell)
+- [ ] **Crop aplicado se necessário** (screenshots originais com ratio errado)
 - [ ] Política de privacidade via Google Sites criada
 - [ ] URL de política verificada (status 200)
-- [ ] store_listing.json com traduções para 11 idiomas
+- [ ] **store_listing.json com traduções para 11 idiomas** (via sub-agente)
+- [ ] **i18n validado** (check_l10n.ps1 passou)
 
 ### Antes do Play Console - AdMob (NOVO v3.4)
 - [ ] **App criado no console AdMob**

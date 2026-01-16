@@ -7,6 +7,13 @@ Versão: 6.4 | Janeiro 2026 | **Factory Mode** + Clean Architecture + Melos Mono
 
 ---
 
+### **📋 Changelog v6.5**
+- ✨ **NOVO:** Crop 9:16 obrigatório para screenshots (PowerShell automatizado)
+- ✨ **NOVO:** Validação i18n via check_l10n.ps1 (sincronização de chaves)
+- ✨ **NOVO:** Workflow swap-and-remove para Play Console
+- ✨ **NOVO:** Traduções de Store Listing obrigatórias (template de delegação)
+- 🔧 **LIÇÃO Fasting Tracker:** Validação antes de submeter = zero retrabalho
+
 ### **📋 Changelog v6.4**
 - ✨ **NOVO:** Automação AdMob via Playwright MCP (criar apps e ad units automaticamente)
 - ✨ **NOVO:** Template ADMOB_IDS.md para documentação de IDs de produção

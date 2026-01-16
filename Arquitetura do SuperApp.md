@@ -1,12 +1,12 @@
 # **Plano de Arquitetura: Do App Simples ao SuperApp (Modular)**
 
-Versão: 6.3  
+Versão: 6.5  
 Data de Atualização: Janeiro 2026  
 Compatibilidade: Android 15+ (API 35), Flutter 3.32+  
+**Nota v6.5:** Crop 9:16 obrigatório (script PowerShell automatizado), validação i18n via check_l10n.ps1, traduções de Store Listing obrigatórias (template de delegação), workflow swap-and-remove, lição Fasting Tracker (validação completa antes de submeter = zero retrabalho)
 **Nota v6.3:** Automação AdMob via Playwright MCP (4 min vs 15+ min), Template ADMOB_IDS.md para documentação de IDs, estrutura DadosPublicacao expandida com pasta admob/
 **Nota v6.2:** Política de Privacidade via Google Sites (workflow completo), verificação obrigatória de URL antes de publicação, lição BMI Calculator (URL 404 = rejeição)
 **Nota v6.0:** Clean Architecture obrigatória (Domain/Data/Presentation), Templates para Health/Wellness Apps, NotificationService, Repository Pattern completo, Entities com estados temporais
-**Nota v5.5:** Crop 9:16 obrigatório, validação i18n automatizada, workflow swap-and-remove para screenshots
 **Nota v5.4:** Workflow de assets para publicação, regra do ícone real, lições do Pomodoro Timer
 **Nota v5.3:** Teste funcional de UI via ADB, estrutura de testes unitários, fast lane de publicação
 **Nota v5.2:** Otimização de performance (R8 full mode, ProGuard 7 passes), assinatura de produção
@@ -1862,6 +1862,105 @@ await page.locator('#feature').screenshot({ path: 'feature_graphic.png' });
 
 ---
 
-**Fim do Planejamento v6.3.** Clean Architecture + Factory Mode + Automação AdMob = Produtividade Máxima.
+## **35. Crop de Screenshots 9:16 (NOVO v6.5 - CRÍTICO)**
 
-*"Da Fundação ao SuperApp: Um Bloco de Cada Vez. Agora com Arquitetura Limpa, Automação Total e AdMob em 4 Minutos."*
+**LIÇÃO APRENDIDA (Fasting Tracker):** O Google Play Console REJEITA screenshots com aspect ratio diferente de 9:16 para phones.
+
+### **35.1. Script de Crop Automatizado**
+
+```powershell
+# Crop para 9:16 (1080x1920) centralizado
+Add-Type -AssemblyName System.Drawing
+$inputPath = "DadosPublicacao\<app>\store_assets\screenshots\original.png"
+$outputPath = "DadosPublicacao\<app>\store_assets\screenshots\cropped.png"
+
+$original = [System.Drawing.Image]::FromFile($inputPath)
+$targetRatio = 9.0 / 16.0
+$currentRatio = $original.Width / $original.Height
+
+if ($currentRatio -gt $targetRatio) {
+    $newWidth = [int]($original.Height * $targetRatio)
+    $cropX = [int](($original.Width - $newWidth) / 2)
+    $cropRect = [System.Drawing.Rectangle]::new($cropX, 0, $newWidth, $original.Height)
+} else {
+    $newHeight = [int]($original.Width / $targetRatio)
+    $cropY = [int](($original.Height - $newHeight) / 2)
+    $cropRect = [System.Drawing.Rectangle]::new(0, $cropY, $original.Width, $newHeight)
+}
+
+$bitmap = New-Object System.Drawing.Bitmap($original)
+$cropped = $bitmap.Clone($cropRect, $bitmap.PixelFormat)
+$cropped.Save($outputPath, [System.Drawing.Imaging.ImageFormat]::Png)
+$original.Dispose(); $bitmap.Dispose(); $cropped.Dispose()
+```
+
+### **35.2. Validação de Aspect Ratio**
+
+```powershell
+Get-ChildItem "DadosPublicacao\<app>\store_assets\screenshots\*.png" | ForEach-Object {
+    Add-Type -AssemblyName System.Drawing
+    $img = [System.Drawing.Image]::FromFile($_.FullName)
+    $ratio = [math]::Round($img.Width / $img.Height, 4)
+    $expected = 0.5625  # 9/16
+    $status = if ($ratio -eq $expected) { "✅" } else { "❌ ($ratio)" }
+    Write-Host "$($_.Name): $status"
+    $img.Dispose()
+}
+```
+
+---
+
+## **36. Traduções de Store Listing (NOVO v6.5 - OBRIGATÓRIO)**
+
+**LIÇÃO:** O Play Console exige descrições traduzidas para cada idioma. Apenas i18n do código NÃO é suficiente.
+
+### **36.1. Template JSON para Sub-agente**
+
+```json
+{
+  "translations": {
+    "en-US": {
+      "title": "App Name",
+      "shortDescription": "Short description up to 80 characters.",
+      "fullDescription": "🎯 App Name\n\n📊 Features:\n• Feature 1\n• Feature 2"
+    },
+    "pt-BR": { "title": "...", "shortDescription": "...", "fullDescription": "..." },
+    "de-DE": { "title": "...", "shortDescription": "...", "fullDescription": "..." }
+  }
+}
+```
+
+### **36.2. Prompt para Delegação**
+
+```
+runSubagent("Traduzir Store Listing", "Traduza para 10 idiomas (de, pt, es, fr, zh, ru, ja, ar, hi, bn):
+
+Regras:
+1. Respeitar limite de 30 chars para título
+2. Respeitar limite de 80 chars para descrição curta
+3. Adaptar culturalmente (não traduzir literalmente)
+4. Manter keywords relevantes para ASO
+
+Retorne JSON organizado por idioma.")
+```
+
+---
+
+## **37. Validação i18n Automatizada (NOVO v6.5)**
+
+### **37.1. Ferramenta check_l10n.ps1**
+
+Criar em `tools/check_l10n.ps1` para validar sincronização de chaves entre todos os arquivos .arb.
+
+### **37.2. Uso**
+
+```powershell
+pwsh -File tools\check_l10n.ps1 -AppPath .\fasting_tracker
+# Output: ✅ OK: all ARB files match template keys.
+```
+
+---
+
+**Fim do Planejamento v6.5.** Clean Architecture + Factory Mode + Automação AdMob + Validação Completa = Zero Retrabalho.
+
+*"Da Fundação ao SuperApp: Um Bloco de Cada Vez. Agora com Arquitetura Limpa, Automação Total, AdMob em 4 Minutos e Validação Automatizada."*
