@@ -66,11 +66,6 @@ class SettingsScreen extends ConsumerWidget {
             title: Text(l10n.version),
             subtitle: const Text('1.0.0'),
           ),
-          ListTile(
-            leading: const Icon(Icons.code),
-            title: Text(l10n.openSource),
-            subtitle: Text(l10n.openSourceDesc),
-          ),
           
           const SizedBox(height: 32),
         ],

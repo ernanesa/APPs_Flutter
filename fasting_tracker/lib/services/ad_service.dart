@@ -15,21 +15,21 @@ class AdService {
     if (kDebugMode) {
       return 'ca-app-pub-3940256099942544/9257395921'; // Test ID
     }
-    return 'ca-app-pub-XXXX/YYYY'; // TODO: Replace with production ID
+    return 'ca-app-pub-9691622617864549/9860889516'; // Production ID
   }
 
   static String get bannerAdUnitId {
     if (kDebugMode) {
       return 'ca-app-pub-3940256099942544/6300978111'; // Test ID
     }
-    return 'ca-app-pub-XXXX/YYYY'; // TODO: Replace with production ID
+    return 'ca-app-pub-9691622617864549/5892696675'; // Production ID
   }
 
   static String get interstitialAdUnitId {
     if (kDebugMode) {
       return 'ca-app-pub-3940256099942544/1033173712'; // Test ID
     }
-    return 'ca-app-pub-XXXX/YYYY'; // TODO: Replace with production ID
+    return 'ca-app-pub-9691622617864549/2173971182'; // Production ID
   }
 
   /// Initialize Mobile Ads SDK
