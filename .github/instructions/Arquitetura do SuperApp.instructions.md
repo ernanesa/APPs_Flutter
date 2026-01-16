@@ -3,9 +3,32 @@ applyTo: '**'
 ---
 # **Plano de Arquitetura: Do App Simples ao SuperApp (Modular)**
 
-Versão: 6.0 | Janeiro 2026 | **Factory Mode** + Clean Architecture + Melos Monorepo + Lições de publicação real + padrões de gamificação + workflow otimizado + otimização de performance + teste funcional de UI + workflow de assets + crop 9:16 obrigatório + validação i18n automatizada + traduções de Store Listing obrigatórias
+Versão: 6.3 | Janeiro 2026 | **Factory Mode** + Clean Architecture + Melos Monorepo + Lições de publicação real + padrões de gamificação + workflow otimizado + otimização de performance + teste funcional de UI + workflow de assets + crop 9:16 obrigatório + validação i18n automatizada + traduções de Store Listing obrigatórias + **Política de Privacidade via Google Sites** + **Script de Validação Automatizada**
 
 ---
+
+### **📋 Changelog v6.3**
+- ✨ **NOVO:** Mapa de Rejeições Comuns (Top 10 causas e soluções)
+- ✨ **NOVO:** Script PowerShell `validate_publication.ps1` para validação completa
+- ✨ **NOVO:** Template HTML de Privacy Policy reutilizável
+- ✨ **NOVO:** Verificação automática de aspect ratio em screenshots
+- 🔧 **AUTOMAÇÃO:** Zero trabalho manual repetitivo na validação
+
+### **📋 Changelog v6.2**
+- ✨ **NOVO:** Política de Privacidade via Google Sites (workflow completo)
+- ✨ **NOVO:** Padrão de nomenclatura URLs: `sarezende-<app>-privacy`
+- ✨ **NOVO:** Verificação obrigatória de URL antes de publicação
+- ✨ **NOVO:** Troubleshooting de rejeição por política inválida
+- 🔧 **LIÇÃO BMI Calculator:** URL 404 = rejeição imediata do Google Play
+
+### **📋 Changelog v6.1**
+- ✨ **NOVO:** Templates para Health/Wellness Apps (FastingSession, MetabolicStage)
+- ✨ **NOVO:** NotificationService pattern com flutter_local_notifications
+- ✨ **NOVO:** Repository Pattern completo (interface + implementação)
+- ✨ **NOVO:** Workflow de criação paralela por lotes
+- ✨ **NOVO:** Entity patterns com estados baseados em tempo
+- 🔧 **LIÇÃO:** `create_file` falha em arquivos existentes → usar `replace_string_in_file`
+- 🔧 **LIÇÃO:** Criar i18n dos 11 idiomas simultaneamente para evitar dessincronização
 
 ### **📋 Changelog v6.0**
 - ✨ **NOVO:** Clean Architecture obrigatória (Domain/Data/Presentation)
@@ -156,6 +179,7 @@ melos test
 | **Navegação** | GoRouter | Deep Linking essencial para SuperApp |
 | **Banco Local** | SharedPreferences / Hive | Persistência simples e rápida |
 | **Áudio** | audioplayers ^6.4.0 | Para ambient sounds e feedback sonoro |
+| **Notificações** | flutter_local_notifications ^18.0.1 | Lembretes e alertas locais |
 | **Ads** | google_mobile_ads 5.3+ | Banner, Interstitial, App Open |
 | **Consent (UE/EEA/UK)** | UMP via google_mobile_ads | GDPR: consent-first + privacy options |
 | **Build** | AGP 8.5.1+ | Compatibilidade 16KB page size |
@@ -248,12 +272,28 @@ adb exec-out screencap -p > screenshot.png
 - [ ] Target SDK 35
 - [ ] IDs AdMob de produção
 - [ ] ConsentService (GDPR) implementado
-- [ ] Screenshots reais do app (mín. 2)
-- [ ] Ícone 512x512
+- [ ] Screenshots reais do app (mín. 2) com ratio 9:16
+- [ ] Ícone 512x512 (REAL, nunca Canvas)
 - [ ] Feature graphic 1024x500
-- [ ] Política de privacidade hospedada
-- [ ] 11 idiomas traduzidos
+- [ ] **Política de privacidade via Google Sites** (padrão: `sarezende-<app>-privacy`)
+- [ ] **URL de política VERIFICADA (status 200)**
+- [ ] 11 idiomas traduzidos (app + Store Listing)
 - [ ] AAB gerado com `flutter build appbundle --release`
+
+### **7.1. Verificação de URL da Política de Privacidade (NOVO v6.2)**
+
+**⚠️ LIÇÃO BMI Calculator:** URL retornando 404 = rejeição imediata do Google Play.
+
+```powershell
+# Verificar antes de submeter
+$url = "https://sites.google.com/view/sarezende-<app>-privacy"
+try {
+    $response = Invoke-WebRequest -Uri $url -Method Head -UseBasicParsing -TimeoutSec 10
+    Write-Host "✅ URL OK (status $($response.StatusCode))"
+} catch {
+    Write-Host "❌ BLOQUEANTE: URL não acessível"
+}
+```
 
 ## **8\. Toolkit de Produtividade (RECOMENDADO)**
 
@@ -677,12 +717,17 @@ DadosPublicacao/<app>/store_assets/
     └── ... (até 08_extra.png)
 ```
 
----
+**INSTRUÇÃO OBRIGATÓRIA:**
+O ícone padrão do Flutter **DEVE** ser substituído por um novo ícone condizente com o app. Não é permitido publicar apps com o ícone genérico do Flutter. O ícone deve representar visualmente o propósito do app e ser entregue em todas as dimensões exigidas pela Play Store.
+
 
 ## **21. Versão do Documento**
 
 | Versão | Data | Mudanças |
 |--------|------|----------|
+| 6.3 | Janeiro 2026 | Mapa de Rejeições Comuns, Script de Validação Pré-Submissão, Template HTML de Privacy Policy |
+| 6.2 | Janeiro 2026 | Política de Privacidade via Google Sites, Verificação de URL obrigatória, Lição BMI Calculator |
+| 6.1 | Janeiro 2026 | Templates Health Apps, NotificationService, Repository Pattern, Lições Fasting Tracker |
 | 6.0 | Janeiro 2026 | Factory Mode, Clean Architecture obrigatória, Melos monorepo, Integration Tests |
 | 5.6 | Janeiro 2026 | Traduções Store Listing obrigatórias |
 | 5.5 | Janeiro 2026 | Crop 9:16 obrigatório, validação i18n automatizada, workflow swap-and-remove |
@@ -795,4 +840,181 @@ runSubagent(
 
 ---
 
-**Fim do Documento v6.0.** Factory Mode ativado. Clean Architecture + Melos = Escala Industrial.
+## **24. Produtividade Máxima (NOVO v6.2)**
+
+### **24.1. Checklist de Ícone Obrigatório (CRÍTICO)**
+
+**⚠️ O ícone padrão do Flutter DEVE ser substituído antes de qualquer build de release.**
+
+| # | Etapa | Comando/Ação |
+|---|-------|--------------|
+| 1 | Criar ícone personalizado | Design no Figma/Canva |
+| 2 | Exportar em densidades Android | 48x48 (mdpi) até 192x192 (xxxhdpi) |
+| 3 | Substituir ic_launcher.png | Copiar para mipmap-* |
+| 4 | Criar versão round | ic_launcher_round.png |
+| 5 | Upscale para Play Store | Script PowerShell 512x512 |
+| 6 | Validar | Verificar que NÃO é cubo azul |
+
+### **24.2. Edição em Lote de i18n**
+
+Para editar múltiplos arquivos .arb simultaneamente:
+
+```
+# Use multi_replace_string_in_file com array de operações
+# Isso é 11x mais rápido que editar arquivo por arquivo
+multi_replace_string_in_file({
+  explanation: "Adicionar nova chave em todos os 11 idiomas",
+  replacements: [
+    { filePath: "app_en.arb", oldString: "...", newString: "..." },
+    { filePath: "app_pt.arb", oldString: "...", newString: "..." },
+    // ... outros 9 idiomas
+  ]
+})
+```
+
+### **24.3. Organização de Chaves por Categoria**
+
+```json
+{
+  "@@locale": "en",
+  "_GENERAL": "=== GENERAL ===",
+  "appTitle": "...",
+  "_CONTROLS": "=== CONTROLS ===",
+  "start": "...",
+  "_ACHIEVEMENTS": "=== ACHIEVEMENTS ===",
+  "achievementFirst": "...",
+  "_SETTINGS": "=== SETTINGS ===",
+  "settings": "..."
+}
+```
+
+### **24.4. Fast Lane Completo**
+
+```powershell
+# Validar + Build em um comando
+Set-Location "<app_path>";
+flutter clean; flutter pub get; flutter gen-l10n; flutter analyze; flutter test; flutter build appbundle --release
+```
+
+---
+
+---
+
+## **25. Mapa de Rejeições Comuns do Google Play (NOVO v6.3)**
+
+### **25.1. Top 10 Causas de Rejeição e Soluções**
+
+| # | Rejeição | Causa | Solução Rápida |
+|---|----------|-------|----------------|
+| 1 | Política de Privacidade inválida | URL 404 ou inacessível | Usar Google Sites + verificar com PowerShell |
+| 2 | Ícone não carrega | Ícone gerado via Canvas | Usar ícone real de mipmap-xxxhdpi upscaled |
+| 3 | Screenshots rejeitados | Aspect ratio incorreto | Crop para 9:16 (1080x1920) |
+| 4 | Data Safety incompleto | Campos obrigatórios faltando | Declarar AdMob/Analytics se usados |
+| 5 | ID de Publicidade não declarado | Usa AdMob sem declarar | Marcar "Sim" em Declaração de Ads |
+| 6 | Classificação de conteúdo ausente | IARC não preenchido | Completar questionário IARC |
+| 7 | Target SDK muito baixo | targetSdkVersion < 35 | Atualizar para SDK 35 |
+| 8 | AAB muito grande | > 150MB | Ativar minifyEnabled + shrinkResources |
+| 9 | Título muito longo | > 30 caracteres | Encurtar título do app |
+| 10 | Descrição curta muito longa | > 80 caracteres | Resumir descrição |
+
+### **25.2. Script de Validação Completa Pré-Submissão**
+
+Salvar em `tools/validate_publication.ps1`:
+
+```powershell
+param(
+    [Parameter(Mandatory=$true)]
+    [string]$AppName
+)
+
+$baseDir = "C:\Users\Ernane\Personal\APPs_Flutter"
+$appDir = "$baseDir\$AppName"
+$pubDir = "$baseDir\DadosPublicacao\$AppName"
+$errors = @()
+$warnings = @()
+
+Write-Host "`n🔍 Validando $AppName para publicação...`n" -ForegroundColor Cyan
+
+# 1. Verificar AAB existe
+Write-Host "1. Verificando AAB..." -NoNewline
+if (Test-Path "$pubDir\app-release.aab") {
+    $size = [math]::Round((Get-Item "$pubDir\app-release.aab").Length / 1MB, 2)
+    Write-Host " ✅ ($size MB)" -ForegroundColor Green
+    if ($size -gt 150) { $warnings += "⚠️ AAB > 150MB - pode ser rejeitado" }
+} else { 
+    Write-Host " ❌" -ForegroundColor Red
+    $errors += "AAB não encontrado" 
+}
+
+# 2. Verificar ícone 512x512
+Write-Host "2. Verificando ícone 512x512..." -NoNewline
+if (Test-Path "$pubDir\store_assets\icon_512.png") {
+    Write-Host " ✅" -ForegroundColor Green
+} else {
+    Write-Host " ❌" -ForegroundColor Red
+    $errors += "Ícone 512x512 não encontrado"
+}
+
+# 3. Verificar screenshots (mínimo 2)
+Write-Host "3. Verificando screenshots..." -NoNewline
+$screenshots = Get-ChildItem "$pubDir\store_assets\screenshots\*.png" -ErrorAction SilentlyContinue
+if ($screenshots.Count -ge 2) {
+    Write-Host " ✅ ($($screenshots.Count) encontrados)" -ForegroundColor Green
+} else {
+    Write-Host " ❌ ($($screenshots.Count)/2 mínimo)" -ForegroundColor Red
+    $errors += "Mínimo 2 screenshots necessários"
+}
+
+# 4. Verificar política de privacidade URL
+Write-Host "4. Verificando política de privacidade URL..." -NoNewline
+$privacyUrl = "https://sites.google.com/view/sarezende-$($AppName.Replace('_','-'))-privacy"
+try {
+    $response = Invoke-WebRequest -Uri $privacyUrl -Method Head -TimeoutSec 10 -UseBasicParsing
+    if ($response.StatusCode -eq 200) {
+        Write-Host " ✅" -ForegroundColor Green
+    } else {
+        Write-Host " ❌ (status $($response.StatusCode))" -ForegroundColor Red
+        $errors += "Política de privacidade retornou status $($response.StatusCode)"
+    }
+} catch {
+    Write-Host " ❌" -ForegroundColor Red
+    $errors += "Política de privacidade inacessível: $privacyUrl"
+}
+
+# 5. Verificar i18n (11 idiomas)
+Write-Host "5. Verificando traduções i18n..." -NoNewline
+$arbFiles = Get-ChildItem "$appDir\lib\l10n\app_*.arb" -ErrorAction SilentlyContinue
+if ($arbFiles.Count -ge 11) {
+    Write-Host " ✅ ($($arbFiles.Count) idiomas)" -ForegroundColor Green
+} else {
+    Write-Host " ⚠️ ($($arbFiles.Count)/11 idiomas)" -ForegroundColor Yellow
+    $warnings += "Apenas $($arbFiles.Count) idiomas configurados (recomendado: 11)"
+}
+
+# Resultado final
+Write-Host "`n" + "="*50
+if ($errors.Count -eq 0 -and $warnings.Count -eq 0) {
+    Write-Host "✅ APROVADO: Pronto para publicação!" -ForegroundColor Green
+} elseif ($errors.Count -eq 0) {
+    Write-Host "⚠️ APROVADO COM AVISOS:" -ForegroundColor Yellow
+    $warnings | ForEach-Object { Write-Host "  $_" -ForegroundColor Yellow }
+} else {
+    Write-Host "❌ BLOQUEADO: Corrija os erros antes de submeter:" -ForegroundColor Red
+    $errors | ForEach-Object { Write-Host "  ❌ $_" -ForegroundColor Red }
+    if ($warnings.Count -gt 0) {
+        Write-Host "`n  Avisos:" -ForegroundColor Yellow
+        $warnings | ForEach-Object { Write-Host "  $_" -ForegroundColor Yellow }
+    }
+}
+```
+
+### **25.3. Uso do Script**
+
+```powershell
+# Validar app antes de publicar
+pwsh -File "C:\Users\Ernane\Personal\APPs_Flutter\tools\validate_publication.ps1" -AppName "bmi_calculator"
+```
+
+---
+
+**Fim do Documento v6.3.** Factory Mode ativado. Clean Architecture + Melos + Validação Automatizada = Zero Rejeições.

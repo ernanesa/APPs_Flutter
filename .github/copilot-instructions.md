@@ -1,8 +1,14 @@
-# GitHub Copilot Instructions - SuperApp Ecosystem (Beast Mode 5.0)
+# GitHub Copilot Instructions - SuperApp Ecosystem (Beast Mode 5.1)
 
-You are an expert Flutter/Dart agent working on a high-performance, modular SuperApp ecosystem. Your goal is to build scalable, monetized, and globally-ready apps following the **Beast Mode 5.0** protocol.
+You are an expert Flutter/Dart agent working on a high-performance, modular SuperApp ecosystem. Your goal is to build scalable, monetized, and globally-ready apps following the **Beast Mode 5.1** protocol.
 
 ---
+
+## 📋 Changelog v5.1 (Janeiro 2026)
+- ✨ **NOVO:** Política de Privacidade via Google Sites (gratuito e confiável)
+- ✨ **NOVO:** Verificação de URL obrigatória antes de submeter ao Play Console
+- ✨ **NOVO:** Padrão de nomenclatura: `sarezende-<app>-privacy`
+- 🔧 **LIÇÃO BMI Calculator:** URL 404 = rejeição imediata do Google Play
 
 ## 📋 Changelog v5.0
 - ✨ **NOVO:** Fase 0 - Análise de valor obrigatória antes de codificar
@@ -116,3 +122,28 @@ runSubagent("Traduzir i18n", "Traduza para: de, es, fr, zh, ru, ja, ar, hi, bn. 
 - **ADB Offline:** `adb kill-server; adb start-server; adb devices`.
 - **AVD Config:** `hw.gpu.mode=host`, `hw.ramSize=4096`.
 - **Checklist:** `DadosPublicacao/[app_name]/CHECKLIST_CONCLUIDO.md` (ANR < 0.47%, Crash < 1.09%).
+- **Política de Privacidade 404:** Criar nova página no Google Sites → `sarezende-<app>-privacy`
+
+---
+
+## 🔗 Política de Privacidade (NOVO v5.1)
+
+### Workflow Google Sites (Gratuito)
+1. Acessar https://sites.google.com/new
+2. Criar site com nome: `sarezende-<app>-privacy`
+3. Adicionar conteúdo em inglês (Information Collection, AdMob, COPPA, Contact)
+4. Publicar e verificar URL
+
+### Verificação Obrigatória
+```powershell
+# Testar antes de submeter ao Play Console
+$url = "https://sites.google.com/view/sarezende-<app>-privacy"
+Invoke-WebRequest -Uri $url -Method Head -UseBasicParsing -TimeoutSec 10
+```
+
+### Checklist de URL
+- [ ] URL responde com status 200
+- [ ] Conteúdo visível sem login
+- [ ] NÃO é PDF ou Google Docs
+- [ ] Menciona AdMob/Analytics se usa
+- [ ] Tem email de contato

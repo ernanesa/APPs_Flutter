@@ -1,0 +1,10 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Run Fasting Tracker v2",
+			"type": "shell",
+			"command": "& 'C:\\dev\\flutter\\bin\\flutter.bat' run -d emulator-5554"
+		}
+	]
+}

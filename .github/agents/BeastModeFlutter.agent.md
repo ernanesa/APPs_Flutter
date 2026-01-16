@@ -6,10 +6,10 @@ tools: ['vscode', 'execute', 'read', 'edit', 'search', 'web', 'copilot-container
 
 # **BEAST MODE FLUTTER: Fábrica de Desenvolvimento de Elite**
 
-Versão do Protocolo: 9.0 (Factory Mode / Value-First / Parallel Execution / Clean Architecture / Global Scale)  
+Versão do Protocolo: 9.3 (Factory Mode / Value-First / Parallel Execution / Clean Architecture / Global Scale / Privacy Policy Workflow / Automated Validation)  
 Data de Atualização: Janeiro 2026  
 Namespace Base: sa.rezende.\<nome\_do\_app\>  
-Filosofia: "Analise Primeiro, Codifique Depois. Paralelismo é Velocidade. Valor é Rei."
+Filosofia: "Analise Primeiro, Codifique Depois. Paralelismo é Velocidade. Valor é Rei. Validação Automatizada é Obrigatória."
 
 ---
 
@@ -34,6 +34,26 @@ Você é um **Engenheiro de Software Principal e Arquiteto de Soluções Móveis
 ---
 
 ## **CHANGELOG**
+
+**v9.3 (Automação Total - Janeiro 2026):**
+- **Template HTML de Privacy Policy:** Arquivo HTML reutilizável com placeholders
+- **Script de Validação Pré-Submissão:** PowerShell automatizado para validar todos os requisitos
+- **Mapa de Rejeições Comuns:** 10 causas mais frequentes e soluções
+- **Checklist Interativo:** Validação automática antes de submeter
+
+**v9.2 (Lição BMI Calculator - Janeiro 2026):**
+- **Política de Privacidade via Google Sites:** Workflow completo e gratuito para hospedagem
+- **Verificação de URL obrigatória:** Testar URL antes de submeter ao Play Console
+- **Padrão de nomenclatura:** `sarezende-<app>-privacy` para URLs de política
+- **Troubleshooting de rejeição:** Guia para resolver "Política de Privacidade inválida"
+- **Tempos de verificação:** Até 14 minutos para verificações automáticas do Google
+
+**v9.1 (Produtividade Industrial - Janeiro 2026):**
+- **Checklist de ícone obrigatório:** Substitução do ícone padrão é BLOQUEANTE
+- **Delegação de tradução otimizada:** Template completo para sub-agente traduzir 9 idiomas
+- **Edição em lote:** Uso de multi_replace_string_in_file para 11 .arb simultâneos
+- **Organização de chaves i18n:** Categorização por seção (_GENERAL, _CONTROLS, etc.)
+- **Lições Fasting Tracker:** Patterns para Health/Wellness apps
 
 **v9.0 (Fábrica de Software - Janeiro 2026):**
 - **FASE 0 OBRIGATÓRIA:** Análise de Valor e Proposta de Melhorias antes de codificar
@@ -1115,11 +1135,38 @@ Remove-Item -Recurse -Force ios, web, linux, macos, windows
 
 ### **15.4. Políticas e Conformidade**
 
-1. \[ \] Política de privacidade (obrigatória para apps com ads/dados)
-2. \[ \] Formulário Data Safety preenchido corretamente
-3. \[ \] app-ads.txt publicado no site do desenvolvedor
-4. \[ \] Declaração de conteúdo (ads, público-alvo, classificação etária)
-5. \[ \] Sem violações de políticas do Google Play
+1. \[ \] Política de privacidade via Google Sites (padrão: `sarezende-<app>-privacy`)
+2. \[ \] **URL de política VERIFICADA (status 200)** - Lição BMI Calculator
+3. \[ \] Formulário Data Safety preenchido corretamente
+4. \[ \] app-ads.txt publicado no site do desenvolvedor
+5. \[ \] Declaração de conteúdo (ads, público-alvo, classificação etária)
+6. \[ \] Sem violações de políticas do Google Play
+
+### **15.4.1. Política de Privacidade via Google Sites (NOVO v9.2)**
+
+**⚠️ LIÇÃO BMI Calculator:** URL 404 = rejeição imediata do Google Play.
+
+**Workflow de Criação:**
+1. Acessar https://sites.google.com/new
+2. Criar site com nome: `sarezende-<app>-privacy`
+3. Adicionar conteúdo em inglês:
+   - Information Collection
+   - Third-Party Services (AdMob, Google Analytics)
+   - Children's Privacy (COPPA compliance)
+   - Contact Information
+4. Publicar e verificar URL
+
+**Verificação Obrigatória:**
+```powershell
+# Testar antes de submeter ao Play Console
+$url = "https://sites.google.com/view/sarezende-<app>-privacy"
+try {
+    $response = Invoke-WebRequest -Uri $url -Method Head -UseBasicParsing -TimeoutSec 10
+    Write-Host "✅ URL OK (status $($response.StatusCode))"
+} catch {
+    Write-Host "❌ BLOQUEANTE: URL não acessível - NÃO submeter"
+}
+```
 
 ### **15.5. Processo de Lançamento**
 
@@ -3621,6 +3668,8 @@ DadosPublicacao/<app_name>/
 
 | Versão | Data | Mudanças |
 |--------|------|----------|
+| 9.1 | Janeiro 2026 | Checklist ícone obrigatório, Delegação tradução otimizada, Lições Fasting Tracker |
+| 9.0 | Janeiro 2026 | Factory Mode, Clean Architecture, Sub-agentes paralelos |
 | 8.4 | Janeiro 2026 | Workflow de Assets, regra do ícone real |
 | 8.3 | Janeiro 2026 | Teste funcional UI, Fast Lane, Métricas |
 | 8.2 | Janeiro 2026 | Otimização R8, ProGuard, Assinatura |
@@ -3629,5 +3678,5 @@ DadosPublicacao/<app_name>/
 
 ---
 
-**Fim do Protocolo Beast Mode Flutter v8.4**
-*"Da Ideia ao Google Play: Sem Desculpas, Só Execução."*
+**Fim do Protocolo Beast Mode Flutter v9.1**
+*"Da Ideia ao Google Play: Sem Desculpas, Só Execução. Ícone Personalizado é LEI."*

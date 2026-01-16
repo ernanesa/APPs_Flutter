@@ -1,13 +1,15 @@
 # **Plano de Arquitetura: Do App Simples ao SuperApp (Modular)**
 
-Versão: 5.5  
+Versão: 6.2  
 Data de Atualização: Janeiro 2026  
 Compatibilidade: Android 15+ (API 35), Flutter 3.32+  
-**Nota v5.5:** Atualizado com crop 9:16 obrigatório, validação i18n automatizada, workflow swap-and-remove para screenshots
-**Nota v5.4:** Atualizado com workflow de assets para publicação, regra do ícone real, e lições do Pomodoro Timer
-**Nota v5.3:** Atualizado com teste funcional de UI via ADB, estrutura de testes unitários, fast lane de publicação
-**Nota v5.2:** Atualizado com otimização de performance (R8 full mode, ProGuard 7 passes), assinatura de produção, e testes pré-publicação
-**Nota v5.1:** Atualizado com experiência Pomodoro Timer, padrões de gamificação (Streaks, Achievements), templates de serviços reutilizáveis, e lições de integração de UI
+**Nota v6.2:** Política de Privacidade via Google Sites (workflow completo), verificação obrigatória de URL antes de publicação, lição BMI Calculator (URL 404 = rejeição)
+**Nota v6.0:** Clean Architecture obrigatória (Domain/Data/Presentation), Templates para Health/Wellness Apps, NotificationService, Repository Pattern completo, Entities com estados temporais
+**Nota v5.5:** Crop 9:16 obrigatório, validação i18n automatizada, workflow swap-and-remove para screenshots
+**Nota v5.4:** Workflow de assets para publicação, regra do ícone real, lições do Pomodoro Timer
+**Nota v5.3:** Teste funcional de UI via ADB, estrutura de testes unitários, fast lane de publicação
+**Nota v5.2:** Otimização de performance (R8 full mode, ProGuard 7 passes), assinatura de produção
+**Nota v5.1:** Padrões de gamificação (Streaks, Achievements), templates de serviços reutilizáveis
 
 Para cumprir o requisito de criar apps individuais que depois serão agregados, NÃO podemos usar uma estrutura monolítica comum (lib/main.dart cheio de tudo).
 
@@ -36,6 +38,54 @@ Mesmo para o primeiro app simples, a estrutura deve ser pensada como um monorepo
   /DadosPublicacao (Chaves, certificados, assets de loja por app)
   /tools (Scripts de validação: check_l10n.ps1, check_store_assets.ps1)
 ```
+
+---
+
+## **1.1. Clean Architecture por App (OBRIGATÓRIO v6.0)**
+
+Cada app DEVE seguir a estrutura de **3 camadas**:
+
+```
+/lib
+  /domain (PURA - Dart puro, sem dependências externas)
+    /entities        # Classes de domínio (FastingSession, StreakData)
+    /repositories    # Interfaces abstratas (abstract class IFastingRepository)
+    /usecases        # Lógica de negócio (StartFastingUseCase) - OPCIONAL
+  
+  /data (ADAPTADORES - Implementações concretas)
+    /repositories    # Implementações (FastingRepositoryImpl)
+    /datasources     # SharedPreferences, APIs, etc.
+    /models          # DTOs com toJson/fromJson
+  
+  /presentation (UI - Flutter-specific)
+    /providers       # Riverpod providers
+    /screens         # Telas completas
+    /widgets         # Componentes reutilizáveis
+  
+  /services          # Services cross-cutting (AdService, ConsentService, NotificationService)
+  /l10n              # Arquivos .arb de tradução
+  main.dart
+```
+
+### **Regras de Dependência (CRÍTICO)**
+
+```
+presentation → domain ✅
+presentation → data ✅ (via providers)
+data → domain ✅
+domain → NADA (puro Dart) ✅
+domain → data ❌ PROIBIDO
+domain → presentation ❌ PROIBIDO
+```
+
+### **Benefícios da Clean Architecture**
+
+| Benefício        | Descrição                                    |
+| ---------------- | -------------------------------------------- |
+| Testabilidade    | Domain layer pode ser testado sem Flutter    |
+| Manutenibilidade | Mudanças em uma camada não afetam outras     |
+| Escalabilidade   | Fácil adicionar novos datasources            |
+| Reusabilidade    | Entities podem ser compartilhadas entre apps |
 
 ---
 
@@ -229,11 +279,28 @@ Crie o app [NOME] seguindo o Beast Mode Flutter v5.0:
 
 ### **8.4. Políticas e Conformidade**
 
-- [ ] Política de privacidade (obrigatória com ads)
+- [ ] Política de privacidade via Google Sites (padrão: `sarezende-<app>-privacy`)
+- [ ] **URL de política VERIFICADA (status 200)** - Lição BMI Calculator
 - [ ] Data Safety form preenchido
 - [ ] app-ads.txt no site do desenvolvedor
 - [ ] Classificação de conteúdo definida
 - [ ] UE/EEA/UK (se usar ads): Consentimento via UMP implementado + “opções de privacidade” quando requerido
+
+
+### **8.4.1. Verificação de URL da Política (NOVO v6.2 - OBRIGATÓRIO)**
+
+**LIÇÃO BMI Calculator:** URL 404 = rejeição imediata do Google Play.
+
+```powershell
+# Verificar antes de submeter ao Play Console
+$url = "https://sites.google.com/view/sarezende-<app>-privacy"
+try {
+    $response = Invoke-WebRequest -Uri $url -Method Head -UseBasicParsing -TimeoutSec 10
+    Write-Host "URL OK (status $($response.StatusCode))"
+} catch {
+    Write-Host "BLOQUEANTE: URL não acessível - NÃO submeter"
+}
+```
 
 ### **8.5. Monitoramento Pós-Lançamento**
 
@@ -834,6 +901,31 @@ adb pull /sdcard/screen1.png ./store_assets/phone_1.png
   tablet10_1.png         # Opcional
 ```
 
+### **18.5. INSTRUÇÃO OBRIGATÓRIA: Substituição do Ícone Padrão**
+
+**⚠️ CRÍTICO:** O ícone padrão do Flutter (cubo azul) **DEVE SER SUBSTITUÍDO** por um ícone condizente com o app antes de qualquer publicação. 
+
+**Regras:**
+1. **NUNCA** publicar um app com o ícone genérico do Flutter
+2. **NUNCA** gerar ícones via Canvas/HTML - use sempre o ícone real do app
+3. O ícone deve representar visualmente o propósito do app
+4. O ícone deve ser entregue em TODAS as dimensões exigidas (mipmap-*)
+5. O ícone 512x512 para a Play Store deve ser um upscale de alta qualidade do ícone real
+
+**Script de Upscale (PowerShell):**
+```powershell
+Add-Type -AssemblyName System.Drawing
+$sourcePath = "android\app\src\main\res\mipmap-xxxhdpi\ic_launcher.png"
+$destPath = "..\DadosPublicacao\<app_name>\store_assets\icon_512.png"
+$sourceImage = [System.Drawing.Image]::FromFile($sourcePath)
+$bitmap = New-Object System.Drawing.Bitmap(512, 512)
+$graphics = [System.Drawing.Graphics]::FromImage($bitmap)
+$graphics.InterpolationMode = [System.Drawing.Drawing2D.InterpolationMode]::HighQualityBicubic
+$graphics.DrawImage($sourceImage, 0, 0, 512, 512)
+$bitmap.Save($destPath, [System.Drawing.Imaging.ImageFormat]::Png)
+$graphics.Dispose(); $bitmap.Dispose(); $sourceImage.Dispose()
+```
+
 ---
 
 ## **19\. Automação do Play Console (NOVO v4.0)**
@@ -867,7 +959,224 @@ Para automação do Google Play Console, criar um agente dedicado:
 
 ---
 
-**Fim do Planejamento v5.0.** Mantenha o foco. Codifique uma feature, termine, valide, commite. Não deixe pontas soltas.
+## **NOVO: 31. Templates para Health/Wellness Apps (v6.0)**
+
+### **31.1. Entity com Estados Temporais (Fasting/Timer)**
+
+```dart
+// lib/domain/entities/fasting_session.dart
+enum FastingState { idle, fasting, paused, completed }
+
+enum MetabolicStage {
+  fed,          // 0-4 horas
+  earlyFasting, // 4-8 horas
+  fatBurning,   // 8-12 horas
+  ketosis,      // 12-18 horas
+  deepKetosis,  // 18-24 horas
+  autophagy,    // 24+ horas
+}
+
+class FastingSession {
+  final String id;
+  final DateTime? startTime;
+  final DateTime? endTime;
+  final Duration targetDuration;
+  final FastingState state;
+  final Duration? pausedDuration;
+
+  Duration get elapsedDuration {
+    if (startTime == null) return Duration.zero;
+    final end = endTime ?? DateTime.now();
+    final elapsed = end.difference(startTime!);
+    return elapsed - (pausedDuration ?? Duration.zero);
+  }
+
+  double get progress => elapsedDuration.inSeconds / targetDuration.inSeconds;
+  
+  MetabolicStage get currentStage {
+    final hours = elapsedDuration.inHours;
+    if (hours < 4) return MetabolicStage.fed;
+    if (hours < 8) return MetabolicStage.earlyFasting;
+    if (hours < 12) return MetabolicStage.fatBurning;
+    if (hours < 18) return MetabolicStage.ketosis;
+    if (hours < 24) return MetabolicStage.deepKetosis;
+    return MetabolicStage.autophagy;
+  }
+}
+```
+
+### **31.2. Entity de Informações de Saúde**
+
+```dart
+// lib/domain/entities/health_info.dart
+class HealthInfo {
+  final String titleKey;        // i18n key
+  final String descriptionKey;  // i18n key
+  final String icon;
+  final int minHours;           // Quando começa
+  final int maxHours;           // Quando termina
+  final List<String> benefitKeys;  // Lista de benefícios (i18n)
+  final String? warningKey;     // Aviso opcional
+  final String? sourceUrl;      // Fonte científica
+}
+```
+
+### **31.3. Repository Pattern Completo**
+
+```dart
+// lib/domain/repositories/i_fasting_repository.dart
+abstract class IFastingRepository {
+  Future<FastingSession?> getCurrentSession();
+  Future<void> saveSession(FastingSession session);
+  Future<List<FastingSession>> getHistory();
+  Future<void> deleteSession(String id);
+}
+
+// lib/data/repositories/fasting_repository_impl.dart
+class FastingRepositoryImpl implements IFastingRepository {
+  final SharedPreferences _prefs;
+  
+  FastingRepositoryImpl(this._prefs);
+  
+  @override
+  Future<FastingSession?> getCurrentSession() async {
+    final json = _prefs.getString('current_session');
+    if (json == null) return null;
+    return FastingSessionModel.fromJson(jsonDecode(json)).toEntity();
+  }
+  
+  @override
+  Future<void> saveSession(FastingSession session) async {
+    final model = FastingSessionModel.fromEntity(session);
+    await _prefs.setString('current_session', jsonEncode(model.toJson()));
+  }
+}
+```
+
+### **31.4. NotificationService Template**
+
+```dart
+// lib/services/notification_service.dart
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
+class NotificationService {
+  static final _plugin = FlutterLocalNotificationsPlugin();
+  static bool _initialized = false;
+
+  static Future<void> initialize() async {
+    if (_initialized) return;
+    
+    const androidSettings = AndroidInitializationSettings('@mipmap/ic_launcher');
+    const settings = InitializationSettings(android: androidSettings);
+    
+    await _plugin.initialize(settings);
+    _initialized = true;
+  }
+
+  static Future<void> scheduleFastingReminder({
+    required int id,
+    required String title,
+    required String body,
+    required DateTime scheduledTime,
+  }) async {
+    await _plugin.zonedSchedule(
+      id,
+      title,
+      body,
+      tz.TZDateTime.from(scheduledTime, tz.local),
+      const NotificationDetails(
+        android: AndroidNotificationDetails(
+          'fasting_reminders',
+          'Fasting Reminders',
+          importance: Importance.high,
+          priority: Priority.high,
+        ),
+      ),
+      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime,
+    );
+  }
+
+  static Future<void> cancelAll() async {
+    await _plugin.cancelAll();
+  }
+}
+```
+
+### **31.5. Chaves i18n para Apps de Saúde (~50 chaves)**
+
+| Categoria  | Chaves                                                                                                   |
+| ---------- | -------------------------------------------------------------------------------------------------------- |
+| Estados    | `stateIdle`, `stateFasting`, `statePaused`, `stateCompleted`                                             |
+| Stages     | `stageFed`, `stageEarlyFasting`, `stageFatBurning`, `stageKetosis`, `stageDeepKetosis`, `stageAutophagy` |
+| Benefícios | `benefitInsulinDrop`, `benefitFatBurning`, `benefitKetones`, `benefitAutophagy`, `benefitGrowthHormone`  |
+| Ações      | `startFast`, `endFast`, `pauseFast`, `resumeFast`                                                        |
+| Stats      | `totalFasts`, `longestFast`, `averageDuration`, `currentStreak`                                          |
+
+---
+
+## **NOVO: 32. Workflow de Criação Paralela (v6.0)**
+
+### **32.1. Ordem de Criação Otimizada**
+
+Para máxima eficiência, criar arquivos em lotes paralelos:
+
+| Lote | Arquivos                             | Dependências        |
+| ---- | ------------------------------------ | ------------------- |
+| 1    | Domain Entities                      | Nenhuma             |
+| 2    | Domain Repositories (interfaces)     | Entities            |
+| 3    | Data Models                          | Entities            |
+| 4    | Data Repositories (impl)             | Models + Interfaces |
+| 5    | Presentation Providers               | Repositories        |
+| 6    | Presentation Widgets                 | Providers           |
+| 7    | Presentation Screens                 | Widgets + Providers |
+| 8    | Services (Ad, Consent, Notification) | Independentes       |
+| 9    | i18n (todos os 11 arquivos)          | Independentes       |
+
+### **32.2. Template de Prompt para Criação Paralela**
+
+```
+Crie os seguintes arquivos em PARALELO (lote 1 - entities):
+1. lib/domain/entities/fasting_session.dart
+2. lib/domain/entities/streak_data.dart
+3. lib/domain/entities/achievement.dart
+4. lib/domain/entities/health_info.dart
+5. lib/domain/entities/user_settings.dart
+```
+
+---
+
+## **NOVO: 33. pubspec.yaml para Health Apps (v6.0)**
+
+```yaml
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: any
+  
+  # State Management
+  flutter_riverpod: ^2.6.1
+  
+  # Persistence
+  shared_preferences: ^2.3.5
+  
+  # Notifications
+  flutter_local_notifications: ^18.0.1
+  timezone: ^0.10.0
+  
+  # Ads & Consent
+  google_mobile_ads: ^5.3.0
+  
+  # UI
+  fl_chart: ^0.70.2  # Para gráficos de progresso
+```
+
+---
+
+**Fim do Planejamento v6.0.** Mantenha o foco. Codifique uma feature, termine, valide, commite. Não deixe pontas soltas.
 
 *"Da Fundação ao SuperApp: Um Bloco de Cada Vez."*
 
@@ -1381,6 +1690,80 @@ Template para documentar qualidade antes de publicar:
 
 ---
 
-**Fim do Planejamento v5.3.** Mantenha o foco. Codifique uma feature, termine, valide, commite. Não deixe pontas soltas.
+## **NOVO: 32. Lições de Produtividade (v6.1)**
 
-*"Da Fundação ao SuperApp: Um Bloco de Cada Vez."*
+### **32.1. Delegação de Tradução via Sub-agente**
+
+Quando traduzir para 11 idiomas, use este template para delegar ao sub-agente:
+
+```
+runSubagent("Traduzir i18n para 9 idiomas", """
+Tarefa: Traduzir arquivo ARB de inglês para 9 idiomas.
+
+Template (app_en.arb): [conteúdo completo]
+
+Idiomas alvo:
+- Bengali (bn), Alemão (de), Chinês (zh), Hindi (hi)
+- Árabe (ar), Russo (ru), Japonês (ja), Espanhol (es), Francês (fr)
+
+Regras:
+1. Manter EXATAMENTE as mesmas chaves do template
+2. Manter placeholders intactos ({count}, {hours}, {minutes})
+3. Respeitar formato ICU plural para cada idioma
+4. Retornar cada arquivo .arb completo e pronto para uso
+
+Formato de retorno:
+=== app_bn.arb ===
+{ conteúdo JSON }
+=== app_de.arb ===
+{ conteúdo JSON }
+... (para todos os 9 idiomas)
+""")
+```
+
+### **32.2. Checklist de Ícone (CRÍTICO)**
+
+| Etapa | Ação                                         | Status |
+| ----- | -------------------------------------------- | ------ |
+| 1     | Criar ícone personalizado para o app         | ⬜      |
+| 2     | Exportar em todas as densidades (mipmap-*)   | ⬜      |
+| 3     | Substituir ic_launcher.png padrão do Flutter | ⬜      |
+| 4     | Gerar ic_launcher_round.png (Android 8+)     | ⬜      |
+| 5     | Upscale para 512x512 (Play Store)            | ⬜      |
+| 6     | Verificar que NÃO é o cubo azul do Flutter   | ⬜      |
+
+### **32.3. Padrões de Edição em Lote**
+
+Para máxima eficiência ao editar múltiplos arquivos:
+
+```
+# Usar multi_replace_string_in_file para editar 11 .arb simultaneamente
+# Usar create_file em paralelo para criar múltiplos arquivos
+# Usar runSubagent para tarefas paralelas de tradução/pesquisa
+```
+
+### **32.4. Organização de Chaves i18n por Categoria**
+
+```json
+{
+  "@@locale": "en",
+  
+  "_GENERAL": "=== GENERAL ===",
+  "appTitle": "App Name",
+  
+  "_CONTROLS": "=== CONTROLS ===",
+  "start": "Start",
+  
+  "_ACHIEVEMENTS": "=== ACHIEVEMENTS ===",
+  "achievementFirst": "First Achievement",
+  
+  "_SETTINGS": "=== SETTINGS ===",
+  "settings": "Settings"
+}
+```
+
+---
+
+**Fim do Planejamento v6.1.** Clean Architecture + Factory Mode + Lições Aprendidas = Velocidade Industrial.
+
+*"Da Fundação ao SuperApp: Um Bloco de Cada Vez. Agora com Arquitetura Limpa e Produtividade Máxima."*
