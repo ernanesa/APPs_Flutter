@@ -496,6 +496,125 @@ output-localization-file: app_localizations.dart
 
 ---
 
+## **4.5. NOVO: Gradle Quick Start Template (TESTADO - White Noise)**
+
+**LIÇÃO:** Copy/paste estas configs para começar com 100% de otimização desde o dia 1.
+
+### **android/settings.gradle**
+```gradle
+plugins {
+    id "dev.flutter.flutter-plugin-loader" version "1.0.0"
+    id "com.android.application" version "8.6.0" apply false
+    id "org.jetbrains.kotlin.android" version "2.1.0" apply false
+}
+```
+
+### **android/build.gradle**
+```gradle
+buildscript {
+    ext.kotlin_version = '2.1.0'
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.6.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+```
+
+### **android/app/build.gradle**
+```gradle
+android {
+    namespace = "sa.rezende.app_name"
+    compileSdk = 35
+    ndkVersion = "28.0.12674087"
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+
+    defaultConfig {
+        applicationId = "sa.rezende.app_name"
+        minSdk = 24
+        targetSdk = 35
+        versionCode = 1
+        versionName = "1.0.0"
+        resourceConfigurations += ['en', 'pt', 'es', 'de', 'fr', 'zh', 'ru', 'ja', 'ar', 'hi', 'bn']
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled = true
+            shrinkResources = true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig = signingConfigs.debug
+        }
+    }
+
+    buildFeatures {
+        buildConfig = false
+    }
+}
+```
+
+### **android/gradle.properties**
+```properties
+org.gradle.jvmargs=-Xmx4G -XX:MaxMetaspaceSize=2G -XX:+HeapDumpOnOutOfMemoryError
+org.gradle.caching=true
+org.gradle.parallel=true
+org.gradle.configuration-cache=true
+
+android.useAndroidX=true
+android.enableJetifier=true
+android.enableR8.fullMode=true
+
+android.defaults.buildfeatures.buildconfig=false
+android.defaults.buildfeatures.aidl=false
+android.defaults.buildfeatures.renderscript=false
+android.defaults.buildfeatures.resvalues=false
+android.defaults.buildfeatures.shaders=false
+```
+
+### **android/app/proguard-rules.pro**
+```proguard
+# Flutter
+-keep class io.flutter.** { *; }
+-keep class io.flutter.plugins.** { *; }
+-dontwarn io.flutter.embedding.**
+
+# Google Mobile Ads
+-keep class com.google.android.gms.ads.** { *; }
+-keep class com.google.ads.** { *; }
+
+# Audioplayers
+-keep class xyz.luan.audioplayers.** { *; }
+
+# Remove logs
+-assumenosideeffects class android.util.Log {
+    public static int v(...);
+    public static int d(...);
+    public static int i(...);
+    public static int w(...);
+    public static int e(...);
+}
+
+# Optimization
+-optimizationpasses 7
+-allowaccessmodification
+-repackageclasses 'a'
+```
+
+**Resultado:** Java 17, AGP 8.6, Kotlin 2.1, Target SDK 35, R8 Full Mode, ProGuard 7 passes.
+
+---
+
 ## **5\. Monetização Equilibrada (AdMob v3 - 2025)**
 
 Lucro não pode matar a usabilidade (retorno do usuário \> clique acidental).

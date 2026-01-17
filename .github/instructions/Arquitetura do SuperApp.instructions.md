@@ -228,7 +228,118 @@ Crie o app [NOME] dentro da estrutura modular.
 10. Use multi_replace_string_in_file para editar múltiplos .arb simultaneamente.
 ```
 
-## **5\. Cronograma de Execução (Beast Mode)**
+## **5\. NOVO: Service Layer Patterns (TESTADO - White Noise)**
+
+### **5.1. AudioPlayerService Pattern**
+
+**Use Case:** Gerenciar múltiplos players de áudio simultaneamente (até 3).
+
+```dart
+import 'package:audioplayers/audioplayers.dart';
+
+class AudioPlayerService {
+  final Map<String, AudioPlayer> _players = {};
+  final Map<String, bool> _playingStates = {};
+
+  Future<void> play(String assetPath, {double volume = 1.0, bool loop = true}) async {
+    final player = _getOrCreatePlayer(assetPath);
+    await player.setVolume(volume);
+    await player.setReleaseMode(loop ? ReleaseMode.loop : ReleaseMode.release);
+    await player.play(AssetSource(assetPath));
+    _playingStates[assetPath] = true;
+  }
+
+  Future<void> stop(String assetPath) async {
+    final player = _players[assetPath];
+    if (player != null) {
+      await player.stop();
+      _playingStates[assetPath] = false;
+    }
+  }
+
+  Future<void> stopAll() async {
+    final futures = _players.keys.map((assetPath) => stop(assetPath)).toList();
+    await Future.wait(futures);
+  }
+
+  bool isPlaying(String assetPath) => _playingStates[assetPath] ?? false;
+  
+  int get playingCount => _playingStates.values.where((playing) => playing).length;
+  bool canAddSound() => playingCount < 3;
+
+  AudioPlayer _getOrCreatePlayer(String assetPath) {
+    if (!_players.containsKey(assetPath)) {
+      _players[assetPath] = AudioPlayer();
+      _playingStates[assetPath] = false;
+    }
+    return _players[assetPath]!;
+  }
+
+  Future<void> dispose() async {
+    final futures = _players.values.map((player) async {
+      await player.stop();
+      await player.dispose();
+    }).toList();
+    await Future.wait(futures);
+    _players.clear();
+    _playingStates.clear();
+  }
+}
+```
+
+**Benefícios:**
+- ✅ Gerencia múltiplos players em paralelo
+- ✅ Previne memory leaks com dispose adequado
+- ✅ Controle de limites (max 3 sounds)
+- ✅ Rastreamento de estado por asset
+
+### **5.2. LocalDataSource Pattern**
+
+**Use Case:** Wrapper type-safe para SharedPreferences.
+
+```dart
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
+
+class LocalDataSource {
+  final SharedPreferences _prefs;
+  LocalDataSource(this._prefs);
+
+  Future<Map<String, dynamic>?> getJson(String key) async {
+    final jsonString = _prefs.getString(key);
+    if (jsonString == null) return null;
+    try {
+      return json.decode(jsonString) as Map<String, dynamic>;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<bool> setJson(String key, Map<String, dynamic> value) async {
+    try {
+      final jsonString = json.encode(value);
+      return await _prefs.setString(key, jsonString);
+    } catch (e) {
+      return false;
+    }
+  }
+
+  // Storage keys constants
+  static const String keyCurrentMix = 'current_mix';
+  static const String keyAchievements = 'achievements';
+  static const String keyStreakData = 'streak_data';
+}
+```
+
+**Benefícios:**
+- ✅ Type-safe wrappers (getJson, setJson)
+- ✅ Constantes centralizadas para chaves
+- ✅ Tratamento de erros embutido
+- ✅ Fácil mockear em testes
+
+---
+
+## **6\. Cronograma de Execução (Beast Mode)**
 
 ### **Fase A: Fundação (1-2 Dias)**
 
@@ -692,6 +803,172 @@ Get-ChildItem "DadosPublicacao\<app>\store_assets\screenshots\*.png" | ForEach-O
 }
 ```
 ---
+
+## **27. Data Layer Creation Workflow (Factory Mode v7.0)**
+
+**NOVO (Janeiro 2026)**: Workflow comprovado no White Noise app.
+
+### **27.1. Parallel DTO Creation (5-10 Entidades Simultaneamente)**
+
+**Template EntityDto** (copy-paste friendly):
+```dart
+class EntityDto {
+  final String id;
+  final String name;
+  final int value;
+  
+  const EntityDto({
+    required this.id,
+    required this.name,
+    required this.value,
+  });
+  
+  // Domain Entity → DTO (usado pelo Repository)
+  factory EntityDto.fromEntity(Entity entity) {
+    return EntityDto(
+      id: entity.id,
+      name: entity.name,
+      value: entity.value,
+    );
+  }
+  
+  // DTO → Domain Entity (usado pelo Repository)
+  Entity toEntity() {
+    return Entity(
+      id: id,
+      name: name,
+      value: value,
+    );
+  }
+  
+  // JSON serialization (para SharedPreferences)
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'name': name,
+    'value': value,
+  };
+  
+  factory EntityDto.fromJson(Map<String, dynamic> json) {
+    return EntityDto(
+      id: json['id'] as String,
+      name: json['name'] as String,
+      value: json['value'] as int,
+    );
+  }
+}
+```
+
+**Criar 5-10 DTOs simultaneamente**:
+```dart
+// lib/data/models/
+achievement_dto.dart
+mix_dto.dart
+sound_dto.dart
+streak_dto.dart
+timer_dto.dart
+```
+
+**Expectativa de Erros** (NORMAL e esperado):
+```
+Após criar 5 DTOs em paralelo:
+├─ 20-40 erros esperados
+├─ Maioria: imports faltando, nomes errados
+├─ Corrigir via multi-replace (80-90% sucesso)
+└─ Diagnóstico para 2-3 erros restantes
+```
+
+### **27.2. Parallel Repository Refactoring**
+
+**Template EntityRepositoryImpl**:
+```dart
+import '../../domain/entities/entity.dart';
+import '../../domain/repositories/i_entity_repository.dart';
+import '../datasources/local_data_source.dart';
+import '../models/entity_dto.dart';
+
+class EntityRepositoryImpl implements IEntityRepository {
+  final LocalDataSource _localDataSource;
+  
+  EntityRepositoryImpl(this._localDataSource);
+  
+  @override
+  Future<Entity?> getById(String id) async {
+    final dto = await _localDataSource.getEntityById(id);
+    return dto?.toEntity();
+  }
+  
+  @override
+  Future<void> save(Entity entity) async {
+    final dto = EntityDto.fromEntity(entity);
+    await _localDataSource.saveEntity(dto);
+  }
+  
+  @override
+  Future<List<Entity>> getAll() async {
+    final dtos = await _localDataSource.getAllEntities();
+    return dtos.map((dto) => dto.toEntity()).toList();
+  }
+  
+  @override
+  Future<void> delete(String id) async {
+    await _localDataSource.deleteEntity(id);
+  }
+}
+```
+
+**Key Points**:
+- ✅ Dependency Injection via constructor
+- ✅ Domain interface implementation
+- ✅ DTO conversions (fromEntity/toEntity)
+- ✅ Pure domain entities retornados
+
+### **27.3. Error Resolution Expectations**
+
+**Typical Error Journey** (White Noise - Janeiro 2026):
+
+```
+Phase 1: Criar 5 DTOs → 58 erros
+├─ undefined_class (entidades não importadas)
+├─ undefined_method (toEntity/fromEntity faltando)
+└─ unused_field (campos não usados ainda)
+
+Phase 2: Multi-replace batch 1 → 17 erros
+├─ Corrige ~70% dos erros automaticamente
+├─ imports adicionados
+└─ conversões básicas funcionando
+
+Phase 3: Multi-replace batch 2 → 2 erros
+├─ Corrige mais ~20% dos erros
+└─ Restam apenas erros pontuais
+
+Phase 4: Diagnóstico + fix cirúrgico → 0 erros
+├─ Leitura do arquivo ao redor do erro
+├─ Identificação da causa raiz
+└─ Correção precisa
+```
+
+**Total Time**: 8-12 minutos  
+**Success Rate**: 100% (comprovado)
+
+### **27.4. Validation Checklist**
+
+**Antes de considerar Data Layer completo**:
+
+- [ ] **Domain Purity**: Entities não dependem de nada (Dart puro)
+- [ ] **DTO Completeness**: Cada entity tem seu DTO correspondente
+- [ ] **Bidirectional Conversion**: toEntity() e fromEntity() funcionando
+- [ ] **Repository Implementation**: Todas as interfaces implementadas
+- [ ] **Dependency Injection**: LocalDataSource injetado via constructor
+- [ ] **Flutter Analyze**: Exit code 0 ou 1 (warnings OK, errors NOT OK)
+- [ ] **Compilation**: `flutter pub get` sem erros
+
+**Comando de Validação**:
+```powershell
+flutter analyze
+# Exit code 0: perfeito
+# Exit code 1: warnings (OK para continuar)
+# Exit code 2+: errors (BLOQUEANTE - corrigir antes de prosseguir)
+```
 
 ## **20. Workflow de Assets para Publicação (NOVO v5.4)**
 

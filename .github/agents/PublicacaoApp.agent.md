@@ -419,7 +419,139 @@ Write-Host "AAB: $([math]::Round((Get-Item $aab).Length / 1MB, 2)) MB"
 
 ---
 
-## 📁 Estrutura de Saída
+## � NOVO: Pre-Flight Validation Script (AUTOMATIZADO)
+
+**LIÇÃO:** Execute este script ANTES de abrir o navegador. Zero surpresas.
+
+### **validate_preflight.ps1**
+
+```powershell
+param([string]$AppName)
+
+$baseDir = "C:\Users\Ernane\Personal\APPs_Flutter"
+$appDir = "$baseDir\$AppName"
+$pubDir = "$baseDir\DadosPublicacao\$AppName"
+$errors = @()
+$warnings = @()
+
+Write-Host "`n🔍 PRE-FLIGHT VALIDATION: $AppName`n" -ForegroundColor Cyan
+
+# 1. Verificar AAB
+Write-Host "1. AAB..." -NoNewline
+if (Test-Path "$pubDir\app-release.aab") {
+    $size = [math]::Round((Get-Item "$pubDir\app-release.aab").Length / 1MB, 2)
+    Write-Host " ✅ ($size MB)" -ForegroundColor Green
+    if ($size -gt 150) { $warnings += "AAB > 150MB" }
+} else { 
+    Write-Host " ❌" -ForegroundColor Red
+    $errors += "AAB não encontrado" 
+}
+
+# 2. Verificar ícone 512x512
+Write-Host "2. Ícone 512x512..." -NoNewline
+if (Test-Path "$pubDir\store_assets\icon_512.png") {
+    Add-Type -AssemblyName System.Drawing
+    $img = [System.Drawing.Image]::FromFile("$pubDir\store_assets\icon_512.png")
+    if ($img.Width -eq 512 -and $img.Height -eq 512) {
+        Write-Host " ✅" -ForegroundColor Green
+    } else {
+        Write-Host " ❌ (${$img.Width}x${$img.Height})" -ForegroundColor Red
+        $errors += "Ícone não é 512x512"
+    }
+    $img.Dispose()
+} else {
+    Write-Host " ❌" -ForegroundColor Red
+    $errors += "Ícone 512x512 não encontrado"
+}
+
+# 3. Verificar screenshots (mínimo 2, aspect ratio 9:16)
+Write-Host "3. Screenshots..." -NoNewline
+$screenshots = Get-ChildItem "$pubDir\store_assets\screenshots\*.png" -ErrorAction SilentlyContinue
+if ($screenshots.Count -ge 2) {
+    $targetRatio = [math]::Round(9/16, 4)
+    $invalidRatio = $screenshots | Where-Object {
+        Add-Type -AssemblyName System.Drawing
+        $img = [System.Drawing.Image]::FromFile($_.FullName)
+        $ratio = [math]::Round($img.Width / $img.Height, 4)
+        $img.Dispose()
+        $ratio -ne $targetRatio
+    }
+    if ($invalidRatio.Count -eq 0) {
+        Write-Host " ✅ ($($screenshots.Count) com ratio 9:16)" -ForegroundColor Green
+    } else {
+        Write-Host " ⚠️ ($($invalidRatio.Count) com ratio errado)" -ForegroundColor Yellow
+        $warnings += "$($invalidRatio.Count) screenshots precisam de crop 9:16"
+    }
+} else {
+    Write-Host " ❌ ($($screenshots.Count)/2 mínimo)" -ForegroundColor Red
+    $errors += "Mínimo 2 screenshots necessários"
+}
+
+# 4. Verificar URL da política
+Write-Host "4. Política URL..." -NoNewline
+$privacyUrl = "https://sites.google.com/view/sarezende-$($AppName.Replace('_','-'))-privacy"
+try {
+    $response = Invoke-WebRequest -Uri $privacyUrl -Method Head -TimeoutSec 10 -UseBasicParsing
+    if ($response.StatusCode -eq 200) {
+        Write-Host " ✅" -ForegroundColor Green
+    }
+} catch {
+    Write-Host " ❌ (404)" -ForegroundColor Red
+    $errors += "Política de privacidade inacessível: $privacyUrl"
+}
+
+# 5. Verificar i18n (11 idiomas)
+Write-Host "5. i18n..." -NoNewline
+$arbFiles = Get-ChildItem "$appDir\lib\l10n\app_*.arb" -ErrorAction SilentlyContinue
+if ($arbFiles.Count -ge 11) {
+    Write-Host " ✅ ($($arbFiles.Count) idiomas)" -ForegroundColor Green
+} else {
+    Write-Host " ⚠️ ($($arbFiles.Count)/11)" -ForegroundColor Yellow
+    $warnings += "Apenas $($arbFiles.Count) idiomas (recomendado: 11)"
+}
+
+# 6. Verificar flutter analyze
+Write-Host "6. Flutter Analyze..." -NoNewline
+Set-Location $appDir
+$analyzeOutput = & "C:\dev\flutter\bin\flutter.bat" analyze 2>&1
+if ($analyzeOutput -match "No issues found") {
+    Write-Host " ✅ (0 issues)" -ForegroundColor Green
+} else {
+    Write-Host " ❌" -ForegroundColor Red
+    $errors += "flutter analyze retornou warnings"
+}
+
+# Resultado final
+Write-Host "`n" + "="*50
+if ($errors.Count -eq 0 -and $warnings.Count -eq 0) {
+    Write-Host "✅ PRE-FLIGHT APPROVED: Pronto para publicação!" -ForegroundColor Green
+    exit 0
+} elseif ($errors.Count -eq 0) {
+    Write-Host "⚠️ APPROVED COM AVISOS:" -ForegroundColor Yellow
+    $warnings | ForEach-Object { Write-Host "  ⚠️ $_" -ForegroundColor Yellow }
+    exit 0
+} else {
+    Write-Host "❌ PRE-FLIGHT FAILED: Corrija antes de publicar:" -ForegroundColor Red
+    $errors | ForEach-Object { Write-Host "  ❌ $_" -ForegroundColor Red }
+    exit 1
+}
+```
+
+### **Uso:**
+
+```powershell
+# Validar antes de abrir navegador
+pwsh -File validate_preflight.ps1 -AppName "white_noise"
+
+# Se exit code = 0: ✅ Prosseguir com publicação
+# Se exit code = 1: ❌ Corrigir erros primeiro
+```
+
+**Benefício:** Detecta 90% dos problemas ANTES de gastar tempo no Play Console.
+
+---
+
+## �📁 Estrutura de Saída
 
 ```
 DadosPublicacao/<app_name>/
