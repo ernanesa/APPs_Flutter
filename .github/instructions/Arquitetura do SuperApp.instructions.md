@@ -19,6 +19,13 @@ Versão: 7.0 | Janeiro 2026 | **Hiper-Aceleração** + PAO (Parallel Agent Orche
 - ✨ **NOVO:** ProGuard agressivo com `-repackageclasses 'a'`
 - 🚀 **META:** Da ideia ao Play Store em 3 horas
 
+### **📋 Changelog v7.1 (Operação sem Retrabalho)**
+- ✨ **NOVO:** Tríade AdMob Sync (AdService + Manifest + ADMOB_IDS.md)
+- ✨ **NOVO:** Feature Graphic fallback via PowerShell (1024x500)
+- ✨ **NOVO:** App-ads.txt obrigatório com validação antes do Console
+- ✨ **NOVO:** Guardrail de assets obrigatório (check_store_assets.ps1)
+- ✨ **NOVO:** Regra de consistência visual (ícone idêntico Android/Play/AdMob)
+
 ### **📋 Changelog v6.5**
 - ✨ **NOVO:** Crop 9:16 obrigatório para screenshots (PowerShell automatizado)
 - ✨ **NOVO:** Validação i18n via check_l10n.ps1 (sincronização de chaves)
@@ -68,6 +75,17 @@ Versão: 7.0 | Janeiro 2026 | **Hiper-Aceleração** + PAO (Parallel Agent Orche
 Para cumprir o requisito de criar apps individuais que depois serão agregados, NÃO podemos usar uma estrutura monolítica comum (lib/main.dart cheio de tudo).
 
 Utilizaremos uma **Arquitetura Modular Baseada em Packages com Clean Architecture**.
+
+## **0.1 Guardrails de Publicação (Fast Path)**
+
+**Objetivo:** evitar retrabalho no Play Console e reduzir tempo de publicação.
+
+**Regras obrigatórias:**
+- **IDs AdMob:** Atualizar SEMPRE `AdService` + `AndroidManifest` + `ADMOB_IDS.md`
+- **Assets:** Rodar `tools/check_store_assets.ps1` antes de abrir o Console
+- **Policy:** URL de privacidade com status 200
+- **app-ads.txt:** publicado e acessível
+- **Ícone:** o mesmo arquivo base para Android, Play Store e AdMob
 
 ## **1\. Estrutura de Pastas (O Segredo)**
 

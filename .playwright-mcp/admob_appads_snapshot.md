@@ -1,0 +1,96 @@
+### Page state
+- Page URL: https://admob.google.com/v2/apps/app-ads-txt?pli=1
+- Page Title: Google AdMob
+- Page Snapshot:
+```yaml
+- generic [ref=e3]:
+  - button "Pular para o conteúdo principal" [ref=e5] [cursor=pointer]:
+    - generic [ref=e6]: Pular para o conteúdo principal
+  - generic [ref=e8]:
+    - banner [ref=e9]:
+      - generic [ref=e10]:
+        - generic [ref=e11]:
+          - button "Menu" [expanded] [ref=e13] [cursor=pointer]:
+            - img [ref=e16]: menu
+          - link "Ir para a página inicial da AdMob" [ref=e18] [cursor=pointer]:
+            - /url: /v2/home?pli=1
+        - generic [ref=e24]:
+          - img [ref=e27]: search
+          - generic [ref=e28]:
+            - generic:
+              - generic: Pesquise apps, blocos de anúncios, grupos de mediação, relatórios e campanhas
+            - combobox "Caixa de pesquisa para procurar seus apps, blocos de anúncios, grupos de mediação, relatórios e campanhas" [ref=e29]
+        - generic [ref=e30]:
+          - button "Abre as notificações" [ref=e33] [cursor=pointer]:
+            - generic [ref=e36]:
+              - img [ref=e38]: notifications
+              - generic [ref=e53]: "1"
+          - button "Conta do Google" [ref=e42] [cursor=pointer]:
+            - img "Conta do Google (ernane.sa@gmail.com)" [ref=e43]
+    - generic [ref=e44]:
+      - navigation [ref=e54]:
+        - navigation "Barra lateral" [ref=e57]:
+          - link "Página inicial" [ref=e62] [cursor=pointer]:
+            - /url: /v2/home?pli=1
+            - img [ref=e64]: home
+            - generic [ref=e67]: Página inicial
+          - link "Abrir/fechar apps" [ref=e74] [cursor=pointer]:
+            - img [ref=e76]: apps
+            - generic [ref=e77]: Apps
+          - generic [ref=e79]:
+            - link "Relatórios" [ref=e83] [cursor=pointer]:
+              - /url: /v2/reports/library?pli=1
+              - img [ref=e85]: assessment
+              - generic [ref=e88]: Relatórios
+            - link "Mediação" [ref=e93] [cursor=pointer]:
+              - /url: /v2/mediation/groups/list?pli=1
+              - generic [ref=e97]: Mediação
+            - link "Campanhas" [ref=e102] [cursor=pointer]:
+              - /url: /v2/campaigns/list?pli=1
+              - img [ref=e104]: campaign
+              - generic [ref=e107]: Campanhas
+          - generic [ref=e109]:
+            - link "Central de políticas" [ref=e113] [cursor=pointer]:
+              - /url: /v2/policycenter?pli=1
+              - img [ref=e115]: verified_user
+              - generic [ref=e118]: Central de políticas
+            - link "Privacidade e mensagens" [ref=e123] [cursor=pointer]:
+              - /url: /v2/privacymessaging?pli=1
+              - generic [ref=e127]: Privacidade e mensagens
+            - link "Dados do publisher" [ref=e132] [cursor=pointer]:
+              - /url: /v2/first-party-data-controls/list?pli=1
+              - img [ref=e134]: badge
+              - generic [ref=e136]:
+                - generic [ref=e137]: Dados do publisher
+                - generic [ref=e139]: Beta
+            - link "Controles de bloqueio" [ref=e144] [cursor=pointer]:
+              - /url: /v2/pubcontrols?pli=1
+              - img [ref=e146]: block
+              - generic [ref=e149]: Controles de bloqueio
+            - link "Pagamentos" [ref=e154] [cursor=pointer]:
+              - /url: /v2/payments/overview?pli=1
+              - generic [ref=e158]: Pagamentos
+            - link "Histórico de alterações" [ref=e163] [cursor=pointer]:
+              - /url: /v2/changehistory?pli=1
+              - img [ref=e165]: history
+              - generic [ref=e167]:
+                - generic [ref=e168]: Histórico de alterações
+                - generic [ref=e170]: Beta
+            - link "Configurações" [ref=e175] [cursor=pointer]:
+              - /url: /v2/settings/personal-settings?pli=1
+              - img [ref=e177]: settings
+              - generic [ref=e180]: Configurações
+            - button "Ajuda" [ref=e185] [cursor=pointer]:
+              - img [ref=e187]: help_outline
+              - generic [ref=e188]: Ajuda
+            - button "Feedback" [ref=e193] [cursor=pointer]:
+              - img [ref=e195]: feedback
+              - generic [ref=e196]: Feedback
+      - main [ref=e45]:
+        - generic [ref=e49]:
+          - text: © 2026 Google
+          - link "Privacidadeopen_in_new" [ref=e50] [cursor=pointer]:
+            - /url: https://www.google.com/intl/pt_BR/policies/privacy
+          - link "Termosopen_in_new" [ref=e51] [cursor=pointer]:
+            - /url: https://adsense.google.com/adsense/terms
+```

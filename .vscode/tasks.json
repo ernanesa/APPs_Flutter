@@ -141,6 +141,110 @@
 			"label": "Run Fasting Tracker",
 			"type": "shell",
 			"command": "pwsh -NoProfile -Command \"Set-Location 'C:\\Users\\Ernane\\Personal\\APPs_Flutter\\fasting_tracker'; & 'C:\\dev\\flutter\\bin\\flutter.bat' run -d emulator-5554\""
+		},
+		{
+			"label": "ADB: White Noise UI Dump",
+			"type": "shell",
+			"command": "pwsh",
+			"args": [
+				"-NoProfile",
+				"-Command",
+				"& \"C:\\dev\\android-sdk\\platform-tools\\adb.exe\" shell am start -n sa.rezende.white_noise/.MainActivity; Start-Sleep -Seconds 2; & \"C:\\dev\\android-sdk\\platform-tools\\adb.exe\" shell uiautomator dump /sdcard/ui.xml; & \"C:\\dev\\android-sdk\\platform-tools\\adb.exe\" shell cat /sdcard/ui.xml"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "test"
+		},
+		{
+			"label": "ADB: Pull White Noise UI XML",
+			"type": "shell",
+			"command": "pwsh",
+			"args": [
+				"-NoProfile",
+				"-Command",
+				"& \"C:\\dev\\android-sdk\\platform-tools\\adb.exe\" pull /sdcard/ui.xml \"C:\\Users\\Ernane\\Personal\\APPs_Flutter\\white_noise\\ui.xml\""
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "test"
+		},
+		{
+			"label": "ADB: Tap FAB and Dump UI",
+			"type": "shell",
+			"command": "pwsh",
+			"args": [
+				"-NoProfile",
+				"-Command",
+				"& \"C:\\dev\\android-sdk\\platform-tools\\adb.exe\" shell input tap 959 2027; Start-Sleep -Seconds 1; & \"C:\\dev\\android-sdk\\platform-tools\\adb.exe\" shell uiautomator dump /sdcard/ui.xml"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "test"
+		},
+		{
+			"label": "ADB: Pull White Noise UI XML (After Tap)",
+			"type": "shell",
+			"command": "pwsh",
+			"args": [
+				"-NoProfile",
+				"-Command",
+				"& \"C:\\dev\\android-sdk\\platform-tools\\adb.exe\" pull /sdcard/ui.xml \"C:\\Users\\Ernane\\Personal\\APPs_Flutter\\white_noise\\ui.xml\""
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "test"
+		},
+		{
+			"label": "Run White Noise",
+			"type": "shell",
+			"command": "pwsh",
+			"args": [
+				"-NoProfile",
+				"-Command",
+				"Set-Location -Path \"C:\\Users\\Ernane\\Personal\\APPs_Flutter\\white_noise\"; & \"C:\\dev\\flutter\\bin\\flutter.bat\" run -d emulator-5554"
+			],
+			"isBackground": true,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "ADB: White Noise UI Dump (Now)",
+			"type": "shell",
+			"command": "pwsh",
+			"args": [
+				"-NoProfile",
+				"-Command",
+				"& \"C:\\dev\\android-sdk\\platform-tools\\adb.exe\" shell am start -n sa.rezende.white_noise/.MainActivity; Start-Sleep -Seconds 2; & \"C:\\dev\\android-sdk\\platform-tools\\adb.exe\" shell uiautomator dump /sdcard/ui.xml; & \"C:\\dev\\android-sdk\\platform-tools\\adb.exe\" shell cat /sdcard/ui.xml"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "test"
+		},
+		{
+			"label": "ADB: White Noise UI Dump (Validate)",
+			"type": "shell",
+			"command": "pwsh",
+			"args": [
+				"-NoProfile",
+				"-Command",
+				"& \"C:\\dev\\android-sdk\\platform-tools\\adb.exe\" shell am start -n sa.rezende.white_noise/.MainActivity; Start-Sleep -Seconds 2; & \"C:\\dev\\android-sdk\\platform-tools\\adb.exe\" shell uiautomator dump /sdcard/ui.xml; & \"C:\\dev\\android-sdk\\platform-tools\\adb.exe\" pull /sdcard/ui.xml \"C:\\Users\\Ernane\\Personal\\APPs_Flutter\\white_noise\\ui.xml\""
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "test"
+		},
+		{
+			"label": "Run White Noise (Fixed CWD)",
+			"type": "shell",
+			"command": "pwsh",
+			"args": [
+				"-NoProfile",
+				"-Command",
+				"Set-Location -Path \"C:\\Users\\Ernane\\Personal\\APPs_Flutter\\white_noise\"; & \"C:\\dev\\flutter\\bin\\flutter.bat\" run -d emulator-5554"
+			],
+			"isBackground": true,
+			"problemMatcher": [],
+			"group": "build"
 		}
 	]
 }

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    
+    <!-- Background circle (zona segura 66dp centrada) -->
+    <group
+        android:translateX="18"
+        android:translateY="18">
+        
+        <!-- Círculo de fundo sutil -->
+        <path
+            android:fillColor="#00695C"
+            android:pathData="M36,36m-34,0a34,34 0,1 1,68 0a34,34 0,1 1,-68 0"/>
+        
+        <!-- Lua crescente - símbolo de sono/noite -->
+        <path
+            android:fillColor="#E0F2F1"
+            android:pathData="M28,16
+                c-12,0 -20,10 -20,22
+                c0,12 8,22 20,22
+                c-8,-5 -12,-13 -12,-22
+                c0,-9 4,-17 12,-22z"/>
+        
+        <!-- Ondas sonoras - primeira (mais próxima) -->
+        <path
+            android:fillColor="#80CBC4"
+            android:strokeWidth="0"
+            android:pathData="M38,24
+                c6,3 10,9 10,16
+                c0,7 -4,13 -10,16
+                c4,-4 6,-10 6,-16
+                c0,-6 -2,-12 -6,-16z"/>
+        
+        <!-- Ondas sonoras - segunda (média) -->
+        <path
+            android:fillColor="#4DB6AC"
+            android:strokeWidth="0"
+            android:pathData="M44,18
+                c8,5 13,13 13,22
+                c0,9 -5,17 -13,22
+                c5,-5 8,-13 8,-22
+                c0,-9 -3,-17 -8,-22z"/>
+        
+        <!-- Ondas sonoras - terceira (mais distante) -->
+        <path
+            android:fillColor="#26A69A"
+            android:strokeWidth="0"
+            android:pathData="M50,12
+                c10,6 16,17 16,28
+                c0,11 -6,22 -16,28
+                c6,-7 10,-17 10,-28
+                c0,-11 -4,-21 -10,-28z"/>
+        
+        <!-- Pequenas estrelas decorativas -->
+        <path
+            android:fillColor="#B2DFDB"
+            android:pathData="M52,20 l1,2 l2,0.5 l-2,0.5 l-1,2 l-1,-2 l-2,-0.5 l2,-0.5z"/>
+        
+        <path
+            android:fillColor="#B2DFDB"
+            android:pathData="M58,32 l0.8,1.5 l1.5,0.4 l-1.5,0.4 l-0.8,1.5 l-0.8,-1.5 l-1.5,-0.4 l1.5,-0.4z"/>
+        
+        <path
+            android:fillColor="#B2DFDB"
+            android:pathData="M56,48 l0.6,1.2 l1.2,0.3 l-1.2,0.3 l-0.6,1.2 l-0.6,-1.2 l-1.2,-0.3 l1.2,-0.3z"/>
+        
+    </group>
+</vector>

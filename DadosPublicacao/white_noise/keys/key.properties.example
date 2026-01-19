@@ -1,0 +1,4 @@
+storePassword=<senha>
+keyPassword=<senha>
+keyAlias=upload
+storeFile=C:/Users/Ernane/Personal/APPs_Flutter/DadosPublicacao/white_noise/keys/upload-keystore.jks

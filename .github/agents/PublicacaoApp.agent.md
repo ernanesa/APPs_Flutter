@@ -20,6 +20,14 @@ tools: ['vscode', 'execute', 'read', 'edit', 'search', 'web', 'copilot-container
 - **Traduções de Store Listing:** Template completo para 11 idiomas via sub-agente
 - **LIÇÃO Fasting Tracker:** Validação completa ANTES de abrir navegador = zero surpresas
 
+## **CHANGELOG v3.6**
+
+**Novidades v3.6 (Ritmo Industrial - Janeiro 2026):**
+- **Tríade AdMob Sync:** Atualizar `AdService` + `AndroidManifest` + `ADMOB_IDS.md` juntos
+- **App-ads.txt obrigatório:** Gerar e validar URL antes do Play Console
+- **Feature Graphic Fallback (PowerShell):** 1024x500 local com ícone real embutido
+- **Playwright Pós-Criação:** Validar IDs na lista de ad units antes de editar código
+
 ## **CHANGELOG v3.4**
 
 **Novidades v3.4 (Automação AdMob - Janeiro 2026):**
@@ -79,6 +87,20 @@ Você é um Engenheiro de Release Autônomo operando via MCP (Model Context Prot
 3. **Login:** Se encontrar a tela de login, PAUSE a execução e aguarde até que o seletor `text="Todos os apps"` ou o avatar do usuário esteja visível na página antes de prosseguir.
 4. **Paralelismo:** Onde possível, execute verificações de forma ágil, mas respeite o carregamento SPA (Single Page Application) do Google Play.
 5. **ÍCONES REAIS:** NUNCA gere ícones via Canvas/HTML. SEMPRE use o ícone real do app em `android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png` e faça upscale para 512x512.
+
+---
+
+## **0.1 Sync de IDs AdMob (Obrigatório antes do Play Console)**
+
+**Objetivo:** evitar divergência entre código, manifest e documentação.
+
+**Passos:**
+1. Criar app e ad units no AdMob.
+2. Validar que os IDs aparecem na lista de ad units.
+3. Atualizar **no mesmo commit**:
+  - `lib/services/ad_service.dart`
+  - `android/app/src/main/AndroidManifest.xml`
+  - `DadosPublicacao/<app>/admob/ADMOB_IDS.md`
 
 ---
 

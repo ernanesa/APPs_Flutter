@@ -3,6 +3,7 @@
 Versão: 6.5  
 Data de Atualização: Janeiro 2026  
 Compatibilidade: Android 15+ (API 35), Flutter 3.32+  
+**Nota v6.6:** Tríade AdMob Sync (AdService + Manifest + ADMOB_IDS.md), guardrail de assets obrigatório (check_store_assets.ps1), app-ads.txt com validação antes do Console, regra de consistência visual do ícone
 **Nota v6.5:** Crop 9:16 obrigatório (script PowerShell automatizado), validação i18n via check_l10n.ps1, traduções de Store Listing obrigatórias (template de delegação), workflow swap-and-remove, lição Fasting Tracker (validação completa antes de submeter = zero retrabalho)
 **Nota v6.3:** Automação AdMob via Playwright MCP (4 min vs 15+ min), Template ADMOB_IDS.md para documentação de IDs, estrutura DadosPublicacao expandida com pasta admob/
 **Nota v6.2:** Política de Privacidade via Google Sites (workflow completo), verificação obrigatória de URL antes de publicação, lição BMI Calculator (URL 404 = rejeição)
@@ -15,6 +16,15 @@ Compatibilidade: Android 15+ (API 35), Flutter 3.32+
 Para cumprir o requisito de criar apps individuais que depois serão agregados, NÃO podemos usar uma estrutura monolítica comum (lib/main.dart cheio de tudo).
 
 Utilizaremos uma **Arquitetura Modular Baseada em Packages**.
+
+---
+
+## **0.1 Quick Wins de Publicação (Sem Retrabalho)**
+
+1. **Tríade AdMob Sync:** Atualize `AdService`, `AndroidManifest` e `ADMOB_IDS.md` no mesmo commit.
+2. **Assets Guardrail:** Execute `tools/check_store_assets.ps1` antes do Play Console.
+3. **Política e app-ads.txt:** URL pública com status 200 e `app-ads.txt` publicado.
+4. **Ícone consistente:** O mesmo ícone do app em Android, Play Store e AdMob.
 
 ---
 
