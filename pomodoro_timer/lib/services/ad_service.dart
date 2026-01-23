@@ -39,7 +39,7 @@ class AdService {
 
   static String get _appOpenAdUnitId {
     if (kDebugMode) {
-      return 'ca-app-pub-3940256099942544/9257990691'; // Test App Open
+      return 'ca-app-pub-3940256099942544/9257395921'; // Test App Open
     }
     return 'ca-app-pub-9691622617864549/2957990691'; // Production App Open
   }
