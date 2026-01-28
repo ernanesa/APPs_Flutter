@@ -1,0 +1,129 @@
+{
+  "@@locale": "en",
+  
+  "appTitle": "Compound Interest",
+  "calculate": "Calculate",
+  "reset": "Reset",
+  "save": "Save",
+  "cancel": "Cancel",
+  "delete": "Delete",
+  "close": "Close",
+  "settings": "Settings",
+  "history": "History",
+  "chart": "Chart",
+  "details": "Details",
+  
+  "initialCapital": "Initial Capital",
+  "interestRate": "Interest Rate (% per year)",
+  "investmentPeriod": "Investment Period",
+  "monthlyContribution": "Monthly Contribution",
+  "months": "Months",
+  "years": "Years",
+  "optional": "Optional",
+  "calculationName": "Calculation Name",
+  "calculationNameHint": "Enter a name",
+  "calculationSaved": "Calculation saved",
+  "requiredField": "Required field",
+  "invalidNumber": "Invalid number",
+  "invalidRate": "Invalid rate",
+  
+  "totalAmount": "Total Amount",
+  "totalContributed": "Total Contributed",
+  "totalInterest": "Total Interest",
+  "percentageGain": "Percentage Gain",
+  "result": "Result",
+  "viewChart": "View chart",
+  "growthChart": "Growth chart",
+  "month": "Month",
+  "monthlyBreakdown": "Monthly Breakdown",
+  "balanceEvolution": "Balance Evolution",
+  
+  "investmentPresets": "Investment Presets",
+  "presetPoupanca": "Savings Account",
+  "presetPoupancaDesc": "Low risk, low return (6.17% p.y.)",
+  "presetCDI": "CDI 100%",
+  "presetCDIDesc": "Post-fixed conservative (10.65% p.y.)",
+  "presetTesouroSelic": "Tesouro Selic",
+  "presetTesouroSelicDesc": "Government bonds (10.75% p.y.)",
+  "presetTesouroIPCA": "Tesouro IPCA+",
+  "presetTesouroIPCADesc": "Inflation protected (6.50% + IPCA)",
+  "presetCDB": "CDB",
+  "presetCDBDesc": "Bank deposit certificate (11.50% p.y.)",
+  "presetLCILCA": "LCI/LCA",
+  "presetLCILCADesc": "Tax-free real estate/agro (9.00% p.y.)",
+  
+  "calculationHistory": "Calculation History",
+  "noHistory": "No calculations yet",
+  "deleteConfirm": "Delete this calculation?",
+  "clearHistory": "Clear All History",
+  "clearHistoryConfirm": "Delete all calculations?",
+  
+  "achievements": "Achievements",
+  "achievementUnlocked": "Achievement Unlocked!",
+  "achievementsProgress": "Progress",
+  "notUnlockedYet": "Not unlocked yet",
+  "unlockedOn": "Unlocked on",
+  "categoryCalculations": "Calculations",
+  "categoryStreak": "Streak",
+  "categoryAmounts": "Amounts",
+  "categorySpecial": "Special",
+  
+  "achievementFirstCalc": "First Calculation",
+  "achievementFirstCalcDesc": "Complete your first calculation",
+  "achievementCalc10": "10 Calculations",
+  "achievementCalc10Desc": "Complete 10 calculations",
+  "achievementCalc50": "50 Calculations",
+  "achievementCalc50Desc": "Complete 50 calculations",
+  "achievementCalc100": "Century",
+  "achievementCalc100Desc": "Complete 100 calculations",
+  "achievementStreak3": "3-Day Streak",
+  "achievementStreak3Desc": "Use the app for 3 consecutive days",
+  "achievementStreak7": "Week Warrior",
+  "achievementStreak7Desc": "Use the app for 7 consecutive days",
+  "achievementStreak30": "Month Master",
+  "achievementStreak30Desc": "Use the app for 30 consecutive days",
+  "achievementMillion": "First Million",
+  "achievementMillionDesc": "Calculate reaching R$ 1,000,000",
+  "achievementTenMillion": "Ten Million Club",
+  "achievementTenMillionDesc": "Calculate reaching R$ 10,000,000",
+  "achievementLongTerm": "Long-Term Thinker",
+  "achievementLongTermDesc": "Calculate investment of 10+ years",
+  
+  "streakDays": "{count, plural, =1{1 day} other{{count} days}}",
+  "@streakDays": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "currentStreak": "Current Streak",
+  "bestStreak": "Best Streak",
+  "days": "days",
+  
+  "dailyGoal": "Daily Goal",
+  "dailyGoalTarget": "Target Calculations",
+  "goalReached": "Goal Reached!",
+  "calculationsProgress": "{completed}/{target} calculations",
+  "@calculationsProgress": {
+    "placeholders": {
+      "completed": {
+        "type": "int"
+      },
+      "target": {
+        "type": "int"
+      }
+    }
+  },
+  "calculationsPerDay": "calculations per day",
+  
+  "colorTheme": "Color Theme",
+  "themeGreen": "Green",
+  "themeBlue": "Blue",
+  "themePurple": "Purple",
+  "themeOrange": "Orange",
+  "themeTeal": "Teal",
+  "themeIndigo": "Indigo",
+  "themeRed": "Red",
+  "themeAmber": "Amber"
+}
