@@ -157,7 +157,9 @@ org.gradle.parallel=true
 
 ---
 
-## **4\. Stack Tecnológica Recomendada (2025-2026)**
+## **4\. Stack Tecnológica Recomendada (Evergreen - 2026)**
+
+**REGRA DE OURO (Evergreen Dependencies):** Todos os apps e packages devem operar SEMPRE com a versão mais atualizada possível do Flutter SDK, Dart SDK e packages do pub.dev. O ecossistema deve estar sempre na vanguarda para extrair máxima performance da engine.
 
 | Categoria              | Tecnologia                | Justificativa                            |
 | ---------------------- | ------------------------- | ---------------------------------------- |

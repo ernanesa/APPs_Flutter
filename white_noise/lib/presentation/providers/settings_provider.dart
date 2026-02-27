@@ -1,4 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
+import 'package:flutter_riverpod/legacy.dart';
 
 import 'package:wakelock_plus/wakelock_plus.dart';
 

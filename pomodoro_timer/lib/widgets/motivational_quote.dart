@@ -40,7 +40,7 @@ class _MotivationalQuoteState extends State<MotivationalQuote> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: theme.colorScheme.primaryContainer.withOpacity(0.3),
+        color: theme.colorScheme.primaryContainer.withValues(alpha: 0.3),
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
@@ -146,7 +146,7 @@ class QuoteCard extends StatelessWidget {
 
     return Card(
       elevation: 0,
-      color: theme.colorScheme.secondaryContainer.withOpacity(0.5),
+      color: theme.colorScheme.secondaryContainer.withValues(alpha: 0.5),
       child: Padding(
         padding: const EdgeInsets.all(12),
         child: Column(

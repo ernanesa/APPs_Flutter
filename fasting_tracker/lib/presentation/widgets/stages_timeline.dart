@@ -80,7 +80,7 @@ class StagesTimeline extends StatelessWidget {
                   color: isActive
                       ? stage.color
                       : isPassed
-                          ? stage.color.withOpacity(0.5)
+                          ? stage.color.withValues(alpha: 0.5)
                           : theme.colorScheme.surfaceContainerHighest,
                   shape: BoxShape.circle,
                   border: Border.all(
@@ -100,7 +100,7 @@ class StagesTimeline extends StatelessWidget {
                   child: Container(
                     width: 2,
                     color: isPassed
-                        ? stage.color.withOpacity(0.5)
+                        ? stage.color.withValues(alpha: 0.5)
                         : theme.colorScheme.surfaceContainerHighest,
                   ),
                 ),

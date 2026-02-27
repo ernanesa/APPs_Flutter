@@ -52,7 +52,7 @@ class _ColorfulBackgroundState extends State<ColorfulBackground>
                 widget.primaryColor,
                 Color.lerp(widget.primaryColor, widget.secondaryColor, 0.5)!,
                 widget.secondaryColor,
-                widget.accentColor.withOpacity(0.8),
+                widget.accentColor.withValues(alpha: 0.8),
               ],
               stops: [
                 0.0,

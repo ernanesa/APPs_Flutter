@@ -27,13 +27,13 @@ class AchievementBadge extends StatelessWidget {
         padding: const EdgeInsets.all(6),
         decoration: BoxDecoration(
           color: isUnlocked
-              ? achievement.color.withOpacity(0.15)
-              : theme.colorScheme.surfaceContainerHighest.withOpacity(0.5),
+              ? achievement.color.withValues(alpha: 0.15)
+              : theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
             color: isUnlocked
-                ? achievement.color.withOpacity(0.5)
-                : theme.colorScheme.outline.withOpacity(0.2),
+                ? achievement.color.withValues(alpha: 0.5)
+                : theme.colorScheme.outline.withValues(alpha: 0.2),
             width: 1.5,
           ),
         ),
@@ -49,7 +49,7 @@ class AchievementBadge extends StatelessWidget {
                   height: 36,
                   decoration: BoxDecoration(
                     color: isUnlocked
-                        ? achievement.color.withOpacity(0.2)
+                        ? achievement.color.withValues(alpha: 0.2)
                         : theme.colorScheme.surfaceContainerHighest,
                     shape: BoxShape.circle,
                   ),
@@ -58,7 +58,7 @@ class AchievementBadge extends StatelessWidget {
                     size: 20,
                     color: isUnlocked
                         ? achievement.color
-                        : theme.colorScheme.outline.withOpacity(0.5),
+                        : theme.colorScheme.outline.withValues(alpha: 0.5),
                   ),
                 ),
                 if (!isUnlocked)
@@ -74,7 +74,7 @@ class AchievementBadge extends StatelessWidget {
                       child: Icon(
                         Icons.lock,
                         size: 10,
-                        color: theme.colorScheme.outline.withOpacity(0.7),
+                        color: theme.colorScheme.outline.withValues(alpha: 0.7),
                       ),
                     ),
                   ),
@@ -93,7 +93,7 @@ class AchievementBadge extends StatelessWidget {
                     height: 1.1,
                     color: isUnlocked
                         ? theme.colorScheme.onSurface
-                        : theme.colorScheme.onSurface.withOpacity(0.5),
+                        : theme.colorScheme.onSurface.withValues(alpha: 0.5),
                   ),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
@@ -154,7 +154,7 @@ class AchievementUnlockedDialog extends StatelessWidget {
               width: 80,
               height: 80,
               decoration: BoxDecoration(
-                color: achievement.color.withOpacity(0.2),
+                color: achievement.color.withValues(alpha: 0.2),
                 shape: BoxShape.circle,
               ),
               child: Icon(
@@ -182,7 +182,7 @@ class AchievementUnlockedDialog extends StatelessWidget {
             Text(
               _getDescription(l10n),
               style: theme.textTheme.bodyMedium?.copyWith(
-                color: theme.colorScheme.onSurface.withOpacity(0.7),
+                color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
               ),
               textAlign: TextAlign.center,
             ),

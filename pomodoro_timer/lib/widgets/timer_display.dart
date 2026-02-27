@@ -55,7 +55,7 @@ class TimerDisplay extends StatelessWidget {
               strokeWidth: 12,
               backgroundColor: Colors.transparent,
               valueColor: AlwaysStoppedAnimation<Color>(
-                bgColor.withOpacity(0.3),
+                bgColor.withValues(alpha: 0.3),
               ),
             ),
           ),
@@ -98,7 +98,7 @@ class TimerDisplay extends StatelessWidget {
                     vertical: 4,
                   ),
                   decoration: BoxDecoration(
-                    color: color.withOpacity(0.1),
+                    color: color.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Row(

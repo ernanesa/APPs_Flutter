@@ -127,7 +127,7 @@ class _SecondaryButton extends StatelessWidget {
         side: BorderSide(
           color: isEnabled
               ? theme.colorScheme.outline
-              : theme.colorScheme.outline.withOpacity(0.3),
+              : theme.colorScheme.outline.withValues(alpha: 0.3),
         ),
       ),
       child: Row(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 import '../l10n/app_localizations.dart';
 import '../providers/streak_provider.dart';
 
@@ -23,12 +24,12 @@ class StreakWidget extends ConsumerWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
-        color: theme.colorScheme.primaryContainer.withOpacity(0.3),
+        color: theme.colorScheme.primaryContainer.withValues(alpha: 0.3),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
           color: streak.currentStreak > 0 
               ? Colors.orange 
-              : theme.colorScheme.outline.withOpacity(0.3),
+              : theme.colorScheme.outline.withValues(alpha: 0.3),
           width: 1.5,
         ),
       ),
@@ -57,7 +58,7 @@ class StreakWidget extends ConsumerWidget {
             Text(
               l10n.streakDays,
               style: theme.textTheme.bodySmall?.copyWith(
-                color: theme.colorScheme.onSurface.withOpacity(0.7),
+                color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
               ),
             ),
           ],
@@ -79,8 +80,8 @@ class StreakBadge extends ConsumerWidget {
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
         color: streak.currentStreak > 0 
-            ? Colors.orange.withOpacity(0.2) 
-            : Colors.grey.withOpacity(0.2),
+            ? Colors.orange.withValues(alpha: 0.2) 
+            : Colors.grey.withValues(alpha: 0.2),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(

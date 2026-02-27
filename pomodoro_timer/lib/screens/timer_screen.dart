@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 import '../l10n/app_localizations.dart';
 import '../models/pomodoro_session.dart';
 import '../providers/settings_provider.dart';
@@ -315,7 +316,7 @@ class _TimerScreenState extends ConsumerState<TimerScreen>
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                     decoration: BoxDecoration(
-                      color: whiteColor.withOpacity(0.2),
+                      color: whiteColor.withValues(alpha: 0.2),
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Row(
@@ -407,7 +408,7 @@ class _TimerScreenState extends ConsumerState<TimerScreen>
                       shape: BoxShape.circle,
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
+                          color: Colors.black.withValues(alpha: 0.1),
                           blurRadius: 15,
                           offset: const Offset(0, 6),
                         ),

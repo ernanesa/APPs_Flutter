@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 import 'package:fl_chart/fl_chart.dart';
 import '../l10n/app_localizations.dart';
 import '../logic/pomodoro_logic.dart';
@@ -296,7 +297,7 @@ class StatisticsScreen extends ConsumerWidget {
         .toDouble();
     
     final barColor = isColorful ? Colors.white : theme.colorScheme.primary;
-    final gridColor = isColorful ? Colors.white24 : theme.colorScheme.outlineVariant.withOpacity(0.5);
+    final gridColor = isColorful ? Colors.white24 : theme.colorScheme.outlineVariant.withValues(alpha: 0.5);
     final textColor = isColorful ? Colors.white70 : theme.colorScheme.onSurfaceVariant;
 
     return BarChart(
@@ -387,7 +388,7 @@ class StatisticsScreen extends ConsumerWidget {
                 toY: daily.completedPomodoros.toDouble(),
                 color: isToday
                     ? barColor
-                    : barColor.withOpacity(0.5),
+                    : barColor.withValues(alpha: 0.5),
                 width: 20,
                 borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(6),

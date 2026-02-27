@@ -50,10 +50,10 @@ class SessionTypeLabel extends StatelessWidget {
         vertical: 8,
       ),
       decoration: BoxDecoration(
-        color: labelColor.withOpacity(0.1),
+        color: labelColor.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: labelColor.withOpacity(0.3),
+          color: labelColor.withValues(alpha: 0.3),
           width: 1,
         ),
       ),

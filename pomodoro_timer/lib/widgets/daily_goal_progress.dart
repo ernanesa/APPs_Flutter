@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 import '../l10n/app_localizations.dart';
 import '../providers/daily_goal_provider.dart';
 
@@ -35,13 +36,13 @@ class DailyGoalProgress extends ConsumerWidget {
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
         color: dailyGoal.isGoalReached
-            ? Colors.green.withOpacity(0.2)
-            : theme.colorScheme.primaryContainer.withOpacity(0.3),
+            ? Colors.green.withValues(alpha: 0.2)
+            : theme.colorScheme.primaryContainer.withValues(alpha: 0.3),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
           color: dailyGoal.isGoalReached
               ? Colors.green
-              : theme.colorScheme.primary.withOpacity(0.3),
+              : theme.colorScheme.primary.withValues(alpha: 0.3),
           width: 1.5,
         ),
       ),
@@ -79,7 +80,7 @@ class DailyGoalProgress extends ConsumerWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: theme.colorScheme.surfaceContainerHighest.withOpacity(0.5),
+        color: theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
@@ -107,7 +108,7 @@ class DailyGoalProgress extends ConsumerWidget {
                     vertical: 4,
                   ),
                   decoration: BoxDecoration(
-                    color: Colors.green.withOpacity(0.2),
+                    color: Colors.green.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Row(
@@ -138,7 +139,7 @@ class DailyGoalProgress extends ConsumerWidget {
               Container(
                 height: 12,
                 decoration: BoxDecoration(
-                  color: theme.colorScheme.outline.withOpacity(0.2),
+                  color: theme.colorScheme.outline.withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(6),
                 ),
               ),
@@ -186,7 +187,7 @@ class DailyGoalProgress extends ConsumerWidget {
             Text(
               l10n.focusTimeToday(dailyGoal.focusMinutesToday),
               style: theme.textTheme.bodySmall?.copyWith(
-                color: theme.colorScheme.onSurface.withOpacity(0.7),
+                color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
               ),
             ),
           ],

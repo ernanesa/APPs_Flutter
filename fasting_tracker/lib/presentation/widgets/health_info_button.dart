@@ -48,7 +48,7 @@ class HealthInfoSheet extends StatelessWidget {
               width: 40,
               height: 4,
               decoration: BoxDecoration(
-                color: theme.colorScheme.onSurfaceVariant.withOpacity(0.4),
+                color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.4),
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
@@ -187,10 +187,10 @@ class HealthInfoSheet extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: theme.colorScheme.errorContainer.withOpacity(0.3),
+                      color: theme.colorScheme.errorContainer.withValues(alpha: 0.3),
                       borderRadius: BorderRadius.circular(8),
                       border: Border.all(
-                        color: theme.colorScheme.error.withOpacity(0.3),
+                        color: theme.colorScheme.error.withValues(alpha: 0.3),
                       ),
                     ),
                     child: Row(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 import '../l10n/app_localizations.dart';
 import 'package:uuid/uuid.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -203,8 +204,8 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      _getCategoryColor(context, _category!).withOpacity(0.9),
-                      _getCategoryColor(context, _category!).withOpacity(0.6),
+                      _getCategoryColor(context, _category!).withValues(alpha: 0.9),
+                      _getCategoryColor(context, _category!).withValues(alpha: 0.6),
                     ],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
@@ -212,7 +213,7 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
                   borderRadius: BorderRadius.circular(24),
                   boxShadow: [
                     BoxShadow(
-                      color: _getCategoryColor(context, _category!).withOpacity(0.4),
+                      color: _getCategoryColor(context, _category!).withValues(alpha: 0.4),
                       blurRadius: 20,
                       offset: const Offset(0, 10),
                     ),
@@ -243,7 +244,7 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 16, vertical: 8),
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.2),
+                        color: Colors.white.withValues(alpha: 0.2),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Text(

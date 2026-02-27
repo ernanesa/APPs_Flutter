@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../domain/entities/app_theme.dart';
 import '../providers/theme_provider.dart';
@@ -216,7 +217,7 @@ class _ThemeChip extends StatelessWidget {
         decoration: BoxDecoration(
           color: isSelected
               ? themeType.primaryColor
-              : themeType.primaryColor.withOpacity(0.2),
+              : themeType.primaryColor.withValues(alpha: 0.2),
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
             color: themeType.primaryColor,

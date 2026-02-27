@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 import '../l10n/app_localizations.dart';
 import '../models/ambient_sound.dart';
 import '../providers/ambient_sound_provider.dart';
@@ -63,8 +64,8 @@ class _SoundItem extends StatelessWidget {
         padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
           color: isSelected
-              ? sound.color.withOpacity(0.2)
-              : theme.colorScheme.surfaceContainerHighest.withOpacity(0.5),
+              ? sound.color.withValues(alpha: 0.2)
+              : theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
             color: isSelected ? sound.color : Colors.transparent,

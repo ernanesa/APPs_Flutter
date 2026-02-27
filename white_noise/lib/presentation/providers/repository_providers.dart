@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 
 import '../../data/datasources/audio_player_service.dart';
 import '../../data/datasources/local_data_source.dart';

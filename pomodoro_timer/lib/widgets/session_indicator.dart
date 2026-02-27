@@ -38,13 +38,13 @@ class SessionIndicator extends StatelessWidget {
                 color: isCompleted
                     ? theme.colorScheme.primary
                     : (isCurrent
-                        ? theme.colorScheme.primary.withOpacity(0.5)
+                        ? theme.colorScheme.primary.withValues(alpha: 0.5)
                         : theme.colorScheme.surfaceContainerHighest),
                 borderRadius: BorderRadius.circular(6),
                 border: Border.all(
                   color: isCompleted || isCurrent
                       ? theme.colorScheme.primary
-                      : theme.colorScheme.outline.withOpacity(0.3),
+                      : theme.colorScheme.outline.withValues(alpha: 0.3),
                   width: 1.5,
                 ),
               ),

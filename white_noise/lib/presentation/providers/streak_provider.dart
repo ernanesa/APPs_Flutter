@@ -1,4 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
+import 'package:flutter_riverpod/legacy.dart';
 
 import '../../domain/entities/streak_entity.dart';
 import '../../domain/usecases/update_streak_usecase.dart';

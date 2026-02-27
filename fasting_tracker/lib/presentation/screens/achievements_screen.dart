@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../domain/entities/achievement.dart';
 import '../providers/achievements_provider.dart';
@@ -53,7 +54,7 @@ class AchievementsScreen extends ConsumerWidget {
                       const SizedBox(height: 16),
                       LinearProgressIndicator(
                         value: achievementsState.progress,
-                        backgroundColor: theme.colorScheme.onPrimaryContainer.withOpacity(0.2),
+                        backgroundColor: theme.colorScheme.onPrimaryContainer.withValues(alpha: 0.2),
                         color: theme.colorScheme.onPrimaryContainer,
                         minHeight: 8,
                         borderRadius: BorderRadius.circular(4),
@@ -98,7 +99,7 @@ class _AchievementCard extends StatelessWidget {
     return Card(
       margin: const EdgeInsets.only(bottom: 8),
       color: isUnlocked
-          ? theme.colorScheme.primaryContainer.withOpacity(0.5)
+          ? theme.colorScheme.primaryContainer.withValues(alpha: 0.5)
           : theme.colorScheme.surfaceContainerHighest,
       child: ListTile(
         leading: Container(

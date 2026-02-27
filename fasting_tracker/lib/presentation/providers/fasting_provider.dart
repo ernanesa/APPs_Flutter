@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
+import 'package:flutter_riverpod/legacy.dart';
 import '../../domain/entities/fasting_session.dart';
 import '../../domain/entities/fasting_protocol.dart';
 import '../../data/repositories/fasting_repository_impl.dart';

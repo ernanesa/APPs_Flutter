@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 import '../l10n/app_localizations.dart';
 import '../models/achievement.dart';
 import '../providers/achievements_provider.dart';
@@ -158,7 +159,7 @@ class AchievementsScreen extends ConsumerWidget {
                 Container(
                   height: 10,
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.3),
+                    color: Colors.white.withValues(alpha: 0.3),
                     borderRadius: BorderRadius.circular(5),
                   ),
                 ),
@@ -171,7 +172,7 @@ class AchievementsScreen extends ConsumerWidget {
                       borderRadius: BorderRadius.circular(5),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.white.withOpacity(0.5),
+                          color: Colors.white.withValues(alpha: 0.5),
                           blurRadius: 10,
                         ),
                       ],
@@ -232,7 +233,7 @@ class AchievementsScreen extends ConsumerWidget {
               Container(
                 height: 10,
                 decoration: BoxDecoration(
-                  color: theme.colorScheme.outline.withOpacity(0.2),
+                  color: theme.colorScheme.outline.withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(5),
                 ),
               ),
@@ -328,7 +329,7 @@ class AchievementsScreen extends ConsumerWidget {
               height: 80,
               decoration: BoxDecoration(
                 color: achievement.isUnlocked
-                    ? achievement.color.withOpacity(0.2)
+                    ? achievement.color.withValues(alpha: 0.2)
                     : theme.colorScheme.surfaceContainerHighest,
                 shape: BoxShape.circle,
               ),
@@ -355,7 +356,7 @@ class AchievementsScreen extends ConsumerWidget {
             Text(
               _getDescription(l10n, achievement.descriptionKey),
               style: theme.textTheme.bodyMedium?.copyWith(
-                color: theme.colorScheme.onSurface.withOpacity(0.7),
+                color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
               ),
               textAlign: TextAlign.center,
             ),

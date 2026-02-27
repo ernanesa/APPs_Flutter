@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 import '../l10n/app_localizations.dart';
 import '../models/app_theme.dart';
 import '../providers/theme_provider.dart';
@@ -63,8 +64,8 @@ class _ThemeItem extends StatelessWidget {
         padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
           color: isSelected
-              ? appTheme.primaryColor.withOpacity(0.15)
-              : theme.colorScheme.surfaceContainerHighest.withOpacity(0.3),
+              ? appTheme.primaryColor.withValues(alpha: 0.15)
+              : theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
             color: isSelected ? appTheme.primaryColor : Colors.transparent,
@@ -89,7 +90,7 @@ class _ThemeItem extends StatelessWidget {
                 ),
                 shape: BoxShape.circle,
                 border: Border.all(
-                  color: Colors.white.withOpacity(0.3),
+                  color: Colors.white.withValues(alpha: 0.3),
                   width: 2,
                 ),
               ),
