@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:core_logic/core_logic.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'l10n/app_localizations.dart';
 
-import 'services/ad_service.dart';
-import 'services/consent_service.dart';
+
+
 import 'presentation/screens/calculator_screen.dart';
 import 'presentation/providers/theme_provider.dart';
 import 'package:core_ui/core_ui.dart';
@@ -23,7 +24,8 @@ void main() async {
   await ConsentService.gatherConsent();
 
   // Initialize ads only if consent allows
-  if (ConsentService.canRequestAds) {
+  final canReq = await ConsentService.canRequestAds();
+  if (canReq) {
     await AdService.initialize();
     AdService.loadAppOpenAd();
   }
@@ -53,8 +55,12 @@ class _MyAppState extends ConsumerState<MyApp> with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed && ConsentService.canRequestAds) {
-      AdService.showAppOpenAdIfAvailable();
+    if (state == AppLifecycleState.resumed) {
+      ConsentService.canRequestAds().then((canRequest) {
+        if (canRequest) {
+          AdService.showAppOpenAdIfAvailable();
+        }
+      });
     }
   }
 

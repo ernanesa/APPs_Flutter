@@ -1,3 +1,4 @@
+import 'package:core_logic/core_logic.dart';
 import 'dart:async';
 
 import 'package:flutter_riverpod/legacy.dart';
@@ -8,7 +9,7 @@ import '../../domain/usecases/mix_sounds_usecase.dart';
 import '../../domain/usecases/set_timer_usecase.dart';
 import '../../domain/usecases/track_achievements_usecase.dart';
 import '../../domain/usecases/update_streak_usecase.dart';
-import '../../services/ad_service.dart';
+
 import 'usecase_providers.dart';
 
 class MixState {
@@ -123,7 +124,7 @@ class MixController extends StateNotifier<MixState> {
       _scheduleAutoStop(timer);
     }
 
-    AdService.incrementActionAndShowInterstitial();
+    AdService.incrementActionAndShowIfNeeded();
   }
 
   Future<void> stopMix() async {

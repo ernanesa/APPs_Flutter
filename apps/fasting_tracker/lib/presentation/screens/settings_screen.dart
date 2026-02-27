@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:fasting_tracker/l10n/app_localizations.dart';
 import '../../domain/entities/app_theme.dart';
 import '../providers/theme_provider.dart';
 import '../providers/locale_provider.dart';

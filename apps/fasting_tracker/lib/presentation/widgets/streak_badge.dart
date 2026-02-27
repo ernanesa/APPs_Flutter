@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:fasting_tracker/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import '../providers/streak_provider.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 /// Streak badge widget showing current streak
 class StreakBadge extends ConsumerWidget {

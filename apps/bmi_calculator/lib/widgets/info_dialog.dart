@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:core_logic/core_logic.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import '../l10n/app_localizations.dart';
-import '../services/consent_service.dart';
+
 
 class InfoDialog extends StatelessWidget {
   const InfoDialog({super.key});

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../domain/entities/health_info.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:fasting_tracker/l10n/app_localizations.dart';
 
 /// Health information button and dialog
 class HealthInfoButton extends StatelessWidget {

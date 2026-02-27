@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:core_logic/core_logic.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../l10n/app_localizations.dart';
 import 'package:uuid/uuid.dart';
@@ -6,7 +7,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import '../logic/bmi_logic.dart';
 import '../models/bmi_entry.dart';
 import '../providers/bmi_provider.dart';
-import '../services/ad_service.dart';
+
 
 class CalculatorScreen extends ConsumerStatefulWidget {
   const CalculatorScreen({super.key});

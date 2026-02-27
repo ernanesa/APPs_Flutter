@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:core_logic/core_logic.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:fasting_tracker/l10n/app_localizations.dart';
 import 'package:core_ui/core_ui.dart';
-import 'presentation/providers/shared_prefs_provider.dart';
+
 import 'presentation/providers/theme_provider.dart';
 import 'presentation/providers/locale_provider.dart';
 import 'presentation/screens/home_screen.dart';
-import 'services/ad_service.dart';
-import 'services/consent_service.dart';
+
+
 import 'services/notification_service.dart';
 
 void main() async {
@@ -23,7 +24,7 @@ void main() async {
   await ConsentService.gatherConsent();
 
   // Initialize Ads only if allowed
-  if (ConsentService.canRequestAds) {
+  if (await ConsentService.canRequestAds()) {
     await AdService.initialize();
     AdService.loadAppOpenAd();
   }

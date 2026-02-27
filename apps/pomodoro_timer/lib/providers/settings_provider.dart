@@ -1,3 +1,4 @@
+import 'package:core_logic/core_logic.dart';
 import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
@@ -5,9 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../models/pomodoro_settings.dart';
 
 /// Provider for SharedPreferences instance.
-final sharedPreferencesProvider = Provider<SharedPreferences>((ref) {
-  throw UnimplementedError('SharedPreferences must be initialized');
-});
+
 
 /// Provider for Pomodoro settings.
 final settingsProvider =

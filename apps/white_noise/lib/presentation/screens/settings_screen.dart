@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:core_logic/core_logic.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../l10n/app_localizations.dart';
-import '../../services/consent_service.dart';
+
 import '../providers/settings_provider.dart';
 
 class SettingsScreen extends ConsumerWidget {
@@ -88,13 +89,12 @@ class SettingsScreen extends ConsumerWidget {
               }
             },
           ),
-          if (ConsentService.isPrivacyOptionsRequired)
-            ListTile(
-              title: Text(loc.privacyPolicy),
-              subtitle: Text(loc.settings),
-              trailing: const Icon(Icons.manage_accounts_outlined),
-              onTap: () => ConsentService.showPrivacyOptions(),
-            ),
+          ListTile(
+            title: const Text('Privacy Options'),
+            subtitle: Text(loc.settings),
+            trailing: const Icon(Icons.manage_accounts_outlined),
+            onTap: () => ConsentService.showPrivacyOptionsForm(),
+          ),
         ],
       ),
     );

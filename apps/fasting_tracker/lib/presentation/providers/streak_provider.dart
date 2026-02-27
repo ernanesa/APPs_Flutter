@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/legacy.dart';
 import '../../domain/entities/streak_data.dart';
 import '../../data/repositories/streak_repository_impl.dart';
-import 'shared_prefs_provider.dart';
+import 'package:core_logic/core_logic.dart';
 
 /// Streak state notifier
 class StreakNotifier extends StateNotifier<StreakData> {

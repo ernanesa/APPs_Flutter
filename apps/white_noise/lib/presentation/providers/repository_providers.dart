@@ -12,10 +12,10 @@ import '../../domain/repositories/mix_repository.dart';
 import '../../domain/repositories/settings_repository.dart';
 import '../../domain/repositories/sound_repository.dart';
 import '../../domain/repositories/streak_repository.dart';
-import 'shared_prefs_provider.dart';
+import 'package:core_logic/core_logic.dart';
 
 final localDataSourceProvider = Provider<LocalDataSource>((ref) {
-  final prefs = ref.watch(sharedPreferencesProvider).requireValue;
+  final prefs = ref.watch(sharedPreferencesProvider);
   return LocalDataSource(prefs);
 });
 

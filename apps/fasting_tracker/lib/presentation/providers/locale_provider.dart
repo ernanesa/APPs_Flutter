@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
-import 'shared_prefs_provider.dart';
+import 'package:core_logic/core_logic.dart';
 
 /// Locale notifier to manage app language
 class LocaleNotifier extends StateNotifier<Locale?> {

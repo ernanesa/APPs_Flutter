@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/legacy.dart';
 import '../../domain/entities/app_theme.dart';
 import '../../data/repositories/settings_repository_impl.dart';
-import 'shared_prefs_provider.dart';
+import 'package:core_logic/core_logic.dart';
 
 /// Theme notifier
 class ThemeNotifier extends StateNotifier<AppThemeType> {

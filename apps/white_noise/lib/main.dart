@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:core_logic/core_logic.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:core_ui/core_ui.dart';
 
 import 'l10n/app_localizations.dart';
 import 'presentation/providers/settings_provider.dart';
-import 'presentation/providers/shared_prefs_provider.dart';
+
 import 'presentation/screens/home_screen.dart';
-import 'services/ad_service.dart';
-import 'services/consent_service.dart';
+
+
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await ConsentService.gatherConsent();
-  if (ConsentService.canRequestAds) {
+  final canReq = await ConsentService.canRequestAds();
+  if (canReq) {
     await AdService.initialize();
     AdService.loadAppOpenAd();
-    AdService.loadInterstitial();
+    AdService.preloadInterstitialAd();
   }
   runApp(const ProviderScope(child: MyApp()));
 }
@@ -42,24 +44,18 @@ class _MyAppState extends ConsumerState<MyApp> with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed && ConsentService.canRequestAds) {
-      AdService.showAppOpenAdIfAvailable();
+    if (state == AppLifecycleState.resumed) {
+      ConsentService.canRequestAds().then((canRequest) {
+        if (canRequest) {
+          AdService.showAppOpenAdIfAvailable();
+        }
+      });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final prefsAsync = ref.watch(sharedPreferencesProvider);
-
-    return prefsAsync.when(
-      data: (_) => const _AppRoot(),
-      loading: () => const MaterialApp(
-        home: Scaffold(body: Center(child: CircularProgressIndicator())),
-      ),
-      error: (error, _) => const MaterialApp(
-        home: Scaffold(body: Center(child: Icon(Icons.error_outline))),
-      ),
-    );
+    return const _AppRoot();
   }
 }
 

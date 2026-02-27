@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../domain/entities/fasting_protocol.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:fasting_tracker/l10n/app_localizations.dart';
 
 /// Protocol selector widget
 class ProtocolSelector extends StatelessWidget {

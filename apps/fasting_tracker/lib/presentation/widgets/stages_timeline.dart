@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:fasting_tracker/l10n/app_localizations.dart';
 import '../../domain/entities/fasting_session.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:fasting_tracker/l10n/app_localizations.dart';
 
 /// Widget showing all fasting stages as a timeline
 class StagesTimeline extends StatelessWidget {

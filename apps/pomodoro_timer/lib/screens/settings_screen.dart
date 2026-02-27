@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:core_logic/core_logic.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../l10n/app_localizations.dart';
 import '../providers/settings_provider.dart';
 import '../providers/locale_provider.dart';
 import '../providers/achievements_provider.dart';
-import '../services/consent_service.dart';
+
 import '../widgets/theme_selector.dart';
 import '../widgets/ambient_sound_selector.dart';
 import '../widgets/daily_goal_progress.dart';
@@ -327,13 +328,13 @@ class SettingsScreen extends ConsumerWidget {
                   // TODO: Open privacy policy URL
                 },
               ),
-              if (ConsentService.instance.isPrivacyOptionsRequired)
+              if (ConsentService.isPrivacyOptionsRequired)
                 ListTile(
                   leading: const Icon(Icons.cookie_outlined),
                   title: const Text('Privacy Options'),
                   trailing: const Icon(Icons.chevron_right),
                   onTap: () {
-                    ConsentService.instance.showPrivacyOptionsForm(
+                    ConsentService.showPrivacyOptionsForm(
                       onComplete: (error) {
                         if (error != null) {
                           ScaffoldMessenger.of(context).showSnackBar(

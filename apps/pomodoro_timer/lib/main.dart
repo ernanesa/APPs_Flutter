@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:core_logic/core_logic.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -9,8 +10,8 @@ import 'providers/settings_provider.dart';
 import 'providers/theme_provider.dart';
 import 'providers/locale_provider.dart';
 import 'screens/timer_screen.dart';
-import 'services/ad_service.dart';
-import 'services/consent_service.dart';
+
+
 import 'services/sound_service.dart';
 import 'utils/logger.dart';
 
@@ -39,16 +40,10 @@ void main() async {
 
 Future<void> _initializeAds() async {
   // Initialize AdMob
-  await AdService.instance.initialize();
+  await AdService.initialize();
 
   // Gather consent (GDPR)
-  ConsentService.instance.gatherConsent(
-    onConsentComplete: (error) {
-      if (error != null) {
-        logDebug('Consent error: ${error.message}');
-      }
-    },
-  );
+  await ConsentService.gatherConsent();
 }
 
 class PomodoroApp extends ConsumerStatefulWidget {
@@ -70,14 +65,14 @@ class _PomodoroAppState extends ConsumerState<PomodoroApp>
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     SoundService.instance.dispose();
-    AdService.instance.dispose();
+    AdService.dispose();
     super.dispose();
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
-      AdService.instance.showAppOpenAdIfAvailable();
+      AdService.showAppOpenAdIfAvailable();
     }
   }
 

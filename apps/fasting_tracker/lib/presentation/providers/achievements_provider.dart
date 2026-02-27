@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import '../../domain/entities/achievement.dart';
 import '../../data/repositories/achievements_repository_impl.dart';
-import 'shared_prefs_provider.dart';
+import 'package:core_logic/core_logic.dart';
 import 'streak_provider.dart';
 
 /// Achievements state

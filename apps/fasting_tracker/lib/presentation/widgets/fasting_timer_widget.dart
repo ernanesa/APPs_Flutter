@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/legacy.dart';
 import 'package:fl_chart/fl_chart.dart';
 import '../../domain/entities/fasting_session.dart';
 import '../providers/fasting_provider.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:fasting_tracker/l10n/app_localizations.dart';
 
 /// Circular timer widget showing fasting progress
 class FastingTimerWidget extends ConsumerWidget {

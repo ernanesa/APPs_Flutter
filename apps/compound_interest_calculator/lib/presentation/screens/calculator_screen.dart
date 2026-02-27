@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:core_logic/core_logic.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import '../../l10n/app_localizations.dart';
 
 import '../../domain/entities/preset.dart';
-import '../../services/ad_service.dart';
+
 import '../../utils/formatters.dart';
 import '../providers/calculation_provider.dart';
 import '../providers/streak_provider.dart';
@@ -63,8 +64,7 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
     final streakNotifier = ref.read(streakProvider.notifier);
     final dailyGoalNotifier = ref.read(dailyGoalProvider.notifier);
     final achievementNotifier = ref.read(achievementProvider.notifier);
-    final historyNotifier = ref.read(historyProvider.notifier);
-
+    
     calculationNotifier.setInitialCapital(
       double.parse(_initialCapitalController.text),
     );
@@ -86,7 +86,7 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
     // Check achievements
     final calcState = ref.read(calculationProvider);
     final streak = ref.read(streakProvider);
-    final history = ref.read(historyProvider).valueOrNull ?? [];
+    final history = ref.read(historyProvider).value ?? [];
 
     final newAchievements = await achievementNotifier.checkAndUnlock(
       totalCalculations: history.length + 1,
@@ -453,12 +453,7 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: SafeArea(
-        child: SizedBox(
-          height: 60,
-          child: AdWidget(ad: AdService.createBannerAd()..load()),
-        ),
-      ),
+      bottomNavigationBar: const SizedBox(height: 60),
     );
   }
 }

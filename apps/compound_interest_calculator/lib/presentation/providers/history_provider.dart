@@ -43,7 +43,7 @@ class HistoryNotifier extends StateNotifier<AsyncValue<List<Calculation>>> {
 
   Future<void> clearAll() async {
     try {
-      final calculations = state.valueOrNull ?? [];
+      final calculations = state.value ?? [];
       for (final calc in calculations) {
         await deleteCalculation(calc.id);
       }

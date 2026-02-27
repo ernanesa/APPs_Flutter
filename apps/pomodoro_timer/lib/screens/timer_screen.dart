@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:core_logic/core_logic.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../l10n/app_localizations.dart';
 import '../models/pomodoro_session.dart';
@@ -8,7 +9,7 @@ import '../providers/streak_provider.dart';
 import '../providers/daily_goal_provider.dart';
 import '../providers/achievements_provider.dart';
 import '../providers/ambient_sound_provider.dart';
-import '../services/ad_service.dart';
+
 import '../services/sound_service.dart';
 import '../widgets/timer_display.dart';
 import '../widgets/control_buttons.dart';
@@ -55,7 +56,7 @@ class _TimerScreenState extends ConsumerState<TimerScreen>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
-      AdService.instance.showAppOpenAdIfAvailable();
+      AdService.showAppOpenAdIfAvailable();
     }
   }
 
@@ -91,7 +92,7 @@ class _TimerScreenState extends ConsumerState<TimerScreen>
       ref.read(ambientSoundServiceProvider).stop();
 
       // Show interstitial ad
-      AdService.instance.incrementActionAndShowIfNeeded();
+      AdService.incrementActionAndShowIfNeeded();
     }
 
     // Show completion snackbar

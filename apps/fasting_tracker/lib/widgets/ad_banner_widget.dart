@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:core_logic/core_logic.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import '../services/ad_service.dart';
-import '../services/consent_service.dart';
+
+
 import '../utils/logger.dart';
 
 class AdBannerWidget extends StatefulWidget {
@@ -33,9 +34,9 @@ class _AdBannerWidgetState extends State<AdBannerWidget> {
     final width = MediaQuery.of(context).size.width.truncate();
     if (width <= 0) return;
 
-    _bannerAd = await AdService.createAdaptiveBanner(
+    _bannerAd = await AdService.createAdaptiveBannerAd(width: constraints.maxWidth.toInt(),
       width,
-      onLoaded: (ad) {
+      onAdLoaded: (ad) {
         logDebug('Banner Ad loaded');
         if (mounted) {
           setState(() {
@@ -43,7 +44,7 @@ class _AdBannerWidgetState extends State<AdBannerWidget> {
           });
         }
       },
-      onFailed: (ad, error) {
+      onAdFailedToLoad: (ad, error) {
         logDebug('Banner Ad failed to load: ${error.message}');
         ad.dispose();
       },
