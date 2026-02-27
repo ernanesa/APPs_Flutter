@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_riverpod/legacy.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import '../../l10n/app_localizations.dart';
 
@@ -284,8 +283,9 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
                 validator: (value) {
                   if (value == null || value.isEmpty) return l10n.requiredField;
                   final rate = double.tryParse(value);
-                  if (rate == null || rate < 0 || rate > 100)
+                  if (rate == null || rate < 0 || rate > 100) {
                     return l10n.invalidRate;
+                  }
                   return null;
                 },
               ),
@@ -303,10 +303,12 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
                       keyboardType: TextInputType.number,
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       validator: (value) {
-                        if (value == null || value.isEmpty)
+                        if (value == null || value.isEmpty) {
                           return l10n.requiredField;
-                        if (int.tryParse(value) == null)
+                        }
+                        if (int.tryParse(value) == null) {
                           return l10n.invalidNumber;
+                        }
                         return null;
                       },
                     ),
@@ -462,9 +464,7 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
         child: SizedBox(
           height: 60,
           child:
-              AdService.createBannerAd() != null
-                  ? AdWidget(ad: AdService.createBannerAd()!..load())
-                  : const SizedBox.shrink(),
+              AdWidget(ad: AdService.createBannerAd()..load()),
         ),
       ),
     );

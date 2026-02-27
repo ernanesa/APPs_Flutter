@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_riverpod/legacy.dart';
 import 'package:fl_chart/fl_chart.dart';
 import '../l10n/app_localizations.dart';
 import '../logic/pomodoro_logic.dart';
@@ -87,7 +86,7 @@ class StatisticsScreen extends ConsumerWidget {
         statsAsync.when(
           loading: () => const Center(child: CircularProgressIndicator()),
           error:
-              (_, __) =>
+              (_, _) =>
                   Text(l10n.noSessionsYet, style: TextStyle(color: titleColor)),
           data:
               (stats) => Row(
@@ -168,7 +167,7 @@ class StatisticsScreen extends ConsumerWidget {
                 child: Center(child: CircularProgressIndicator()),
               ),
           error:
-              (_, __) => SizedBox(
+              (_, _) => SizedBox(
                 height: 200,
                 child: Center(
                   child: Text(
@@ -204,7 +203,7 @@ class StatisticsScreen extends ConsumerWidget {
   ) {
     return statsAsync.when(
       loading: () => const SizedBox.shrink(),
-      error: (_, __) => const SizedBox.shrink(),
+      error: (_, _) => const SizedBox.shrink(),
       data: (stats) {
         final Widget content = Row(
           children: [

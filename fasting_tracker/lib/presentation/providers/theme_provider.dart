@@ -1,4 +1,3 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import '../../domain/entities/app_theme.dart';
 import '../../data/repositories/settings_repository_impl.dart';

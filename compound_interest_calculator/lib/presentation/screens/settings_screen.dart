@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_riverpod/legacy.dart';
 import '../../l10n/app_localizations.dart';
 import '../providers/theme_provider.dart';
 import '../providers/daily_goal_provider.dart';
@@ -161,8 +160,8 @@ class SettingsScreen extends ConsumerWidget {
       children: [
         Text(l10n.aboutDescription),
         const SizedBox(height: 16),
-        Text('Developer: SA Rezende'),
-        Text('Email: contact@sarezende.dev'),
+        const Text('Developer: SA Rezende'),
+        const Text('Email: contact@sarezende.dev'),
       ],
     );
   }

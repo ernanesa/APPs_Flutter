@@ -28,7 +28,7 @@ android {
 
     defaultConfig {
         applicationId = "sa.rezende.bmi_calculator"
-        minSdkVersion = flutter.minSdkVersion  // Android 5.0 Lollipop
+        minSdkVersion = 26  // Android 8.0 Oreo
         targetSdk = 35  // Android 15 (requirement 2025)
         versionCode = flutter.versionCode
         versionName = flutter.versionName

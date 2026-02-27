@@ -28,7 +28,7 @@ android {
 
     defaultConfig {
         applicationId = "sa.rezende.fasting_tracker"
-        minSdk = 21
+        minSdk = 26
         targetSdk = 35
         versionCode = flutter.versionCode
         versionName = flutter.versionName
@@ -36,7 +36,7 @@ android {
         // Apenas idiomas usados
         resourceConfigurations += ['en', 'pt', 'es', 'zh', 'de', 'fr', 'ar', 'bn', 'hi', 'ja', 'ru']
         
-        multiDexEnabled true
+
     }
 
     signingConfigs {

@@ -3,7 +3,7 @@ class BmiLogic {
     if (heightInput <= 0) return 0;
     // Heuristic: If height is less than 3.0, it's likely in meters.
     // Otherwise treat as centimeters.
-    double heightM = heightInput < 3.0 ? heightInput : heightInput / 100;
+    final double heightM = heightInput < 3.0 ? heightInput : heightInput / 100;
     return weight / (heightM * heightM);
   }
 

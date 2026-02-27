@@ -23,8 +23,9 @@ class _AdBannerWidgetState extends State<AdBannerWidget> {
 
   Future<void> _loadAd() async {
     // Only load if consent allows
-    if (!ConsentService.canRequestAds)
+    if (!ConsentService.canRequestAds) {
       return; // Might be null/false if logic allows
+    }
 
     // Prevent reloading if already loaded or if width is zero
     if (_isLoaded || _bannerAd != null) return;

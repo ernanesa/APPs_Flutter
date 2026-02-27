@@ -19,34 +19,34 @@ class InfoDialog extends StatelessWidget {
           children: [
             Text(l10n.infoDescription),
             const SizedBox(height: 16),
-            _buildCategoryRow(context, "< 18.5", l10n.underweight, Colors.blue),
+            _buildCategoryRow(context, '< 18.5', l10n.underweight, Colors.blue),
             _buildCategoryRow(
               context,
-              "18.5 - 24.9",
+              '18.5 - 24.9',
               l10n.normal,
               Colors.green,
             ),
             _buildCategoryRow(
               context,
-              "25.0 - 29.9",
+              '25.0 - 29.9',
               l10n.overweight,
               Colors.orange,
             ),
             _buildCategoryRow(
               context,
-              "30.0 - 34.9",
+              '30.0 - 34.9',
               l10n.obesity1,
               Colors.deepOrange,
             ),
             _buildCategoryRow(
               context,
-              "35.0 - 39.9",
+              '35.0 - 39.9',
               l10n.obesity2,
               Colors.red,
             ),
             _buildCategoryRow(
               context,
-              "> 40.0",
+              '> 40.0',
               l10n.obesity3,
               Colors.red.shade900,
             ),
@@ -77,7 +77,7 @@ class InfoDialog extends StatelessWidget {
         ),
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text("OK"),
+          child: const Text('OK'),
         ),
       ],
     );
@@ -101,7 +101,7 @@ class InfoDialog extends StatelessWidget {
           const SizedBox(width: 8),
           Expanded(
             child: Text(
-              "$range: ",
+              '$range: ',
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
