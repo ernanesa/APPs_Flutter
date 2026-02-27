@@ -1,0 +1,9 @@
+name: antigravity_app_factory
+description: The ultimate Flutter App Factory Workspace. Maintains all apps independently while sharing the core_ui and core_logic engines.
+publish_to: 'none'
+
+environment:
+  sdk: ">=3.11.0 <4.0.0"
+
+dev_dependencies:
+  melos: ^6.2.0

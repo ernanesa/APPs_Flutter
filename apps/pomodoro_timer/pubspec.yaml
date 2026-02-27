@@ -1,0 +1,30 @@
+name: pomodoro_timer
+description: A professional Pomodoro Timer app with focus sessions, breaks, and productivity tracking.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.11.0
+
+dependencies:
+  core_ui:
+    path: ../../packages/core_ui
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: any
+  flutter_riverpod: ^3.2.1
+  shared_preferences: ^2.3.5
+  google_mobile_ads: ^7.0.0
+  audioplayers: ^6.1.0
+  fl_chart: ^1.1.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  generate: true
+  uses-material-design: true

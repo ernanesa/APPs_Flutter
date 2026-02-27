@@ -1,0 +1,32 @@
+name: antigravity_app_factory
+repository: https://github.com/sa.rezende/app_factory
+
+packages:
+  - "apps/**"
+  - "packages/**"
+
+command:
+  bootstrap:
+    # It seems to be faster for larger workspaces when enabling this
+    usePubspecOverrides: true
+
+  version:
+    # Use conventional commits to derive versions automatically
+    message: "chore(release): publish %v [skip ci]"
+
+scripts:
+  analyze:
+    run: melos exec -- "flutter analyze"
+    description: Run `flutter analyze` in all packages and apps.
+
+  test:
+    run: melos exec --dir-exists="test" -- "flutter test"
+    description: Run `flutter test` in all packages and apps containing a test directory.
+
+  clean:
+    run: melos exec -- "flutter clean"
+    description: Clean all build caches simultaneously.
+
+  format:
+    run: melos exec -- "dart format ."
+    description: Enforce extreme clean-code formatting across the entire monorepo.

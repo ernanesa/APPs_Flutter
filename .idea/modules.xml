@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/apps/bmi_calculator/melos_bmi_calculator.iml" filepath="$PROJECT_DIR$/apps/bmi_calculator/melos_bmi_calculator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/apps/compound_interest_calculator/melos_compound_interest_calculator.iml" filepath="$PROJECT_DIR$/apps/compound_interest_calculator/melos_compound_interest_calculator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/packages/core_logic/melos_core_logic.iml" filepath="$PROJECT_DIR$/packages/core_logic/melos_core_logic.iml" />
+      <module fileurl="file://$PROJECT_DIR$/packages/core_ui/melos_core_ui.iml" filepath="$PROJECT_DIR$/packages/core_ui/melos_core_ui.iml" />
+      <module fileurl="file://$PROJECT_DIR$/apps/fasting_tracker/melos_fasting_tracker.iml" filepath="$PROJECT_DIR$/apps/fasting_tracker/melos_fasting_tracker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/apps/pomodoro_timer/melos_pomodoro_timer.iml" filepath="$PROJECT_DIR$/apps/pomodoro_timer/melos_pomodoro_timer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/apps/white_noise/melos_white_noise.iml" filepath="$PROJECT_DIR$/apps/white_noise/melos_white_noise.iml" />
+      <module fileurl="file://$PROJECT_DIR$/melos_antigravity_app_factory.iml" filepath="$PROJECT_DIR$/melos_antigravity_app_factory.iml" />
+    </modules>
+  </component>
+</project>
