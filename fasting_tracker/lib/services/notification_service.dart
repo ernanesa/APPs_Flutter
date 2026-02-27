@@ -68,11 +68,11 @@ class NotificationService {
     if (endTime.isBefore(now)) return;
 
     await _notificationsPlugin.zonedSchedule(
-      0,
-      title,
-      body,
-      tz.TZDateTime.from(endTime, tz.local),
-      const NotificationDetails(
+      id: 0,
+      title: title,
+      body: body,
+      scheduledDate: tz.TZDateTime.from(endTime, tz.local),
+      notificationDetails: const NotificationDetails(
         android: AndroidNotificationDetails(
           'fasting_channel',
           'Fasting Notifications',

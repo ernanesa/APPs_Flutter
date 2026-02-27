@@ -23,7 +23,7 @@ class _AdBannerWidgetState extends State<AdBannerWidget> {
   void _loadBannerAd() {
     if (!ConsentService.canRequestAds) return;
 
-    _bannerAd = AdService.createBannerAd(context);
+    _bannerAd = AdService.createBannerAd();
     _bannerAd!
         .load()
         .then((_) {

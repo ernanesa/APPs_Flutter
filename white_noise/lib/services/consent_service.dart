@@ -16,7 +16,7 @@ class ConsentService {
       ConsentInformation.instance.reset();
     }
 
-    await ConsentInformation.instance.requestConsentInfoUpdate(
+    ConsentInformation.instance.requestConsentInfoUpdate(
       params,
       () async {
         if (await ConsentInformation.instance.isConsentFormAvailable()) {
@@ -32,13 +32,14 @@ class ConsentService {
   }
 
   static Future<void> _loadAndShowConsentForm() async {
-    await ConsentForm.loadConsentForm((form) async {
-      final status = await ConsentInformation.instance.getConsentStatus();
-      if (status == ConsentStatus.required) {
-        form.show((error) => _updateCanRequestAds());
-      } else {
-        await _updateCanRequestAds();
-      }
+    ConsentForm.loadConsentForm((form) {
+      ConsentInformation.instance.getConsentStatus().then((status) {
+        if (status == ConsentStatus.required) {
+          form.show((error) => _updateCanRequestAds());
+        } else {
+          _updateCanRequestAds();
+        }
+      });
     }, (error) => logError('Consent form error: ${error.message}'));
   }
 

@@ -319,7 +319,6 @@ class StatisticsScreen extends ConsumerWidget {
           enabled: true,
           touchTooltipData: BarTouchTooltipData(
             getTooltipColor: (_) => theme.colorScheme.inverseSurface,
-            tooltipRoundedRadius: 8,
             getTooltipItem: (group, groupIndex, rod, rodIndex) {
               return BarTooltipItem(
                 '${rod.toY.toInt()} sessions',

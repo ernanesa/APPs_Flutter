@@ -16,8 +16,7 @@ class ConsentService {
     final params = ConsentRequestParameters(
       consentDebugSettings:
           kDebugMode
-              ? const ConsentDebugSettings(
-                // Mantém neutro; se quiser forçar UE em debug, altere para debugGeographyEea.
+              ? ConsentDebugSettings(
                 debugGeography: DebugGeography.debugGeographyDisabled,
                 testIdentifiers: <String>[],
               )
@@ -25,7 +24,7 @@ class ConsentService {
       tagForUnderAgeOfConsent: false,
     );
 
-    await ConsentInformation.instance.requestConsentInfoUpdate(
+    ConsentInformation.instance.requestConsentInfoUpdate(
       params,
       () async {
         await _loadAndShowConsentFormIfRequired();
@@ -64,7 +63,9 @@ class ConsentService {
     );
   }
 
-  static Future<void> resetForTesting() => ConsentInformation.instance.reset();
+  static Future<void> resetConsent() async {
+    ConsentInformation.instance.reset();
+  }
 
   static Future<void> _loadAndShowConsentFormIfRequired() async {
     final isAvailable =

@@ -102,7 +102,8 @@ class _PomodoroAppState extends ConsumerState<PomodoroApp>
         ),
         useMaterial3: true,
         appBarTheme: const AppBarTheme(centerTitle: true, elevation: 0),
-        cardTheme: CardTheme(
+        cardTheme: CardThemeData(
+          color: Colors.white,
           elevation: 0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
@@ -116,7 +117,8 @@ class _PomodoroAppState extends ConsumerState<PomodoroApp>
         ),
         useMaterial3: true,
         appBarTheme: const AppBarTheme(centerTitle: true, elevation: 0),
-        cardTheme: CardTheme(
+        cardTheme: CardThemeData(
+          color: Colors.grey[900],
           elevation: 0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
