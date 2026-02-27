@@ -1,0 +1,43 @@
+{
+  "appTitle": "Kalkulator BMI",
+  "calculator": "Kalkulator",
+  "history": "Sejarah",
+  "evolution": "Evolusi",
+  "weight": "Berat (kg)",
+  "height": "Tinggi (cm)",
+  "calculate": "Menghitung",
+  "save": "Simpan Hasil",
+  "result": "Hasil",
+  "yourBmi": "BMI Anda adalah{bmi}",
+  "@yourBmi": {
+    "placeholders": {
+      "bmi": {
+        "type": "String"
+      }
+    }
+  },
+  "category": "Kategori:{category}",
+  "@category": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+  "infoTitle": "Informasi BMI",
+  "infoDescription": "Indeks Massa Tubuh (BMI) merupakan ukuran lemak tubuh berdasarkan tinggi dan berat badan yang berlaku pada pria dan wanita dewasa.",
+  "source": "Sumber: Organisasi Kesehatan Dunia (WHO)",
+  "underweight": "Berat badan kurang",
+  "normal": "Berat badan normal",
+  "overweight": "Kegemukan",
+  "obesity1": "Obesitas Kelas I",
+  "obesity2": "Obesitas Kelas II",
+  "obesity3": "Obesitas Kelas III",
+  "delete": "Menghapus",
+  "noHistory": "Belum ada sejarah",
+  "evolutionGraph": "Grafik Evolusi",
+  "needTwoEntries": "Terus lacak! Anda memerlukan setidaknya 2 entri untuk melihat evolusi.",
+  "bmiEvolutionTitle": "Evolusi BMI",
+  "reset": "Mengatur ulang",
+  "resultSaved": "Hasil disimpan!"
+}

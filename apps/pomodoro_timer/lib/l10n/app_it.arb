@@ -1,0 +1,192 @@
+{
+  "@@locale": "it",
+  "appTitle": "Temporizzatore del pomodoro",
+  "focusSession": "Sessione focalizzata",
+  "shortBreak": "Breve pausa",
+  "longBreak": "Lunga pausa",
+  "start": "Inizio",
+  "pause": "Pausa",
+  "resume": "Riprendere",
+  "reset": "Reset",
+  "skip": "Saltare",
+  "sessions": "Sessioni",
+  "sessionsCompleted": "Sessioni completate",
+  "totalFocusTime": "Tempo di concentrazione totale",
+  "todayStats": "Le statistiche di oggi",
+  "weeklyStats": "Statistiche settimanali",
+  "settings": "Impostazioni",
+  "focusDuration": "Durata della messa a fuoco",
+  "shortBreakDuration": "Durata della pausa breve",
+  "longBreakDuration": "Durata della pausa lunga",
+  "sessionsUntilLongBreak": "Sessioni fino alla lunga pausa",
+  "soundEnabled": "Suono abilitato",
+  "vibrationEnabled": "Vibrazione abilitata",
+  "autoStartBreaks": "Pause con avvio automatico",
+  "autoStartFocus": "Messa a fuoco con avvio automatico",
+  "notifications": "Notifiche",
+  "minutes": "minuti",
+  "min": "min",
+  "hours": "ore",
+  "history": "Storia",
+  "statistics": "Statistiche",
+  "timer": "Timer",
+  "keepFocused": "Mantieni la concentrazione!",
+  "timeForBreak": "È ora di fare una pausa!",
+  "breakOver": "La pausa è finita!",
+  "greatJob": "Ottimo lavoro!",
+  "sessionComplete": "Sessione completata",
+  "ready": "Pronto",
+  "focusMode": "Modalità di messa a fuoco",
+  "breakMode": "Modalità di interruzione",
+  "darkMode": "Modalità oscura",
+  "language": "Lingua",
+  "about": "Di",
+  "version": "Versione",
+  "privacyPolicy": "politica sulla riservatezza",
+  "rateApp": "Valuta l'app",
+  "noSessionsYet": "Nessuna sessione ancora. Inizia il tuo primo Pomodoro!",
+  "pomodoroTechnique": "La Tecnica del Pomodoro ti aiuta a concentrarti suddividendo il lavoro in intervalli, tradizionalmente di 25 minuti, separati da brevi pause.",
+  "getStarted": "Inizia",
+  "letsGo": "Andiamo!",
+  "streakDays": "serie di giorni",
+  "currentStreak": "Serie attuale",
+  "bestStreak": "Miglior serie",
+  "days": "giorni",
+  "achievements": "Risultati",
+  "achievementUnlocked": "Obiettivo sbloccato!",
+  "achievementsProgress": "{unlocked}/{total}Sbloccato",
+  "@achievementsProgress": {
+    "placeholders": {
+      "unlocked": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "notUnlockedYet": "Non ancora sbloccato",
+  "unlockedOn": "Sbloccato{date}",
+  "@unlockedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "close": "Vicino",
+  "categorySession": "Sessioni",
+  "categoryStreak": "Strisciante",
+  "categoryTime": "Tempo di concentrazione",
+  "categorySpecial": "Speciale",
+  "achievementFirstSession": "Primo passo",
+  "achievementFirstSessionDesc": "Completa la tua prima sessione di focus",
+  "achievementSessions10": "Iniziare",
+  "achievementSessions10Desc": "Completa 10 sessioni di focus",
+  "achievementSessions50": "Dedicato",
+  "achievementSessions50Desc": "Completa 50 sessioni di focus",
+  "achievementSessions100": "Centurione",
+  "achievementSessions100Desc": "Completa 100 sessioni di focus",
+  "achievementSessions500": "Gran Maestro",
+  "achievementSessions500Desc": "Completa 500 sessioni di focus",
+  "achievementStreak3": "Tripletta",
+  "achievementStreak3Desc": "Mantenere una serie di 3 giorni",
+  "achievementStreak7": "Settimana Guerriero",
+  "achievementStreak7Desc": "Mantieni una serie di 7 giorni",
+  "achievementStreak30": "Campione mensile",
+  "achievementStreak30Desc": "Mantenere una serie di 30 giorni",
+  "achievementTime1h": "Prima Ora",
+  "achievementTime1hDesc": "Accumula 1 ora di tempo di concentrazione",
+  "achievementTime10h": "Investitore nel tempo",
+  "achievementTime10hDesc": "Accumulate 10 hours of focus time",
+  "achievementTime100h": "Maestro del tempo",
+  "achievementTime100hDesc": "Accumulate 100 hours of focus time",
+  "achievementEarlyBird": "Mattiniero",
+  "achievementEarlyBirdDesc": "Completa una sessione prima delle 7:00",
+  "achievementNightOwl": "Nottambulo",
+  "achievementNightOwlDesc": "Completa una sessione dopo le 22:00",
+  "achievementWeekendWarrior": "Guerriero del fine settimana",
+  "achievementWeekendWarriorDesc": "Completa 5 sessioni in un fine settimana",
+  "ambientSounds": "Suoni ambientali",
+  "soundSilence": "Silenzio",
+  "soundRain": "Piovere",
+  "soundForest": "Foresta",
+  "soundOcean": "Oceano",
+  "soundCafe": "Caffetteria",
+  "soundFireplace": "Camino",
+  "soundWhiteNoise": "Rumore bianco",
+  "soundThunder": "Tuono",
+  "colorTheme": "Tema del colore",
+  "themeTomato": "Pomodoro",
+  "themeOcean": "Oceano",
+  "themeForest": "Foresta",
+  "themeLavender": "Lavanda",
+  "themeSunset": "Tramonto",
+  "themeMidnight": "Mezzanotte",
+  "themeRose": "Rosa",
+  "themeMint": "Menta",
+  "dailyGoal": "Obiettivo quotidiano",
+  "dailyGoalTarget": "Obiettivo giornaliero",
+  "goalReached": "Obiettivo raggiunto!",
+  "sessionsProgress": "{completed}/{target}sessioni",
+  "@sessionsProgress": {
+    "placeholders": {
+      "completed": {
+        "type": "int"
+      },
+      "target": {
+        "type": "int"
+      }
+    }
+  },
+  "sessionsPerDay": "{count}sessioni al giorno",
+  "@sessionsPerDay": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "focusTimeToday": "{minutes}minuto concentrato oggi",
+  "@focusTimeToday": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "newQuote": "Nuova citazione",
+  "quote1Text": "Il segreto per andare avanti è iniziare.",
+  "quote1Author": "Mark Twain",
+  "quote2Text": "Focus on being productive instead of busy.",
+  "quote2Author": "Tim Ferriss",
+  "quote3Text": "Non è che io sia così intelligente, è solo che rimango con i problemi più a lungo.",
+  "quote3Author": "Albert Einstein",
+  "quote4Text": "Il modo per iniziare è smettere di parlare e iniziare a fare.",
+  "quote4Author": "Walt Disney",
+  "quote5Text": "Non devi essere eccezionale per iniziare, ma devi iniziare ad essere eccezionale.",
+  "quote5Author": "Zig Ziglar",
+  "quote6Text": "Il successo è la somma di piccoli sforzi ripetuti giorno dopo giorno.",
+  "quote6Author": "Roberto Collier",
+  "quote7Text": "L’unico modo per fare un ottimo lavoro è amare ciò che fai.",
+  "quote7Author": "Steve Jobs",
+  "quote8Text": "Concentra tutti i tuoi pensieri sul lavoro da svolgere.",
+  "quote8Author": "Alexander Graham Bell",
+  "quote9Text": "Il tempo è ciò che desideriamo di più, ma ciò che usiamo peggio.",
+  "quote9Author": "William Penn",
+  "quote10Text": "L’azione è la chiave fondamentale di ogni successo.",
+  "quote10Author": "Pablo Picasso",
+  "quote11Text": "Non guardare l'orologio; fare quello che fa. Continuare.",
+  "quote11Author": "Sam Levenson",
+  "quote12Text": "Il tuo limite: è solo la tua immaginazione.",
+  "quote12Author": "Sconosciuto",
+  "quote13Text": "Sognatelo. Lo auguro. Fallo.",
+  "quote13Author": "Sconosciuto",
+  "quote14Text": "Più lavori duro, più sarai fortunato.",
+  "quote14Author": "Gary Giocatore",
+  "quote15Text": "Fai qualcosa oggi per cui il tuo io futuro ti ringrazierà.",
+  "quote15Author": "Sconosciuto",
+  "appearance": "Aspetto",
+  "colorfulMode": "Modalità colorata",
+  "colorfulModeDesc": "Utilizza colori vivaci e layout animato"
+}

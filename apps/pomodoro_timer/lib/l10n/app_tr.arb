@@ -1,0 +1,192 @@
+{
+  "@@locale": "tr",
+  "appTitle": "Pomodoro Zamanlayıcı",
+  "focusSession": "Odaklanma Oturumu",
+  "shortBreak": "Kısa Mola",
+  "longBreak": "Uzun Mola",
+  "start": "Başlangıç",
+  "pause": "Duraklat",
+  "resume": "Sürdürmek",
+  "reset": "Sıfırla",
+  "skip": "Atlamak",
+  "sessions": "Oturumlar",
+  "sessionsCompleted": "Tamamlanan Oturumlar",
+  "totalFocusTime": "Toplam Odaklanma Süresi",
+  "todayStats": "Bugünün İstatistikleri",
+  "weeklyStats": "Haftalık İstatistikler",
+  "settings": "Ayarlar",
+  "focusDuration": "Odaklanma Süresi",
+  "shortBreakDuration": "Kısa Mola Süresi",
+  "longBreakDuration": "Uzun Mola Süresi",
+  "sessionsUntilLongBreak": "Uzun Araya Kadar Oturumlar",
+  "soundEnabled": "Ses Etkin",
+  "vibrationEnabled": "Titreşim Etkin",
+  "autoStartBreaks": "Molaları Otomatik Başlat",
+  "autoStartFocus": "Otomatik Başlatılan Odaklama",
+  "notifications": "Bildirimler",
+  "minutes": "dakika",
+  "min": "dk.",
+  "hours": "saat",
+  "history": "Tarih",
+  "statistics": "İstatistikler",
+  "timer": "Zamanlayıcı",
+  "keepFocused": "Odaklanmaya devam edin!",
+  "timeForBreak": "Mola Zamanı!",
+  "breakOver": "Mola bitti!",
+  "greatJob": "Harika İş!",
+  "sessionComplete": "Oturum Tamamlandı",
+  "ready": "Hazır",
+  "focusMode": "Odak Modu",
+  "breakMode": "Mola Modu",
+  "darkMode": "Karanlık Mod",
+  "language": "Dil",
+  "about": "Hakkında",
+  "version": "Sürüm",
+  "privacyPolicy": "Gizlilik Politikası",
+  "rateApp": "Uygulamayı Değerlendirin",
+  "noSessionsYet": "Henüz oturum yok. İlk Pomodoro'nuza başlayın!",
+  "pomodoroTechnique": "Pomodoro Tekniği, çalışmayı geleneksel olarak 25 dakika uzunluğunda ve kısa molalarla ayrılmış aralıklarla bölerek odaklanmanıza yardımcı olur.",
+  "getStarted": "Başlayın",
+  "letsGo": "Hadi gidelim!",
+  "streakDays": "gün serisi",
+  "currentStreak": "Mevcut Seri",
+  "bestStreak": "En İyi Seri",
+  "days": "günler",
+  "achievements": "Başarılar",
+  "achievementUnlocked": "Başarı Kilidi Açıldı!",
+  "achievementsProgress": "{unlocked}/{total}Kilitli değil",
+  "@achievementsProgress": {
+    "placeholders": {
+      "unlocked": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "notUnlockedYet": "Henüz kilidi açılmadı",
+  "unlockedOn": "Kilit açma tarihi{date}",
+  "@unlockedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "close": "Kapalı",
+  "categorySession": "Oturumlar",
+  "categoryStreak": "Rüzgâr gibi geçmek",
+  "categoryTime": "Odaklanma Süresi",
+  "categorySpecial": "Özel",
+  "achievementFirstSession": "İlk adım",
+  "achievementFirstSessionDesc": "İlk odaklanma oturumunuzu tamamlayın",
+  "achievementSessions10": "Başlarken",
+  "achievementSessions10Desc": "10 odaklanma oturumunu tamamlayın",
+  "achievementSessions50": "Özel",
+  "achievementSessions50Desc": "50 odaklanma oturumunu tamamlayın",
+  "achievementSessions100": "Yüzbaşı",
+  "achievementSessions100Desc": "100 odaklanma oturumunu tamamla",
+  "achievementSessions500": "Büyük usta",
+  "achievementSessions500Desc": "500 odaklanma oturumunu tamamlayın",
+  "achievementStreak3": "El çabukluğu",
+  "achievementStreak3Desc": "3 günlük seriyi koruyun",
+  "achievementStreak7": "Hafta Savaşçısı",
+  "achievementStreak7Desc": "7 günlük seriyi koruyun",
+  "achievementStreak30": "Aylık Şampiyon",
+  "achievementStreak30Desc": "30 günlük seriyi koruyun",
+  "achievementTime1h": "İlk Saat",
+  "achievementTime1hDesc": "1 saatlik odaklanma süresi biriktirin",
+  "achievementTime10h": "Zaman Yatırımcısı",
+  "achievementTime10hDesc": "10 saatlik odaklanma süresi biriktirin",
+  "achievementTime100h": "Zaman Ustası",
+  "achievementTime100hDesc": "100 saatlik odaklanma süresi biriktirin",
+  "achievementEarlyBird": "Erken Rezervasyon",
+  "achievementEarlyBirdDesc": "Bir oturumu sabah 7'den önce tamamlayın",
+  "achievementNightOwl": "Gece Kuşu",
+  "achievementNightOwlDesc": "Bir oturumu saat 22.00'den sonra tamamlayın",
+  "achievementWeekendWarrior": "Hafta Sonu Savaşçısı",
+  "achievementWeekendWarriorDesc": "Hafta sonu 5 seansı tamamlayın",
+  "ambientSounds": "Ortam Sesleri",
+  "soundSilence": "Sessizlik",
+  "soundRain": "Yağmur",
+  "soundForest": "Orman",
+  "soundOcean": "Okyanus",
+  "soundCafe": "Kafe",
+  "soundFireplace": "Şömine",
+  "soundWhiteNoise": "Beyaz Gürültü",
+  "soundThunder": "Gök gürültüsü",
+  "colorTheme": "Renk Teması",
+  "themeTomato": "Domates",
+  "themeOcean": "Okyanus",
+  "themeForest": "Orman",
+  "themeLavender": "Lavanta",
+  "themeSunset": "Gün batımı",
+  "themeMidnight": "Gece yarısı",
+  "themeRose": "Gül",
+  "themeMint": "Nane",
+  "dailyGoal": "Günlük Hedef",
+  "dailyGoalTarget": "Günlük Hedef Hedefi",
+  "goalReached": "Hedefe Ulaşıldı!",
+  "sessionsProgress": "{completed}/{target}oturumlar",
+  "@sessionsProgress": {
+    "placeholders": {
+      "completed": {
+        "type": "int"
+      },
+      "target": {
+        "type": "int"
+      }
+    }
+  },
+  "sessionsPerDay": "{count}günlük seanslar",
+  "@sessionsPerDay": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "focusTimeToday": "{minutes}bugün odaklandım",
+  "@focusTimeToday": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "newQuote": "Yeni Teklif",
+  "quote1Text": "İlerlemenin sırrı başlamaktır.",
+  "quote1Author": "Mark Twain",
+  "quote2Text": "Meşgul olmak yerine üretken olmaya odaklanın.",
+  "quote2Author": "Tim Ferris",
+  "quote3Text": "Çok akıllı olduğumdan değil, sadece sorunlarla daha uzun süre baş başa kaldığım için.",
+  "quote3Author": "Albert Einstein",
+  "quote4Text": "Başlamanın yolu konuşmayı bırakıp yapmaya başlamaktır.",
+  "quote4Author": "Walt Disney",
+  "quote5Text": "Başlamak için harika olmanıza gerek yok, ama harika olmak için başlamanız gerekiyor.",
+  "quote5Author": "Zig Ziglar",
+  "quote6Text": "Başarı her gün tekrarlanan küçük çabaların toplamıdır.",
+  "quote6Author": "Robert Collier",
+  "quote7Text": "Harika işler yapmanın tek yolu yaptığınız işi sevmektir.",
+  "quote7Author": "Steve Jobs",
+  "quote8Text": "Tüm düşüncelerinizi elinizdeki işe yoğunlaştırın.",
+  "quote8Author": "Alexander Graham Bell",
+  "quote9Text": "Zaman en çok istediğimiz ama en kötü kullandığımız şeydir.",
+  "quote9Author": "William Penn",
+  "quote10Text": "Eylem, tüm başarının temel anahtarıdır.",
+  "quote10Author": "Pablo Picasso",
+  "quote11Text": "Saate bakmayın; ne yapıyorsa onu yap. Devam etmek.",
+  "quote11Author": "Sam Levenson",
+  "quote12Text": "Sınırlamanız — bu yalnızca sizin hayal gücünüzdür.",
+  "quote12Author": "Bilinmiyor",
+  "quote13Text": "Hayal et. Dile. Yap.",
+  "quote13Author": "Bilinmiyor",
+  "quote14Text": "Ne kadar çok çalışırsanız o kadar şanslı olursunuz.",
+  "quote14Author": "Gary Oyuncu",
+  "quote15Text": "Bugün gelecekteki benliğinizin size teşekkür edeceği bir şey yapın.",
+  "quote15Author": "Bilinmiyor",
+  "appearance": "Dış görünüş",
+  "colorfulMode": "Renkli Mod",
+  "colorfulModeDesc": "Canlı renkler ve animasyonlu düzen kullanın"
+}

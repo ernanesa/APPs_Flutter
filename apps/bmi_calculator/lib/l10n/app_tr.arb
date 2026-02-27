@@ -1,0 +1,43 @@
+{
+  "appTitle": "BMI Hesaplayıcı",
+  "calculator": "Hesap Makinesi",
+  "history": "Tarih",
+  "evolution": "Evrim",
+  "weight": "Ağırlık (kg)",
+  "height": "Yükseklik (cm)",
+  "calculate": "Hesaplamak",
+  "save": "Sonucu Kaydet",
+  "result": "Sonuç",
+  "yourBmi": "BMI'ınız{bmi}",
+  "@yourBmi": {
+    "placeholders": {
+      "bmi": {
+        "type": "String"
+      }
+    }
+  },
+  "category": "Kategori:{category}",
+  "@category": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+  "infoTitle": "BMI Bilgileri",
+  "infoDescription": "Vücut Kitle İndeksi (BMI), yetişkin erkek ve kadınlar için geçerli olan, boy ve kiloya dayalı vücut yağının bir ölçüsüdür.",
+  "source": "Kaynak: Dünya Sağlık Örgütü (WHO)",
+  "underweight": "Düşük kilolu",
+  "normal": "Normal ağırlık",
+  "overweight": "Fazla kilolu",
+  "obesity1": "Obezite Sınıfı I",
+  "obesity2": "Obezite Sınıfı II",
+  "obesity3": "Obezite Sınıfı III",
+  "delete": "Silmek",
+  "noHistory": "Henüz geçmiş yok",
+  "evolutionGraph": "Evrim Grafiği",
+  "needTwoEntries": "Takip etmeye devam edin! Evrimi görmek için en az 2 girişe ihtiyacınız var.",
+  "bmiEvolutionTitle": "BMI Gelişimi",
+  "reset": "Sıfırla",
+  "resultSaved": "Sonuç kaydedildi!"
+}

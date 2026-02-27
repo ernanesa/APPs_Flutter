@@ -1,0 +1,43 @@
+{
+  "appTitle": "BMI 계산기",
+  "calculator": "계산자",
+  "history": "역사",
+  "evolution": "진화",
+  "weight": "체중(kg)",
+  "height": "높이(cm)",
+  "calculate": "믿다",
+  "save": "결과 저장",
+  "result": "결과",
+  "yourBmi": "당신의 BMI는{bmi}",
+  "@yourBmi": {
+    "placeholders": {
+      "bmi": {
+        "type": "String"
+      }
+    }
+  },
+  "category": "범주:{category}",
+  "@category": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+  "infoTitle": "BMI 정보",
+  "infoDescription": "체질량지수(BMI)는 성인 남성과 여성에게 적용되는 키와 몸무게를 기준으로 체지방을 측정한 것입니다.",
+  "source": "출처: 세계보건기구(WHO)",
+  "underweight": "저체중",
+  "normal": "정상 체중",
+  "overweight": "초과 중량",
+  "obesity1": "비만 등급 I",
+  "obesity2": "비만 등급 II",
+  "obesity3": "비만 등급 III",
+  "delete": "삭제",
+  "noHistory": "아직 기록이 없습니다.",
+  "evolutionGraph": "진화 그래프",
+  "needTwoEntries": "계속 추적하세요! 진화를 보려면 항목이 2개 이상 필요합니다.",
+  "bmiEvolutionTitle": "BMI 진화",
+  "reset": "다시 놓기",
+  "resultSaved": "결과가 저장되었습니다!"
+}

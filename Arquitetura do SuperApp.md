@@ -100,19 +100,19 @@ domain → presentation ❌ PROIBIDO
 
 ---
 
-## **2\. Requisitos Técnicos Obrigatórios (2025-2026)**
+## **2\. Requisitos Técnicos Obrigatórios (2026)**
 
-### **2.1. Política de 16KB Page Size (CRÍTICO)**
+### **2.1. Política de 16KB Page Size & SDK 35 (CRÍTICO)**
 
-A partir de **1º de novembro de 2025**, todos os apps que targetam Android 15 (API 35)+ **DEVEM** suportar tamanhos de página de memória de 16KB.
+Já em vigor ddesde **1º de novembro de 2025**, todos os apps na loja **DEVEM** suportar tamanhos de página de memória de 16KB sob pena de rejeição automática. Além disso, pelo ciclo anual de 2026, a API 35 já é obrigatória.
 
 | Requisito                       | Versão Mínima        |
 | ------------------------------- | -------------------- |
 | **Android Gradle Plugin (AGP)** | 8.5.1+ (OBRIGATÓRIO) |
 | **NDK**                         | r28+ (recomendado)   |
-| **Flutter SDK**                 | 3.32+                |
+| **Flutter SDK**                 | 3.32+ ou mais atual  |
 | **Target SDK**                  | 35 (Android 15)      |
-| **Min SDK**                     | 21 (Android 5.0)     |
+| **Min SDK**                     | 26 (Android 8.0)     |
 
 ### **2.2. Configuração settings.gradle**
 
@@ -260,7 +260,7 @@ Crie o app [NOME] seguindo o Beast Mode Flutter v5.0:
 
 ---
 
-## **8\. Checklist de Publicação (Play Store 2025)**
+## **8\. Checklist de Publicação (Play Store 2026)**
 
 ### **8.1. Requisitos Técnicos**
 

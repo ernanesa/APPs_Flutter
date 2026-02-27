@@ -1,0 +1,192 @@
+{
+  "@@locale": "id",
+  "appTitle": "Pengatur Waktu Pomodoro",
+  "focusSession": "Sesi Fokus",
+  "shortBreak": "Istirahat Singkat",
+  "longBreak": "Istirahat Panjang",
+  "start": "Awal",
+  "pause": "Berhenti sebentar",
+  "resume": "Melanjutkan",
+  "reset": "Mengatur ulang",
+  "skip": "Melewati",
+  "sessions": "Sesi",
+  "sessionsCompleted": "Sesi Selesai",
+  "totalFocusTime": "Total Waktu Fokus",
+  "todayStats": "Statistik hari ini",
+  "weeklyStats": "Statistik Mingguan",
+  "settings": "Pengaturan",
+  "focusDuration": "Durasi Fokus",
+  "shortBreakDuration": "Durasi Istirahat Singkat",
+  "longBreakDuration": "Durasi Istirahat Panjang",
+  "sessionsUntilLongBreak": "Sesi Sampai Istirahat Panjang",
+  "soundEnabled": "Suara Diaktifkan",
+  "vibrationEnabled": "Getaran Diaktifkan",
+  "autoStartBreaks": "Istirahat Mulai Otomatis",
+  "autoStartFocus": "Fokus Mulai Otomatis",
+  "notifications": "Pemberitahuan",
+  "minutes": "menit",
+  "min": "menit",
+  "hours": "jam",
+  "history": "Sejarah",
+  "statistics": "Statistik",
+  "timer": "pengatur waktu",
+  "keepFocused": "Tetap Fokus!",
+  "timeForBreak": "Waktunya istirahat!",
+  "breakOver": "Istirahat sudah berakhir!",
+  "greatJob": "Kerja Hebat!",
+  "sessionComplete": "Sesi Selesai",
+  "ready": "Siap",
+  "focusMode": "Modus Fokus",
+  "breakMode": "Modus Istirahat",
+  "darkMode": "Mode Gelap",
+  "language": "Bahasa",
+  "about": "Tentang",
+  "version": "Versi",
+  "privacyPolicy": "Kebijakan Privasi",
+  "rateApp": "Nilai Aplikasi",
+  "noSessionsYet": "Belum ada sesi. Mulai Pomodoro pertama Anda!",
+  "pomodoroTechnique": "Teknik Pomodoro membantu Anda fokus dengan membagi pekerjaan menjadi beberapa interval, biasanya berdurasi 25 menit, dipisahkan dengan istirahat singkat.",
+  "getStarted": "Memulai",
+  "letsGo": "Ayo Pergi!",
+  "streakDays": "hari berturut-turut",
+  "currentStreak": "Garis Saat Ini",
+  "bestStreak": "Garis Terbaik",
+  "days": "hari",
+  "achievements": "Prestasi",
+  "achievementUnlocked": "Prestasi Tidak Terkunci!",
+  "achievementsProgress": "{unlocked}/{total}Tidak terkunci",
+  "@achievementsProgress": {
+    "placeholders": {
+      "unlocked": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "notUnlockedYet": "Belum dibuka kuncinya",
+  "unlockedOn": "Tidak terkunci{date}",
+  "@unlockedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "close": "Menutup",
+  "categorySession": "Sesi",
+  "categoryStreak": "Garis",
+  "categoryTime": "Waktu Fokus",
+  "categorySpecial": "Spesial",
+  "achievementFirstSession": "Langkah Pertama",
+  "achievementFirstSessionDesc": "Selesaikan sesi fokus pertama Anda",
+  "achievementSessions10": "Memulai",
+  "achievementSessions10Desc": "Selesaikan 10 sesi fokus",
+  "achievementSessions50": "Berdedikasi",
+  "achievementSessions50Desc": "Selesaikan 50 sesi fokus",
+  "achievementSessions100": "Perwira",
+  "achievementSessions100Desc": "Selesaikan 100 sesi fokus",
+  "achievementSessions500": "Guru Besar",
+  "achievementSessions500Desc": "Selesaikan 500 sesi fokus",
+  "achievementStreak3": "Trik Topi",
+  "achievementStreak3Desc": "Pertahankan rekor 3 hari berturut-turut",
+  "achievementStreak7": "Pejuang Minggu",
+  "achievementStreak7Desc": "Pertahankan rekor 7 hari berturut-turut",
+  "achievementStreak30": "Juara Bulanan",
+  "achievementStreak30Desc": "Pertahankan rekor 30 hari berturut-turut",
+  "achievementTime1h": "Jam Pertama",
+  "achievementTime1hDesc": "Akumulasi 1 jam waktu fokus",
+  "achievementTime10h": "Investor Waktu",
+  "achievementTime10hDesc": "Akumulasi 10 jam waktu fokus",
+  "achievementTime100h": "Tuan Waktu",
+  "achievementTime100hDesc": "Akumulasi 100 jam waktu fokus",
+  "achievementEarlyBird": "Burung Awal",
+  "achievementEarlyBirdDesc": "Selesaikan sesi sebelum jam 7 pagi",
+  "achievementNightOwl": "Burung Hantu Malam",
+  "achievementNightOwlDesc": "Selesaikan satu sesi setelah jam 10 malam",
+  "achievementWeekendWarrior": "Prajurit Akhir Pekan",
+  "achievementWeekendWarriorDesc": "Selesaikan 5 sesi di akhir pekan",
+  "ambientSounds": "Suara Sekitar",
+  "soundSilence": "Kesunyian",
+  "soundRain": "Hujan",
+  "soundForest": "Hutan",
+  "soundOcean": "Laut",
+  "soundCafe": "Kafe",
+  "soundFireplace": "Perapian",
+  "soundWhiteNoise": "Kebisingan Putih",
+  "soundThunder": "Guruh",
+  "colorTheme": "Tema Warna",
+  "themeTomato": "Tomat",
+  "themeOcean": "Laut",
+  "themeForest": "Hutan",
+  "themeLavender": "warna lembayung muda",
+  "themeSunset": "Matahari terbenam",
+  "themeMidnight": "Tengah malam",
+  "themeRose": "Mawar",
+  "themeMint": "daun mint",
+  "dailyGoal": "Tujuan Harian",
+  "dailyGoalTarget": "Target Sasaran Harian",
+  "goalReached": "Tujuan Tercapai!",
+  "sessionsProgress": "{completed}/{target}sesi",
+  "@sessionsProgress": {
+    "placeholders": {
+      "completed": {
+        "type": "int"
+      },
+      "target": {
+        "type": "int"
+      }
+    }
+  },
+  "sessionsPerDay": "{count}sesi per hari",
+  "@sessionsPerDay": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "focusTimeToday": "{minutes}min fokus hari ini",
+  "@focusTimeToday": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "newQuote": "Kutipan Baru",
+  "quote1Text": "Rahasia untuk maju adalah dengan memulainya.",
+  "quote1Author": "Tandai Twain",
+  "quote2Text": "Fokuslah untuk menjadi produktif daripada sibuk.",
+  "quote2Author": "Tim Ferris",
+  "quote3Text": "Bukannya aku begitu pintar, hanya saja aku bertahan lebih lama dengan masalah.",
+  "quote3Author": "Albert Einstein",
+  "quote4Text": "Cara memulainya adalah dengan berhenti berbicara dan mulai melakukan.",
+  "quote4Author": "Walt Disney",
+  "quote5Text": "Anda tidak harus menjadi hebat untuk memulai, tetapi Anda harus memulai untuk menjadi hebat.",
+  "quote5Author": "Zig Ziglar",
+  "quote6Text": "Kesuksesan adalah hasil dari usaha-usaha kecil yang dilakukan berulang-ulang hari demi hari.",
+  "quote6Author": "Robert Collier",
+  "quote7Text": "Satu-satunya cara untuk melakukan pekerjaan hebat adalah dengan mencintai apa yang Anda lakukan.",
+  "quote7Author": "Steve Jobs",
+  "quote8Text": "Pusatkan semua pikiran Anda pada pekerjaan yang ada.",
+  "quote8Author": "Alexander Graham Bell",
+  "quote9Text": "Waktu adalah hal yang paling kita inginkan, namun yang paling kita manfaatkan.",
+  "quote9Author": "William Penn",
+  "quote10Text": "Tindakan adalah kunci dasar dari semua kesuksesan.",
+  "quote10Author": "Pablo Picasso",
+  "quote11Text": "Jangan memperhatikan jam; melakukan apa yang dilakukannya. Terus berlanjut.",
+  "quote11Author": "Sam Levenson",
+  "quote12Text": "Keterbatasan Anda—itu hanya imajinasi Anda.",
+  "quote12Author": "Tidak dikenal",
+  "quote13Text": "Mimpikan itu. Berharap itu. Lakukan itu.",
+  "quote13Author": "Tidak dikenal",
+  "quote14Text": "Semakin keras Anda bekerja, semakin banyak keberuntungan yang Anda dapatkan.",
+  "quote14Author": "Pemain Gary",
+  "quote15Text": "Lakukan sesuatu hari ini yang akan membuat diri Anda berterima kasih di masa depan.",
+  "quote15Author": "Tidak dikenal",
+  "appearance": "Penampilan",
+  "colorfulMode": "Modus Berwarna-warni",
+  "colorfulModeDesc": "Gunakan warna-warna cerah dan tata letak animasi"
+}

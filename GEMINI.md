@@ -19,6 +19,10 @@
 - **Parallel Everything**: ALL tasks (research, planning, file creation, code development, testing, compiling) MUST be executed in parallel whenever programmatically possible. Do not perform actions sequentially if they can be grouped.
 - **Maximum Agent Force**: Utilize all available tools, subagents, and concurrent API calls simultaneously to maximize speed, agility, and efficiency. Single-threading your thoughts is forbidden unless strictly required by file lock dependencies.
 
+### 📅 TEMPORAL CONTEXT RULE (MANDATORY INSTRUCTION)
+- **Always Verify Current Date:** Before performing any research, proposing any SDK versions, or outlining any App Store/Play Store publication policies, you MUST check the current date provided in your system metadata context.
+- **No Outdated Tech:** We are operating in the year **2026**. Never propose deprecated 2023/2024 solutions, APIs, or policy compliance checklists. Always ensure information is current relative to the present day.
+
 ### 🌌 SUPERAPP ARCHITECTURE RAG (MANDATORY INSTRUCTION)
 > **AI INSTRUCTION: CRITICAL PROTOCOL FOR ALL FUTURE DEVELOPMENTS**
 

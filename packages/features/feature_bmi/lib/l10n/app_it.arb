@@ -1,0 +1,43 @@
+{
+  "appTitle": "Calcolatore dell'IMC",
+  "calculator": "Calcolatrice",
+  "history": "Storia",
+  "evolution": "Evoluzione",
+  "weight": "Peso (kg)",
+  "height": "Altezza (cm)",
+  "calculate": "Calcolare",
+  "save": "Salva risultato",
+  "result": "Risultato",
+  "yourBmi": "Il tuo indice di massa corporea lo è{bmi}",
+  "@yourBmi": {
+    "placeholders": {
+      "bmi": {
+        "type": "String"
+      }
+    }
+  },
+  "category": "Categoria:{category}",
+  "@category": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+  "infoTitle": "Informazioni sull'IMC",
+  "infoDescription": "L'indice di massa corporea (BMI) è una misura del grasso corporeo basata sull'altezza e sul peso che si applica a uomini e donne adulti.",
+  "source": "Fonte: Organizzazione Mondiale della Sanità (OMS)",
+  "underweight": "Sottopeso",
+  "normal": "Peso normale",
+  "overweight": "Sovrappeso",
+  "obesity1": "Classe di obesità I",
+  "obesity2": "Classe di obesità II",
+  "obesity3": "Classe di obesità III",
+  "delete": "Eliminare",
+  "noHistory": "Nessuna storia ancora",
+  "evolutionGraph": "Grafico dell'evoluzione",
+  "needTwoEntries": "Continua a monitorare! Sono necessarie almeno 2 voci per vedere l'evoluzione.",
+  "bmiEvolutionTitle": "Evoluzione dell'IMC",
+  "reset": "Reset",
+  "resultSaved": "Risultato salvato!"
+}
