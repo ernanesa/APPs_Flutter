@@ -1,3 +1,5 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -163,19 +165,22 @@ class AppLocalizationsFr extends AppLocalizations {
   String get achievementStreak3 => 'Série de 3 Jours';
 
   @override
-  String get achievementStreak3Desc => 'Utilisez l\'app pendant 3 jours consécutifs';
+  String get achievementStreak3Desc =>
+      'Utilisez l\'app pendant 3 jours consécutifs';
 
   @override
   String get achievementStreak7 => 'Guerrier Hebdomadaire';
 
   @override
-  String get achievementStreak7Desc => 'Utilisez l\'app pendant 7 jours consécutifs';
+  String get achievementStreak7Desc =>
+      'Utilisez l\'app pendant 7 jours consécutifs';
 
   @override
   String get achievementStreak30 => 'Maître Mensuel';
 
   @override
-  String get achievementStreak30Desc => 'Utilisez l\'app pendant 30 jours consécutifs';
+  String get achievementStreak30Desc =>
+      'Utilisez l\'app pendant 30 jours consécutifs';
 
   @override
   String get achievement1Hour => '1 Heure';
@@ -193,13 +198,15 @@ class AppLocalizationsFr extends AppLocalizations {
   String get achievement100Hours => '100 Heures';
 
   @override
-  String get achievement100HoursDesc => 'Écoutez pendant un total de 100 heures';
+  String get achievement100HoursDesc =>
+      'Écoutez pendant un total de 100 heures';
 
   @override
   String get achievementNightOwl => 'Oiseau de Nuit';
 
   @override
-  String get achievementNightOwlDesc => 'Utilisez l\'app entre minuit et 5h du matin';
+  String get achievementNightOwlDesc =>
+      'Utilisez l\'app entre minuit et 5h du matin';
 
   @override
   String get achievementFirstMix => 'Premier Mix';
@@ -253,7 +260,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get keepScreenOn => 'Garder l\'Écran Allumé';
 
   @override
-  String get keepScreenOnDesc => 'Empêcher l\'écran de s\'éteindre pendant la lecture';
+  String get keepScreenOnDesc =>
+      'Empêcher l\'écran de s\'éteindre pendant la lecture';
 
   @override
   String get language => 'Langue';

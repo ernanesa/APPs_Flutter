@@ -1,3 +1,5 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -139,10 +141,12 @@ class AppLocalizationsHi extends AppLocalizations {
   String get rateApp => 'ऐप को रेट करें';
 
   @override
-  String get noSessionsYet => 'अभी तक कोई सेशन नहीं। अपना पहला पोमोडोरो शुरू करें!';
+  String get noSessionsYet =>
+      'अभी तक कोई सेशन नहीं। अपना पहला पोमोडोरो शुरू करें!';
 
   @override
-  String get pomodoroTechnique => 'पोमोडोरो तकनीक आपको काम को अंतराल में विभाजित करके ध्यान केंद्रित करने में मदद करती है, पारंपरिक रूप से 25 मिनट, छोटे ब्रेक से अलग।';
+  String get pomodoroTechnique =>
+      'पोमोडोरो तकनीक आपको काम को अंतराल में विभाजित करके ध्यान केंद्रित करने में मदद करती है, पारंपरिक रूप से 25 मिनट, छोटे ब्रेक से अलग।';
 
   @override
   String get getStarted => 'शुरू करें';
@@ -374,19 +378,22 @@ class AppLocalizationsHi extends AppLocalizations {
   String get quote2Author => 'टिम फेरिस';
 
   @override
-  String get quote3Text => 'मैं इतना स्मार्ट नहीं हूं, मैं बस समस्याओं के साथ अधिक समय रहता हूं।';
+  String get quote3Text =>
+      'मैं इतना स्मार्ट नहीं हूं, मैं बस समस्याओं के साथ अधिक समय रहता हूं।';
 
   @override
   String get quote3Author => 'अल्बर्ट आइंस्टीन';
 
   @override
-  String get quote4Text => 'शुरू करने का तरीका है बात करना बंद करो और करना शुरू करो।';
+  String get quote4Text =>
+      'शुरू करने का तरीका है बात करना बंद करो और करना शुरू करो।';
 
   @override
   String get quote4Author => 'वॉल्ट डिज़्नी';
 
   @override
-  String get quote5Text => 'शुरू करने के लिए आपको महान होने की आवश्यकता नहीं है, लेकिन महान होने के लिए आपको शुरू करना होगा।';
+  String get quote5Text =>
+      'शुरू करने के लिए आपको महान होने की आवश्यकता नहीं है, लेकिन महान होने के लिए आपको शुरू करना होगा।';
 
   @override
   String get quote5Author => 'ज़िग ज़िगलर';
@@ -398,7 +405,8 @@ class AppLocalizationsHi extends AppLocalizations {
   String get quote6Author => 'रॉबर्ट कोलियर';
 
   @override
-  String get quote7Text => 'महान काम करने का एकमात्र तरीका है कि आप जो करते हैं उससे प्यार करें।';
+  String get quote7Text =>
+      'महान काम करने का एकमात्र तरीका है कि आप जो करते हैं उससे प्यार करें।';
 
   @override
   String get quote7Author => 'स्टीव जॉब्स';
@@ -410,7 +418,8 @@ class AppLocalizationsHi extends AppLocalizations {
   String get quote8Author => 'अलेक्जेंडर ग्राहम बेल';
 
   @override
-  String get quote9Text => 'समय वह है जो हम सबसे ज्यादा चाहते हैं, लेकिन सबसे बुरी तरह उपयोग करते हैं।';
+  String get quote9Text =>
+      'समय वह है जो हम सबसे ज्यादा चाहते हैं, लेकिन सबसे बुरी तरह उपयोग करते हैं।';
 
   @override
   String get quote9Author => 'विलियम पेन';
@@ -422,7 +431,8 @@ class AppLocalizationsHi extends AppLocalizations {
   String get quote10Author => 'पाब्लो पिकासो';
 
   @override
-  String get quote11Text => 'घड़ी मत देखो; वही करो जो वह करती है। आगे बढ़ते रहो।';
+  String get quote11Text =>
+      'घड़ी मत देखो; वही करो जो वह करती है। आगे बढ़ते रहो।';
 
   @override
   String get quote11Author => 'सैम लेवेन्सन';
@@ -440,13 +450,15 @@ class AppLocalizationsHi extends AppLocalizations {
   String get quote13Author => 'अज्ञात';
 
   @override
-  String get quote14Text => 'आप जितना कठिन परिश्रम करते हैं, उतने भाग्यशाली होते हैं।';
+  String get quote14Text =>
+      'आप जितना कठिन परिश्रम करते हैं, उतने भाग्यशाली होते हैं।';
 
   @override
   String get quote14Author => 'गैरी प्लेयर';
 
   @override
-  String get quote15Text => 'आज कुछ ऐसा करें जिसके लिए आपका भविष्य धन्यवाद करे।';
+  String get quote15Text =>
+      'आज कुछ ऐसा करें जिसके लिए आपका भविष्य धन्यवाद करे।';
 
   @override
   String get quote15Author => 'अज्ञात';

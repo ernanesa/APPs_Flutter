@@ -1,3 +1,5 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -199,7 +201,8 @@ class AppLocalizationsHi extends AppLocalizations {
   String get achievementNightOwl => 'रात का उल्लू';
 
   @override
-  String get achievementNightOwlDesc => 'आधी रात से सुबह 5 बजे के बीच ऐप का उपयोग करें';
+  String get achievementNightOwlDesc =>
+      'आधी रात से सुबह 5 बजे के बीच ऐप का उपयोग करें';
 
   @override
   String get achievementFirstMix => 'First Mix';

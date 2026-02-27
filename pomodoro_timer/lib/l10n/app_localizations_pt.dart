@@ -1,3 +1,5 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -139,10 +141,12 @@ class AppLocalizationsPt extends AppLocalizations {
   String get rateApp => 'Avaliar App';
 
   @override
-  String get noSessionsYet => 'Nenhuma sessão ainda. Comece seu primeiro Pomodoro!';
+  String get noSessionsYet =>
+      'Nenhuma sessão ainda. Comece seu primeiro Pomodoro!';
 
   @override
-  String get pomodoroTechnique => 'A Técnica Pomodoro ajuda você a focar dividindo o trabalho em intervalos, tradicionalmente de 25 minutos, separados por pausas curtas.';
+  String get pomodoroTechnique =>
+      'A Técnica Pomodoro ajuda você a focar dividindo o trabalho em intervalos, tradicionalmente de 25 minutos, separados por pausas curtas.';
 
   @override
   String get getStarted => 'Começar';
@@ -200,7 +204,8 @@ class AppLocalizationsPt extends AppLocalizations {
   String get achievementFirstSession => 'Primeiro Passo';
 
   @override
-  String get achievementFirstSessionDesc => 'Complete sua primeira sessão de foco';
+  String get achievementFirstSessionDesc =>
+      'Complete sua primeira sessão de foco';
 
   @override
   String get achievementSessions10 => 'Começando Bem';
@@ -278,7 +283,8 @@ class AppLocalizationsPt extends AppLocalizations {
   String get achievementWeekendWarrior => 'Guerreiro de Fim de Semana';
 
   @override
-  String get achievementWeekendWarriorDesc => 'Complete 5 sessões em um fim de semana';
+  String get achievementWeekendWarriorDesc =>
+      'Complete 5 sessões em um fim de semana';
 
   @override
   String get ambientSounds => 'Sons Ambiente';
@@ -374,43 +380,50 @@ class AppLocalizationsPt extends AppLocalizations {
   String get quote2Author => 'Tim Ferriss';
 
   @override
-  String get quote3Text => 'Não é que eu seja tão inteligente, é que eu fico com os problemas por mais tempo.';
+  String get quote3Text =>
+      'Não é que eu seja tão inteligente, é que eu fico com os problemas por mais tempo.';
 
   @override
   String get quote3Author => 'Albert Einstein';
 
   @override
-  String get quote4Text => 'A maneira de começar é parar de falar e começar a fazer.';
+  String get quote4Text =>
+      'A maneira de começar é parar de falar e começar a fazer.';
 
   @override
   String get quote4Author => 'Walt Disney';
 
   @override
-  String get quote5Text => 'Você não precisa ser ótimo para começar, mas precisa começar para ser ótimo.';
+  String get quote5Text =>
+      'Você não precisa ser ótimo para começar, mas precisa começar para ser ótimo.';
 
   @override
   String get quote5Author => 'Zig Ziglar';
 
   @override
-  String get quote6Text => 'O sucesso é a soma de pequenos esforços repetidos dia após dia.';
+  String get quote6Text =>
+      'O sucesso é a soma de pequenos esforços repetidos dia após dia.';
 
   @override
   String get quote6Author => 'Robert Collier';
 
   @override
-  String get quote7Text => 'A única maneira de fazer um ótimo trabalho é amar o que você faz.';
+  String get quote7Text =>
+      'A única maneira de fazer um ótimo trabalho é amar o que você faz.';
 
   @override
   String get quote7Author => 'Steve Jobs';
 
   @override
-  String get quote8Text => 'Concentre todos os seus pensamentos no trabalho em mãos.';
+  String get quote8Text =>
+      'Concentre todos os seus pensamentos no trabalho em mãos.';
 
   @override
   String get quote8Author => 'Alexander Graham Bell';
 
   @override
-  String get quote9Text => 'Tempo é o que mais queremos, mas o que pior usamos.';
+  String get quote9Text =>
+      'Tempo é o que mais queremos, mas o que pior usamos.';
 
   @override
   String get quote9Author => 'William Penn';
@@ -422,7 +435,8 @@ class AppLocalizationsPt extends AppLocalizations {
   String get quote10Author => 'Pablo Picasso';
 
   @override
-  String get quote11Text => 'Não olhe para o relógio; faça o que ele faz. Continue.';
+  String get quote11Text =>
+      'Não olhe para o relógio; faça o que ele faz. Continue.';
 
   @override
   String get quote11Author => 'Sam Levenson';

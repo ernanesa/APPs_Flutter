@@ -1,3 +1,5 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -139,10 +141,12 @@ class AppLocalizationsBn extends AppLocalizations {
   String get rateApp => 'অ্যাপ রেট করুন';
 
   @override
-  String get noSessionsYet => 'এখনো কোনো সেশন নেই। আপনার প্রথম পমোডোরো শুরু করুন!';
+  String get noSessionsYet =>
+      'এখনো কোনো সেশন নেই। আপনার প্রথম পমোডোরো শুরু করুন!';
 
   @override
-  String get pomodoroTechnique => 'পমোডোরো কৌশল আপনাকে কাজকে ২৫ মিনিটের বিরতিতে ভাগ করে মনোযোগ দিতে সাহায্য করে, ছোট বিরতি দিয়ে আলাদা।';
+  String get pomodoroTechnique =>
+      'পমোডোরো কৌশল আপনাকে কাজকে ২৫ মিনিটের বিরতিতে ভাগ করে মনোযোগ দিতে সাহায্য করে, ছোট বিরতি দিয়ে আলাদা।';
 
   @override
   String get getStarted => 'শুরু করুন';
@@ -200,7 +204,8 @@ class AppLocalizationsBn extends AppLocalizations {
   String get achievementFirstSession => 'প্রথম পদক্ষেপ';
 
   @override
-  String get achievementFirstSessionDesc => 'আপনার প্রথম ফোকাস সেশন সম্পন্ন করুন';
+  String get achievementFirstSessionDesc =>
+      'আপনার প্রথম ফোকাস সেশন সম্পন্ন করুন';
 
   @override
   String get achievementSessions10 => 'ভালো শুরু';
@@ -278,7 +283,8 @@ class AppLocalizationsBn extends AppLocalizations {
   String get achievementWeekendWarrior => 'সপ্তাহান্তের যোদ্ধা';
 
   @override
-  String get achievementWeekendWarriorDesc => 'সপ্তাহান্তে ৫টি সেশন সম্পন্ন করুন';
+  String get achievementWeekendWarriorDesc =>
+      'সপ্তাহান্তে ৫টি সেশন সম্পন্ন করুন';
 
   @override
   String get ambientSounds => 'পরিবেশগত শব্দ';
@@ -374,7 +380,8 @@ class AppLocalizationsBn extends AppLocalizations {
   String get quote2Author => 'টিম ফেরিস';
 
   @override
-  String get quote3Text => 'আমি এত বুদ্ধিমান নই, আমি শুধু সমস্যার সাথে বেশি সময় থাকি।';
+  String get quote3Text =>
+      'আমি এত বুদ্ধিমান নই, আমি শুধু সমস্যার সাথে বেশি সময় থাকি।';
 
   @override
   String get quote3Author => 'অ্যালবার্ট আইনস্টাইন';
@@ -386,19 +393,22 @@ class AppLocalizationsBn extends AppLocalizations {
   String get quote4Author => 'ওয়াল্ট ডিজনি';
 
   @override
-  String get quote5Text => 'শুরু করতে আপনাকে দারুণ হতে হবে না, কিন্তু দারুণ হতে হলে শুরু করতে হবে।';
+  String get quote5Text =>
+      'শুরু করতে আপনাকে দারুণ হতে হবে না, কিন্তু দারুণ হতে হলে শুরু করতে হবে।';
 
   @override
   String get quote5Author => 'জিগ জিগলার';
 
   @override
-  String get quote6Text => 'সাফল্য হলো প্রতিদিন পুনরাবৃত্ত ছোট প্রচেষ্টার সমষ্টি।';
+  String get quote6Text =>
+      'সাফল্য হলো প্রতিদিন পুনরাবৃত্ত ছোট প্রচেষ্টার সমষ্টি।';
 
   @override
   String get quote6Author => 'রবার্ট কলিয়ার';
 
   @override
-  String get quote7Text => 'দারুণ কাজ করার একমাত্র উপায় হলো আপনি যা করেন তা ভালোবাসা।';
+  String get quote7Text =>
+      'দারুণ কাজ করার একমাত্র উপায় হলো আপনি যা করেন তা ভালোবাসা।';
 
   @override
   String get quote7Author => 'স্টিভ জবস';
@@ -410,7 +420,8 @@ class AppLocalizationsBn extends AppLocalizations {
   String get quote8Author => 'আলেকজান্ডার গ্রাহাম বেল';
 
   @override
-  String get quote9Text => 'সময় হলো যা আমরা সবচেয়ে বেশি চাই, কিন্তু সবচেয়ে খারাপভাবে ব্যবহার করি।';
+  String get quote9Text =>
+      'সময় হলো যা আমরা সবচেয়ে বেশি চাই, কিন্তু সবচেয়ে খারাপভাবে ব্যবহার করি।';
 
   @override
   String get quote9Author => 'উইলিয়াম পেন';
@@ -422,7 +433,8 @@ class AppLocalizationsBn extends AppLocalizations {
   String get quote10Author => 'পাবলো পিকাসো';
 
   @override
-  String get quote11Text => 'ঘড়ির দিকে তাকাবেন না; এটি যা করে তাই করুন। চালিয়ে যান।';
+  String get quote11Text =>
+      'ঘড়ির দিকে তাকাবেন না; এটি যা করে তাই করুন। চালিয়ে যান।';
 
   @override
   String get quote11Author => 'স্যাম লেভেনসন';
@@ -446,7 +458,8 @@ class AppLocalizationsBn extends AppLocalizations {
   String get quote14Author => 'গ্যারি প্লেয়ার';
 
   @override
-  String get quote15Text => 'আজ এমন কিছু করুন যার জন্য আপনার ভবিষ্যৎ স্বত্তা আপনাকে ধন্যবাদ দেবে।';
+  String get quote15Text =>
+      'আজ এমন কিছু করুন যার জন্য আপনার ভবিষ্যৎ স্বত্তা আপনাকে ধন্যবাদ দেবে।';
 
   @override
   String get quote15Author => 'অজানা';
@@ -458,5 +471,6 @@ class AppLocalizationsBn extends AppLocalizations {
   String get colorfulMode => 'রঙিন মোড';
 
   @override
-  String get colorfulModeDesc => 'প্রাণবন্ত রঙ এবং অ্যানিমেটেড লেআউট ব্যবহার করুন';
+  String get colorfulModeDesc =>
+      'প্রাণবন্ত রঙ এবং অ্যানিমেটেড লেআউট ব্যবহার করুন';
 }

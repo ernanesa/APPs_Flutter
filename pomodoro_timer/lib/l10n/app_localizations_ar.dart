@@ -1,3 +1,5 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -142,7 +144,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get noSessionsYet => 'لا توجد جلسات بعد. ابدأ بومودورو الأول!';
 
   @override
-  String get pomodoroTechnique => 'تساعدك تقنية بومودورو على التركيز عن طريق تقسيم العمل إلى فترات، عادةً 25 دقيقة، تفصلها استراحات قصيرة.';
+  String get pomodoroTechnique =>
+      'تساعدك تقنية بومودورو على التركيز عن طريق تقسيم العمل إلى فترات، عادةً 25 دقيقة، تفصلها استراحات قصيرة.';
 
   @override
   String get getStarted => 'ابدأ';
@@ -278,7 +281,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get achievementWeekendWarrior => 'محارب نهاية الأسبوع';
 
   @override
-  String get achievementWeekendWarriorDesc => 'أكمل 5 جلسات في عطلة نهاية الأسبوع';
+  String get achievementWeekendWarriorDesc =>
+      'أكمل 5 جلسات في عطلة نهاية الأسبوع';
 
   @override
   String get ambientSounds => 'أصوات محيطة';
@@ -374,7 +378,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get quote2Author => 'تيم فيريس';
 
   @override
-  String get quote3Text => 'ليس لأنني ذكي جداً، بل لأنني أبقى مع المشاكل لفترة أطول.';
+  String get quote3Text =>
+      'ليس لأنني ذكي جداً، بل لأنني أبقى مع المشاكل لفترة أطول.';
 
   @override
   String get quote3Author => 'ألبرت أينشتاين';
@@ -386,19 +391,22 @@ class AppLocalizationsAr extends AppLocalizations {
   String get quote4Author => 'والت ديزني';
 
   @override
-  String get quote5Text => 'لا يجب أن تكون عظيماً لتبدأ، لكن يجب أن تبدأ لتصبح عظيماً.';
+  String get quote5Text =>
+      'لا يجب أن تكون عظيماً لتبدأ، لكن يجب أن تبدأ لتصبح عظيماً.';
 
   @override
   String get quote5Author => 'زيج زيجلار';
 
   @override
-  String get quote6Text => 'النجاح هو مجموع الجهود الصغيرة المتكررة يوماً بعد يوم.';
+  String get quote6Text =>
+      'النجاح هو مجموع الجهود الصغيرة المتكررة يوماً بعد يوم.';
 
   @override
   String get quote6Author => 'روبرت كوليير';
 
   @override
-  String get quote7Text => 'الطريقة الوحيدة للقيام بعمل رائع هي أن تحب ما تفعله.';
+  String get quote7Text =>
+      'الطريقة الوحيدة للقيام بعمل رائع هي أن تحب ما تفعله.';
 
   @override
   String get quote7Author => 'ستيف جوبز';
@@ -458,5 +466,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get colorfulMode => 'الوضع الملون';
 
   @override
-  String get colorfulModeDesc => 'استخدم ألواناً نابضة بالحياة وتخطيطاً متحركاً';
+  String get colorfulModeDesc =>
+      'استخدم ألواناً نابضة بالحياة وتخطيطاً متحركاً';
 }

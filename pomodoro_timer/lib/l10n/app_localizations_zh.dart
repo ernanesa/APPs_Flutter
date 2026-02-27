@@ -1,3 +1,5 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -142,7 +144,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get noSessionsYet => '还没有记录。开始你的第一个番茄钟吧！';
 
   @override
-  String get pomodoroTechnique => '番茄工作法通过将工作分成时间段来帮助您集中注意力，传统上是25分钟的专注时间，中间穿插短暂休息。';
+  String get pomodoroTechnique =>
+      '番茄工作法通过将工作分成时间段来帮助您集中注意力，传统上是25分钟的专注时间，中间穿插短暂休息。';
 
   @override
   String get getStarted => '开始';

@@ -1,3 +1,5 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -253,7 +255,8 @@ class AppLocalizationsBn extends AppLocalizations {
   String get keepScreenOn => 'Keep Screen On';
 
   @override
-  String get keepScreenOnDesc => 'Prevent screen from turning off during playback';
+  String get keepScreenOnDesc =>
+      'Prevent screen from turning off during playback';
 
   @override
   String get language => 'Language';

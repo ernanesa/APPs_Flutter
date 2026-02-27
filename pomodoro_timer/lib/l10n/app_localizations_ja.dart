@@ -1,3 +1,5 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -142,7 +144,8 @@ class AppLocalizationsJa extends AppLocalizations {
   String get noSessionsYet => 'まだセッションがありません。最初のポモドーロを始めましょう！';
 
   @override
-  String get pomodoroTechnique => 'ポモドーロ・テクニックは、作業を25分間隔に分割し、短い休憩を挟むことで集中力を高めます。';
+  String get pomodoroTechnique =>
+      'ポモドーロ・テクニックは、作業を25分間隔に分割し、短い休憩を挟むことで集中力を高めます。';
 
   @override
   String get getStarted => '始める';

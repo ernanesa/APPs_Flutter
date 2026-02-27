@@ -1,3 +1,5 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -199,7 +201,8 @@ class AppLocalizationsPt extends AppLocalizations {
   String get achievementNightOwl => 'Coruja Noturna';
 
   @override
-  String get achievementNightOwlDesc => 'Use o app entre meia-noite e 5 da manhã';
+  String get achievementNightOwlDesc =>
+      'Use o app entre meia-noite e 5 da manhã';
 
   @override
   String get achievementFirstMix => 'Primeiro Mix';
@@ -253,7 +256,8 @@ class AppLocalizationsPt extends AppLocalizations {
   String get keepScreenOn => 'Manter Tela Ligada';
 
   @override
-  String get keepScreenOnDesc => 'Impedir que a tela desligue durante a reprodução';
+  String get keepScreenOnDesc =>
+      'Impedir que a tela desligue durante a reprodução';
 
   @override
   String get language => 'Idioma';

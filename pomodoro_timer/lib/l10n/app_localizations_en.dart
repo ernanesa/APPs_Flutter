@@ -1,3 +1,5 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -142,7 +144,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get noSessionsYet => 'No sessions yet. Start your first Pomodoro!';
 
   @override
-  String get pomodoroTechnique => 'The Pomodoro Technique helps you focus by breaking work into intervals, traditionally 25 minutes in length, separated by short breaks.';
+  String get pomodoroTechnique =>
+      'The Pomodoro Technique helps you focus by breaking work into intervals, traditionally 25 minutes in length, separated by short breaks.';
 
   @override
   String get getStarted => 'Get Started';
@@ -278,7 +281,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get achievementWeekendWarrior => 'Weekend Warrior';
 
   @override
-  String get achievementWeekendWarriorDesc => 'Complete 5 sessions on a weekend';
+  String get achievementWeekendWarriorDesc =>
+      'Complete 5 sessions on a weekend';
 
   @override
   String get ambientSounds => 'Ambient Sounds';
@@ -374,37 +378,43 @@ class AppLocalizationsEn extends AppLocalizations {
   String get quote2Author => 'Tim Ferriss';
 
   @override
-  String get quote3Text => 'It\'s not that I\'m so smart, it\'s just that I stay with problems longer.';
+  String get quote3Text =>
+      'It\'s not that I\'m so smart, it\'s just that I stay with problems longer.';
 
   @override
   String get quote3Author => 'Albert Einstein';
 
   @override
-  String get quote4Text => 'The way to get started is to quit talking and begin doing.';
+  String get quote4Text =>
+      'The way to get started is to quit talking and begin doing.';
 
   @override
   String get quote4Author => 'Walt Disney';
 
   @override
-  String get quote5Text => 'You don\'t have to be great to start, but you have to start to be great.';
+  String get quote5Text =>
+      'You don\'t have to be great to start, but you have to start to be great.';
 
   @override
   String get quote5Author => 'Zig Ziglar';
 
   @override
-  String get quote6Text => 'Success is the sum of small efforts repeated day in and day out.';
+  String get quote6Text =>
+      'Success is the sum of small efforts repeated day in and day out.';
 
   @override
   String get quote6Author => 'Robert Collier';
 
   @override
-  String get quote7Text => 'The only way to do great work is to love what you do.';
+  String get quote7Text =>
+      'The only way to do great work is to love what you do.';
 
   @override
   String get quote7Author => 'Steve Jobs';
 
   @override
-  String get quote8Text => 'Concentrate all your thoughts upon the work at hand.';
+  String get quote8Text =>
+      'Concentrate all your thoughts upon the work at hand.';
 
   @override
   String get quote8Author => 'Alexander Graham Bell';
@@ -422,7 +432,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get quote10Author => 'Pablo Picasso';
 
   @override
-  String get quote11Text => 'Don\'t watch the clock; do what it does. Keep going.';
+  String get quote11Text =>
+      'Don\'t watch the clock; do what it does. Keep going.';
 
   @override
   String get quote11Author => 'Sam Levenson';
@@ -446,7 +457,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get quote14Author => 'Gary Player';
 
   @override
-  String get quote15Text => 'Do something today that your future self will thank you for.';
+  String get quote15Text =>
+      'Do something today that your future self will thank you for.';
 
   @override
   String get quote15Author => 'Unknown';

@@ -1,3 +1,5 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -175,7 +177,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get achievementStreak30 => 'Maestro Mensual';
 
   @override
-  String get achievementStreak30Desc => 'Usa la app durante 30 días consecutivos';
+  String get achievementStreak30Desc =>
+      'Usa la app durante 30 días consecutivos';
 
   @override
   String get achievement1Hour => '1 Hora';
@@ -253,7 +256,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get keepScreenOn => 'Mantener Pantalla Encendida';
 
   @override
-  String get keepScreenOnDesc => 'Evitar que la pantalla se apague durante la reproducción';
+  String get keepScreenOnDesc =>
+      'Evitar que la pantalla se apague durante la reproducción';
 
   @override
   String get language => 'Idioma';

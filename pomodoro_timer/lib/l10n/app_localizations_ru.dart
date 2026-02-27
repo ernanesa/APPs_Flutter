@@ -1,3 +1,5 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -142,7 +144,8 @@ class AppLocalizationsRu extends AppLocalizations {
   String get noSessionsYet => 'Пока нет сессий. Начните свой первый Помодоро!';
 
   @override
-  String get pomodoroTechnique => 'Техника Помодоро помогает сосредоточиться, разбивая работу на интервалы, традиционно 25 минут, разделённые короткими перерывами.';
+  String get pomodoroTechnique =>
+      'Техника Помодоро помогает сосредоточиться, разбивая работу на интервалы, традиционно 25 минут, разделённые короткими перерывами.';
 
   @override
   String get getStarted => 'Начать';
@@ -368,37 +371,43 @@ class AppLocalizationsRu extends AppLocalizations {
   String get quote1Author => 'Марк Твен';
 
   @override
-  String get quote2Text => 'Сосредоточьтесь на продуктивности, а не на занятости.';
+  String get quote2Text =>
+      'Сосредоточьтесь на продуктивности, а не на занятости.';
 
   @override
   String get quote2Author => 'Тим Феррис';
 
   @override
-  String get quote3Text => 'Я не такой умный, я просто дольше остаюсь с проблемами.';
+  String get quote3Text =>
+      'Я не такой умный, я просто дольше остаюсь с проблемами.';
 
   @override
   String get quote3Author => 'Альберт Эйнштейн';
 
   @override
-  String get quote4Text => 'Способ начать — перестать говорить и начать делать.';
+  String get quote4Text =>
+      'Способ начать — перестать говорить и начать делать.';
 
   @override
   String get quote4Author => 'Уолт Дисней';
 
   @override
-  String get quote5Text => 'Не нужно быть великим, чтобы начать, но нужно начать, чтобы стать великим.';
+  String get quote5Text =>
+      'Не нужно быть великим, чтобы начать, но нужно начать, чтобы стать великим.';
 
   @override
   String get quote5Author => 'Зиг Зиглар';
 
   @override
-  String get quote6Text => 'Успех — это сумма небольших усилий, повторяемых изо дня в день.';
+  String get quote6Text =>
+      'Успех — это сумма небольших усилий, повторяемых изо дня в день.';
 
   @override
   String get quote6Author => 'Роберт Коллиер';
 
   @override
-  String get quote7Text => 'Единственный способ делать великую работу — любить то, что делаешь.';
+  String get quote7Text =>
+      'Единственный способ делать великую работу — любить то, что делаешь.';
 
   @override
   String get quote7Author => 'Стив Джобс';
@@ -410,7 +419,8 @@ class AppLocalizationsRu extends AppLocalizations {
   String get quote8Author => 'Александр Грэхем Белл';
 
   @override
-  String get quote9Text => 'Время — то, чего мы хотим больше всего, но используем хуже всего.';
+  String get quote9Text =>
+      'Время — то, чего мы хотим больше всего, но используем хуже всего.';
 
   @override
   String get quote9Author => 'Уильям Пенн';
@@ -422,7 +432,8 @@ class AppLocalizationsRu extends AppLocalizations {
   String get quote10Author => 'Пабло Пикассо';
 
   @override
-  String get quote11Text => 'Не смотрите на часы; делайте то, что они делают. Продолжайте двигаться.';
+  String get quote11Text =>
+      'Не смотрите на часы; делайте то, что они делают. Продолжайте двигаться.';
 
   @override
   String get quote11Author => 'Сэм Левенсон';
@@ -440,13 +451,15 @@ class AppLocalizationsRu extends AppLocalizations {
   String get quote13Author => 'Неизвестен';
 
   @override
-  String get quote14Text => 'Чем усерднее работаешь, тем удачливее становишься.';
+  String get quote14Text =>
+      'Чем усерднее работаешь, тем удачливее становишься.';
 
   @override
   String get quote14Author => 'Гэри Плейер';
 
   @override
-  String get quote15Text => 'Сделай сегодня то, за что будущий ты скажет спасибо.';
+  String get quote15Text =>
+      'Сделай сегодня то, за что будущий ты скажет спасибо.';
 
   @override
   String get quote15Author => 'Неизвестен';
@@ -458,5 +471,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get colorfulMode => 'Красочный режим';
 
   @override
-  String get colorfulModeDesc => 'Используйте яркие цвета и анимированный макет';
+  String get colorfulModeDesc =>
+      'Используйте яркие цвета и анимированный макет';
 }

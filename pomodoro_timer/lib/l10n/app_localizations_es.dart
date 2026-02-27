@@ -1,3 +1,5 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -142,7 +144,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get noSessionsYet => 'Sin sesiones aún. ¡Comienza tu primer Pomodoro!';
 
   @override
-  String get pomodoroTechnique => 'La Técnica Pomodoro te ayuda a enfocarte dividiendo el trabajo en intervalos, tradicionalmente de 25 minutos, separados por descansos cortos.';
+  String get pomodoroTechnique =>
+      'La Técnica Pomodoro te ayuda a enfocarte dividiendo el trabajo en intervalos, tradicionalmente de 25 minutos, separados por descansos cortos.';
 
   @override
   String get getStarted => 'Comenzar';
@@ -200,7 +203,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get achievementFirstSession => 'Primer Paso';
 
   @override
-  String get achievementFirstSessionDesc => 'Completa tu primera sesión de enfoque';
+  String get achievementFirstSessionDesc =>
+      'Completa tu primera sesión de enfoque';
 
   @override
   String get achievementSessions10 => 'Empezando Bien';
@@ -260,25 +264,29 @@ class AppLocalizationsEs extends AppLocalizations {
   String get achievementTime100h => 'Maestro del Tiempo';
 
   @override
-  String get achievementTime100hDesc => 'Acumula 100 horas de tiempo de enfoque';
+  String get achievementTime100hDesc =>
+      'Acumula 100 horas de tiempo de enfoque';
 
   @override
   String get achievementEarlyBird => 'Madrugador';
 
   @override
-  String get achievementEarlyBirdDesc => 'Completa una sesión antes de las 7 AM';
+  String get achievementEarlyBirdDesc =>
+      'Completa una sesión antes de las 7 AM';
 
   @override
   String get achievementNightOwl => 'Búho Nocturno';
 
   @override
-  String get achievementNightOwlDesc => 'Completa una sesión después de las 10 PM';
+  String get achievementNightOwlDesc =>
+      'Completa una sesión después de las 10 PM';
 
   @override
   String get achievementWeekendWarrior => 'Guerrero de Fin de Semana';
 
   @override
-  String get achievementWeekendWarriorDesc => 'Completa 5 sesiones en un fin de semana';
+  String get achievementWeekendWarriorDesc =>
+      'Completa 5 sesiones en un fin de semana';
 
   @override
   String get ambientSounds => 'Sonidos Ambientales';
@@ -374,43 +382,50 @@ class AppLocalizationsEs extends AppLocalizations {
   String get quote2Author => 'Tim Ferriss';
 
   @override
-  String get quote3Text => 'No es que sea tan inteligente, es que me quedo con los problemas más tiempo.';
+  String get quote3Text =>
+      'No es que sea tan inteligente, es que me quedo con los problemas más tiempo.';
 
   @override
   String get quote3Author => 'Albert Einstein';
 
   @override
-  String get quote4Text => 'La manera de empezar es dejar de hablar y empezar a hacer.';
+  String get quote4Text =>
+      'La manera de empezar es dejar de hablar y empezar a hacer.';
 
   @override
   String get quote4Author => 'Walt Disney';
 
   @override
-  String get quote5Text => 'No tienes que ser genial para empezar, pero tienes que empezar para ser genial.';
+  String get quote5Text =>
+      'No tienes que ser genial para empezar, pero tienes que empezar para ser genial.';
 
   @override
   String get quote5Author => 'Zig Ziglar';
 
   @override
-  String get quote6Text => 'El éxito es la suma de pequeños esfuerzos repetidos día tras día.';
+  String get quote6Text =>
+      'El éxito es la suma de pequeños esfuerzos repetidos día tras día.';
 
   @override
   String get quote6Author => 'Robert Collier';
 
   @override
-  String get quote7Text => 'La única manera de hacer un gran trabajo es amar lo que haces.';
+  String get quote7Text =>
+      'La única manera de hacer un gran trabajo es amar lo que haces.';
 
   @override
   String get quote7Author => 'Steve Jobs';
 
   @override
-  String get quote8Text => 'Concentra todos tus pensamientos en el trabajo en cuestión.';
+  String get quote8Text =>
+      'Concentra todos tus pensamientos en el trabajo en cuestión.';
 
   @override
   String get quote8Author => 'Alexander Graham Bell';
 
   @override
-  String get quote9Text => 'El tiempo es lo que más queremos, pero lo que peor usamos.';
+  String get quote9Text =>
+      'El tiempo es lo que más queremos, pero lo que peor usamos.';
 
   @override
   String get quote9Author => 'William Penn';
@@ -422,7 +437,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get quote10Author => 'Pablo Picasso';
 
   @override
-  String get quote11Text => 'No mires el reloj; haz lo que él hace. Sigue adelante.';
+  String get quote11Text =>
+      'No mires el reloj; haz lo que él hace. Sigue adelante.';
 
   @override
   String get quote11Author => 'Sam Levenson';

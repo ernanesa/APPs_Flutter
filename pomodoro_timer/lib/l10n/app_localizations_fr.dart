@@ -1,3 +1,5 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -139,10 +141,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get rateApp => 'Noter l\'App';
 
   @override
-  String get noSessionsYet => 'Pas encore de sessions. Commencez votre premier Pomodoro!';
+  String get noSessionsYet =>
+      'Pas encore de sessions. Commencez votre premier Pomodoro!';
 
   @override
-  String get pomodoroTechnique => 'La Technique Pomodoro vous aide à vous concentrer en divisant le travail en intervalles, traditionnellement de 25 minutes, séparés par de courtes pauses.';
+  String get pomodoroTechnique =>
+      'La Technique Pomodoro vous aide à vous concentrer en divisant le travail en intervalles, traditionnellement de 25 minutes, séparés par de courtes pauses.';
 
   @override
   String get getStarted => 'Commencer';
@@ -200,31 +204,36 @@ class AppLocalizationsFr extends AppLocalizations {
   String get achievementFirstSession => 'Premier Pas';
 
   @override
-  String get achievementFirstSessionDesc => 'Complétez votre première session de concentration';
+  String get achievementFirstSessionDesc =>
+      'Complétez votre première session de concentration';
 
   @override
   String get achievementSessions10 => 'Bon Départ';
 
   @override
-  String get achievementSessions10Desc => 'Complétez 10 sessions de concentration';
+  String get achievementSessions10Desc =>
+      'Complétez 10 sessions de concentration';
 
   @override
   String get achievementSessions50 => 'Dévoué';
 
   @override
-  String get achievementSessions50Desc => 'Complétez 50 sessions de concentration';
+  String get achievementSessions50Desc =>
+      'Complétez 50 sessions de concentration';
 
   @override
   String get achievementSessions100 => 'Centurion';
 
   @override
-  String get achievementSessions100Desc => 'Complétez 100 sessions de concentration';
+  String get achievementSessions100Desc =>
+      'Complétez 100 sessions de concentration';
 
   @override
   String get achievementSessions500 => 'Grand Maître';
 
   @override
-  String get achievementSessions500Desc => 'Complétez 500 sessions de concentration';
+  String get achievementSessions500Desc =>
+      'Complétez 500 sessions de concentration';
 
   @override
   String get achievementStreak3 => 'Hat Trick';
@@ -248,19 +257,22 @@ class AppLocalizationsFr extends AppLocalizations {
   String get achievementTime1h => 'Première Heure';
 
   @override
-  String get achievementTime1hDesc => 'Accumulez 1 heure de temps de concentration';
+  String get achievementTime1hDesc =>
+      'Accumulez 1 heure de temps de concentration';
 
   @override
   String get achievementTime10h => 'Investisseur de Temps';
 
   @override
-  String get achievementTime10hDesc => 'Accumulez 10 heures de temps de concentration';
+  String get achievementTime10hDesc =>
+      'Accumulez 10 heures de temps de concentration';
 
   @override
   String get achievementTime100h => 'Maître du Temps';
 
   @override
-  String get achievementTime100hDesc => 'Accumulez 100 heures de temps de concentration';
+  String get achievementTime100hDesc =>
+      'Accumulez 100 heures de temps de concentration';
 
   @override
   String get achievementEarlyBird => 'Lève-tôt';
@@ -278,7 +290,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get achievementWeekendWarrior => 'Guerrier du Week-end';
 
   @override
-  String get achievementWeekendWarriorDesc => 'Complétez 5 sessions un week-end';
+  String get achievementWeekendWarriorDesc =>
+      'Complétez 5 sessions un week-end';
 
   @override
   String get ambientSounds => 'Sons Ambiants';
@@ -374,43 +387,50 @@ class AppLocalizationsFr extends AppLocalizations {
   String get quote2Author => 'Tim Ferriss';
 
   @override
-  String get quote3Text => 'Ce n\'est pas que je suis si intelligent, c\'est que je reste plus longtemps avec les problèmes.';
+  String get quote3Text =>
+      'Ce n\'est pas que je suis si intelligent, c\'est que je reste plus longtemps avec les problèmes.';
 
   @override
   String get quote3Author => 'Albert Einstein';
 
   @override
-  String get quote4Text => 'La façon de commencer est d\'arrêter de parler et de commencer à faire.';
+  String get quote4Text =>
+      'La façon de commencer est d\'arrêter de parler et de commencer à faire.';
 
   @override
   String get quote4Author => 'Walt Disney';
 
   @override
-  String get quote5Text => 'Vous n\'avez pas besoin d\'être génial pour commencer, mais vous devez commencer pour être génial.';
+  String get quote5Text =>
+      'Vous n\'avez pas besoin d\'être génial pour commencer, mais vous devez commencer pour être génial.';
 
   @override
   String get quote5Author => 'Zig Ziglar';
 
   @override
-  String get quote6Text => 'Le succès est la somme de petits efforts répétés jour après jour.';
+  String get quote6Text =>
+      'Le succès est la somme de petits efforts répétés jour après jour.';
 
   @override
   String get quote6Author => 'Robert Collier';
 
   @override
-  String get quote7Text => 'La seule façon de faire du bon travail est d\'aimer ce que vous faites.';
+  String get quote7Text =>
+      'La seule façon de faire du bon travail est d\'aimer ce que vous faites.';
 
   @override
   String get quote7Author => 'Steve Jobs';
 
   @override
-  String get quote8Text => 'Concentrez toutes vos pensées sur le travail en cours.';
+  String get quote8Text =>
+      'Concentrez toutes vos pensées sur le travail en cours.';
 
   @override
   String get quote8Author => 'Alexander Graham Bell';
 
   @override
-  String get quote9Text => 'Le temps est ce que nous voulons le plus, mais ce que nous utilisons le moins bien.';
+  String get quote9Text =>
+      'Le temps est ce que nous voulons le plus, mais ce que nous utilisons le moins bien.';
 
   @override
   String get quote9Author => 'William Penn';
@@ -422,7 +442,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get quote10Author => 'Pablo Picasso';
 
   @override
-  String get quote11Text => 'Ne regardez pas l\'horloge; faites ce qu\'elle fait. Continuez.';
+  String get quote11Text =>
+      'Ne regardez pas l\'horloge; faites ce qu\'elle fait. Continuez.';
 
   @override
   String get quote11Author => 'Sam Levenson';
@@ -440,13 +461,15 @@ class AppLocalizationsFr extends AppLocalizations {
   String get quote13Author => 'Inconnu';
 
   @override
-  String get quote14Text => 'Plus vous travaillez dur, plus vous avez de chance.';
+  String get quote14Text =>
+      'Plus vous travaillez dur, plus vous avez de chance.';
 
   @override
   String get quote14Author => 'Gary Player';
 
   @override
-  String get quote15Text => 'Faites aujourd\'hui quelque chose dont votre futur vous remerciera.';
+  String get quote15Text =>
+      'Faites aujourd\'hui quelque chose dont votre futur vous remerciera.';
 
   @override
   String get quote15Author => 'Inconnu';
@@ -458,5 +481,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get colorfulMode => 'Mode Coloré';
 
   @override
-  String get colorfulModeDesc => 'Utilisez des couleurs vibrantes et une mise en page animée';
+  String get colorfulModeDesc =>
+      'Utilisez des couleurs vibrantes et une mise en page animée';
 }
