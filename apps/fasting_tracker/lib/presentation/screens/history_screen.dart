@@ -152,10 +152,9 @@ class _HistoryCard extends StatelessWidget {
           width: 48,
           height: 48,
           decoration: BoxDecoration(
-            color:
-                session.goalAchieved
-                    ? theme.colorScheme.primaryContainer
-                    : theme.colorScheme.surfaceContainerHighest,
+            color: session.goalAchieved
+                ? theme.colorScheme.primaryContainer
+                : theme.colorScheme.surfaceContainerHighest,
             shape: BoxShape.circle,
           ),
           child: Center(

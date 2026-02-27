@@ -46,8 +46,9 @@ class MixRepositoryImpl implements MixRepository {
     if (sound == null) throw Exception('Sound not found: $soundId');
 
     // Remove if exists, then add with new volume
-    final updatedSounds =
-        currentMix.sounds.where((ms) => ms.sound.id != soundId).toList();
+    final updatedSounds = currentMix.sounds
+        .where((ms) => ms.sound.id != soundId)
+        .toList();
     updatedSounds.add(MixSound(sound: sound, volume: volume.clamp(0.0, 1.0)));
 
     final updatedMix = currentMix.copyWith(sounds: updatedSounds);
@@ -60,8 +61,9 @@ class MixRepositoryImpl implements MixRepository {
   Future<MixEntity> removeSound(String soundId) async {
     final currentMix = await getCurrentMix();
 
-    final updatedSounds =
-        currentMix.sounds.where((ms) => ms.sound.id != soundId).toList();
+    final updatedSounds = currentMix.sounds
+        .where((ms) => ms.sound.id != soundId)
+        .toList();
 
     final updatedMix = currentMix.copyWith(sounds: updatedSounds);
     await saveMix(updatedMix);
@@ -83,13 +85,12 @@ class MixRepositoryImpl implements MixRepository {
       throw Exception('Sound not in mix');
     }
 
-    final updatedSounds =
-        currentMix.sounds.map((ms) {
-          if (ms.sound.id == soundId) {
-            return ms.withVolume(volume);
-          }
-          return ms;
-        }).toList();
+    final updatedSounds = currentMix.sounds.map((ms) {
+      if (ms.sound.id == soundId) {
+        return ms.withVolume(volume);
+      }
+      return ms;
+    }).toList();
 
     final updatedMix = currentMix.copyWith(sounds: updatedSounds);
     await saveMix(updatedMix);

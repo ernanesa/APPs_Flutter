@@ -180,16 +180,15 @@ class SettingsScreen extends ConsumerWidget {
                       ref.read(localeProvider.notifier).setLocale(code);
                     }
                   },
-                  items:
-                      LocaleNotifier.supportedLocales.entries.map((entry) {
-                        return DropdownMenuItem<String>(
-                          value: entry.key,
-                          child: Text(
-                            entry.value,
-                            style: theme.textTheme.bodyMedium,
-                          ),
-                        );
-                      }).toList(),
+                  items: LocaleNotifier.supportedLocales.entries.map((entry) {
+                    return DropdownMenuItem<String>(
+                      value: entry.key,
+                      child: Text(
+                        entry.value,
+                        style: theme.textTheme.bodyMedium,
+                      ),
+                    );
+                  }).toList(),
                 ),
               ),
               SwitchListTile(
@@ -203,10 +202,9 @@ class SettingsScreen extends ConsumerWidget {
               SwitchListTile(
                 secondary: Icon(
                   Icons.palette_outlined,
-                  color:
-                      (settings.colorfulMode && !isColorful)
-                          ? theme.colorScheme.primary
-                          : null,
+                  color: (settings.colorfulMode && !isColorful)
+                      ? theme.colorScheme.primary
+                      : null,
                 ),
                 title: Text(l10n.colorfulMode),
                 subtitle: Text(
@@ -276,8 +274,9 @@ class SettingsScreen extends ConsumerWidget {
               Builder(
                 builder: (context) {
                   final achievements = ref.watch(achievementsProvider);
-                  final unlocked =
-                      achievements.where((a) => a.unlockedAt != null).length;
+                  final unlocked = achievements
+                      .where((a) => a.unlockedAt != null)
+                      .length;
                   final total = achievements.length;
                   return ListTile(
                     leading: const Icon(Icons.emoji_events_outlined),
@@ -314,10 +313,9 @@ class SettingsScreen extends ConsumerWidget {
                 trailing: Text(
                   '1.0.0',
                   style: theme.textTheme.bodyMedium?.copyWith(
-                    color:
-                        isColorful
-                            ? Colors.white70
-                            : theme.colorScheme.onSurfaceVariant,
+                    color: isColorful
+                        ? Colors.white70
+                        : theme.colorScheme.onSurfaceVariant,
                   ),
                 ),
               ),

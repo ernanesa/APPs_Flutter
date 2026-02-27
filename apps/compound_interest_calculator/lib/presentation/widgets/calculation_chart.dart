@@ -93,17 +93,16 @@ class CalculationChart extends StatelessWidget {
                       lineBarsData: [
                         // Contributions line (grey)
                         LineChartBarData(
-                          spots:
-                              monthlyData
-                                  .asMap()
-                                  .entries
-                                  .map(
-                                    (e) => FlSpot(
-                                      e.key.toDouble(),
-                                      e.value.totalInvested,
-                                    ),
-                                  )
-                                  .toList(),
+                          spots: monthlyData
+                              .asMap()
+                              .entries
+                              .map(
+                                (e) => FlSpot(
+                                  e.key.toDouble(),
+                                  e.value.totalInvested,
+                                ),
+                              )
+                              .toList(),
                           isCurved: true,
                           color: Colors.grey,
                           barWidth: 2,
@@ -112,17 +111,14 @@ class CalculationChart extends StatelessWidget {
                         ),
                         // Total amount line (green)
                         LineChartBarData(
-                          spots:
-                              monthlyData
-                                  .asMap()
-                                  .entries
-                                  .map(
-                                    (e) => FlSpot(
-                                      e.key.toDouble(),
-                                      e.value.balance,
-                                    ),
-                                  )
-                                  .toList(),
+                          spots: monthlyData
+                              .asMap()
+                              .entries
+                              .map(
+                                (e) =>
+                                    FlSpot(e.key.toDouble(), e.value.balance),
+                              )
+                              .toList(),
                           isCurved: true,
                           color: Colors.green,
                           barWidth: 3,

@@ -102,11 +102,10 @@ class AudioPlayerService {
 
   /// Dispose all players and clean up resources
   Future<void> dispose() async {
-    final futures =
-        _players.values.map((player) async {
-          await player.stop();
-          await player.dispose();
-        }).toList();
+    final futures = _players.values.map((player) async {
+      await player.stop();
+      await player.dispose();
+    }).toList();
 
     await Future.wait(futures);
     _players.clear();
@@ -143,10 +142,9 @@ class AudioPlayerService {
   /// Set global volume for all active sounds
   Future<void> setGlobalVolume(double volume) async {
     final clampedVolume = volume.clamp(0.0, 1.0);
-    final futures =
-        _players.values
-            .map((player) => player.setVolume(clampedVolume))
-            .toList();
+    final futures = _players.values
+        .map((player) => player.setVolume(clampedVolume))
+        .toList();
     await Future.wait(futures);
   }
 }

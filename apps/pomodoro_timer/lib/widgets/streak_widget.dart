@@ -22,10 +22,9 @@ class StreakWidget extends ConsumerWidget {
         color: theme.colorScheme.primaryContainer.withValues(alpha: 0.3),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color:
-              streak.currentStreak > 0
-                  ? Colors.orange
-                  : theme.colorScheme.outline.withValues(alpha: 0.3),
+          color: streak.currentStreak > 0
+              ? Colors.orange
+              : theme.colorScheme.outline.withValues(alpha: 0.3),
           width: 1.5,
         ),
       ),
@@ -34,10 +33,9 @@ class StreakWidget extends ConsumerWidget {
         children: [
           Icon(
             Icons.local_fire_department,
-            color:
-                streak.currentStreak > 0
-                    ? Colors.orange
-                    : theme.colorScheme.outline,
+            color: streak.currentStreak > 0
+                ? Colors.orange
+                : theme.colorScheme.outline,
             size: iconSize,
           ),
           const SizedBox(width: 4),
@@ -45,10 +43,9 @@ class StreakWidget extends ConsumerWidget {
             '${streak.currentStreak}',
             style: theme.textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.bold,
-              color:
-                  streak.currentStreak > 0
-                      ? Colors.orange
-                      : theme.colorScheme.onSurface,
+              color: streak.currentStreak > 0
+                  ? Colors.orange
+                  : theme.colorScheme.onSurface,
             ),
           ),
           if (showLabel) ...[
@@ -77,10 +74,9 @@ class StreakBadge extends ConsumerWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color:
-            streak.currentStreak > 0
-                ? Colors.orange.withValues(alpha: 0.2)
-                : Colors.grey.withValues(alpha: 0.2),
+        color: streak.currentStreak > 0
+            ? Colors.orange.withValues(alpha: 0.2)
+            : Colors.grey.withValues(alpha: 0.2),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(

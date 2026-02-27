@@ -154,11 +154,10 @@ class AchievementRepositoryImpl implements AchievementRepository {
   Future<void> _saveAchievements(List<AchievementEntity> achievements) async {
     final json =
         await _localDataSource.getJson(LocalDataSource.keyAchievements) ?? {};
-    json['achievements'] =
-        achievements.map((a) {
-          final dto = AchievementDto.fromEntity(a);
-          return dto.toJson();
-        }).toList();
+    json['achievements'] = achievements.map((a) {
+      final dto = AchievementDto.fromEntity(a);
+      return dto.toJson();
+    }).toList();
     await _localDataSource.setJson(LocalDataSource.keyAchievements, json);
   }
 

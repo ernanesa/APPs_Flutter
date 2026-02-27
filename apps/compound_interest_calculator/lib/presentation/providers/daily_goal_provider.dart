@@ -30,10 +30,9 @@ class DailyGoalNotifier extends StateNotifier<DailyGoal> {
     var goal = DailyGoal(
       targetCalculations: target,
       completedCalculations: completed,
-      date:
-          lastResetMs != null
-              ? DateTime.fromMillisecondsSinceEpoch(lastResetMs)
-              : DateTime.now(),
+      date: lastResetMs != null
+          ? DateTime.fromMillisecondsSinceEpoch(lastResetMs)
+          : DateTime.now(),
     );
 
     // Reset if new day

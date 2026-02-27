@@ -26,8 +26,8 @@ void main() {
     });
 
     test('Should return 0 for zero height', () {
-        final result = BmiLogic.calculateBmi(70, 0);
-        expect(result, 0);
+      final result = BmiLogic.calculateBmi(70, 0);
+      expect(result, 0);
     });
   });
 }

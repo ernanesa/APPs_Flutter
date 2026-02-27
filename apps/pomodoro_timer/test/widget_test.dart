@@ -21,7 +21,9 @@ void main() {
       expect(find.text('25:00'), findsOneWidget);
     });
 
-    testWidgets('displays single digit seconds with leading zero', (tester) async {
+    testWidgets('displays single digit seconds with leading zero', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(

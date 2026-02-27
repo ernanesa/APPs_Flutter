@@ -66,10 +66,9 @@ class TimerState {
       isPaused: isPaused ?? this.isPaused,
       completedSessions: completedSessions ?? this.completedSessions,
       completedPomodoros: completedPomodoros ?? this.completedPomodoros,
-      sessionStartTime:
-          clearSessionStartTime
-              ? null
-              : (sessionStartTime ?? this.sessionStartTime),
+      sessionStartTime: clearSessionStartTime
+          ? null
+          : (sessionStartTime ?? this.sessionStartTime),
     );
   }
 }

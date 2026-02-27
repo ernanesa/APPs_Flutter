@@ -36,53 +36,40 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             onSelected: (String code) {
               ref.read(localeProvider.notifier).setLocale(code);
             },
-            itemBuilder:
-                (BuildContext context) => <PopupMenuEntry<String>>[
-                  const PopupMenuItem<String>(
-                    value: 'en',
-                    child: Text('English'),
-                  ),
-                  const PopupMenuItem<String>(
-                    value: 'zh',
-                    child: Text('中文 (Chinese)'),
-                  ),
-                  const PopupMenuItem<String>(
-                    value: 'hi',
-                    child: Text('हिन्दी (Hindi)'),
-                  ),
-                  const PopupMenuItem<String>(
-                    value: 'es',
-                    child: Text('Español'),
-                  ),
-                  const PopupMenuItem<String>(
-                    value: 'fr',
-                    child: Text('Français'),
-                  ),
-                  const PopupMenuItem<String>(
-                    value: 'ar',
-                    child: Text('العربية (Arabic)'),
-                  ),
-                  const PopupMenuItem<String>(
-                    value: 'bn',
-                    child: Text('বাংলা (Bengali)'),
-                  ),
-                  const PopupMenuItem<String>(
-                    value: 'ru',
-                    child: Text('Русский (Russian)'),
-                  ),
-                  const PopupMenuItem<String>(
-                    value: 'pt',
-                    child: Text('Português'),
-                  ),
-                  const PopupMenuItem<String>(
-                    value: 'ja',
-                    child: Text('日本語 (Japanese)'),
-                  ),
-                  const PopupMenuItem<String>(
-                    value: 'de',
-                    child: Text('Deutsch'),
-                  ),
-                ],
+            itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+              const PopupMenuItem<String>(value: 'en', child: Text('English')),
+              const PopupMenuItem<String>(
+                value: 'zh',
+                child: Text('中文 (Chinese)'),
+              ),
+              const PopupMenuItem<String>(
+                value: 'hi',
+                child: Text('हिन्दी (Hindi)'),
+              ),
+              const PopupMenuItem<String>(value: 'es', child: Text('Español')),
+              const PopupMenuItem<String>(value: 'fr', child: Text('Français')),
+              const PopupMenuItem<String>(
+                value: 'ar',
+                child: Text('العربية (Arabic)'),
+              ),
+              const PopupMenuItem<String>(
+                value: 'bn',
+                child: Text('বাংলা (Bengali)'),
+              ),
+              const PopupMenuItem<String>(
+                value: 'ru',
+                child: Text('Русский (Russian)'),
+              ),
+              const PopupMenuItem<String>(
+                value: 'pt',
+                child: Text('Português'),
+              ),
+              const PopupMenuItem<String>(
+                value: 'ja',
+                child: Text('日本語 (Japanese)'),
+              ),
+              const PopupMenuItem<String>(value: 'de', child: Text('Deutsch')),
+            ],
           ),
           IconButton(
             icon: const Icon(Icons.info_outline),

@@ -32,10 +32,7 @@ class PrimaryButton extends StatelessWidget {
               width: 20,
               child: CircularProgressIndicator(strokeWidth: 2),
             )
-          : Text(
-              text,
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
+          : Text(text, style: const TextStyle(fontWeight: FontWeight.bold)),
     );
   }
 }

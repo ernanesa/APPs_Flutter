@@ -61,12 +61,11 @@ class _ThemeItem extends StatelessWidget {
         width: 72,
         padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
-          color:
-              isSelected
-                  ? appTheme.primaryColor.withValues(alpha: 0.15)
-                  : theme.colorScheme.surfaceContainerHighest.withValues(
-                    alpha: 0.3,
-                  ),
+          color: isSelected
+              ? appTheme.primaryColor.withValues(alpha: 0.15)
+              : theme.colorScheme.surfaceContainerHighest.withValues(
+                  alpha: 0.3,
+                ),
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
             color: isSelected ? appTheme.primaryColor : Colors.transparent,
@@ -92,19 +91,17 @@ class _ThemeItem extends StatelessWidget {
                   width: 2,
                 ),
               ),
-              child:
-                  isSelected
-                      ? const Icon(Icons.check, color: Colors.white, size: 20)
-                      : null,
+              child: isSelected
+                  ? const Icon(Icons.check, color: Colors.white, size: 20)
+                  : null,
             ),
             const SizedBox(height: 4),
             Text(
               _getLocalizedName(l10n, appTheme.nameKey),
               style: theme.textTheme.bodySmall?.copyWith(
-                color:
-                    isSelected
-                        ? appTheme.primaryColor
-                        : theme.colorScheme.onSurface,
+                color: isSelected
+                    ? appTheme.primaryColor
+                    : theme.colorScheme.onSurface,
                 fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
                 fontSize: 10,
               ),

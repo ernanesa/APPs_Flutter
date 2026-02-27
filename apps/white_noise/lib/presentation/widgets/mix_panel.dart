@@ -27,10 +27,9 @@ class MixPanel extends ConsumerWidget {
             SectionHeader(
               title: loc.mix,
               trailing: IconButton(
-                onPressed:
-                    mixState.mix.sounds.isEmpty
-                        ? null
-                        : () => ref.read(mixProvider.notifier).clearMix(),
+                onPressed: mixState.mix.sounds.isEmpty
+                    ? null
+                    : () => ref.read(mixProvider.notifier).clearMix(),
                 icon: const Icon(Icons.clear_all),
                 tooltip: loc.stop,
               ),
@@ -40,50 +39,43 @@ class MixPanel extends ConsumerWidget {
               Text(loc.mixEmpty)
             else
               Column(
-                children:
-                    mixState.mix.sounds.map((mixSound) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 6),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                soundName(loc, mixSound.sound.nameKey),
-                              ),
-                            ),
-                            Expanded(
-                              child: Slider(
-                                value: mixSound.volume,
-                                onChanged:
-                                    (value) => ref
-                                        .read(mixProvider.notifier)
-                                        .updateVolume(mixSound.sound.id, value),
-                              ),
-                            ),
-                            IconButton(
-                              onPressed:
-                                  () => ref
-                                      .read(mixProvider.notifier)
-                                      .toggleSound(mixSound.sound.id),
-                              icon: const Icon(Icons.remove_circle_outline),
-                            ),
-                          ],
+                children: mixState.mix.sounds.map((mixSound) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 6),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(soundName(loc, mixSound.sound.nameKey)),
                         ),
-                      );
-                    }).toList(),
+                        Expanded(
+                          child: Slider(
+                            value: mixSound.volume,
+                            onChanged: (value) => ref
+                                .read(mixProvider.notifier)
+                                .updateVolume(mixSound.sound.id, value),
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () => ref
+                              .read(mixProvider.notifier)
+                              .toggleSound(mixSound.sound.id),
+                          icon: const Icon(Icons.remove_circle_outline),
+                        ),
+                      ],
+                    ),
+                  );
+                }).toList(),
               ),
             const SizedBox(height: 8),
             Row(
               children: [
                 Expanded(
                   child: ElevatedButton.icon(
-                    onPressed:
-                        mixState.isLoading
-                            ? null
-                            : (mixState.isPlaying
-                                ? () => ref.read(mixProvider.notifier).stopMix()
-                                : () =>
-                                    ref.read(mixProvider.notifier).playMix()),
+                    onPressed: mixState.isLoading
+                        ? null
+                        : (mixState.isPlaying
+                              ? () => ref.read(mixProvider.notifier).stopMix()
+                              : () => ref.read(mixProvider.notifier).playMix()),
                     icon: Icon(
                       mixState.isPlaying ? Icons.pause : Icons.play_arrow,
                     ),
@@ -93,10 +85,9 @@ class MixPanel extends ConsumerWidget {
                 const SizedBox(width: 12),
                 Expanded(
                   child: OutlinedButton.icon(
-                    onPressed:
-                        mixState.isLoading
-                            ? null
-                            : () => ref.read(mixProvider.notifier).stopMix(),
+                    onPressed: mixState.isLoading
+                        ? null
+                        : () => ref.read(mixProvider.notifier).stopMix(),
                     icon: const Icon(Icons.stop),
                     label: Text(loc.stop),
                   ),
@@ -111,12 +102,11 @@ class MixPanel extends ConsumerWidget {
                 Expanded(
                   child: Slider(
                     value: settings.globalVolume,
-                    onChanged:
-                        settings.isLoading
-                            ? null
-                            : (value) => ref
-                                .read(settingsProvider.notifier)
-                                .setGlobalVolume(value),
+                    onChanged: settings.isLoading
+                        ? null
+                        : (value) => ref
+                              .read(settingsProvider.notifier)
+                              .setGlobalVolume(value),
                   ),
                 ),
               ],

@@ -103,22 +103,19 @@ class HomeScreen extends ConsumerWidget {
                     children: [
                       for (final category in categories)
                         _SoundList(
-                          sounds:
-                              sounds
-                                  .where((s) => s.category == category)
-                                  .toList(),
-                          selectedSoundIds:
-                              mixState.mix.sounds
-                                  .map((s) => s.sound.id)
-                                  .toSet(),
+                          sounds: sounds
+                              .where((s) => s.category == category)
+                              .toList(),
+                          selectedSoundIds: mixState.mix.sounds
+                              .map((s) => s.sound.id)
+                              .toSet(),
                         ),
                     ],
                   );
                 },
                 loading: () => const Center(child: CircularProgressIndicator()),
-                error:
-                    (error, _) =>
-                        const Center(child: Icon(Icons.error_outline)),
+                error: (error, _) =>
+                    const Center(child: Icon(Icons.error_outline)),
               ),
             ),
           ],

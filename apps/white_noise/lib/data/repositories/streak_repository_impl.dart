@@ -54,8 +54,9 @@ class StreakRepositoryImpl implements StreakRepository {
       }
     }
 
-    final newBest =
-        newStreak > current.bestStreak ? newStreak : current.bestStreak;
+    final newBest = newStreak > current.bestStreak
+        ? newStreak
+        : current.bestStreak;
 
     final updated = StreakEntity(
       currentStreak: newStreak,

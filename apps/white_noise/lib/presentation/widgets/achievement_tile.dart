@@ -22,15 +22,14 @@ class AchievementTile extends StatelessWidget {
       ),
       title: Text(achievementTitle(loc, achievement.titleKey)),
       subtitle: Text(achievementDescription(loc, achievement.descriptionKey)),
-      trailing:
-          isUnlocked
-              ? Text(
-                loc.achievementUnlocked,
-                style: theme.textTheme.labelSmall?.copyWith(
-                  color: theme.colorScheme.primary,
-                ),
-              )
-              : null,
+      trailing: isUnlocked
+          ? Text(
+              loc.achievementUnlocked,
+              style: theme.textTheme.labelSmall?.copyWith(
+                color: theme.colorScheme.primary,
+              ),
+            )
+          : null,
     );
   }
 }

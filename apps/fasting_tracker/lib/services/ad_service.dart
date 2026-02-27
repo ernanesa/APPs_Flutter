@@ -112,10 +112,9 @@ class AdService {
   }) async {
     final anchoredSize =
         await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(width);
-    final AdSize size =
-        anchoredSize != null
-            ? AdSize(width: anchoredSize.width, height: anchoredSize.height)
-            : AdSize.banner;
+    final AdSize size = anchoredSize != null
+        ? AdSize(width: anchoredSize.width, height: anchoredSize.height)
+        : AdSize.banner;
 
     return BannerAd(
       adUnitId: bannerAdUnitId,

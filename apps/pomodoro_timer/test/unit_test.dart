@@ -19,11 +19,17 @@ void main() {
         equals(25 * 60),
       );
       expect(
-        PomodoroLogic.getDurationForSessionType(SessionType.shortBreak, settings),
+        PomodoroLogic.getDurationForSessionType(
+          SessionType.shortBreak,
+          settings,
+        ),
         equals(5 * 60),
       );
       expect(
-        PomodoroLogic.getDurationForSessionType(SessionType.longBreak, settings),
+        PomodoroLogic.getDurationForSessionType(
+          SessionType.longBreak,
+          settings,
+        ),
         equals(15 * 60),
       );
     });
@@ -73,8 +79,14 @@ void main() {
     test('formatMinutesAsHoursAndMinutes formats correctly', () {
       expect(PomodoroLogic.formatMinutesAsHoursAndMinutes(30), equals('30m'));
       expect(PomodoroLogic.formatMinutesAsHoursAndMinutes(60), equals('1h 0m'));
-      expect(PomodoroLogic.formatMinutesAsHoursAndMinutes(90), equals('1h 30m'));
-      expect(PomodoroLogic.formatMinutesAsHoursAndMinutes(125), equals('2h 5m'));
+      expect(
+        PomodoroLogic.formatMinutesAsHoursAndMinutes(90),
+        equals('1h 30m'),
+      );
+      expect(
+        PomodoroLogic.formatMinutesAsHoursAndMinutes(125),
+        equals('2h 5m'),
+      );
     });
   });
 
@@ -117,10 +129,7 @@ void main() {
     });
 
     test('copyWith creates new state with modified values', () {
-      const original = TimerState(
-        remainingSeconds: 1000,
-        isRunning: false,
-      );
+      const original = TimerState(remainingSeconds: 1000, isRunning: false);
 
       final modified = original.copyWith(
         remainingSeconds: 500,

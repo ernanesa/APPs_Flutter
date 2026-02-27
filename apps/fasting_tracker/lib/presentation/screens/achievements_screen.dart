@@ -17,65 +17,63 @@ class AchievementsScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.achievements)),
-      body:
-          achievementsState.isLoading
-              ? const Center(child: CircularProgressIndicator())
-              : Column(
-                children: [
-                  // Progress header
-                  Container(
-                    padding: const EdgeInsets.all(24),
-                    color: theme.colorScheme.primaryContainer,
-                    child: Column(
-                      children: [
-                        Text('🏆', style: const TextStyle(fontSize: 48)),
-                        const SizedBox(height: 8),
-                        Text(
-                          '${achievementsState.unlockedCount}/${achievementsState.totalCount}',
-                          style: theme.textTheme.headlineMedium?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: theme.colorScheme.onPrimaryContainer,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          l10n.achievementsProgress(
-                            achievementsState.unlockedCount,
-                            achievementsState.totalCount,
-                          ),
-                          style: theme.textTheme.bodyMedium?.copyWith(
-                            color: theme.colorScheme.onPrimaryContainer,
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-                        LinearProgressIndicator(
-                          value: achievementsState.progress,
-                          backgroundColor: theme.colorScheme.onPrimaryContainer
-                              .withValues(alpha: 0.2),
+      body: achievementsState.isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : Column(
+              children: [
+                // Progress header
+                Container(
+                  padding: const EdgeInsets.all(24),
+                  color: theme.colorScheme.primaryContainer,
+                  child: Column(
+                    children: [
+                      Text('🏆', style: const TextStyle(fontSize: 48)),
+                      const SizedBox(height: 8),
+                      Text(
+                        '${achievementsState.unlockedCount}/${achievementsState.totalCount}',
+                        style: theme.textTheme.headlineMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
                           color: theme.colorScheme.onPrimaryContainer,
-                          minHeight: 8,
-                          borderRadius: BorderRadius.circular(4),
                         ),
-                      ],
-                    ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        l10n.achievementsProgress(
+                          achievementsState.unlockedCount,
+                          achievementsState.totalCount,
+                        ),
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          color: theme.colorScheme.onPrimaryContainer,
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      LinearProgressIndicator(
+                        value: achievementsState.progress,
+                        backgroundColor: theme.colorScheme.onPrimaryContainer
+                            .withValues(alpha: 0.2),
+                        color: theme.colorScheme.onPrimaryContainer,
+                        minHeight: 8,
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                    ],
                   ),
-                  // Achievements list
-                  Expanded(
-                    child: ListView.builder(
-                      padding: const EdgeInsets.all(16),
-                      itemCount: achievementsState.achievements.length,
-                      itemBuilder: (context, index) {
-                        final achievement =
-                            achievementsState.achievements[index];
-                        return _AchievementCard(
-                          achievement: achievement,
-                          l10n: l10n,
-                        );
-                      },
-                    ),
+                ),
+                // Achievements list
+                Expanded(
+                  child: ListView.builder(
+                    padding: const EdgeInsets.all(16),
+                    itemCount: achievementsState.achievements.length,
+                    itemBuilder: (context, index) {
+                      final achievement = achievementsState.achievements[index];
+                      return _AchievementCard(
+                        achievement: achievement,
+                        l10n: l10n,
+                      );
+                    },
                   ),
-                ],
-              ),
+                ),
+              ],
+            ),
     );
   }
 }
@@ -93,19 +91,17 @@ class _AchievementCard extends StatelessWidget {
 
     return Card(
       margin: const EdgeInsets.only(bottom: 8),
-      color:
-          isUnlocked
-              ? theme.colorScheme.primaryContainer.withValues(alpha: 0.5)
-              : theme.colorScheme.surfaceContainerHighest,
+      color: isUnlocked
+          ? theme.colorScheme.primaryContainer.withValues(alpha: 0.5)
+          : theme.colorScheme.surfaceContainerHighest,
       child: ListTile(
         leading: Container(
           width: 48,
           height: 48,
           decoration: BoxDecoration(
-            color:
-                isUnlocked
-                    ? theme.colorScheme.primary
-                    : theme.colorScheme.surfaceContainerHighest,
+            color: isUnlocked
+                ? theme.colorScheme.primary
+                : theme.colorScheme.surfaceContainerHighest,
             shape: BoxShape.circle,
           ),
           child: Center(
@@ -131,10 +127,9 @@ class _AchievementCard extends StatelessWidget {
             color: isUnlocked ? null : theme.colorScheme.onSurfaceVariant,
           ),
         ),
-        trailing:
-            isUnlocked
-                ? Icon(Icons.check_circle, color: theme.colorScheme.primary)
-                : null,
+        trailing: isUnlocked
+            ? Icon(Icons.check_circle, color: theme.colorScheme.primary)
+            : null,
       ),
     );
   }

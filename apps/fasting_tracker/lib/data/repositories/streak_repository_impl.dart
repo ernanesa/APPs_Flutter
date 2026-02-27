@@ -53,8 +53,9 @@ class StreakRepositoryImpl implements IStreakRepository {
       newStreak = 1;
     }
 
-    final newBest =
-        newStreak > current.bestStreak ? newStreak : current.bestStreak;
+    final newBest = newStreak > current.bestStreak
+        ? newStreak
+        : current.bestStreak;
 
     final updated = StreakDataModel(
       currentStreak: newStreak,

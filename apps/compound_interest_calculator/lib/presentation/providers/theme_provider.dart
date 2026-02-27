@@ -21,11 +21,8 @@ class ThemeNotifier extends StateNotifier<AppThemeType> {
   Future<void> _loadTheme() async {
     final prefs = await SharedPreferences.getInstance();
     final themeIndex = prefs.getInt('selected_theme') ?? 0;
-    state =
-        AppThemeType.values[themeIndex.clamp(
-          0,
-          AppThemeType.values.length - 1,
-        )];
+    state = AppThemeType
+        .values[themeIndex.clamp(0, AppThemeType.values.length - 1)];
   }
 
   Future<void> setTheme(AppThemeType theme) async {

@@ -33,19 +33,16 @@ class SettingsScreen extends ConsumerWidget {
             child: Wrap(
               spacing: 8,
               runSpacing: 8,
-              children:
-                  AppThemeType.values.map((themeType) {
-                    final isSelected = themeType == currentTheme;
-                    return _ThemeChip(
-                      themeType: themeType,
-                      isSelected: isSelected,
-                      onTap:
-                          () => ref
-                              .read(themeProvider.notifier)
-                              .setTheme(themeType),
-                      l10n: l10n,
-                    );
-                  }).toList(),
+              children: AppThemeType.values.map((themeType) {
+                final isSelected = themeType == currentTheme;
+                return _ThemeChip(
+                  themeType: themeType,
+                  isSelected: isSelected,
+                  onTap: () =>
+                      ref.read(themeProvider.notifier).setTheme(themeType),
+                  l10n: l10n,
+                );
+              }).toList(),
             ),
           ),
 
@@ -100,10 +97,9 @@ class SettingsScreen extends ConsumerWidget {
               const Divider(),
               ListTile(
                 title: Text(l10n.languageDefault),
-                trailing:
-                    currentLocale == null
-                        ? const Icon(Icons.check, color: Colors.green)
-                        : null,
+                trailing: currentLocale == null
+                    ? const Icon(Icons.check, color: Colors.green)
+                    : null,
                 onTap: () {
                   ref.read(localeProvider.notifier).setLocale(null);
                   Navigator.pop(context);
@@ -144,8 +140,9 @@ class SettingsScreen extends ConsumerWidget {
 
     return ListTile(
       title: Text(name),
-      trailing:
-          isSelected ? const Icon(Icons.check, color: Colors.green) : null,
+      trailing: isSelected
+          ? const Icon(Icons.check, color: Colors.green)
+          : null,
       onTap: () {
         ref.read(localeProvider.notifier).setLocale(Locale(code));
         Navigator.pop(context);
@@ -255,10 +252,9 @@ class _ThemeChip extends StatelessWidget {
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
-          color:
-              isSelected
-                  ? themeType.primaryColor
-                  : themeType.primaryColor.withValues(alpha: 0.2),
+          color: isSelected
+              ? themeType.primaryColor
+              : themeType.primaryColor.withValues(alpha: 0.2),
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
             color: themeType.primaryColor,

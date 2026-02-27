@@ -60,8 +60,8 @@ class ConsentService {
   static Future<void> _updateCanRequestAds() async {
     _canRequestAds = await ConsentInformation.instance.canRequestAds();
 
-    final privacyStatus =
-        await ConsentInformation.instance.getPrivacyOptionsRequirementStatus();
+    final privacyStatus = await ConsentInformation.instance
+        .getPrivacyOptionsRequirementStatus();
     _isPrivacyOptionsRequired =
         privacyStatus == PrivacyOptionsRequirementStatus.required;
   }

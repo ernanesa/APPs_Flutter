@@ -98,10 +98,9 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
     final entry = BmiEntry(
       id: const Uuid().v4(),
       weight: _currentWeight,
-      height:
-          _currentHeight < 3
-              ? _currentHeight * 100
-              : _currentHeight, // Store as CM standard
+      height: _currentHeight < 3
+          ? _currentHeight * 100
+          : _currentHeight, // Store as CM standard
       bmi: _bmiResult!,
       date: DateTime.now(),
     );

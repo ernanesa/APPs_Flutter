@@ -8,6 +8,7 @@ import 'services/ad_service.dart';
 import 'services/consent_service.dart';
 import 'presentation/screens/calculator_screen.dart';
 import 'presentation/providers/theme_provider.dart';
+import 'package:core_ui/core_ui.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -64,20 +65,8 @@ class _MyAppState extends ConsumerState<MyApp> with WidgetsBindingObserver {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Compound Interest Calculator',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: selectedTheme.primaryColor,
-          brightness: Brightness.light,
-        ),
-        useMaterial3: true,
-      ),
-      darkTheme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: selectedTheme.primaryColor,
-          brightness: Brightness.dark,
-        ),
-        useMaterial3: true,
-      ),
+      theme: AppTheme.lightTheme(selectedTheme.primaryColor),
+      darkTheme: AppTheme.darkTheme(selectedTheme.primaryColor),
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,

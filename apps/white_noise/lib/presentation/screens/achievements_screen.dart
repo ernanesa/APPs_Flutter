@@ -15,16 +15,15 @@ class AchievementsScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(title: Text(loc.achievements)),
-      body:
-          state.isLoading
-              ? const Center(child: CircularProgressIndicator())
-              : ListView.builder(
-                itemCount: state.achievements.length,
-                itemBuilder: (context, index) {
-                  final achievement = state.achievements[index];
-                  return AchievementTile(achievement: achievement);
-                },
-              ),
+      body: state.isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : ListView.builder(
+              itemCount: state.achievements.length,
+              itemBuilder: (context, index) {
+                final achievement = state.achievements[index];
+                return AchievementTile(achievement: achievement);
+              },
+            ),
     );
   }
 }

@@ -25,58 +25,53 @@ class SettingsScreen extends ConsumerWidget {
           SwitchListTile(
             title: Text(loc.darkMode),
             value: settings.isDarkMode,
-            onChanged:
-                settings.isLoading
-                    ? null
-                    : (value) =>
-                        ref.read(settingsProvider.notifier).setDarkMode(value),
+            onChanged: settings.isLoading
+                ? null
+                : (value) =>
+                      ref.read(settingsProvider.notifier).setDarkMode(value),
           ),
           SwitchListTile(
             title: Text(loc.keepScreenOn),
             subtitle: Text(loc.keepScreenOnDesc),
             value: settings.keepScreenOn,
-            onChanged:
-                settings.isLoading
-                    ? null
-                    : (value) => ref
-                        .read(settingsProvider.notifier)
-                        .setKeepScreenOn(value),
+            onChanged: settings.isLoading
+                ? null
+                : (value) => ref
+                      .read(settingsProvider.notifier)
+                      .setKeepScreenOn(value),
           ),
           ListTile(
             title: Text(loc.volume),
             subtitle: Slider(
               value: settings.globalVolume,
-              onChanged:
-                  settings.isLoading
-                      ? null
-                      : (value) => ref
-                          .read(settingsProvider.notifier)
-                          .setGlobalVolume(value),
+              onChanged: settings.isLoading
+                  ? null
+                  : (value) => ref
+                        .read(settingsProvider.notifier)
+                        .setGlobalVolume(value),
             ),
           ),
           ListTile(
             title: Text(loc.language),
             trailing: DropdownButton<String>(
               value: settings.languageCode,
-              items:
-                  AppLocalizations.supportedLocales
-                      .map(
-                        (locale) => DropdownMenuItem<String>(
-                          value: locale.languageCode,
-                          child: Text(locale.languageCode),
-                        ),
-                      )
-                      .toList(),
-              onChanged:
-                  settings.isLoading
-                      ? null
-                      : (value) {
-                        if (value != null) {
-                          ref
-                              .read(settingsProvider.notifier)
-                              .setLanguageCode(value);
-                        }
-                      },
+              items: AppLocalizations.supportedLocales
+                  .map(
+                    (locale) => DropdownMenuItem<String>(
+                      value: locale.languageCode,
+                      child: Text(locale.languageCode),
+                    ),
+                  )
+                  .toList(),
+              onChanged: settings.isLoading
+                  ? null
+                  : (value) {
+                      if (value != null) {
+                        ref
+                            .read(settingsProvider.notifier)
+                            .setLanguageCode(value);
+                      }
+                    },
             ),
           ),
           ListTile(

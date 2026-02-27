@@ -69,10 +69,9 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
       double.parse(_initialCapitalController.text),
     );
     calculationNotifier.setAnnualRate(double.parse(_rateController.text));
-    final months =
-        _isYearsMode
-            ? int.parse(_monthsController.text) * 12
-            : int.parse(_monthsController.text);
+    final months = _isYearsMode
+        ? int.parse(_monthsController.text) * 12
+        : int.parse(_monthsController.text);
     calculationNotifier.setMonths(months);
     calculationNotifier.setMonthlyContribution(
       double.parse(_contributionController.text),
@@ -119,28 +118,27 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
 
     final saved = await showDialog<bool>(
       context: context,
-      builder:
-          (context) => AlertDialog(
-            title: Text(l10n.save),
-            content: TextField(
-              controller: nameController,
-              decoration: InputDecoration(
-                labelText: l10n.calculationName,
-                hintText: l10n.calculationNameHint,
-              ),
-              autofocus: true,
-            ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context, false),
-                child: Text(l10n.cancel),
-              ),
-              FilledButton(
-                onPressed: () => Navigator.pop(context, true),
-                child: Text(l10n.save),
-              ),
-            ],
+      builder: (context) => AlertDialog(
+        title: Text(l10n.save),
+        content: TextField(
+          controller: nameController,
+          decoration: InputDecoration(
+            labelText: l10n.calculationName,
+            hintText: l10n.calculationNameHint,
           ),
+          autofocus: true,
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: Text(l10n.cancel),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: Text(l10n.save),
+          ),
+        ],
+      ),
     );
 
     if (saved == true && nameController.text.isNotEmpty) {
@@ -350,14 +348,13 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
               // Calculate button
               FilledButton.icon(
                 onPressed: calcState.isLoading ? null : _calculate,
-                icon:
-                    calcState.isLoading
-                        ? const SizedBox(
-                          width: 20,
-                          height: 20,
-                          child: CircularProgressIndicator(strokeWidth: 2),
-                        )
-                        : const Icon(Icons.calculate),
+                icon: calcState.isLoading
+                    ? const SizedBox(
+                        width: 20,
+                        height: 20,
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      )
+                    : const Icon(Icons.calculate),
                 label: Text(l10n.calculate),
                 style: FilledButton.styleFrom(
                   padding: const EdgeInsets.all(16),
@@ -384,12 +381,11 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
                         ),
                         Text(
                           formatCurrency(calcState.result!.totalAmount),
-                          style: Theme.of(
-                            context,
-                          ).textTheme.headlineLarge?.copyWith(
-                            color: Colors.green,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: Theme.of(context).textTheme.headlineLarge
+                              ?.copyWith(
+                                color: Colors.green,
+                                fontWeight: FontWeight.bold,
+                              ),
                         ),
                         const SizedBox(height: 8),
                         Row(
@@ -414,10 +410,9 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
                               formatCurrency(calcState.result!.totalInterest),
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color:
-                                    calcState.result!.percentageGain > 10
-                                        ? Colors.green
-                                        : Colors.orange,
+                                color: calcState.result!.percentageGain > 10
+                                    ? Colors.green
+                                    : Colors.orange,
                               ),
                             ),
                           ],
@@ -428,16 +423,14 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
                             showModalBottomSheet(
                               context: context,
                               isScrollControlled: true,
-                              builder:
-                                  (context) => SizedBox(
-                                    height:
-                                        MediaQuery.of(context).size.height *
-                                        0.8,
-                                    child: CalculationChart(
-                                      monthlyData:
-                                          calcState.result!.monthlyBreakdown,
-                                    ),
-                                  ),
+                              builder: (context) => SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.8,
+                                child: CalculationChart(
+                                  monthlyData:
+                                      calcState.result!.monthlyBreakdown,
+                                ),
+                              ),
                             );
                           },
                           child: Text(l10n.viewChart),
@@ -463,8 +456,7 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
       bottomNavigationBar: SafeArea(
         child: SizedBox(
           height: 60,
-          child:
-              AdWidget(ad: AdService.createBannerAd()..load()),
+          child: AdWidget(ad: AdService.createBannerAd()..load()),
         ),
       ),
     );

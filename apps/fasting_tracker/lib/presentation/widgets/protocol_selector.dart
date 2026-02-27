@@ -82,10 +82,9 @@ class _ProtocolCard extends StatelessWidget {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 200),
       child: Material(
-        color:
-            isSelected
-                ? theme.colorScheme.primaryContainer
-                : theme.colorScheme.surfaceContainerHighest,
+        color: isSelected
+            ? theme.colorScheme.primaryContainer
+            : theme.colorScheme.surfaceContainerHighest,
         borderRadius: BorderRadius.circular(16),
         child: InkWell(
           onTap: enabled ? onTap : null,
@@ -95,10 +94,9 @@ class _ProtocolCard extends StatelessWidget {
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16),
-              border:
-                  isSelected
-                      ? Border.all(color: theme.colorScheme.primary, width: 2)
-                      : null,
+              border: isSelected
+                  ? Border.all(color: theme.colorScheme.primary, width: 2)
+                  : null,
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -112,10 +110,9 @@ class _ProtocolCard extends StatelessWidget {
                     protocol.ratioString,
                     style: theme.textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
-                      color:
-                          isSelected
-                              ? theme.colorScheme.onPrimaryContainer
-                              : theme.colorScheme.onSurfaceVariant,
+                      color: isSelected
+                          ? theme.colorScheme.onPrimaryContainer
+                          : theme.colorScheme.onSurfaceVariant,
                     ),
                   ),
                 ),
@@ -124,10 +121,9 @@ class _ProtocolCard extends StatelessWidget {
                   child: Text(
                     _getProtocolName(protocol.nameKey),
                     style: theme.textTheme.bodySmall?.copyWith(
-                      color:
-                          isSelected
-                              ? theme.colorScheme.onPrimaryContainer
-                              : theme.colorScheme.onSurfaceVariant,
+                      color: isSelected
+                          ? theme.colorScheme.onPrimaryContainer
+                          : theme.colorScheme.onSurfaceVariant,
                     ),
                     overflow: TextOverflow.ellipsis,
                   ),

@@ -18,10 +18,9 @@ class StreakBadge extends ConsumerWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color:
-            streakData.currentStreak > 0
-                ? theme.colorScheme.primaryContainer
-                : theme.colorScheme.surfaceContainerHighest,
+        color: streakData.currentStreak > 0
+            ? theme.colorScheme.primaryContainer
+            : theme.colorScheme.surfaceContainerHighest,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Row(
@@ -36,10 +35,9 @@ class StreakBadge extends ConsumerWidget {
             '${streakData.currentStreak}',
             style: theme.textTheme.labelLarge?.copyWith(
               fontWeight: FontWeight.bold,
-              color:
-                  streakData.currentStreak > 0
-                      ? theme.colorScheme.onPrimaryContainer
-                      : theme.colorScheme.onSurfaceVariant,
+              color: streakData.currentStreak > 0
+                  ? theme.colorScheme.onPrimaryContainer
+                  : theme.colorScheme.onSurfaceVariant,
             ),
           ),
         ],

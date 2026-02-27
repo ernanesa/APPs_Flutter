@@ -40,8 +40,9 @@ class FastingState {
     bool clearSession = false,
   }) {
     return FastingState(
-      currentSession:
-          clearSession ? null : (currentSession ?? this.currentSession),
+      currentSession: clearSession
+          ? null
+          : (currentSession ?? this.currentSession),
       selectedProtocol: selectedProtocol ?? this.selectedProtocol,
       isLoading: isLoading ?? this.isLoading,
       errorMessage: errorMessage,

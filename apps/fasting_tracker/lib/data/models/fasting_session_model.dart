@@ -16,10 +16,9 @@ class FastingSessionModel extends FastingSession {
     return FastingSessionModel(
       id: json['id'] as String,
       startTime: DateTime.parse(json['startTime'] as String),
-      endTime:
-          json['endTime'] != null
-              ? DateTime.parse(json['endTime'] as String)
-              : null,
+      endTime: json['endTime'] != null
+          ? DateTime.parse(json['endTime'] as String)
+          : null,
       protocolId: json['protocolId'] as String,
       isCompleted: json['isCompleted'] as bool? ?? false,
       targetHours: json['targetHours'] as int,

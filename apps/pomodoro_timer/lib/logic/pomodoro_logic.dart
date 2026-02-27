@@ -60,14 +60,13 @@ class PomodoroLogic {
     List<PomodoroSession> sessions,
     DateTime date,
   ) {
-    final daySessions =
-        sessions.where((s) {
-          return s.startTime.year == date.year &&
-              s.startTime.month == date.month &&
-              s.startTime.day == date.day &&
-              s.type == SessionType.focus &&
-              s.wasCompleted;
-        }).toList();
+    final daySessions = sessions.where((s) {
+      return s.startTime.year == date.year &&
+          s.startTime.month == date.month &&
+          s.startTime.day == date.day &&
+          s.type == SessionType.focus &&
+          s.wasCompleted;
+    }).toList();
 
     final totalMinutes = daySessions.fold<int>(
       0,

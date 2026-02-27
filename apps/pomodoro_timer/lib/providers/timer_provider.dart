@@ -130,10 +130,9 @@ class TimerNotifier extends StateNotifier<TimerState> {
     onSessionComplete?.call(state.currentSessionType, true);
 
     // Check auto-start settings
-    final shouldAutoStart =
-        state.isFocusSession
-            ? _settings.autoStartBreaks
-            : _settings.autoStartFocus;
+    final shouldAutoStart = state.isFocusSession
+        ? _settings.autoStartBreaks
+        : _settings.autoStartFocus;
 
     _moveToNextSession();
 
@@ -196,8 +195,9 @@ class TimerNotifier extends StateNotifier<TimerState> {
 
     // Keep only last 30 days of sessions
     final cutoff = DateTime.now().subtract(const Duration(days: 30));
-    final filtered =
-        sessions.where((s) => s.startTime.isAfter(cutoff)).toList();
+    final filtered = sessions
+        .where((s) => s.startTime.isAfter(cutoff))
+        .toList();
 
     final json = filtered.map((s) => s.toJson()).toList();
     await _prefs.setString(_sessionsKey, jsonEncode(json));

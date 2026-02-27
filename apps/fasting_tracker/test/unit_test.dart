@@ -7,7 +7,7 @@ void main() {
       // Arrange
       final now = DateTime.now();
       final start = now.subtract(const Duration(hours: 4));
-      
+
       // Act
       final session = FastingSession(
         id: 'test_1',
@@ -34,7 +34,7 @@ void main() {
         protocolId: '16:8',
         targetHours: 16,
       );
-      
+
       final sessionAchieved = FastingSession(
         id: '2',
         startTime: startAchieved,
@@ -67,10 +67,10 @@ void main() {
       // Current: 15h (Middle) -> Expected 0.5
       final stage = FastingStage.fatBurning;
       expect(stage.progressInStage(15), closeTo(0.5, 0.01));
-      
+
       // Start of stage
       expect(stage.progressInStage(12), closeTo(0.0, 0.01));
-      
+
       // End of stage
       expect(stage.progressInStage(18), closeTo(1.0, 0.01));
     });

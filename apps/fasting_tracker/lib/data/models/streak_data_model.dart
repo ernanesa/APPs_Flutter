@@ -15,10 +15,9 @@ class StreakDataModel extends StreakData {
     return StreakDataModel(
       currentStreak: json['currentStreak'] as int? ?? 0,
       bestStreak: json['bestStreak'] as int? ?? 0,
-      lastCompletedDate:
-          json['lastCompletedDate'] != null
-              ? DateTime.parse(json['lastCompletedDate'] as String)
-              : null,
+      lastCompletedDate: json['lastCompletedDate'] != null
+          ? DateTime.parse(json['lastCompletedDate'] as String)
+          : null,
       totalCompletedFasts: json['totalCompletedFasts'] as int? ?? 0,
       totalFastingMinutes: json['totalFastingMinutes'] as int? ?? 0,
     );

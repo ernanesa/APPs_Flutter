@@ -198,24 +198,23 @@ class _TimerScreenState extends ConsumerState<TimerScreen>
         child: Column(
           children: [
             Expanded(
-              child:
-                  isColorful
-                      ? _buildColorfulBody(
-                        context,
-                        timerState,
-                        settings,
-                        sessionColor,
-                        l10n,
-                        theme,
-                      )
-                      : _buildMinimalBody(
-                        context,
-                        timerState,
-                        settings,
-                        sessionColor,
-                        l10n,
-                        theme,
-                      ),
+              child: isColorful
+                  ? _buildColorfulBody(
+                      context,
+                      timerState,
+                      settings,
+                      sessionColor,
+                      l10n,
+                      theme,
+                    )
+                  : _buildMinimalBody(
+                      context,
+                      timerState,
+                      settings,
+                      sessionColor,
+                      l10n,
+                      theme,
+                    ),
             ),
             // Banner ad at bottom
             const AdBannerWidget(),

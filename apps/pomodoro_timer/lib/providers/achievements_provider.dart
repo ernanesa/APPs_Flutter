@@ -34,21 +34,18 @@ class AchievementsNotifier extends StateNotifier<List<Achievement>> {
     if (json != null) {
       try {
         final Map<String, dynamic> data = jsonDecode(json);
-        state =
-            state.map((achievement) {
-              if (data.containsKey(achievement.id)) {
-                final unlockedData =
-                    data[achievement.id] as Map<String, dynamic>;
-                return achievement.copyWith(
-                  isUnlocked: unlockedData['isUnlocked'] as bool,
-                  unlockedAt:
-                      unlockedData['unlockedAt'] != null
-                          ? DateTime.parse(unlockedData['unlockedAt'] as String)
-                          : null,
-                );
-              }
-              return achievement;
-            }).toList();
+        state = state.map((achievement) {
+          if (data.containsKey(achievement.id)) {
+            final unlockedData = data[achievement.id] as Map<String, dynamic>;
+            return achievement.copyWith(
+              isUnlocked: unlockedData['isUnlocked'] as bool,
+              unlockedAt: unlockedData['unlockedAt'] != null
+                  ? DateTime.parse(unlockedData['unlockedAt'] as String)
+                  : null,
+            );
+          }
+          return achievement;
+        }).toList();
       } catch (_) {
         // Use defaults on error
       }
@@ -127,10 +124,9 @@ class AchievementsNotifier extends StateNotifier<List<Achievement>> {
 
   /// Called when a session is completed to check achievements.
   Future<void> onSessionCompleted(List<PomodoroSession> allSessions) async {
-    final totalSessions =
-        allSessions
-            .where((s) => s.type == SessionType.focus && s.wasCompleted)
-            .length;
+    final totalSessions = allSessions
+        .where((s) => s.type == SessionType.focus && s.wasCompleted)
+        .length;
 
     final totalFocusMinutes = allSessions
         .where((s) => s.type == SessionType.focus && s.wasCompleted)
@@ -141,14 +137,13 @@ class AchievementsNotifier extends StateNotifier<List<Achievement>> {
     // Count weekend sessions
     final now = DateTime.now();
     final weekStart = now.subtract(Duration(days: now.weekday - 1));
-    final weekendSessions =
-        allSessions.where((s) {
-          final day = s.startTime.weekday;
-          return s.startTime.isAfter(weekStart) &&
-              (day == DateTime.saturday || day == DateTime.sunday) &&
-              s.type == SessionType.focus &&
-              s.wasCompleted;
-        }).length;
+    final weekendSessions = allSessions.where((s) {
+      final day = s.startTime.weekday;
+      return s.startTime.isAfter(weekStart) &&
+          (day == DateTime.saturday || day == DateTime.sunday) &&
+          s.type == SessionType.focus &&
+          s.wasCompleted;
+    }).length;
 
     await checkAndUnlockAchievements(
       totalSessions: totalSessions,

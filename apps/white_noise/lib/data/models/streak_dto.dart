@@ -16,8 +16,9 @@ class StreakDto {
     return StreakEntity(
       currentStreak: currentStreak,
       bestStreak: bestStreak,
-      lastActiveDate:
-          lastActiveDate != null ? DateTime.parse(lastActiveDate!) : null,
+      lastActiveDate: lastActiveDate != null
+          ? DateTime.parse(lastActiveDate!)
+          : null,
     );
   }
 

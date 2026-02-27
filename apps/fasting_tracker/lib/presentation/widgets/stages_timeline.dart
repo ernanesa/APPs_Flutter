@@ -103,12 +103,11 @@ class StagesTimeline extends StatelessWidget {
                 width: 24,
                 height: 24,
                 decoration: BoxDecoration(
-                  color:
-                      isActive
-                          ? stage.color
-                          : isPassed
-                          ? stage.color.withValues(alpha: 0.5)
-                          : theme.colorScheme.surfaceContainerHighest,
+                  color: isActive
+                      ? stage.color
+                      : isPassed
+                      ? stage.color.withValues(alpha: 0.5)
+                      : theme.colorScheme.surfaceContainerHighest,
                   shape: BoxShape.circle,
                   border: Border.all(
                     color: stage.color,
@@ -126,10 +125,9 @@ class StagesTimeline extends StatelessWidget {
                 Expanded(
                   child: Container(
                     width: 2,
-                    color:
-                        isPassed
-                            ? stage.color.withValues(alpha: 0.5)
-                            : theme.colorScheme.surfaceContainerHighest,
+                    color: isPassed
+                        ? stage.color.withValues(alpha: 0.5)
+                        : theme.colorScheme.surfaceContainerHighest,
                   ),
                 ),
             ],
@@ -147,8 +145,9 @@ class StagesTimeline extends StatelessWidget {
                       Text(
                         stage.name,
                         style: theme.textTheme.bodyLarge?.copyWith(
-                          fontWeight:
-                              isActive ? FontWeight.bold : FontWeight.normal,
+                          fontWeight: isActive
+                              ? FontWeight.bold
+                              : FontWeight.normal,
                           color: isActive ? stage.color : null,
                         ),
                       ),

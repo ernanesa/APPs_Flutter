@@ -103,10 +103,9 @@ class FastingTimerWidget extends ConsumerWidget {
     final clampedProgress = progress.clamp(0.0, 1.0);
 
     // Stage colors
-    final stageColor =
-        session != null
-            ? _getStageColor(session.currentStage, theme)
-            : theme.colorScheme.surfaceContainerHighest;
+    final stageColor = session != null
+        ? _getStageColor(session.currentStage, theme)
+        : theme.colorScheme.surfaceContainerHighest;
 
     return [
       // Progress section

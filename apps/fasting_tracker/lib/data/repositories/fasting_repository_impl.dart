@@ -63,8 +63,9 @@ class FastingRepositoryImpl implements IFastingRepository {
 
     // Add to history
     final history = await getHistory(limit: 100);
-    final historyModels =
-        history.map((s) => FastingSessionModel.fromEntity(s)).toList();
+    final historyModels = history
+        .map((s) => FastingSessionModel.fromEntity(s))
+        .toList();
     historyModels.insert(0, completedSession);
 
     // Keep only last 100 sessions

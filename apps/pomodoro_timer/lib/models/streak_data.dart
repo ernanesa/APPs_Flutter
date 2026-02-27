@@ -24,10 +24,9 @@ class StreakData {
     return StreakData(
       currentStreak: json['currentStreak'] as int? ?? 0,
       bestStreak: json['bestStreak'] as int? ?? 0,
-      lastActiveDate:
-          json['lastActiveDate'] != null
-              ? DateTime.parse(json['lastActiveDate'] as String)
-              : null,
+      lastActiveDate: json['lastActiveDate'] != null
+          ? DateTime.parse(json['lastActiveDate'] as String)
+          : null,
       totalDaysActive: json['totalDaysActive'] as int? ?? 0,
     );
   }

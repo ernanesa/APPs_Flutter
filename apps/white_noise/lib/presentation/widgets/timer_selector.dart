@@ -40,18 +40,17 @@ class TimerSelector extends ConsumerWidget {
                   );
                 }),
               ],
-              onChanged:
-                  settings.isLoading
-                      ? null
-                      : (value) {
-                        if (value == null) {
-                          ref.read(settingsProvider.notifier).disableTimer();
-                        } else {
-                          ref
-                              .read(settingsProvider.notifier)
-                              .setTimer(value, enabled: true);
-                        }
-                      },
+              onChanged: settings.isLoading
+                  ? null
+                  : (value) {
+                      if (value == null) {
+                        ref.read(settingsProvider.notifier).disableTimer();
+                      } else {
+                        ref
+                            .read(settingsProvider.notifier)
+                            .setTimer(value, enabled: true);
+                      }
+                    },
             ),
           ],
         ),

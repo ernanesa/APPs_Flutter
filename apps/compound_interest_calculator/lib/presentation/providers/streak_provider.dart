@@ -21,10 +21,9 @@ class StreakNotifier extends StateNotifier<StreakData> {
     state = StreakData(
       currentStreak: currentStreak,
       bestStreak: bestStreak,
-      lastActiveDate:
-          lastActiveMs != null
-              ? DateTime.fromMillisecondsSinceEpoch(lastActiveMs)
-              : null,
+      lastActiveDate: lastActiveMs != null
+          ? DateTime.fromMillisecondsSinceEpoch(lastActiveMs)
+          : null,
     );
   }
 

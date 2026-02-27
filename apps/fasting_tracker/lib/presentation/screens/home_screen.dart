@@ -48,36 +48,35 @@ class HomeScreen extends ConsumerWidget {
                 const HealthInfoButton().showHealthInfoSheet(context);
               }
             },
-            itemBuilder:
-                (context) => [
-                  PopupMenuItem(
-                    value: 'history',
-                    child: ListTile(
-                      leading: const Icon(Icons.history),
-                      title: Text(l10n.history),
-                      contentPadding: EdgeInsets.zero,
-                      visualDensity: VisualDensity.compact,
-                    ),
-                  ),
-                  PopupMenuItem(
-                    value: 'info',
-                    child: ListTile(
-                      leading: const Icon(Icons.info_outline),
-                      title: Text(l10n.healthInfoTitle),
-                      contentPadding: EdgeInsets.zero,
-                      visualDensity: VisualDensity.compact,
-                    ),
-                  ),
-                  PopupMenuItem(
-                    value: 'settings',
-                    child: ListTile(
-                      leading: const Icon(Icons.settings),
-                      title: Text(l10n.settings),
-                      contentPadding: EdgeInsets.zero,
-                      visualDensity: VisualDensity.compact,
-                    ),
-                  ),
-                ],
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                value: 'history',
+                child: ListTile(
+                  leading: const Icon(Icons.history),
+                  title: Text(l10n.history),
+                  contentPadding: EdgeInsets.zero,
+                  visualDensity: VisualDensity.compact,
+                ),
+              ),
+              PopupMenuItem(
+                value: 'info',
+                child: ListTile(
+                  leading: const Icon(Icons.info_outline),
+                  title: Text(l10n.healthInfoTitle),
+                  contentPadding: EdgeInsets.zero,
+                  visualDensity: VisualDensity.compact,
+                ),
+              ),
+              PopupMenuItem(
+                value: 'settings',
+                child: ListTile(
+                  leading: const Icon(Icons.settings),
+                  title: Text(l10n.settings),
+                  contentPadding: EdgeInsets.zero,
+                  visualDensity: VisualDensity.compact,
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -92,13 +91,12 @@ class HomeScreen extends ConsumerWidget {
                 children: [
                   const StreakBadge(),
                   FilledButton.tonalIcon(
-                    onPressed:
-                        () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => const AchievementsScreen(),
-                          ),
-                        ),
+                    onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const AchievementsScreen(),
+                      ),
+                    ),
                     icon: const Icon(Icons.emoji_events, size: 18),
                     label: Text(l10n.achievements),
                     style: FilledButton.styleFrom(
@@ -203,10 +201,9 @@ class HomeScreen extends ConsumerWidget {
               label: Text(goalAchieved ? l10n.complete : l10n.endEarly),
               style: FilledButton.styleFrom(
                 padding: const EdgeInsets.symmetric(vertical: 16),
-                backgroundColor:
-                    goalAchieved
-                        ? theme.colorScheme.primary
-                        : theme.colorScheme.secondary,
+                backgroundColor: goalAchieved
+                    ? theme.colorScheme.primary
+                    : theme.colorScheme.secondary,
               ),
             ),
           ),
@@ -242,24 +239,23 @@ class HomeScreen extends ConsumerWidget {
   ) {
     showDialog(
       context: context,
-      builder:
-          (context) => AlertDialog(
-            title: Text(l10n.cancelFasting),
-            content: Text(l10n.cancelFastingConfirm),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: Text(l10n.no),
-              ),
-              FilledButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                  ref.read(fastingProvider.notifier).cancelFasting();
-                },
-                child: Text(l10n.yes),
-              ),
-            ],
+      builder: (context) => AlertDialog(
+        title: Text(l10n.cancelFasting),
+        content: Text(l10n.cancelFastingConfirm),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(l10n.no),
           ),
+          FilledButton(
+            onPressed: () {
+              Navigator.pop(context);
+              ref.read(fastingProvider.notifier).cancelFasting();
+            },
+            child: Text(l10n.yes),
+          ),
+        ],
+      ),
     );
   }
 }

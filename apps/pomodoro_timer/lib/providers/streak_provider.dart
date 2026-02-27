@@ -72,8 +72,9 @@ class StreakNotifier extends StateNotifier<StreakData> {
       }
     }
 
-    final newBestStreak =
-        newStreak > state.bestStreak ? newStreak : state.bestStreak;
+    final newBestStreak = newStreak > state.bestStreak
+        ? newStreak
+        : state.bestStreak;
 
     state = state.copyWith(
       currentStreak: newStreak,
