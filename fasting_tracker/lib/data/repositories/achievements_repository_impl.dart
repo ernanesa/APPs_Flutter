@@ -5,7 +5,7 @@ import '../../domain/repositories/i_achievements_repository.dart';
 
 class AchievementsRepositoryImpl implements IAchievementsRepository {
   final SharedPreferences _prefs;
-  
+
   static const String _achievementsKey = 'achievements_status';
   static const String _unlockDatesKey = 'achievements_dates';
 
@@ -15,21 +15,23 @@ class AchievementsRepositoryImpl implements IAchievementsRepository {
   Future<List<Achievement>> getAchievements() async {
     final statusJson = _prefs.getString(_achievementsKey);
     final datesJson = _prefs.getString(_unlockDatesKey);
-    
+
     Map<String, bool> unlockStatus = {};
     Map<String, DateTime> unlockDates = {};
-    
+
     if (statusJson != null && statusJson.isNotEmpty) {
       try {
         final decoded = jsonDecode(statusJson) as Map<String, dynamic>;
         unlockStatus = decoded.map((k, v) => MapEntry(k, v as bool));
       } catch (_) {}
     }
-    
+
     if (datesJson != null && datesJson.isNotEmpty) {
       try {
         final decoded = jsonDecode(datesJson) as Map<String, dynamic>;
-        unlockDates = decoded.map((k, v) => MapEntry(k, DateTime.parse(v as String)));
+        unlockDates = decoded.map(
+          (k, v) => MapEntry(k, DateTime.parse(v as String)),
+        );
       } catch (_) {}
     }
 
@@ -45,17 +47,17 @@ class AchievementsRepositoryImpl implements IAchievementsRepository {
   Future<Achievement> unlockAchievement(String achievementId) async {
     final statusJson = _prefs.getString(_achievementsKey);
     final datesJson = _prefs.getString(_unlockDatesKey);
-    
+
     Map<String, bool> unlockStatus = {};
     Map<String, String> unlockDates = {};
-    
+
     if (statusJson != null && statusJson.isNotEmpty) {
       try {
         final decoded = jsonDecode(statusJson) as Map<String, dynamic>;
         unlockStatus = decoded.map((k, v) => MapEntry(k, v as bool));
       } catch (_) {}
     }
-    
+
     if (datesJson != null && datesJson.isNotEmpty) {
       try {
         final decoded = jsonDecode(datesJson) as Map<String, dynamic>;
@@ -66,13 +68,14 @@ class AchievementsRepositoryImpl implements IAchievementsRepository {
     final now = DateTime.now();
     unlockStatus[achievementId] = true;
     unlockDates[achievementId] = now.toIso8601String();
-    
+
     await _prefs.setString(_achievementsKey, jsonEncode(unlockStatus));
     await _prefs.setString(_unlockDatesKey, jsonEncode(unlockDates));
 
-    final achievement = Achievement.defaultAchievements
-        .firstWhere((a) => a.id == achievementId);
-    
+    final achievement = Achievement.defaultAchievements.firstWhere(
+      (a) => a.id == achievementId,
+    );
+
     return achievement.copyWith(isUnlocked: true, unlockedAt: now);
   }
 

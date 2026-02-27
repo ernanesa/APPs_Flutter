@@ -78,7 +78,8 @@ class PomodoroSettings {
       focusDurationMinutes: focusDurationMinutes ?? this.focusDurationMinutes,
       shortBreakMinutes: shortBreakMinutes ?? this.shortBreakMinutes,
       longBreakMinutes: longBreakMinutes ?? this.longBreakMinutes,
-      sessionsUntilLongBreak: sessionsUntilLongBreak ?? this.sessionsUntilLongBreak,
+      sessionsUntilLongBreak:
+          sessionsUntilLongBreak ?? this.sessionsUntilLongBreak,
       soundEnabled: soundEnabled ?? this.soundEnabled,
       vibrationEnabled: vibrationEnabled ?? this.vibrationEnabled,
       autoStartBreaks: autoStartBreaks ?? this.autoStartBreaks,

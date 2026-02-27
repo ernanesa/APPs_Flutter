@@ -26,9 +26,10 @@ class AchievementModel extends Achievement {
       ),
       requirement: json['requirement'] as int,
       isUnlocked: json['isUnlocked'] as bool? ?? false,
-      unlockedAt: json['unlockedAt'] != null
-          ? DateTime.parse(json['unlockedAt'] as String)
-          : null,
+      unlockedAt:
+          json['unlockedAt'] != null
+              ? DateTime.parse(json['unlockedAt'] as String)
+              : null,
     );
   }
 

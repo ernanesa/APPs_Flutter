@@ -17,9 +17,7 @@ class SettingsScreen extends ConsumerWidget {
     final dailyGoal = ref.watch(dailyGoalProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.settings),
-      ),
+      appBar: AppBar(title: Text(l10n.settings)),
       body: ListView(
         padding: const EdgeInsets.all(8),
         children: [
@@ -41,24 +39,37 @@ class SettingsScreen extends ConsumerWidget {
                     crossAxisCount: 4,
                     mainAxisSpacing: 8,
                     crossAxisSpacing: 8,
-                    children: AppThemeType.values.map((theme) {
-                      final isSelected = theme == selectedTheme;
-                      return InkWell(
-                        onTap: () => ref.read(selectedThemeProvider.notifier).setTheme(theme),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: theme.primaryColor,
-                            borderRadius: BorderRadius.circular(8),
-                            border: isSelected
-                                ? Border.all(color: Colors.white, width: 3)
-                                : null,
-                          ),
-                          child: isSelected
-                              ? const Icon(Icons.check, color: Colors.white, size: 32)
-                              : null,
-                        ),
-                      );
-                    }).toList(),
+                    children:
+                        AppThemeType.values.map((theme) {
+                          final isSelected = theme == selectedTheme;
+                          return InkWell(
+                            onTap:
+                                () => ref
+                                    .read(selectedThemeProvider.notifier)
+                                    .setTheme(theme),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: theme.primaryColor,
+                                borderRadius: BorderRadius.circular(8),
+                                border:
+                                    isSelected
+                                        ? Border.all(
+                                          color: Colors.white,
+                                          width: 3,
+                                        )
+                                        : null,
+                              ),
+                              child:
+                                  isSelected
+                                      ? const Icon(
+                                        Icons.check,
+                                        color: Colors.white,
+                                        size: 32,
+                                      )
+                                      : null,
+                            ),
+                          );
+                        }).toList(),
                   ),
                 ],
               ),
@@ -88,7 +99,9 @@ class SettingsScreen extends ConsumerWidget {
                     divisions: 9,
                     label: dailyGoal.targetCalculations.toString(),
                     onChanged: (value) {
-                      ref.read(dailyGoalProvider.notifier).setTarget(value.toInt());
+                      ref
+                          .read(dailyGoalProvider.notifier)
+                          .setTarget(value.toInt());
                     },
                   ),
                 ],
@@ -161,27 +174,28 @@ class SettingsScreen extends ConsumerWidget {
   ) {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text(l10n.clearHistory),
-        content: Text(l10n.clearHistoryConfirmation),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text(l10n.cancel),
+      builder:
+          (context) => AlertDialog(
+            title: Text(l10n.clearHistory),
+            content: Text(l10n.clearHistoryConfirmation),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text(l10n.cancel),
+              ),
+              TextButton(
+                onPressed: () {
+                  // Clear history via provider
+                  Navigator.pop(context);
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(SnackBar(content: Text(l10n.historyCleared)));
+                },
+                style: TextButton.styleFrom(foregroundColor: Colors.red),
+                child: Text(l10n.clearAll),
+              ),
+            ],
           ),
-          TextButton(
-            onPressed: () {
-              // Clear history via provider
-              Navigator.pop(context);
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(l10n.historyCleared)),
-              );
-            },
-            style: TextButton.styleFrom(foregroundColor: Colors.red),
-            child: Text(l10n.clearAll),
-          ),
-        ],
-      ),
     );
   }
 }

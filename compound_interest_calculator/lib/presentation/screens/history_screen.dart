@@ -57,8 +57,10 @@ class HistoryScreen extends ConsumerWidget {
             itemBuilder: (context, index) {
               final calc = calculations[index];
               final date = DateFormat.yMd().format(calc.timestamp);
-              final percentageGain = ((calc.totalAmount - calc.totalContributed) / 
-                  calc.totalContributed * 100);
+              final percentageGain =
+                  ((calc.totalAmount - calc.totalContributed) /
+                      calc.totalContributed *
+                      100);
 
               return Dismissible(
                 key: Key(calc.timestamp.toIso8601String()),
@@ -99,7 +101,10 @@ class HistoryScreen extends ConsumerWidget {
                         Text(
                           '+${percentageGain.toStringAsFixed(1)}%',
                           style: TextStyle(
-                            color: percentageGain > 10 ? Colors.green : Colors.orange,
+                            color:
+                                percentageGain > 10
+                                    ? Colors.green
+                                    : Colors.orange,
                             fontSize: 12,
                           ),
                         ),
@@ -113,9 +118,7 @@ class HistoryScreen extends ConsumerWidget {
           );
         },
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, stack) => Center(
-          child: Text('${l10n.error}: $error'),
-        ),
+        error: (error, stack) => Center(child: Text('${l10n.error}: $error')),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => Navigator.pop(context),
@@ -127,48 +130,54 @@ class HistoryScreen extends ConsumerWidget {
   Future<bool?> _confirmDelete(BuildContext context, AppLocalizations l10n) {
     return showDialog<bool>(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text(l10n.confirmDelete),
-        content: Text(l10n.deleteCalculationMessage),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context, false),
-            child: Text(l10n.cancel),
+      builder:
+          (context) => AlertDialog(
+            title: Text(l10n.confirmDelete),
+            content: Text(l10n.deleteCalculationMessage),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context, false),
+                child: Text(l10n.cancel),
+              ),
+              TextButton(
+                onPressed: () => Navigator.pop(context, true),
+                style: TextButton.styleFrom(foregroundColor: Colors.red),
+                child: Text(l10n.delete),
+              ),
+            ],
           ),
-          TextButton(
-            onPressed: () => Navigator.pop(context, true),
-            style: TextButton.styleFrom(foregroundColor: Colors.red),
-            child: Text(l10n.delete),
-          ),
-        ],
-      ),
     );
   }
 
-  void _showClearAllDialog(BuildContext context, WidgetRef ref, AppLocalizations l10n) {
+  void _showClearAllDialog(
+    BuildContext context,
+    WidgetRef ref,
+    AppLocalizations l10n,
+  ) {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text(l10n.clearAllHistory),
-        content: Text(l10n.clearAllHistoryMessage),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text(l10n.cancel),
+      builder:
+          (context) => AlertDialog(
+            title: Text(l10n.clearAllHistory),
+            content: Text(l10n.clearAllHistoryMessage),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text(l10n.cancel),
+              ),
+              TextButton(
+                onPressed: () {
+                  ref.read(historyProvider.notifier).clearAll();
+                  Navigator.pop(context);
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(SnackBar(content: Text(l10n.historyCleared)));
+                },
+                style: TextButton.styleFrom(foregroundColor: Colors.red),
+                child: Text(l10n.clearAll),
+              ),
+            ],
           ),
-          TextButton(
-            onPressed: () {
-              ref.read(historyProvider.notifier).clearAll();
-              Navigator.pop(context);
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(l10n.historyCleared)),
-              );
-            },
-            style: TextButton.styleFrom(foregroundColor: Colors.red),
-            child: Text(l10n.clearAll),
-          ),
-        ],
-      ),
     );
   }
 
@@ -179,28 +188,41 @@ class HistoryScreen extends ConsumerWidget {
   ) {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text(calc.name),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildDetailRow(l10n.initialCapital, formatCurrency(calc.principal)),
-            _buildDetailRow(l10n.interestRate, '${calc.annualRate}%'),
-            _buildDetailRow(l10n.months, '${calc.months}'),
-            _buildDetailRow(l10n.monthlyContribution, formatCurrency(calc.monthlyContribution)),
-            const Divider(),
-            _buildDetailRow(l10n.totalAmount, formatCurrency(calc.totalAmount)),
-            _buildDetailRow(l10n.totalInterest, formatCurrency(calc.totalInterest)),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text(l10n.close),
+      builder:
+          (context) => AlertDialog(
+            title: Text(calc.name),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildDetailRow(
+                  l10n.initialCapital,
+                  formatCurrency(calc.principal),
+                ),
+                _buildDetailRow(l10n.interestRate, '${calc.annualRate}%'),
+                _buildDetailRow(l10n.months, '${calc.months}'),
+                _buildDetailRow(
+                  l10n.monthlyContribution,
+                  formatCurrency(calc.monthlyContribution),
+                ),
+                const Divider(),
+                _buildDetailRow(
+                  l10n.totalAmount,
+                  formatCurrency(calc.totalAmount),
+                ),
+                _buildDetailRow(
+                  l10n.totalInterest,
+                  formatCurrency(calc.totalInterest),
+                ),
+              ],
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text(l10n.close),
+              ),
+            ],
           ),
-        ],
-      ),
     );
   }
 

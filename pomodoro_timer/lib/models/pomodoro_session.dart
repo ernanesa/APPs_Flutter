@@ -45,8 +45,4 @@ class PomodoroSession {
 }
 
 /// Types of Pomodoro sessions.
-enum SessionType {
-  focus,
-  shortBreak,
-  longBreak,
-}
+enum SessionType { focus, shortBreak, longBreak }

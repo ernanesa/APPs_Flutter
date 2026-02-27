@@ -31,9 +31,7 @@ void main() async {
 
   runApp(
     ProviderScope(
-      overrides: [
-        sharedPreferencesProvider.overrideWithValue(prefs),
-      ],
+      overrides: [sharedPreferencesProvider.overrideWithValue(prefs)],
       child: const PomodoroApp(),
     ),
   );
@@ -103,10 +101,7 @@ class _PomodoroAppState extends ConsumerState<PomodoroApp>
           brightness: Brightness.light,
         ),
         useMaterial3: true,
-        appBarTheme: const AppBarTheme(
-          centerTitle: true,
-          elevation: 0,
-        ),
+        appBarTheme: const AppBarTheme(centerTitle: true, elevation: 0),
         cardTheme: CardTheme(
           elevation: 0,
           shape: RoundedRectangleBorder(
@@ -120,10 +115,7 @@ class _PomodoroAppState extends ConsumerState<PomodoroApp>
           brightness: Brightness.dark,
         ),
         useMaterial3: true,
-        appBarTheme: const AppBarTheme(
-          centerTitle: true,
-          elevation: 0,
-        ),
+        appBarTheme: const AppBarTheme(centerTitle: true, elevation: 0),
         cardTheme: CardTheme(
           elevation: 0,
           shape: RoundedRectangleBorder(

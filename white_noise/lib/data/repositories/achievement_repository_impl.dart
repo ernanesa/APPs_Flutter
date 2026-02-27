@@ -9,20 +9,21 @@ class AchievementRepositoryImpl implements AchievementRepository {
 
   // Use default achievements from entity
 
-  AchievementRepositoryImpl({
-    required LocalDataSource localDataSource,
-  }) : _localDataSource = localDataSource;
+  AchievementRepositoryImpl({required LocalDataSource localDataSource})
+    : _localDataSource = localDataSource;
 
   @override
   Future<List<AchievementEntity>> getAllAchievements() async {
-    final json = await _localDataSource.getJson(LocalDataSource.keyAchievements);
-    
+    final json = await _localDataSource.getJson(
+      LocalDataSource.keyAchievements,
+    );
+
     if (json == null) {
       // Initialize with defaults
       await _saveAchievements(DefaultAchievements.all);
       return DefaultAchievements.all;
     }
-    
+
     final List<dynamic> list = json['achievements'] as List<dynamic>;
     return list.map((item) {
       final dto = AchievementDto.fromJson(item as Map<String, dynamic>);
@@ -43,7 +44,9 @@ class AchievementRepositoryImpl implements AchievementRepository {
   }
 
   @override
-  Future<List<AchievementEntity>> getAchievementsByCategory(AchievementCategory category) async {
+  Future<List<AchievementEntity>> getAchievementsByCategory(
+    AchievementCategory category,
+  ) async {
     final all = await getAllAchievements();
     return all.where((a) => a.category == category).toList();
   }
@@ -52,23 +55,23 @@ class AchievementRepositoryImpl implements AchievementRepository {
   Future<AchievementEntity> unlockAchievement(String achievementId) async {
     final all = await getAllAchievements();
     final index = all.indexWhere((a) => a.id == achievementId);
-    
+
     if (index == -1) {
       throw Exception('Achievement not found: $achievementId');
     }
-    
+
     if (all[index].isUnlocked) {
       return all[index]; // Already unlocked
     }
-    
+
     final unlocked = all[index].copyWith(
       isUnlocked: true,
       unlockedAt: DateTime.now(),
     );
-    
+
     all[index] = unlocked;
     await _saveAchievements(all);
-    
+
     return unlocked;
   }
 
@@ -84,7 +87,9 @@ class AchievementRepositoryImpl implements AchievementRepository {
 
   @override
   Future<int> getTotalSessions() async {
-    final json = await _localDataSource.getJson(LocalDataSource.keyAchievements);
+    final json = await _localDataSource.getJson(
+      LocalDataSource.keyAchievements,
+    );
     return (json?['totalSessions'] as int?) ?? 0;
   }
 
@@ -96,7 +101,9 @@ class AchievementRepositoryImpl implements AchievementRepository {
 
   @override
   Future<int> getTotalListeningTime() async {
-    final json = await _localDataSource.getJson(LocalDataSource.keyAchievements);
+    final json = await _localDataSource.getJson(
+      LocalDataSource.keyAchievements,
+    );
     return (json?['totalListeningTime'] as int?) ?? 0;
   }
 
@@ -108,16 +115,21 @@ class AchievementRepositoryImpl implements AchievementRepository {
 
   @override
   Future<int> getUniqueSoundsPlayed() async {
-    final json = await _localDataSource.getJson(LocalDataSource.keyAchievements);
-    final List<dynamic>? soundsList = json?['uniqueSoundsPlayed'] as List<dynamic>?;
+    final json = await _localDataSource.getJson(
+      LocalDataSource.keyAchievements,
+    );
+    final List<dynamic>? soundsList =
+        json?['uniqueSoundsPlayed'] as List<dynamic>?;
     return soundsList?.length ?? 0;
   }
 
   @override
   Future<void> recordSoundPlayed(String soundId) async {
-    final json = await _localDataSource.getJson(LocalDataSource.keyAchievements) ?? {};
-    final List<dynamic> soundsList = (json['uniqueSoundsPlayed'] as List<dynamic>?) ?? [];
-    
+    final json =
+        await _localDataSource.getJson(LocalDataSource.keyAchievements) ?? {};
+    final List<dynamic> soundsList =
+        (json['uniqueSoundsPlayed'] as List<dynamic>?) ?? [];
+
     if (!soundsList.contains(soundId)) {
       soundsList.add(soundId);
       await _updateStats({'uniqueSoundsPlayed': soundsList});
@@ -126,7 +138,9 @@ class AchievementRepositoryImpl implements AchievementRepository {
 
   @override
   Future<int> getThreeSoundMixCount() async {
-    final json = await _localDataSource.getJson(LocalDataSource.keyAchievements);
+    final json = await _localDataSource.getJson(
+      LocalDataSource.keyAchievements,
+    );
     return (json?['threeSoundMixCount'] as int?) ?? 0;
   }
 
@@ -138,16 +152,19 @@ class AchievementRepositoryImpl implements AchievementRepository {
 
   // Private helper methods
   Future<void> _saveAchievements(List<AchievementEntity> achievements) async {
-    final json = await _localDataSource.getJson(LocalDataSource.keyAchievements) ?? {};
-    json['achievements'] = achievements.map((a) {
-      final dto = AchievementDto.fromEntity(a);
-      return dto.toJson();
-    }).toList();
+    final json =
+        await _localDataSource.getJson(LocalDataSource.keyAchievements) ?? {};
+    json['achievements'] =
+        achievements.map((a) {
+          final dto = AchievementDto.fromEntity(a);
+          return dto.toJson();
+        }).toList();
     await _localDataSource.setJson(LocalDataSource.keyAchievements, json);
   }
 
   Future<void> _updateStats(Map<String, dynamic> updates) async {
-    final json = await _localDataSource.getJson(LocalDataSource.keyAchievements) ?? {};
+    final json =
+        await _localDataSource.getJson(LocalDataSource.keyAchievements) ?? {};
     json.addAll(updates);
     await _localDataSource.setJson(LocalDataSource.keyAchievements, json);
   }

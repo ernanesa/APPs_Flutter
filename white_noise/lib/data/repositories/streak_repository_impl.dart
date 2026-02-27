@@ -7,18 +7,17 @@ import '../models/streak_dto.dart';
 class StreakRepositoryImpl implements StreakRepository {
   final LocalDataSource _localDataSource;
 
-  StreakRepositoryImpl({
-    required LocalDataSource localDataSource,
-  }) : _localDataSource = localDataSource;
+  StreakRepositoryImpl({required LocalDataSource localDataSource})
+    : _localDataSource = localDataSource;
 
   @override
   Future<StreakEntity> getStreak() async {
     final json = await _localDataSource.getJson('streak_data');
-    
+
     if (json == null) {
       return const StreakEntity(currentStreak: 0, bestStreak: 0);
     }
-    
+
     final dto = StreakDto.fromJson(json);
     return dto.toEntity();
   }
@@ -26,26 +25,26 @@ class StreakRepositoryImpl implements StreakRepository {
   @override
   Future<StreakEntity> updateStreak() async {
     final current = await getStreak();
-    
+
     // Check if already active today
     if (current.isActiveToday) {
       return current; // No update needed
     }
-    
+
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
-    
+
     int newStreak = 1;
-    
+
     if (current.lastActiveDate != null) {
       final lastDate = DateTime(
         current.lastActiveDate!.year,
         current.lastActiveDate!.month,
         current.lastActiveDate!.day,
       );
-      
+
       final difference = today.difference(lastDate).inDays;
-      
+
       if (difference == 1) {
         // Consecutive day
         newStreak = current.currentStreak + 1;
@@ -54,18 +53,19 @@ class StreakRepositoryImpl implements StreakRepository {
         newStreak = 1;
       }
     }
-    
-    final newBest = newStreak > current.bestStreak ? newStreak : current.bestStreak;
-    
+
+    final newBest =
+        newStreak > current.bestStreak ? newStreak : current.bestStreak;
+
     final updated = StreakEntity(
       currentStreak: newStreak,
       bestStreak: newBest,
       lastActiveDate: now,
     );
-    
+
     final dto = StreakDto.fromEntity(updated);
     await _localDataSource.setJson('streak_data', dto.toJson());
-    
+
     return updated;
   }
 

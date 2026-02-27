@@ -24,13 +24,16 @@ class _AdBannerWidgetState extends State<AdBannerWidget> {
     if (!ConsentService.canRequestAds) return;
 
     _bannerAd = AdService.createBannerAd(context);
-    _bannerAd!.load().then((_) {
-      if (mounted) {
-        setState(() => _isLoaded = true);
-      }
-    }).catchError((error) {
-      debugPrint('Banner ad failed to load: $error');
-    });
+    _bannerAd!
+        .load()
+        .then((_) {
+          if (mounted) {
+            setState(() => _isLoaded = true);
+          }
+        })
+        .catchError((error) {
+          debugPrint('Banner ad failed to load: $error');
+        });
   }
 
   @override

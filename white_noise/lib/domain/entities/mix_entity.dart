@@ -6,15 +6,9 @@ class MixEntity {
   final List<MixSound> sounds;
   final bool isPlaying;
 
-  const MixEntity({
-    required this.sounds,
-    this.isPlaying = false,
-  });
+  const MixEntity({required this.sounds, this.isPlaying = false});
 
-  MixEntity copyWith({
-    List<MixSound>? sounds,
-    bool? isPlaying,
-  }) {
+  MixEntity copyWith({List<MixSound>? sounds, bool? isPlaying}) {
     return MixEntity(
       sounds: sounds ?? this.sounds,
       isPlaying: isPlaying ?? this.isPlaying,
@@ -58,19 +52,10 @@ class MixSound {
   final SoundEntity sound;
   final double volume; // 0.0 to 1.0
 
-  const MixSound({
-    required this.sound,
-    this.volume = 0.7,
-  });
+  const MixSound({required this.sound, this.volume = 0.7});
 
-  MixSound copyWith({
-    SoundEntity? sound,
-    double? volume,
-  }) {
-    return MixSound(
-      sound: sound ?? this.sound,
-      volume: volume ?? this.volume,
-    );
+  MixSound copyWith({SoundEntity? sound, double? volume}) {
+    return MixSound(sound: sound ?? this.sound, volume: volume ?? this.volume);
   }
 
   /// Clamp volume to valid range

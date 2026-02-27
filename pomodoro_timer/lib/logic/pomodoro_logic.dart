@@ -60,13 +60,14 @@ class PomodoroLogic {
     List<PomodoroSession> sessions,
     DateTime date,
   ) {
-    final daySessions = sessions.where((s) {
-      return s.startTime.year == date.year &&
-          s.startTime.month == date.month &&
-          s.startTime.day == date.day &&
-          s.type == SessionType.focus &&
-          s.wasCompleted;
-    }).toList();
+    final daySessions =
+        sessions.where((s) {
+          return s.startTime.year == date.year &&
+              s.startTime.month == date.month &&
+              s.startTime.day == date.day &&
+              s.type == SessionType.focus &&
+              s.wasCompleted;
+        }).toList();
 
     final totalMinutes = daySessions.fold<int>(
       0,
@@ -84,7 +85,7 @@ class PomodoroLogic {
   static WeeklyStats calculateWeeklyStats(List<PomodoroSession> sessions) {
     final now = DateTime.now();
     final weekStart = now.subtract(Duration(days: now.weekday - 1));
-    
+
     final dailyStats = <DailyStats>[];
     for (int i = 0; i < 7; i++) {
       final date = weekStart.add(Duration(days: i));

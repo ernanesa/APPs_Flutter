@@ -2,13 +2,13 @@
 class DailyGoal {
   /// Target number of focus sessions per day.
   final int targetSessions;
-  
+
   /// Number of sessions completed today.
   final int completedSessions;
-  
+
   /// The date for which this goal applies.
   final DateTime date;
-  
+
   /// Total focus minutes completed today.
   final int focusMinutesToday;
 
@@ -29,7 +29,8 @@ class DailyGoal {
   bool get isGoalReached => completedSessions >= targetSessions;
 
   /// Remaining sessions to reach the goal.
-  int get remainingSessions => (targetSessions - completedSessions).clamp(0, targetSessions);
+  int get remainingSessions =>
+      (targetSessions - completedSessions).clamp(0, targetSessions);
 
   /// Creates DailyGoal from JSON.
   factory DailyGoal.fromJson(Map<String, dynamic> json) {
@@ -69,8 +70,8 @@ class DailyGoal {
   /// Checks if this goal is for today.
   bool get isToday {
     final now = DateTime.now();
-    return date.year == now.year && 
-           date.month == now.month && 
-           date.day == now.day;
+    return date.year == now.year &&
+        date.month == now.month &&
+        date.day == now.day;
   }
 }

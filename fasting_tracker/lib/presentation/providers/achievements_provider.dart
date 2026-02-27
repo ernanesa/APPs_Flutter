@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
-import 'package:flutter_riverpod/legacy.dart';
 import '../../domain/entities/achievement.dart';
 import '../../data/repositories/achievements_repository_impl.dart';
 import 'shared_prefs_provider.dart';
@@ -36,7 +35,8 @@ class AchievementsNotifier extends StateNotifier<AchievementsState> {
   final AchievementsRepositoryImpl _repository;
   final Ref _ref;
 
-  AchievementsNotifier(this._repository, this._ref) : super(const AchievementsState()) {
+  AchievementsNotifier(this._repository, this._ref)
+    : super(const AchievementsState()) {
     _loadAchievements();
   }
 
@@ -48,7 +48,7 @@ class AchievementsNotifier extends StateNotifier<AchievementsState> {
 
   Future<List<Achievement>> checkAndUnlock() async {
     final streakData = _ref.read(streakProvider);
-    
+
     final newlyUnlocked = await _repository.checkAndUnlock(
       totalFasts: streakData.totalCompletedFasts,
       currentStreak: streakData.currentStreak,
@@ -70,7 +70,8 @@ class AchievementsNotifier extends StateNotifier<AchievementsState> {
 }
 
 /// Achievements provider
-final achievementsProvider = StateNotifierProvider<AchievementsNotifier, AchievementsState>((ref) {
-  final prefs = ref.watch(sharedPreferencesProvider);
-  return AchievementsNotifier(AchievementsRepositoryImpl(prefs), ref);
-});
+final achievementsProvider =
+    StateNotifierProvider<AchievementsNotifier, AchievementsState>((ref) {
+      final prefs = ref.watch(sharedPreferencesProvider);
+      return AchievementsNotifier(AchievementsRepositoryImpl(prefs), ref);
+    });

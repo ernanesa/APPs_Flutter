@@ -16,26 +16,27 @@ class AmbientSoundSelector extends ConsumerWidget {
     return SizedBox(
       height: 110,
       child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.symmetric(horizontal: 12),
-            itemCount: AmbientSounds.all.length,
-          itemBuilder: (context, index) {
-            final sound = AmbientSounds.all[index];
-            final isSelected = selectedSound.id == sound.id;
-            
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
-              child: _SoundItem(
-                sound: sound,
-                isSelected: isSelected,
-                onTap: () {
-                  ref.read(selectedAmbientSoundProvider.notifier)
-                      .selectSound(sound);
-                },
-              ),
-            );
-          },
-        ),
+        scrollDirection: Axis.horizontal,
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+        itemCount: AmbientSounds.all.length,
+        itemBuilder: (context, index) {
+          final sound = AmbientSounds.all[index];
+          final isSelected = selectedSound.id == sound.id;
+
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+            child: _SoundItem(
+              sound: sound,
+              isSelected: isSelected,
+              onTap: () {
+                ref
+                    .read(selectedAmbientSoundProvider.notifier)
+                    .selectSound(sound);
+              },
+            ),
+          );
+        },
+      ),
     );
   }
 }
@@ -63,9 +64,12 @@ class _SoundItem extends StatelessWidget {
         width: 80,
         padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
-          color: isSelected
-              ? sound.color.withValues(alpha: 0.2)
-              : theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
+          color:
+              isSelected
+                  ? sound.color.withValues(alpha: 0.2)
+                  : theme.colorScheme.surfaceContainerHighest.withValues(
+                    alpha: 0.5,
+                  ),
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
             color: isSelected ? sound.color : Colors.transparent,
@@ -128,7 +132,8 @@ class AmbientSoundButton extends ConsumerWidget {
         children: [
           Icon(
             selectedSound.icon,
-            color: isPlaying ? selectedSound.color : theme.colorScheme.onSurface,
+            color:
+                isPlaying ? selectedSound.color : theme.colorScheme.onSurface,
           ),
           if (isPlaying)
             Positioned(
@@ -156,10 +161,11 @@ class AmbientSoundButton extends ConsumerWidget {
   void _showSoundPicker(BuildContext context) {
     showModalBottomSheet(
       context: context,
-      builder: (context) => const Padding(
-        padding: EdgeInsets.symmetric(vertical: 16),
-        child: AmbientSoundSelector(),
-      ),
+      builder:
+          (context) => const Padding(
+            padding: EdgeInsets.symmetric(vertical: 16),
+            child: AmbientSoundSelector(),
+          ),
     );
   }
 }

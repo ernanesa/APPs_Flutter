@@ -45,18 +45,20 @@ class PomodoroScaffold extends ConsumerWidget {
       accentColor: selectedTheme.accentColor,
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        appBar: appBar != null
-            ? _wrapAppBar(appBar!, context)
-            : null,
+        appBar: appBar != null ? _wrapAppBar(appBar!, context) : null,
         body: body,
         floatingActionButton: floatingActionButton,
         bottomNavigationBar: bottomNavigationBar,
-        extendBodyBehindAppBar: false, // Don't extend - let Scaffold handle spacing
+        extendBodyBehindAppBar:
+            false, // Don't extend - let Scaffold handle spacing
       ),
     );
   }
 
-  PreferredSizeWidget _wrapAppBar(PreferredSizeWidget originalAppBar, BuildContext context) {
+  PreferredSizeWidget _wrapAppBar(
+    PreferredSizeWidget originalAppBar,
+    BuildContext context,
+  ) {
     // If it's a standard AppBar, we might want to make it transparent or semi-transparent
     if (originalAppBar is AppBar) {
       return AppBar(
@@ -68,7 +70,9 @@ class PomodoroScaffold extends ConsumerWidget {
         backgroundColor: Colors.transparent, // Transparent for gradient
         elevation: 0,
         scrolledUnderElevation: 0, // Prevent shadow when scrolling
-        iconTheme: const IconThemeData(color: Colors.white), // Force white icons on colorful bg
+        iconTheme: const IconThemeData(
+          color: Colors.white,
+        ), // Force white icons on colorful bg
         titleTextStyle: Theme.of(context).textTheme.titleLarge?.copyWith(
           color: Colors.white, // Force white text
           fontWeight: FontWeight.bold,

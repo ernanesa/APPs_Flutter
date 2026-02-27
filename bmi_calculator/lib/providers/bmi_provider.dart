@@ -1,15 +1,13 @@
 import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
-import 'package:flutter_riverpod/legacy.dart';
-import 'package:flutter_riverpod/legacy.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/bmi_entry.dart';
 
 final bmiHistoryProvider =
     StateNotifierProvider<BmiHistoryNotifier, List<BmiEntry>>((ref) {
-  return BmiHistoryNotifier();
-});
+      return BmiHistoryNotifier();
+    });
 
 class BmiHistoryNotifier extends StateNotifier<List<BmiEntry>> {
   BmiHistoryNotifier() : super([]) {
@@ -41,8 +39,9 @@ class BmiHistoryNotifier extends StateNotifier<List<BmiEntry>> {
 
   Future<void> _saveToDisk() async {
     final prefs = await SharedPreferences.getInstance();
-    final String encoded =
-        json.encode(state.map((entry) => entry.toMap()).toList());
+    final String encoded = json.encode(
+      state.map((entry) => entry.toMap()).toList(),
+    );
     await prefs.setString(_storageKey, encoded);
   }
 }

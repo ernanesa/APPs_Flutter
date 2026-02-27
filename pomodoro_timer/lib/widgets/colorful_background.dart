@@ -60,7 +60,9 @@ class _ColorfulBackgroundState extends State<ColorfulBackground>
                 0.6 + (_controller.value * 0.1),
                 1.0,
               ],
-              transform: GradientRotation(_controller.value * 2 * math.pi * 0.05),
+              transform: GradientRotation(
+                _controller.value * 2 * math.pi * 0.05,
+              ),
             ),
           ),
           child: widget.child,
@@ -81,11 +83,11 @@ class GradientRotation extends GradientTransform {
     // We don't need sin/cos for simple rotation around center using Matrix4
     // But GradientRotation usually means rotating the gradient shading.
     // The default LinearGradient rotation uses radians.
-    
+
     // Standard implementation for GradientRotation:
     // It seems Flutter's GradientRotation class (internal) does some math.
     // But here we just want to rotate around the center.
-    
+
     return Matrix4.identity()
       ..translate(center.dx, center.dy)
       ..rotateZ(radians)

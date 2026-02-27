@@ -5,9 +5,7 @@ import '../repositories/streak_repository.dart';
 class UpdateStreakUseCase {
   final StreakRepository streakRepository;
 
-  UpdateStreakUseCase({
-    required this.streakRepository,
-  });
+  UpdateStreakUseCase({required this.streakRepository});
 
   /// Update streak for today (called on app usage)
   Future<StreakResult> updateStreak() async {
@@ -67,7 +65,10 @@ class StreakResult {
     this.errorMessage,
   });
 
-  factory StreakResult.updated(StreakEntity streak, StreakMilestone? milestone) {
+  factory StreakResult.updated(
+    StreakEntity streak,
+    StreakMilestone? milestone,
+  ) {
     return StreakResult._(
       isSuccess: true,
       streak: streak,
@@ -84,20 +85,11 @@ class StreakResult {
   }
 
   factory StreakResult.failure(String message) {
-    return StreakResult._(
-      isSuccess: false,
-      errorMessage: message,
-    );
+    return StreakResult._(isSuccess: false, errorMessage: message);
   }
 
   bool get hasMilestone => milestone != null;
 }
 
 /// Streak milestones for user feedback
-enum StreakMilestone {
-  threeDays,
-  oneWeek,
-  twoWeeks,
-  oneMonth,
-  hundredDays,
-}
+enum StreakMilestone { threeDays, oneWeek, twoWeeks, oneMonth, hundredDays }

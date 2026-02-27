@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
-import 'package:flutter_riverpod/legacy.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/achievement.dart';
 import '../models/pomodoro_session.dart';
@@ -9,13 +8,16 @@ import 'settings_provider.dart';
 import 'streak_provider.dart';
 
 /// Provider for achievements state.
-final achievementsProvider = StateNotifierProvider<AchievementsNotifier, List<Achievement>>((ref) {
-  final prefs = ref.watch(sharedPreferencesProvider);
-  return AchievementsNotifier(prefs, ref);
-});
+final achievementsProvider =
+    StateNotifierProvider<AchievementsNotifier, List<Achievement>>((ref) {
+      final prefs = ref.watch(sharedPreferencesProvider);
+      return AchievementsNotifier(prefs, ref);
+    });
 
 /// Provider for newly unlocked achievement (for notifications).
-final newlyUnlockedAchievementProvider = StateProvider<Achievement?>((ref) => null);
+final newlyUnlockedAchievementProvider = StateProvider<Achievement?>(
+  (ref) => null,
+);
 
 /// Notifier for managing achievements.
 class AchievementsNotifier extends StateNotifier<List<Achievement>> {
@@ -32,18 +34,21 @@ class AchievementsNotifier extends StateNotifier<List<Achievement>> {
     if (json != null) {
       try {
         final Map<String, dynamic> data = jsonDecode(json);
-        state = state.map((achievement) {
-          if (data.containsKey(achievement.id)) {
-            final unlockedData = data[achievement.id] as Map<String, dynamic>;
-            return achievement.copyWith(
-              isUnlocked: unlockedData['isUnlocked'] as bool,
-              unlockedAt: unlockedData['unlockedAt'] != null
-                  ? DateTime.parse(unlockedData['unlockedAt'] as String)
-                  : null,
-            );
-          }
-          return achievement;
-        }).toList();
+        state =
+            state.map((achievement) {
+              if (data.containsKey(achievement.id)) {
+                final unlockedData =
+                    data[achievement.id] as Map<String, dynamic>;
+                return achievement.copyWith(
+                  isUnlocked: unlockedData['isUnlocked'] as bool,
+                  unlockedAt:
+                      unlockedData['unlockedAt'] != null
+                          ? DateTime.parse(unlockedData['unlockedAt'] as String)
+                          : null,
+                );
+              }
+              return achievement;
+            }).toList();
       } catch (_) {
         // Use defaults on error
       }
@@ -115,31 +120,35 @@ class AchievementsNotifier extends StateNotifier<List<Achievement>> {
 
     // Notify about newly unlocked achievement
     if (newlyUnlocked != null) {
-      _ref.read(newlyUnlockedAchievementProvider.notifier).state = newlyUnlocked;
+      _ref.read(newlyUnlockedAchievementProvider.notifier).state =
+          newlyUnlocked;
     }
   }
 
   /// Called when a session is completed to check achievements.
   Future<void> onSessionCompleted(List<PomodoroSession> allSessions) async {
-    final totalSessions = allSessions.where((s) => 
-        s.type == SessionType.focus && s.wasCompleted).length;
-    
+    final totalSessions =
+        allSessions
+            .where((s) => s.type == SessionType.focus && s.wasCompleted)
+            .length;
+
     final totalFocusMinutes = allSessions
         .where((s) => s.type == SessionType.focus && s.wasCompleted)
         .fold<int>(0, (sum, s) => sum + s.durationMinutes);
-    
+
     final streak = _ref.read(streakProvider);
-    
+
     // Count weekend sessions
     final now = DateTime.now();
     final weekStart = now.subtract(Duration(days: now.weekday - 1));
-    final weekendSessions = allSessions.where((s) {
-      final day = s.startTime.weekday;
-      return s.startTime.isAfter(weekStart) && 
-             (day == DateTime.saturday || day == DateTime.sunday) &&
-             s.type == SessionType.focus && 
-             s.wasCompleted;
-    }).length;
+    final weekendSessions =
+        allSessions.where((s) {
+          final day = s.startTime.weekday;
+          return s.startTime.isAfter(weekStart) &&
+              (day == DateTime.saturday || day == DateTime.sunday) &&
+              s.type == SessionType.focus &&
+              s.wasCompleted;
+        }).length;
 
     await checkAndUnlockAchievements(
       totalSessions: totalSessions,

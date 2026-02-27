@@ -23,24 +23,25 @@ class AchievementsScreen extends ConsumerWidget {
     final isColorful = settings.colorfulMode;
 
     // Group achievements by category
-    final sessionAchievements = achievements
-        .where((a) => a.category == AchievementCategory.sessions)
-        .toList();
-    final streakAchievements = achievements
-        .where((a) => a.category == AchievementCategory.streak)
-        .toList();
-    final timeAchievements = achievements
-        .where((a) => a.category == AchievementCategory.time)
-        .toList();
-    final specialAchievements = achievements
-        .where((a) => a.category == AchievementCategory.special)
-        .toList();
+    final sessionAchievements =
+        achievements
+            .where((a) => a.category == AchievementCategory.sessions)
+            .toList();
+    final streakAchievements =
+        achievements
+            .where((a) => a.category == AchievementCategory.streak)
+            .toList();
+    final timeAchievements =
+        achievements
+            .where((a) => a.category == AchievementCategory.time)
+            .toList();
+    final specialAchievements =
+        achievements
+            .where((a) => a.category == AchievementCategory.special)
+            .toList();
 
     return PomodoroScaffold(
-      appBar: AppBar(
-        title: Text(l10n.achievements),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: Text(l10n.achievements), centerTitle: true),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -128,7 +129,7 @@ class AchievementsScreen extends ConsumerWidget {
     bool isColorful,
   ) {
     final progress = total > 0 ? unlocked / total : 0.0;
-    
+
     if (isColorful) {
       return GlassContainer(
         padding: const EdgeInsets.all(20),
@@ -137,11 +138,7 @@ class AchievementsScreen extends ConsumerWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(
-                  Icons.emoji_events,
-                  color: Colors.white,
-                  size: 32,
-                ),
+                const Icon(Icons.emoji_events, color: Colors.white, size: 32),
                 const SizedBox(width: 12),
                 Text(
                   l10n.achievementsProgress(unlocked, total),
@@ -290,7 +287,10 @@ class AchievementsScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildAchievementGrid(List<Achievement> achievements, bool isColorful) {
+  Widget _buildAchievementGrid(
+    List<Achievement> achievements,
+    bool isColorful,
+  ) {
     return GridView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
@@ -312,91 +312,96 @@ class AchievementsScreen extends ConsumerWidget {
     );
   }
 
-
   void _showAchievementDetails(BuildContext context, Achievement achievement) {
     final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
 
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              width: 80,
-              height: 80,
-              decoration: BoxDecoration(
-                color: achievement.isUnlocked
-                    ? achievement.color.withValues(alpha: 0.2)
-                    : theme.colorScheme.surfaceContainerHighest,
-                shape: BoxShape.circle,
-              ),
-              child: Icon(
-                achievement.icon,
-                size: 48,
-                color: achievement.isUnlocked
-                    ? achievement.color
-                    : theme.colorScheme.outline,
-              ),
+      builder:
+          (context) => AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
             ),
-            const SizedBox(height: 16),
-            Text(
-              _getTitle(l10n, achievement.titleKey),
-              style: theme.textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.bold,
-                color: achievement.isUnlocked
-                    ? achievement.color
-                    : theme.colorScheme.onSurface,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 8),
-            Text(
-              _getDescription(l10n, achievement.descriptionKey),
-              style: theme.textTheme.bodyMedium?.copyWith(
-                color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
-              ),
-              textAlign: TextAlign.center,
-            ),
-            if (!achievement.isUnlocked) ...[
-              const SizedBox(height: 16),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.lock_outline,
-                    size: 16,
-                    color: theme.colorScheme.outline,
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 80,
+                  height: 80,
+                  decoration: BoxDecoration(
+                    color:
+                        achievement.isUnlocked
+                            ? achievement.color.withValues(alpha: 0.2)
+                            : theme.colorScheme.surfaceContainerHighest,
+                    shape: BoxShape.circle,
                   ),
-                  const SizedBox(width: 4),
+                  child: Icon(
+                    achievement.icon,
+                    size: 48,
+                    color:
+                        achievement.isUnlocked
+                            ? achievement.color
+                            : theme.colorScheme.outline,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  _getTitle(l10n, achievement.titleKey),
+                  style: theme.textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color:
+                        achievement.isUnlocked
+                            ? achievement.color
+                            : theme.colorScheme.onSurface,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  _getDescription(l10n, achievement.descriptionKey),
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                if (!achievement.isUnlocked) ...[
+                  const SizedBox(height: 16),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.lock_outline,
+                        size: 16,
+                        color: theme.colorScheme.outline,
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        l10n.notUnlockedYet,
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: theme.colorScheme.outline,
+                        ),
+                      ),
+                    ],
+                  ),
+                ] else if (achievement.unlockedAt != null) ...[
+                  const SizedBox(height: 16),
                   Text(
-                    l10n.notUnlockedYet,
+                    l10n.unlockedOn(_formatDate(achievement.unlockedAt!)),
                     style: theme.textTheme.bodySmall?.copyWith(
-                      color: theme.colorScheme.outline,
+                      color: theme.colorScheme.primary,
                     ),
                   ),
                 ],
-              ),
-            ] else if (achievement.unlockedAt != null) ...[
-              const SizedBox(height: 16),
-              Text(
-                l10n.unlockedOn(_formatDate(achievement.unlockedAt!)),
-                style: theme.textTheme.bodySmall?.copyWith(
-                  color: theme.colorScheme.primary,
-                ),
+              ],
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text(l10n.close),
               ),
             ],
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text(l10n.close),
           ),
-        ],
-      ),
     );
   }
 

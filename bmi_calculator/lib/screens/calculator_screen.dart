@@ -64,7 +64,6 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
     _bannerAd?.load();
   }
 
-
   @override
   void dispose() {
     _weightController.dispose();
@@ -100,7 +99,10 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
     final entry = BmiEntry(
       id: const Uuid().v4(),
       weight: _currentWeight,
-      height: _currentHeight < 3 ? _currentHeight * 100 : _currentHeight, // Store as CM standard
+      height:
+          _currentHeight < 3
+              ? _currentHeight * 100
+              : _currentHeight, // Store as CM standard
       bmi: _bmiResult!,
       date: DateTime.now(),
     );
@@ -149,7 +151,8 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
               unit: 'cm', // Label says CM but logic handles meters too
               min: 100,
               max: 250,
-              isHeight: true, // Special handling for slider range if user types meters
+              isHeight:
+                  true, // Special handling for slider range if user types meters
               controller: _heightController,
               onChanged: (val) {
                 setState(() {
@@ -175,7 +178,10 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
                     ),
                     child: Text(
                       l10n.calculate.toUpperCase(),
-                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
                     ),
                   ),
                 ),
@@ -204,8 +210,14 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      _getCategoryColor(context, _category!).withValues(alpha: 0.9),
-                      _getCategoryColor(context, _category!).withValues(alpha: 0.6),
+                      _getCategoryColor(
+                        context,
+                        _category!,
+                      ).withValues(alpha: 0.9),
+                      _getCategoryColor(
+                        context,
+                        _category!,
+                      ).withValues(alpha: 0.6),
                     ],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
@@ -213,7 +225,10 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
                   borderRadius: BorderRadius.circular(24),
                   boxShadow: [
                     BoxShadow(
-                      color: _getCategoryColor(context, _category!).withValues(alpha: 0.4),
+                      color: _getCategoryColor(
+                        context,
+                        _category!,
+                      ).withValues(alpha: 0.4),
                       blurRadius: 20,
                       offset: const Offset(0, 10),
                     ),
@@ -242,7 +257,9 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
                     const SizedBox(height: 8),
                     Container(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 8),
+                        horizontal: 16,
+                        vertical: 8,
+                      ),
                       decoration: BoxDecoration(
                         color: Colors.white.withValues(alpha: 0.2),
                         borderRadius: BorderRadius.circular(20),
@@ -275,7 +292,7 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
                 ),
               ),
             ],
-            
+
             if (_isAdLoaded && _bannerAd != null) ...[
               const SizedBox(height: 24),
               SizedBox(
@@ -302,16 +319,16 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
     bool isHeight = false,
   }) {
     final colorScheme = Theme.of(context).colorScheme;
-    
+
     // Adjust slider range dynamically if user is typing meters
     double sliderVal = value;
     double sliderMin = min;
     double sliderMax = max;
 
     if (isHeight && value < 3.0) {
-        // User entered meters, adjust slider context
-        sliderMin = 1.0;
-        sliderMax = 2.5; 
+      // User entered meters, adjust slider context
+      sliderMin = 1.0;
+      sliderMax = 2.5;
     }
 
     // Clamp slider value to avoid crash
@@ -343,11 +360,15 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
                     textAlign: TextAlign.end,
                     keyboardType: TextInputType.number,
                     style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: colorScheme.onSurface),
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: colorScheme.onSurface,
+                    ),
                     decoration: InputDecoration(
-                        border: InputBorder.none, isDense: true, suffixText: unit),
+                      border: InputBorder.none,
+                      isDense: true,
+                      suffixText: unit,
+                    ),
                   ),
                 ),
               ],

@@ -48,35 +48,36 @@ class HomeScreen extends ConsumerWidget {
                 const HealthInfoButton().showHealthInfoSheet(context);
               }
             },
-            itemBuilder: (context) => [
-              PopupMenuItem(
-                value: 'history',
-                child: ListTile(
-                  leading: const Icon(Icons.history),
-                  title: Text(l10n.history),
-                  contentPadding: EdgeInsets.zero,
-                  visualDensity: VisualDensity.compact,
-                ),
-              ),
-              PopupMenuItem(
-                value: 'info',
-                child: ListTile(
-                  leading: const Icon(Icons.info_outline),
-                  title: Text(l10n.healthInfoTitle),
-                  contentPadding: EdgeInsets.zero,
-                  visualDensity: VisualDensity.compact,
-                ),
-              ),
-              PopupMenuItem(
-                value: 'settings',
-                child: ListTile(
-                  leading: const Icon(Icons.settings),
-                  title: Text(l10n.settings),
-                  contentPadding: EdgeInsets.zero,
-                  visualDensity: VisualDensity.compact,
-                ),
-              ),
-            ],
+            itemBuilder:
+                (context) => [
+                  PopupMenuItem(
+                    value: 'history',
+                    child: ListTile(
+                      leading: const Icon(Icons.history),
+                      title: Text(l10n.history),
+                      contentPadding: EdgeInsets.zero,
+                      visualDensity: VisualDensity.compact,
+                    ),
+                  ),
+                  PopupMenuItem(
+                    value: 'info',
+                    child: ListTile(
+                      leading: const Icon(Icons.info_outline),
+                      title: Text(l10n.healthInfoTitle),
+                      contentPadding: EdgeInsets.zero,
+                      visualDensity: VisualDensity.compact,
+                    ),
+                  ),
+                  PopupMenuItem(
+                    value: 'settings',
+                    child: ListTile(
+                      leading: const Icon(Icons.settings),
+                      title: Text(l10n.settings),
+                      contentPadding: EdgeInsets.zero,
+                      visualDensity: VisualDensity.compact,
+                    ),
+                  ),
+                ],
           ),
         ],
       ),
@@ -91,14 +92,20 @@ class HomeScreen extends ConsumerWidget {
                 children: [
                   const StreakBadge(),
                   FilledButton.tonalIcon(
-                    onPressed: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (_) => const AchievementsScreen()),
-                    ),
+                    onPressed:
+                        () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const AchievementsScreen(),
+                          ),
+                        ),
                     icon: const Icon(Icons.emoji_events, size: 18),
                     label: Text(l10n.achievements),
                     style: FilledButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 8,
+                      ),
                       visualDensity: VisualDensity.compact,
                     ),
                   ),
@@ -106,23 +113,23 @@ class HomeScreen extends ConsumerWidget {
               ),
             ),
             const SizedBox(height: 8),
-            
+
             // Timer widget
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 24),
               child: FastingTimerWidget(),
             ),
-            
+
             const SizedBox(height: 24),
-            
+
             // Control buttons
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: _buildControlButtons(context, ref, fastingState, l10n),
             ),
-            
+
             const SizedBox(height: 24),
-            
+
             // Protocol selector (disabled when fasting)
             if (!fastingState.isFasting) ...[
               ProtocolSelector(
@@ -135,7 +142,7 @@ class HomeScreen extends ConsumerWidget {
               ),
               const SizedBox(height: 16),
             ],
-            
+
             // Stages timeline
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -143,7 +150,7 @@ class HomeScreen extends ConsumerWidget {
                 currentSession: fastingState.currentSession,
               ),
             ),
-            
+
             const SizedBox(height: 24),
             const AdBannerWidget(),
             const SizedBox(height: 24),
@@ -160,16 +167,14 @@ class HomeScreen extends ConsumerWidget {
     AppLocalizations l10n,
   ) {
     final theme = Theme.of(context);
-    
+
     if (state.isLoading) {
-      return const Center(
-        child: CircularProgressIndicator(),
-      );
+      return const Center(child: CircularProgressIndicator());
     }
 
     if (state.isFasting) {
       final goalAchieved = state.currentSession?.goalAchieved ?? false;
-      
+
       return Row(
         children: [
           Expanded(
@@ -198,9 +203,10 @@ class HomeScreen extends ConsumerWidget {
               label: Text(goalAchieved ? l10n.complete : l10n.endEarly),
               style: FilledButton.styleFrom(
                 padding: const EdgeInsets.symmetric(vertical: 16),
-                backgroundColor: goalAchieved
-                    ? theme.colorScheme.primary
-                    : theme.colorScheme.secondary,
+                backgroundColor:
+                    goalAchieved
+                        ? theme.colorScheme.primary
+                        : theme.colorScheme.secondary,
               ),
             ),
           ),
@@ -213,10 +219,12 @@ class HomeScreen extends ConsumerWidget {
       child: FilledButton.icon(
         onPressed: () {
           HapticFeedback.heavyImpact();
-          ref.read(fastingProvider.notifier).startFasting(
-            notificationTitle: l10n.notificationGoalReachedTitle,
-            notificationBody: l10n.notificationGoalReachedBody,
-          );
+          ref
+              .read(fastingProvider.notifier)
+              .startFasting(
+                notificationTitle: l10n.notificationGoalReachedTitle,
+                notificationBody: l10n.notificationGoalReachedBody,
+              );
         },
         icon: const Icon(Icons.play_arrow),
         label: Text(l10n.startFasting),
@@ -227,26 +235,31 @@ class HomeScreen extends ConsumerWidget {
     );
   }
 
-  void _showCancelDialog(BuildContext context, WidgetRef ref, AppLocalizations l10n) {
+  void _showCancelDialog(
+    BuildContext context,
+    WidgetRef ref,
+    AppLocalizations l10n,
+  ) {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text(l10n.cancelFasting),
-        content: Text(l10n.cancelFastingConfirm),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text(l10n.no),
+      builder:
+          (context) => AlertDialog(
+            title: Text(l10n.cancelFasting),
+            content: Text(l10n.cancelFastingConfirm),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text(l10n.no),
+              ),
+              FilledButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  ref.read(fastingProvider.notifier).cancelFasting();
+                },
+                child: Text(l10n.yes),
+              ),
+            ],
           ),
-          FilledButton(
-            onPressed: () {
-              Navigator.pop(context);
-              ref.read(fastingProvider.notifier).cancelFasting();
-            },
-            child: Text(l10n.yes),
-          ),
-        ],
-      ),
     );
   }
 }

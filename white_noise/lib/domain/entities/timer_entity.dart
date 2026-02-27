@@ -11,11 +11,7 @@ class TimerEntity {
     this.fadeOut = true,
   });
 
-  TimerEntity copyWith({
-    Duration? duration,
-    bool? isEnabled,
-    bool? fadeOut,
-  }) {
+  TimerEntity copyWith({Duration? duration, bool? isEnabled, bool? fadeOut}) {
     return TimerEntity(
       duration: duration ?? this.duration,
       isEnabled: isEnabled ?? this.isEnabled,

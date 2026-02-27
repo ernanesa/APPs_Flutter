@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
-import 'package:flutter_riverpod/legacy.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/pomodoro_settings.dart';
 
@@ -13,9 +12,9 @@ final sharedPreferencesProvider = Provider<SharedPreferences>((ref) {
 /// Provider for Pomodoro settings.
 final settingsProvider =
     StateNotifierProvider<SettingsNotifier, PomodoroSettings>((ref) {
-  final prefs = ref.watch(sharedPreferencesProvider);
-  return SettingsNotifier(prefs);
-});
+      final prefs = ref.watch(sharedPreferencesProvider);
+      return SettingsNotifier(prefs);
+    });
 
 /// Notifier for managing Pomodoro settings.
 class SettingsNotifier extends StateNotifier<PomodoroSettings> {

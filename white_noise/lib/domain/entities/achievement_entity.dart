@@ -40,10 +40,7 @@ class AchievementEntity {
 
   /// Unlock achievement
   AchievementEntity unlock() {
-    return copyWith(
-      isUnlocked: true,
-      unlockedAt: DateTime.now(),
-    );
+    return copyWith(isUnlocked: true, unlockedAt: DateTime.now());
   }
 
   @override
@@ -217,7 +214,9 @@ class DefaultAchievements {
 
   /// Get achievements by category
   static List<AchievementEntity> getByCategory(AchievementCategory category) {
-    return all.where((achievement) => achievement.category == category).toList();
+    return all
+        .where((achievement) => achievement.category == category)
+        .toList();
   }
 
   /// Find achievement by ID

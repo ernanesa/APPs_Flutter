@@ -38,9 +38,7 @@ class ControlButtons extends StatelessWidget {
           width: 200,
           height: 56,
           child: FilledButton(
-            onPressed: isRunning
-                ? onPause
-                : (isPaused ? onResume : onStart),
+            onPressed: isRunning ? onPause : (isPaused ? onResume : onStart),
             style: FilledButton.styleFrom(
               backgroundColor: color,
               shape: RoundedRectangleBorder(
@@ -51,9 +49,7 @@ class ControlButtons extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
-                  isRunning
-                      ? Icons.pause_rounded
-                      : Icons.play_arrow_rounded,
+                  isRunning ? Icons.pause_rounded : Icons.play_arrow_rounded,
                   size: 28,
                 ),
                 const SizedBox(width: 8),
@@ -113,30 +109,22 @@ class _SecondaryButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    
+
     return OutlinedButton(
       onPressed: isEnabled ? onPressed : null,
       style: OutlinedButton.styleFrom(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 20,
-          vertical: 12,
-        ),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         side: BorderSide(
-          color: isEnabled
-              ? theme.colorScheme.outline
-              : theme.colorScheme.outline.withValues(alpha: 0.3),
+          color:
+              isEnabled
+                  ? theme.colorScheme.outline
+                  : theme.colorScheme.outline.withValues(alpha: 0.3),
         ),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: 20),
-          const SizedBox(width: 6),
-          Text(label),
-        ],
+        children: [Icon(icon, size: 20), const SizedBox(width: 6), Text(label)],
       ),
     );
   }

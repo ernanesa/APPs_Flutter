@@ -5,7 +5,7 @@ import '../models/streak_data_model.dart';
 
 class StreakRepositoryImpl implements IStreakRepository {
   final SharedPreferences _prefs;
-  
+
   static const String _streakKey = 'streak_data';
 
   StreakRepositoryImpl(this._prefs);
@@ -14,7 +14,7 @@ class StreakRepositoryImpl implements IStreakRepository {
   Future<StreakData> getStreakData() async {
     final json = _prefs.getString(_streakKey);
     if (json == null || json.isEmpty) return const StreakData();
-    
+
     try {
       return StreakDataModel.decode(json);
     } catch (_) {
@@ -27,9 +27,9 @@ class StreakRepositoryImpl implements IStreakRepository {
     final current = await getStreakData();
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
-    
+
     int newStreak = current.currentStreak;
-    
+
     if (current.lastCompletedDate != null) {
       final lastDate = DateTime(
         current.lastCompletedDate!.year,
@@ -37,7 +37,7 @@ class StreakRepositoryImpl implements IStreakRepository {
         current.lastCompletedDate!.day,
       );
       final difference = today.difference(lastDate).inDays;
-      
+
       if (difference == 0) {
         // Already completed today, don't increment streak
         newStreak = current.currentStreak;
@@ -53,8 +53,9 @@ class StreakRepositoryImpl implements IStreakRepository {
       newStreak = 1;
     }
 
-    final newBest = newStreak > current.bestStreak ? newStreak : current.bestStreak;
-    
+    final newBest =
+        newStreak > current.bestStreak ? newStreak : current.bestStreak;
+
     final updated = StreakDataModel(
       currentStreak: newStreak,
       bestStreak: newBest,

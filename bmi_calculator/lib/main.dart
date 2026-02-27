@@ -27,12 +27,8 @@ void main() async {
   } else {
     AdService.disableAds();
   }
-  
-  runApp(
-    const ProviderScope(
-      child: MyApp(),
-    ),
-  );
+
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends ConsumerStatefulWidget {

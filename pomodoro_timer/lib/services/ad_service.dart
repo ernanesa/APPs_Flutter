@@ -6,19 +6,19 @@ import '../utils/logger.dart';
 class AdService {
   static AdService? _instance;
   static AdService get instance => _instance ??= AdService._();
-  
+
   AdService._();
 
   BannerAd? _bannerAd;
   InterstitialAd? _interstitialAd;
   AppOpenAd? _appOpenAd;
-  
+
   bool _isInitialized = false;
   bool _canShowAds = false;
   int _actionCount = 0;
   int _openCount = 0;
   DateTime? _appOpenLoadTime;
-  
+
   static const int _showInterstitialAfterActions = 3;
   static const Duration _maxAppOpenAdAge = Duration(hours: 4);
 
@@ -47,11 +47,11 @@ class AdService {
   /// Initializes the Mobile Ads SDK.
   Future<void> initialize() async {
     if (_isInitialized) return;
-    
+
     await MobileAds.instance.initialize();
     _isInitialized = true;
     _canShowAds = true; // Will be updated by consent service
-    
+
     // Pre-load ads
     _loadBannerAd();
     _loadInterstitialAd();
@@ -72,7 +72,7 @@ class AdService {
 
   void _loadBannerAd() {
     if (!_canShowAds) return;
-    
+
     _bannerAd?.dispose();
     _bannerAd = BannerAd(
       adUnitId: _bannerAdUnitId,
@@ -94,10 +94,12 @@ class AdService {
   /// Creates an adaptive banner ad for the given width.
   Future<BannerAd?> createAdaptiveBannerAd(int width) async {
     if (!_canShowAds) return null;
-    
-    final size = await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(width);
+
+    final size = await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(
+      width,
+    );
     if (size == null) return null;
-    
+
     return BannerAd(
       adUnitId: _bannerAdUnitId,
       size: size,
@@ -121,7 +123,7 @@ class AdService {
 
   void _loadInterstitialAd() {
     if (!_canShowAds) return;
-    
+
     InterstitialAd.load(
       adUnitId: _interstitialAdUnitId,
       request: const AdRequest(),
@@ -150,7 +152,7 @@ class AdService {
   /// Shows the interstitial ad if available.
   void showInterstitialAd() {
     if (!_canShowAds || _interstitialAd == null) return;
-    
+
     _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
       onAdDismissedFullScreenContent: (ad) {
         ad.dispose();
@@ -164,7 +166,7 @@ class AdService {
         _loadInterstitialAd();
       },
     );
-    
+
     _interstitialAd!.show();
     _interstitialAd = null;
   }
@@ -173,7 +175,7 @@ class AdService {
 
   void _loadAppOpenAd() {
     if (!_canShowAds || _appOpenAd != null) return;
-    
+
     AppOpenAd.load(
       adUnitId: _appOpenAdUnitId,
       request: const AdRequest(),
@@ -198,18 +200,18 @@ class AdService {
   /// Shows the App Open ad if available and not expired.
   void showAppOpenAdIfAvailable() {
     _openCount++;
-    
+
     // Don't show on first 2 opens for better UX
     if (_openCount < 2) {
       _loadAppOpenAd();
       return;
     }
-    
+
     if (!_canShowAds || _appOpenAd == null || _isAppOpenAdExpired) {
       _loadAppOpenAd();
       return;
     }
-    
+
     _appOpenAd!.fullScreenContentCallback = FullScreenContentCallback(
       onAdDismissedFullScreenContent: (ad) {
         ad.dispose();
@@ -223,7 +225,7 @@ class AdService {
         _loadAppOpenAd();
       },
     );
-    
+
     _appOpenAd!.show();
     _appOpenAd = null;
   }

@@ -2,13 +2,13 @@
 class StreakData {
   /// Current streak (consecutive days).
   final int currentStreak;
-  
+
   /// Best streak ever achieved.
   final int bestStreak;
-  
+
   /// Last date when user completed at least one focus session.
   final DateTime? lastActiveDate;
-  
+
   /// Total days the user has used the app.
   final int totalDaysActive;
 
@@ -24,9 +24,10 @@ class StreakData {
     return StreakData(
       currentStreak: json['currentStreak'] as int? ?? 0,
       bestStreak: json['bestStreak'] as int? ?? 0,
-      lastActiveDate: json['lastActiveDate'] != null
-          ? DateTime.parse(json['lastActiveDate'] as String)
-          : null,
+      lastActiveDate:
+          json['lastActiveDate'] != null
+              ? DateTime.parse(json['lastActiveDate'] as String)
+              : null,
       totalDaysActive: json['totalDaysActive'] as int? ?? 0,
     );
   }

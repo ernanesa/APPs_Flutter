@@ -21,11 +21,11 @@ class AdService {
   // ============================================================================
   // AD UNIT IDs - PRODUÇÃO
   // ============================================================================
-  
+
   /// ID do Banner Ad (Produção)
   static String get bannerAdUnitId {
     if (Platform.isAndroid) {
-      return kDebugMode 
+      return kDebugMode
           ? 'ca-app-pub-3940256099942544/6300978111' // Test ID
           : 'ca-app-pub-9691622617864549/5123837659'; // Produção
     }
@@ -55,7 +55,7 @@ class AdService {
   // ============================================================================
   // APP OPEN AD - Gerenciamento Avançado
   // ============================================================================
-  
+
   static AppOpenAd? _appOpenAd;
   static DateTime? _appOpenAdLoadTime;
   static bool _isShowingAppOpenAd = false;
@@ -138,7 +138,7 @@ class AdService {
   // ============================================================================
   // INTERSTITIAL AD - Com Pre-loading
   // ============================================================================
-  
+
   static InterstitialAd? _interstitialAd;
   static int _actionCount = 0;
   static const int _showAfterActions = 3; // Mostrar a cada 3 cálculos
@@ -240,7 +240,9 @@ class AdService {
     if (!_adsEnabled) return null;
     if (!Platform.isAndroid) return null;
 
-    final size = await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(width);
+    final size = await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(
+      width,
+    );
     if (size == null) return null;
 
     return BannerAd(

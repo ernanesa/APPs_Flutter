@@ -4,7 +4,7 @@ import '../../domain/repositories/i_settings_repository.dart';
 
 class SettingsRepositoryImpl implements ISettingsRepository {
   final SharedPreferences _prefs;
-  
+
   static const String _themeKey = 'app_theme';
   static const String _protocolKey = 'selected_protocol';
   static const String _notificationsKey = 'notifications_enabled';
@@ -16,7 +16,7 @@ class SettingsRepositoryImpl implements ISettingsRepository {
   Future<AppThemeType> getTheme() async {
     final themeName = _prefs.getString(_themeKey);
     if (themeName == null) return AppThemeType.forest;
-    
+
     try {
       return AppThemeType.values.firstWhere(
         (t) => t.name == themeName,

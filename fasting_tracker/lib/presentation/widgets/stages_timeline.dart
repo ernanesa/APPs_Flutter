@@ -16,11 +16,36 @@ class StagesTimeline extends StatelessWidget {
 
     final stages = [
       _StageInfo(FastingStage.fed, l10n.stageFed, '0-4h', Colors.grey),
-      _StageInfo(FastingStage.earlyFasting, l10n.stageEarlyFasting, '4-12h', Colors.blue),
-      _StageInfo(FastingStage.fatBurning, l10n.stageFatBurning, '12-18h', Colors.orange),
-      _StageInfo(FastingStage.ketosis, l10n.stageKetosis, '18-24h', Colors.deepOrange),
-      _StageInfo(FastingStage.deepKetosis, l10n.stageDeepKetosis, '24-48h', Colors.red),
-      _StageInfo(FastingStage.autophagy, l10n.stageAutophagy, '48h+', Colors.purple),
+      _StageInfo(
+        FastingStage.earlyFasting,
+        l10n.stageEarlyFasting,
+        '4-12h',
+        Colors.blue,
+      ),
+      _StageInfo(
+        FastingStage.fatBurning,
+        l10n.stageFatBurning,
+        '12-18h',
+        Colors.orange,
+      ),
+      _StageInfo(
+        FastingStage.ketosis,
+        l10n.stageKetosis,
+        '18-24h',
+        Colors.deepOrange,
+      ),
+      _StageInfo(
+        FastingStage.deepKetosis,
+        l10n.stageDeepKetosis,
+        '24-48h',
+        Colors.red,
+      ),
+      _StageInfo(
+        FastingStage.autophagy,
+        l10n.stageAutophagy,
+        '48h+',
+        Colors.purple,
+      ),
     ];
 
     return Card(
@@ -39,10 +64,11 @@ class StagesTimeline extends StatelessWidget {
             ...stages.asMap().entries.map((entry) {
               final index = entry.key;
               final stage = entry.value;
-              final isActive = currentSession != null && 
+              final isActive =
+                  currentSession != null &&
                   currentSession!.currentStage == stage.stage;
               final isPassed = currentHours >= stage.stage.endHour;
-              
+
               return _buildStageRow(
                 context,
                 stage,
@@ -65,7 +91,7 @@ class StagesTimeline extends StatelessWidget {
     bool isLast = false,
   }) {
     final theme = Theme.of(context);
-    
+
     return IntrinsicHeight(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,9 +103,10 @@ class StagesTimeline extends StatelessWidget {
                 width: 24,
                 height: 24,
                 decoration: BoxDecoration(
-                  color: isActive
-                      ? stage.color
-                      : isPassed
+                  color:
+                      isActive
+                          ? stage.color
+                          : isPassed
                           ? stage.color.withValues(alpha: 0.5)
                           : theme.colorScheme.surfaceContainerHighest,
                   shape: BoxShape.circle,
@@ -99,9 +126,10 @@ class StagesTimeline extends StatelessWidget {
                 Expanded(
                   child: Container(
                     width: 2,
-                    color: isPassed
-                        ? stage.color.withValues(alpha: 0.5)
-                        : theme.colorScheme.surfaceContainerHighest,
+                    color:
+                        isPassed
+                            ? stage.color.withValues(alpha: 0.5)
+                            : theme.colorScheme.surfaceContainerHighest,
                   ),
                 ),
             ],
@@ -119,7 +147,8 @@ class StagesTimeline extends StatelessWidget {
                       Text(
                         stage.name,
                         style: theme.textTheme.bodyLarge?.copyWith(
-                          fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
+                          fontWeight:
+                              isActive ? FontWeight.bold : FontWeight.normal,
                           color: isActive ? stage.color : null,
                         ),
                       ),

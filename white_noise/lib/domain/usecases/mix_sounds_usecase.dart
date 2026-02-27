@@ -131,23 +131,13 @@ class MixResult {
   final MixEntity? mix;
   final String? errorMessage;
 
-  MixResult._({
-    required this.isSuccess,
-    this.mix,
-    this.errorMessage,
-  });
+  MixResult._({required this.isSuccess, this.mix, this.errorMessage});
 
   factory MixResult.success(MixEntity mix) {
-    return MixResult._(
-      isSuccess: true,
-      mix: mix,
-    );
+    return MixResult._(isSuccess: true, mix: mix);
   }
 
   factory MixResult.failure(String message) {
-    return MixResult._(
-      isSuccess: false,
-      errorMessage: message,
-    );
+    return MixResult._(isSuccess: false, errorMessage: message);
   }
 }

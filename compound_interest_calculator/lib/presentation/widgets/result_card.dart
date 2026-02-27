@@ -8,19 +8,17 @@ class ResultCard extends StatelessWidget {
   final Calculation calculation;
   final VoidCallback? onSave;
 
-  const ResultCard({
-    super.key,
-    required this.calculation,
-    this.onSave,
-  });
+  const ResultCard({super.key, required this.calculation, this.onSave});
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
-    
-    final percentageGain = ((calculation.totalAmount - calculation.totalContributed) / 
-        calculation.totalContributed * 100);
+
+    final percentageGain =
+        ((calculation.totalAmount - calculation.totalContributed) /
+            calculation.totalContributed *
+            100);
     final gainColor = percentageGain > 10 ? Colors.green : Colors.orange;
 
     return Card(
@@ -30,10 +28,7 @@ class ResultCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              l10n.totalAmount,
-              style: theme.textTheme.titleMedium,
-            ),
+            Text(l10n.totalAmount, style: theme.textTheme.titleMedium),
             const SizedBox(height: 8),
             Text(
               formatCurrency(calculation.totalAmount),
@@ -70,15 +65,17 @@ class ResultCard extends StatelessWidget {
                     onPressed: () {
                       showDialog(
                         context: context,
-                        builder: (context) => Dialog(
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.9,
-                            height: MediaQuery.of(context).size.height * 0.7,
-                            child: CalculationChart(
-                              monthlyData: calculation.monthlyBreakdown,
+                        builder:
+                            (context) => Dialog(
+                              child: SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.9,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.7,
+                                child: CalculationChart(
+                                  monthlyData: calculation.monthlyBreakdown,
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
                       );
                     },
                     icon: const Icon(Icons.show_chart),

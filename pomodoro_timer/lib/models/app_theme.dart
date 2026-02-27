@@ -107,9 +107,6 @@ class AppThemes {
   ];
 
   static AppTheme getById(String id) {
-    return all.firstWhere(
-      (theme) => theme.id == id,
-      orElse: () => tomato,
-    );
+    return all.firstWhere((theme) => theme.id == id, orElse: () => tomato);
   }
 }

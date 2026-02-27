@@ -11,13 +11,17 @@ class StreakWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
     final streak = ref.watch(streakProvider);
-    
+
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(12),
         child: Row(
           children: [
-            const Icon(Icons.local_fire_department, color: Colors.orange, size: 28),
+            const Icon(
+              Icons.local_fire_department,
+              color: Colors.orange,
+              size: 28,
+            ),
             const SizedBox(width: 8),
             Expanded(
               child: Column(

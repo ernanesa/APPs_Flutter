@@ -21,14 +21,35 @@ class InfoDialog extends StatelessWidget {
             const SizedBox(height: 16),
             _buildCategoryRow(context, "< 18.5", l10n.underweight, Colors.blue),
             _buildCategoryRow(
-                context, "18.5 - 24.9", l10n.normal, Colors.green),
+              context,
+              "18.5 - 24.9",
+              l10n.normal,
+              Colors.green,
+            ),
             _buildCategoryRow(
-                context, "25.0 - 29.9", l10n.overweight, Colors.orange),
+              context,
+              "25.0 - 29.9",
+              l10n.overweight,
+              Colors.orange,
+            ),
             _buildCategoryRow(
-                context, "30.0 - 34.9", l10n.obesity1, Colors.deepOrange),
-            _buildCategoryRow(context, "35.0 - 39.9", l10n.obesity2, Colors.red),
+              context,
+              "30.0 - 34.9",
+              l10n.obesity1,
+              Colors.deepOrange,
+            ),
             _buildCategoryRow(
-                context, "> 40.0", l10n.obesity3, Colors.red.shade900),
+              context,
+              "35.0 - 39.9",
+              l10n.obesity2,
+              Colors.red,
+            ),
+            _buildCategoryRow(
+              context,
+              "> 40.0",
+              l10n.obesity3,
+              Colors.red.shade900,
+            ),
             const SizedBox(height: 16),
             Text(
               l10n.source,
@@ -63,7 +84,11 @@ class InfoDialog extends StatelessWidget {
   }
 
   Widget _buildCategoryRow(
-      BuildContext context, String range, String label, Color color) {
+    BuildContext context,
+    String range,
+    String label,
+    Color color,
+  ) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: Row(
@@ -71,10 +96,7 @@ class InfoDialog extends StatelessWidget {
           Container(
             width: 12,
             height: 12,
-            decoration: BoxDecoration(
-              color: color,
-              shape: BoxShape.circle,
-            ),
+            decoration: BoxDecoration(color: color, shape: BoxShape.circle),
           ),
           const SizedBox(width: 8),
           Expanded(

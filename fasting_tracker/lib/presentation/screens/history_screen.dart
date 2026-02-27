@@ -19,9 +19,7 @@ class HistoryScreen extends ConsumerWidget {
     final streakData = ref.watch(streakProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.history),
-      ),
+      appBar: AppBar(title: Text(l10n.history)),
       body: Column(
         children: [
           // Stats header
@@ -79,7 +77,7 @@ class HistoryScreen extends ConsumerWidget {
                     ),
                   );
                 }
-                
+
                 return ListView.builder(
                   padding: const EdgeInsets.all(16),
                   itemCount: history.length,
@@ -154,9 +152,10 @@ class _HistoryCard extends StatelessWidget {
           width: 48,
           height: 48,
           decoration: BoxDecoration(
-            color: session.goalAchieved
-                ? theme.colorScheme.primaryContainer
-                : theme.colorScheme.surfaceContainerHighest,
+            color:
+                session.goalAchieved
+                    ? theme.colorScheme.primaryContainer
+                    : theme.colorScheme.surfaceContainerHighest,
             shape: BoxShape.circle,
           ),
           child: Center(

@@ -29,9 +29,7 @@ void main() async {
 
   runApp(
     ProviderScope(
-      overrides: [
-        sharedPreferencesProvider.overrideWithValue(sharedPrefs),
-      ],
+      overrides: [sharedPreferencesProvider.overrideWithValue(sharedPrefs)],
       child: const FastingTrackerApp(),
     ),
   );
@@ -50,7 +48,7 @@ class _FastingTrackerAppState extends ConsumerState<FastingTrackerApp>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(notificationServiceProvider).initialize().then((_) {
         ref.read(notificationServiceProvider).requestPermissions();

@@ -42,8 +42,8 @@ class TimerState {
   bool get isFocusSession => currentSessionType == SessionType.focus;
 
   /// Returns true if this is any type of break.
-  bool get isBreakSession => 
-      currentSessionType == SessionType.shortBreak || 
+  bool get isBreakSession =>
+      currentSessionType == SessionType.shortBreak ||
       currentSessionType == SessionType.longBreak;
 
   /// Creates a copy with modified values.
@@ -66,7 +66,10 @@ class TimerState {
       isPaused: isPaused ?? this.isPaused,
       completedSessions: completedSessions ?? this.completedSessions,
       completedPomodoros: completedPomodoros ?? this.completedPomodoros,
-      sessionStartTime: clearSessionStartTime ? null : (sessionStartTime ?? this.sessionStartTime),
+      sessionStartTime:
+          clearSessionStartTime
+              ? null
+              : (sessionStartTime ?? this.sessionStartTime),
     );
   }
 }

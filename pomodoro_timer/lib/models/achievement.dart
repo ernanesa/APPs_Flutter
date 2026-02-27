@@ -24,10 +24,7 @@ class Achievement {
     this.unlockedAt,
   });
 
-  Achievement copyWith({
-    bool? isUnlocked,
-    DateTime? unlockedAt,
-  }) {
+  Achievement copyWith({bool? isUnlocked, DateTime? unlockedAt}) {
     return Achievement(
       id: id,
       titleKey: titleKey,
@@ -51,12 +48,7 @@ class Achievement {
 }
 
 /// Categories of achievements.
-enum AchievementCategory {
-  sessions,
-  streak,
-  time,
-  special,
-}
+enum AchievementCategory { sessions, streak, time, special }
 
 /// Predefined achievements list.
 class Achievements {
@@ -107,7 +99,7 @@ class Achievements {
       category: AchievementCategory.sessions,
       targetValue: 500,
     ),
-    
+
     // Streak-based achievements
     const Achievement(
       id: 'streak_3',
@@ -136,7 +128,7 @@ class Achievements {
       category: AchievementCategory.streak,
       targetValue: 30,
     ),
-    
+
     // Time-based achievements
     const Achievement(
       id: 'time_1h',
@@ -165,7 +157,7 @@ class Achievements {
       category: AchievementCategory.time,
       targetValue: 6000, // minutes
     ),
-    
+
     // Special achievements
     const Achievement(
       id: 'early_bird',

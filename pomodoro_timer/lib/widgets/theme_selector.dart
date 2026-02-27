@@ -16,26 +16,25 @@ class ThemeSelector extends ConsumerWidget {
     return SizedBox(
       height: 90,
       child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.symmetric(horizontal: 12),
-            itemCount: AppThemes.all.length,
-          itemBuilder: (context, index) {
-            final appTheme = AppThemes.all[index];
-            final isSelected = selectedTheme.id == appTheme.id;
-            
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
-              child: _ThemeItem(
-                appTheme: appTheme,
-                isSelected: isSelected,
-                onTap: () {
-                  ref.read(selectedThemeProvider.notifier)
-                      .selectTheme(appTheme);
-                },
-              ),
-            );
-          },
-        ),
+        scrollDirection: Axis.horizontal,
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+        itemCount: AppThemes.all.length,
+        itemBuilder: (context, index) {
+          final appTheme = AppThemes.all[index];
+          final isSelected = selectedTheme.id == appTheme.id;
+
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+            child: _ThemeItem(
+              appTheme: appTheme,
+              isSelected: isSelected,
+              onTap: () {
+                ref.read(selectedThemeProvider.notifier).selectTheme(appTheme);
+              },
+            ),
+          );
+        },
+      ),
     );
   }
 }
@@ -63,9 +62,12 @@ class _ThemeItem extends StatelessWidget {
         width: 72,
         padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
-          color: isSelected
-              ? appTheme.primaryColor.withValues(alpha: 0.15)
-              : theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
+          color:
+              isSelected
+                  ? appTheme.primaryColor.withValues(alpha: 0.15)
+                  : theme.colorScheme.surfaceContainerHighest.withValues(
+                    alpha: 0.3,
+                  ),
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
             color: isSelected ? appTheme.primaryColor : Colors.transparent,
@@ -81,10 +83,7 @@ class _ThemeItem extends StatelessWidget {
               height: 36,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [
-                    appTheme.primaryColor,
-                    appTheme.secondaryColor,
-                  ],
+                  colors: [appTheme.primaryColor, appTheme.secondaryColor],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
@@ -94,17 +93,19 @@ class _ThemeItem extends StatelessWidget {
                   width: 2,
                 ),
               ),
-              child: isSelected
-                  ? const Icon(Icons.check, color: Colors.white, size: 20)
-                  : null,
+              child:
+                  isSelected
+                      ? const Icon(Icons.check, color: Colors.white, size: 20)
+                      : null,
             ),
             const SizedBox(height: 4),
             Text(
               _getLocalizedName(l10n, appTheme.nameKey),
               style: theme.textTheme.bodySmall?.copyWith(
-                color: isSelected 
-                    ? appTheme.primaryColor 
-                    : theme.colorScheme.onSurface,
+                color:
+                    isSelected
+                        ? appTheme.primaryColor
+                        : theme.colorScheme.onSurface,
                 fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
                 fontSize: 10,
               ),

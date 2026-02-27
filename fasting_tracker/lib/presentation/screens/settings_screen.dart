@@ -17,14 +17,12 @@ class SettingsScreen extends ConsumerWidget {
     final currentLocale = ref.watch(localeProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.settings),
-      ),
+      appBar: AppBar(title: Text(l10n.settings)),
       body: ListView(
         children: [
           // Appearance section
           _buildSectionHeader(context, l10n.appearance, Icons.palette),
-          
+
           // Theme section
           ListTile(
             title: Text(l10n.colorTheme),
@@ -35,20 +33,24 @@ class SettingsScreen extends ConsumerWidget {
             child: Wrap(
               spacing: 8,
               runSpacing: 8,
-              children: AppThemeType.values.map((themeType) {
-                final isSelected = themeType == currentTheme;
-                return _ThemeChip(
-                  themeType: themeType,
-                  isSelected: isSelected,
-                  onTap: () => ref.read(themeProvider.notifier).setTheme(themeType),
-                  l10n: l10n,
-                );
-              }).toList(),
+              children:
+                  AppThemeType.values.map((themeType) {
+                    final isSelected = themeType == currentTheme;
+                    return _ThemeChip(
+                      themeType: themeType,
+                      isSelected: isSelected,
+                      onTap:
+                          () => ref
+                              .read(themeProvider.notifier)
+                              .setTheme(themeType),
+                      l10n: l10n,
+                    );
+                  }).toList(),
             ),
           ),
-          
+
           const SizedBox(height: 16),
-          
+
           // Language section
           ListTile(
             leading: const Icon(Icons.language),
@@ -57,9 +59,9 @@ class SettingsScreen extends ConsumerWidget {
             trailing: const Icon(Icons.chevron_right),
             onTap: () => _showLanguageSelector(context, ref, l10n),
           ),
-          
+
           const SizedBox(height: 24),
-          
+
           // About section
           _buildSectionHeader(context, l10n.about, Icons.info),
           ListTile(
@@ -67,16 +69,20 @@ class SettingsScreen extends ConsumerWidget {
             title: Text(l10n.version),
             subtitle: const Text('1.0.0'),
           ),
-          
+
           const SizedBox(height: 32),
         ],
       ),
     );
   }
 
-  void _showLanguageSelector(BuildContext context, WidgetRef ref, AppLocalizations l10n) {
+  void _showLanguageSelector(
+    BuildContext context,
+    WidgetRef ref,
+    AppLocalizations l10n,
+  ) {
     final currentLocale = ref.read(localeProvider);
-    
+
     showModalBottomSheet(
       context: context,
       builder: (context) {
@@ -94,7 +100,10 @@ class SettingsScreen extends ConsumerWidget {
               const Divider(),
               ListTile(
                 title: Text(l10n.languageDefault),
-                trailing: currentLocale == null ? const Icon(Icons.check, color: Colors.green) : null,
+                trailing:
+                    currentLocale == null
+                        ? const Icon(Icons.check, color: Colors.green)
+                        : null,
                 onTap: () {
                   ref.read(localeProvider.notifier).setLocale(null);
                   Navigator.pop(context);
@@ -124,13 +133,19 @@ class SettingsScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildLanguageItem(BuildContext context, WidgetRef ref, String code, String name) {
+  Widget _buildLanguageItem(
+    BuildContext context,
+    WidgetRef ref,
+    String code,
+    String name,
+  ) {
     final currentLocale = ref.watch(localeProvider);
     final isSelected = currentLocale?.languageCode == code;
 
     return ListTile(
       title: Text(name),
-      trailing: isSelected ? const Icon(Icons.check, color: Colors.green) : null,
+      trailing:
+          isSelected ? const Icon(Icons.check, color: Colors.green) : null,
       onTap: () {
         ref.read(localeProvider.notifier).setLocale(Locale(code));
         Navigator.pop(context);
@@ -141,36 +156,61 @@ class SettingsScreen extends ConsumerWidget {
   String _getLanguageName(String? code, AppLocalizations l10n) {
     if (code == null) return l10n.languageDefault;
     switch (code) {
-      case 'en': return 'English';
-      case 'pt': return 'Português';
-      case 'es': return 'Español';
-      case 'fr': return 'Français';
-      case 'de': return 'Deutsch';
-      case 'ar': return 'العربية';
-      case 'hi': return 'हिन्दी';
-      case 'bn': return 'বাংলা';
-      case 'ja': return '日本語';
-      case 'ru': return 'Русский';
-      case 'zh': return '中文';
-      default: return code;
+      case 'en':
+        return 'English';
+      case 'pt':
+        return 'Português';
+      case 'es':
+        return 'Español';
+      case 'fr':
+        return 'Français';
+      case 'de':
+        return 'Deutsch';
+      case 'ar':
+        return 'العربية';
+      case 'hi':
+        return 'हिन्दी';
+      case 'bn':
+        return 'বাংলা';
+      case 'ja':
+        return '日本語';
+      case 'ru':
+        return 'Русский';
+      case 'zh':
+        return '中文';
+      default:
+        return code;
     }
   }
 
   String _getThemeName(String name, AppLocalizations l10n) {
     switch (name) {
-      case 'forest': return l10n.themeForest;
-      case 'ocean': return l10n.themeOcean;
-      case 'sunset': return l10n.themeSunset;
-      case 'lavender': return l10n.themeLavender;
-      case 'midnight': return l10n.themeMidnight;
-      case 'rose': return l10n.themeRose;
-      case 'mint': return l10n.themeMint;
-      case 'amber': return l10n.themeAmber;
-      default: return name;
+      case 'forest':
+        return l10n.themeForest;
+      case 'ocean':
+        return l10n.themeOcean;
+      case 'sunset':
+        return l10n.themeSunset;
+      case 'lavender':
+        return l10n.themeLavender;
+      case 'midnight':
+        return l10n.themeMidnight;
+      case 'rose':
+        return l10n.themeRose;
+      case 'mint':
+        return l10n.themeMint;
+      case 'amber':
+        return l10n.themeAmber;
+      default:
+        return name;
     }
   }
 
-  Widget _buildSectionHeader(BuildContext context, String title, IconData icon) {
+  Widget _buildSectionHeader(
+    BuildContext context,
+    String title,
+    IconData icon,
+  ) {
     final theme = Theme.of(context);
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
@@ -208,16 +248,17 @@ class _ThemeChip extends StatelessWidget {
   Widget build(BuildContext context) {
     // Theme available for future enhancements
     // final theme = Theme.of(context);
-    
+
     return GestureDetector(
       onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
-          color: isSelected
-              ? themeType.primaryColor
-              : themeType.primaryColor.withValues(alpha: 0.2),
+          color:
+              isSelected
+                  ? themeType.primaryColor
+                  : themeType.primaryColor.withValues(alpha: 0.2),
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
             color: themeType.primaryColor,
@@ -252,15 +293,24 @@ class _ThemeChip extends StatelessWidget {
 
   String _getThemeName(String name, AppLocalizations l10n) {
     switch (name) {
-      case 'forest': return l10n.themeForest;
-      case 'ocean': return l10n.themeOcean;
-      case 'sunset': return l10n.themeSunset;
-      case 'lavender': return l10n.themeLavender;
-      case 'midnight': return l10n.themeMidnight;
-      case 'rose': return l10n.themeRose;
-      case 'mint': return l10n.themeMint;
-      case 'amber': return l10n.themeAmber;
-      default: return name;
+      case 'forest':
+        return l10n.themeForest;
+      case 'ocean':
+        return l10n.themeOcean;
+      case 'sunset':
+        return l10n.themeSunset;
+      case 'lavender':
+        return l10n.themeLavender;
+      case 'midnight':
+        return l10n.themeMidnight;
+      case 'rose':
+        return l10n.themeRose;
+      case 'mint':
+        return l10n.themeMint;
+      case 'amber':
+        return l10n.themeAmber;
+      default:
+        return name;
     }
   }
 }

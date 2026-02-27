@@ -4,10 +4,10 @@ import '../entities/streak_data.dart';
 abstract class IStreakRepository {
   /// Get current streak data
   Future<StreakData> getStreakData();
-  
+
   /// Record a completed fast
   Future<StreakData> recordCompletedFast(int durationMinutes);
-  
+
   /// Reset streak (for testing or user request)
   Future<void> resetStreak();
 }

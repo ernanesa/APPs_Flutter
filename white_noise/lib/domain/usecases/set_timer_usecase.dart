@@ -39,11 +39,7 @@ class SetTimerUseCase {
 
   /// Quick set with common duration
   Future<TimerResult> quickSet(Duration duration) async {
-    return setTimer(
-      duration: duration,
-      enabled: true,
-      fadeOut: true,
-    );
+    return setTimer(duration: duration, enabled: true, fadeOut: true);
   }
 
   /// Disable timer
@@ -88,23 +84,13 @@ class TimerResult {
   final TimerEntity? timer;
   final String? errorMessage;
 
-  TimerResult._({
-    required this.isSuccess,
-    this.timer,
-    this.errorMessage,
-  });
+  TimerResult._({required this.isSuccess, this.timer, this.errorMessage});
 
   factory TimerResult.success(TimerEntity timer) {
-    return TimerResult._(
-      isSuccess: true,
-      timer: timer,
-    );
+    return TimerResult._(isSuccess: true, timer: timer);
   }
 
   factory TimerResult.failure(String message) {
-    return TimerResult._(
-      isSuccess: false,
-      errorMessage: message,
-    );
+    return TimerResult._(isSuccess: false, errorMessage: message);
   }
 }

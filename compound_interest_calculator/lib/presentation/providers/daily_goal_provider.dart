@@ -1,17 +1,24 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
-import 'package:flutter_riverpod/legacy.dart';
-import 'package:flutter_riverpod/legacy.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../domain/entities/daily_goal.dart';
 
-final dailyGoalProvider = StateNotifierProvider<DailyGoalNotifier, DailyGoal>((ref) {
+final dailyGoalProvider = StateNotifierProvider<DailyGoalNotifier, DailyGoal>((
+  ref,
+) {
   return DailyGoalNotifier();
 });
 
 class DailyGoalNotifier extends StateNotifier<DailyGoal> {
-  DailyGoalNotifier() : super(DailyGoal(targetCalculations: 3, completedCalculations: 0, date: DateTime.now())) {
+  DailyGoalNotifier()
+    : super(
+        DailyGoal(
+          targetCalculations: 3,
+          completedCalculations: 0,
+          date: DateTime.now(),
+        ),
+      ) {
     _loadGoal();
   }
 
@@ -20,28 +27,33 @@ class DailyGoalNotifier extends StateNotifier<DailyGoal> {
     final target = prefs.getInt('daily_goal_target') ?? 3;
     final completed = prefs.getInt('daily_goal_completed') ?? 0;
     final lastResetMs = prefs.getInt('daily_goal_last_reset');
-    
+
     var goal = DailyGoal(
       targetCalculations: target,
       completedCalculations: completed,
-      date: lastResetMs != null 
-          ? DateTime.fromMillisecondsSinceEpoch(lastResetMs)
-          : DateTime.now(),
+      date:
+          lastResetMs != null
+              ? DateTime.fromMillisecondsSinceEpoch(lastResetMs)
+              : DateTime.now(),
     );
-    
+
     // Reset if new day
     if (!_isSameDay(goal.date, DateTime.now())) {
-      goal = DailyGoal(targetCalculations: target, completedCalculations: 0, date: DateTime.now());
+      goal = DailyGoal(
+        targetCalculations: target,
+        completedCalculations: 0,
+        date: DateTime.now(),
+      );
       await _saveGoal(goal);
     }
-    
+
     state = goal;
   }
 
   bool _isSameDay(DateTime date1, DateTime date2) {
     return date1.year == date2.year &&
-           date1.month == date2.month &&
-           date1.day == date2.day;
+        date1.month == date2.month &&
+        date1.day == date2.day;
   }
 
   Future<void> incrementCompleted() async {
@@ -59,7 +71,7 @@ class DailyGoalNotifier extends StateNotifier<DailyGoal> {
         date: state.date,
       );
     }
-    
+
     await _saveGoal(state);
   }
 
@@ -76,6 +88,9 @@ class DailyGoalNotifier extends StateNotifier<DailyGoal> {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setInt('daily_goal_target', goal.targetCalculations);
     await prefs.setInt('daily_goal_completed', goal.completedCalculations);
-    await prefs.setInt('daily_goal_last_reset', goal.date.millisecondsSinceEpoch);
+    await prefs.setInt(
+      'daily_goal_last_reset',
+      goal.date.millisecondsSinceEpoch,
+    );
   }
 }

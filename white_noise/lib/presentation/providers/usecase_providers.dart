@@ -33,7 +33,9 @@ final setTimerUseCaseProvider = Provider<SetTimerUseCase>((ref) {
   );
 });
 
-final trackAchievementsUseCaseProvider = Provider<TrackAchievementsUseCase>((ref) {
+final trackAchievementsUseCaseProvider = Provider<TrackAchievementsUseCase>((
+  ref,
+) {
   return TrackAchievementsUseCase(
     achievementRepository: ref.watch(achievementRepositoryProvider),
     streakRepository: ref.watch(streakRepositoryProvider),

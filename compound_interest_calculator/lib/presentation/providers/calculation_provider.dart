@@ -1,7 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
-import 'package:flutter_riverpod/legacy.dart';
-import 'package:flutter_riverpod/legacy.dart';
 
 import '../../domain/entities/calculation.dart';
 import '../../domain/entities/preset.dart';
@@ -13,10 +11,11 @@ final calculationRepositoryProvider = Provider((ref) {
   return CalculationRepositoryImpl(CalculationLocalDataSource());
 });
 
-final calculationProvider = StateNotifierProvider<CalculationNotifier, CalculationState>((ref) {
-  final repository = ref.watch(calculationRepositoryProvider);
-  return CalculationNotifier(repository);
-});
+final calculationProvider =
+    StateNotifierProvider<CalculationNotifier, CalculationState>((ref) {
+      final repository = ref.watch(calculationRepositoryProvider);
+      return CalculationNotifier(repository);
+    });
 
 class CalculationState {
   final double initialCapital;
@@ -81,7 +80,7 @@ class CalculationNotifier extends StateNotifier<CalculationState> {
 
   Future<void> calculate() async {
     state = state.copyWith(isLoading: true);
-    
+
     final usecase = CalculateCompoundInterestUseCase();
     final result = usecase.execute(
       initialCapital: state.initialCapital,
@@ -89,13 +88,13 @@ class CalculationNotifier extends StateNotifier<CalculationState> {
       months: state.months,
       monthlyContribution: state.monthlyContribution,
     );
-    
+
     state = state.copyWith(result: result, isLoading: false);
   }
 
   Future<void> saveCalculation(String name) async {
     if (state.result == null) return;
-    
+
     final usecase = SaveCalculationUseCase(_repository);
     final calculation = state.result!.copyWith(name: name);
     await usecase.execute(calculation);

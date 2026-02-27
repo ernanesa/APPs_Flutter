@@ -13,21 +13,20 @@ class SettingsRepositoryImpl implements SettingsRepository {
   static const bool _defaultDarkMode = false;
   static const bool _defaultKeepScreenOn = false;
 
-  SettingsRepositoryImpl({
-    required LocalDataSource localDataSource,
-  }) : _localDataSource = localDataSource;
+  SettingsRepositoryImpl({required LocalDataSource localDataSource})
+    : _localDataSource = localDataSource;
 
   @override
   Future<TimerEntity> getTimerSettings() async {
     final json = await _localDataSource.getJson('timer_settings');
-    
+
     if (json == null) {
       return const TimerEntity(
         duration: Duration(minutes: 30),
         isEnabled: false,
       );
     }
-    
+
     final dto = TimerDto.fromJson(json);
     return dto.toEntity();
   }
@@ -91,12 +90,11 @@ class SettingsRepositoryImpl implements SettingsRepository {
       'isDarkMode': _defaultDarkMode,
       'keepScreenOn': _defaultKeepScreenOn,
     });
-    
+
     // Reset timer settings
-    await saveTimerSettings(const TimerEntity(
-      duration: Duration(minutes: 30),
-      isEnabled: false,
-    ));
+    await saveTimerSettings(
+      const TimerEntity(duration: Duration(minutes: 30), isEnabled: false),
+    );
   }
 
   // Private helper

@@ -1,13 +1,14 @@
 import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
-import 'package:flutter_riverpod/legacy.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/daily_goal.dart';
 import 'settings_provider.dart';
 
 /// Provider for daily goal.
-final dailyGoalProvider = StateNotifierProvider<DailyGoalNotifier, DailyGoal>((ref) {
+final dailyGoalProvider = StateNotifierProvider<DailyGoalNotifier, DailyGoal>((
+  ref,
+) {
   final prefs = ref.watch(sharedPreferencesProvider);
   return DailyGoalNotifier(prefs);
 });
@@ -18,20 +19,19 @@ class DailyGoalNotifier extends StateNotifier<DailyGoal> {
   static const _goalKey = 'daily_goal';
   static const _targetKey = 'daily_goal_target';
 
-  DailyGoalNotifier(this._prefs) 
-      : super(DailyGoal(date: DateTime.now())) {
+  DailyGoalNotifier(this._prefs) : super(DailyGoal(date: DateTime.now())) {
     _loadDailyGoal();
   }
 
   void _loadDailyGoal() {
     final targetSessions = _prefs.getInt(_targetKey) ?? 8;
     final json = _prefs.getString(_goalKey);
-    
+
     if (json != null) {
       try {
         final map = jsonDecode(json) as Map<String, dynamic>;
         final savedGoal = DailyGoal.fromJson(map);
-        
+
         // Check if it's still today
         if (savedGoal.isToday) {
           state = savedGoal.copyWith(targetSessions: targetSessions);
@@ -45,16 +45,10 @@ class DailyGoalNotifier extends StateNotifier<DailyGoal> {
         }
       } catch (_) {
         // Use default on error
-        state = DailyGoal(
-          date: DateTime.now(),
-          targetSessions: targetSessions,
-        );
+        state = DailyGoal(date: DateTime.now(), targetSessions: targetSessions);
       }
     } else {
-      state = DailyGoal(
-        date: DateTime.now(),
-        targetSessions: targetSessions,
-      );
+      state = DailyGoal(date: DateTime.now(), targetSessions: targetSessions);
     }
   }
 

@@ -23,10 +23,7 @@ class Achievement extends Equatable {
     this.unlockedAt,
   });
 
-  Achievement copyWith({
-    bool? isUnlocked,
-    DateTime? unlockedAt,
-  }) {
+  Achievement copyWith({bool? isUnlocked, DateTime? unlockedAt}) {
     return Achievement(
       id: id,
       titleKey: titleKey,
@@ -41,15 +38,15 @@ class Achievement extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        titleKey,
-        descriptionKey,
-        icon,
-        category,
-        requirement,
-        isUnlocked,
-        unlockedAt,
-      ];
+    id,
+    titleKey,
+    descriptionKey,
+    icon,
+    category,
+    requirement,
+    isUnlocked,
+    unlockedAt,
+  ];
 }
 
 /// Default achievements for the app
@@ -88,7 +85,7 @@ class DefaultAchievements {
       category: AchievementCategory.calculations,
       requirement: 100,
     ),
-    
+
     // Streaks
     Achievement(
       id: 'streak_3',
@@ -114,7 +111,7 @@ class DefaultAchievements {
       category: AchievementCategory.streak,
       requirement: 30,
     ),
-    
+
     // Amounts
     Achievement(
       id: 'million',
@@ -132,7 +129,7 @@ class DefaultAchievements {
       category: AchievementCategory.amounts,
       requirement: 10000000,
     ),
-    
+
     // Special
     Achievement(
       id: 'long_term',

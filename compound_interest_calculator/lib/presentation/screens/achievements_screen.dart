@@ -13,7 +13,7 @@ class AchievementsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
     final achievements = ref.watch(achievementsProvider);
-    
+
     final unlockedCount = achievements.where((a) => a.isUnlocked).length;
     final progress = unlockedCount / achievements.length;
 
@@ -27,7 +27,10 @@ class AchievementsScreen extends ConsumerWidget {
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 8,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -67,22 +70,30 @@ class AchievementsScreen extends ConsumerWidget {
             _buildAchievementGrid(
               context,
               l10n,
-              achievements.where((a) => a.category == AchievementCategory.calculations).toList(),
+              achievements
+                  .where((a) => a.category == AchievementCategory.calculations)
+                  .toList(),
             ),
             _buildAchievementGrid(
               context,
               l10n,
-              achievements.where((a) => a.category == AchievementCategory.streak).toList(),
+              achievements
+                  .where((a) => a.category == AchievementCategory.streak)
+                  .toList(),
             ),
             _buildAchievementGrid(
               context,
               l10n,
-              achievements.where((a) => a.category == AchievementCategory.amounts).toList(),
+              achievements
+                  .where((a) => a.category == AchievementCategory.amounts)
+                  .toList(),
             ),
             _buildAchievementGrid(
               context,
               l10n,
-              achievements.where((a) => a.category == AchievementCategory.special).toList(),
+              achievements
+                  .where((a) => a.category == AchievementCategory.special)
+                  .toList(),
             ),
           ],
         ),
@@ -142,9 +153,7 @@ class AchievementsScreen extends ConsumerWidget {
                   Icon(
                     _getAchievementIcon(achievement.id),
                     size: 48,
-                    color: isLocked
-                        ? Colors.grey
-                        : theme.colorScheme.primary,
+                    color: isLocked ? Colors.grey : theme.colorScheme.primary,
                   ),
                   const SizedBox(height: 8),
                   Text(
@@ -188,11 +197,7 @@ class AchievementsScreen extends ConsumerWidget {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: const Center(
-                    child: Icon(
-                      Icons.lock,
-                      size: 32,
-                      color: Colors.white,
-                    ),
+                    child: Icon(Icons.lock, size: 32, color: Colors.white),
                   ),
                 ),
               ),
@@ -209,46 +214,48 @@ class AchievementsScreen extends ConsumerWidget {
   ) {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Row(
-          children: [
-            Icon(_getAchievementIcon(achievement.id)),
-            const SizedBox(width: 8),
-            Expanded(
-              child: Text(_getAchievementTitle(l10n, achievement.id)),
-            ),
-          ],
-        ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(_getAchievementDescription(l10n, achievement.id)),
-            if (achievement.isUnlocked && achievement.unlockedAt != null) ...[
-              const SizedBox(height: 16),
-              Text(
-                '${l10n.unlockedOn}: ${DateFormat.yMd().format(achievement.unlockedAt!)}',
-                style: const TextStyle(
-                  color: Colors.green,
-                  fontWeight: FontWeight.bold,
+      builder:
+          (context) => AlertDialog(
+            title: Row(
+              children: [
+                Icon(_getAchievementIcon(achievement.id)),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(_getAchievementTitle(l10n, achievement.id)),
                 ),
-              ),
-            ] else ...[
-              const SizedBox(height: 16),
-              Text(
-                l10n.notUnlockedYet,
-                style: const TextStyle(color: Colors.grey),
+              ],
+            ),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(_getAchievementDescription(l10n, achievement.id)),
+                if (achievement.isUnlocked &&
+                    achievement.unlockedAt != null) ...[
+                  const SizedBox(height: 16),
+                  Text(
+                    '${l10n.unlockedOn}: ${DateFormat.yMd().format(achievement.unlockedAt!)}',
+                    style: const TextStyle(
+                      color: Colors.green,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ] else ...[
+                  const SizedBox(height: 16),
+                  Text(
+                    l10n.notUnlockedYet,
+                    style: const TextStyle(color: Colors.grey),
+                  ),
+                ],
+              ],
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text(l10n.close),
               ),
             ],
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text(l10n.close),
           ),
-        ],
-      ),
     );
   }
 

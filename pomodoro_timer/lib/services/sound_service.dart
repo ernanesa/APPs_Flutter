@@ -6,7 +6,7 @@ import '../utils/logger.dart';
 class SoundService {
   static SoundService? _instance;
   static SoundService get instance => _instance ??= SoundService._();
-  
+
   SoundService._();
 
   final AudioPlayer _audioPlayer = AudioPlayer();
@@ -26,7 +26,7 @@ class SoundService {
   /// Plays the timer complete sound.
   Future<void> playTimerComplete() async {
     if (!_soundEnabled) return;
-    
+
     try {
       // Using a built-in notification sound
       await _audioPlayer.play(
@@ -43,12 +43,9 @@ class SoundService {
   /// Plays a tick sound (for countdown if enabled).
   Future<void> playTick() async {
     if (!_soundEnabled) return;
-    
+
     try {
-      await _audioPlayer.play(
-        AssetSource('sounds/tick.mp3'),
-        volume: 0.3,
-      );
+      await _audioPlayer.play(AssetSource('sounds/tick.mp3'), volume: 0.3);
     } catch (e) {
       logDebug('Error playing tick: $e');
     }
@@ -57,12 +54,9 @@ class SoundService {
   /// Plays a button click sound.
   Future<void> playClick() async {
     if (!_soundEnabled) return;
-    
+
     try {
-      await _audioPlayer.play(
-        AssetSource('sounds/click.mp3'),
-        volume: 0.5,
-      );
+      await _audioPlayer.play(AssetSource('sounds/click.mp3'), volume: 0.5);
     } catch (e) {
       // Ignore errors for click sound
     }
@@ -79,7 +73,7 @@ class SoundService {
   /// Triggers haptic feedback for timer completion.
   Future<void> vibrateOnComplete() async {
     if (!_vibrationEnabled) return;
-    
+
     try {
       await HapticFeedback.heavyImpact();
       await Future.delayed(const Duration(milliseconds: 200));
@@ -94,7 +88,7 @@ class SoundService {
   /// Triggers light haptic feedback for button press.
   Future<void> vibrateOnPress() async {
     if (!_vibrationEnabled) return;
-    
+
     try {
       await HapticFeedback.lightImpact();
     } catch (_) {
@@ -105,7 +99,7 @@ class SoundService {
   /// Triggers medium haptic feedback.
   Future<void> vibrateMedium() async {
     if (!_vibrationEnabled) return;
-    
+
     try {
       await HapticFeedback.mediumImpact();
     } catch (_) {

@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
-import 'package:flutter_riverpod/legacy.dart';
 
 import '../../domain/entities/timer_entity.dart';
 import '../../domain/entities/mix_entity.dart';
@@ -58,11 +57,11 @@ class MixController extends StateNotifier<MixState> {
     required SetTimerUseCase setTimerUseCase,
     required TrackAchievementsUseCase trackAchievementsUseCase,
     required UpdateStreakUseCase updateStreakUseCase,
-  })  : _mixSoundsUseCase = mixSoundsUseCase,
-        _setTimerUseCase = setTimerUseCase,
-        _trackAchievementsUseCase = trackAchievementsUseCase,
-        _updateStreakUseCase = updateStreakUseCase,
-        super(MixState.initial()) {
+  }) : _mixSoundsUseCase = mixSoundsUseCase,
+       _setTimerUseCase = setTimerUseCase,
+       _trackAchievementsUseCase = trackAchievementsUseCase,
+       _updateStreakUseCase = updateStreakUseCase,
+       super(MixState.initial()) {
     _load();
   }
 
@@ -103,7 +102,10 @@ class MixController extends StateNotifier<MixState> {
     state = state.copyWith(isLoading: true, errorMessage: null);
     final result = await _mixSoundsUseCase.playMix();
     if (!result.isSuccess) {
-      state = state.copyWith(isLoading: false, errorMessage: result.errorMessage);
+      state = state.copyWith(
+        isLoading: false,
+        errorMessage: result.errorMessage,
+      );
       return;
     }
 
@@ -136,7 +138,11 @@ class MixController extends StateNotifier<MixState> {
     _autoStopTimer?.cancel();
     final result = await _mixSoundsUseCase.clearMix();
     if (result.isSuccess && result.mix != null) {
-      state = state.copyWith(mix: result.mix!, isPlaying: false, errorMessage: null);
+      state = state.copyWith(
+        mix: result.mix!,
+        isPlaying: false,
+        errorMessage: null,
+      );
     }
   }
 

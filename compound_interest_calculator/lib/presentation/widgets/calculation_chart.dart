@@ -7,15 +7,12 @@ import '../../utils/formatters.dart';
 class CalculationChart extends StatelessWidget {
   final List<MonthlyData> monthlyData;
 
-  const CalculationChart({
-    super.key,
-    required this.monthlyData,
-  });
+  const CalculationChart({super.key, required this.monthlyData});
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    
+
     return Column(
       children: [
         AppBar(
@@ -40,15 +37,11 @@ class CalculationChart extends StatelessWidget {
                       l10n.totalContributed,
                     ),
                     const SizedBox(width: 24),
-                    _buildLegendItem(
-                      context,
-                      Colors.green,
-                      l10n.totalAmount,
-                    ),
+                    _buildLegendItem(context, Colors.green, l10n.totalAmount),
                   ],
                 ),
                 const SizedBox(height: 24),
-                
+
                 // Chart
                 Expanded(
                   child: LineChart(
@@ -77,7 +70,9 @@ class CalculationChart extends StatelessWidget {
                             reservedSize: 30,
                             interval: _calculateMonthInterval(),
                             getTitlesWidget: (value, meta) {
-                              if (value.toInt() % _calculateMonthInterval().toInt() == 0) {
+                              if (value.toInt() %
+                                      _calculateMonthInterval().toInt() ==
+                                  0) {
                                 return Text(
                                   '${value.toInt()}',
                                   style: const TextStyle(fontSize: 10),
@@ -98,14 +93,17 @@ class CalculationChart extends StatelessWidget {
                       lineBarsData: [
                         // Contributions line (grey)
                         LineChartBarData(
-                          spots: monthlyData
-                              .asMap()
-                              .entries
-                              .map((e) => FlSpot(
-                                    e.key.toDouble(),
-                                    e.value.totalInvested,
-                                  ))
-                              .toList(),
+                          spots:
+                              monthlyData
+                                  .asMap()
+                                  .entries
+                                  .map(
+                                    (e) => FlSpot(
+                                      e.key.toDouble(),
+                                      e.value.totalInvested,
+                                    ),
+                                  )
+                                  .toList(),
                           isCurved: true,
                           color: Colors.grey,
                           barWidth: 2,
@@ -114,14 +112,17 @@ class CalculationChart extends StatelessWidget {
                         ),
                         // Total amount line (green)
                         LineChartBarData(
-                          spots: monthlyData
-                              .asMap()
-                              .entries
-                              .map((e) => FlSpot(
-                                    e.key.toDouble(),
-                                    e.value.balance,
-                                  ))
-                              .toList(),
+                          spots:
+                              monthlyData
+                                  .asMap()
+                                  .entries
+                                  .map(
+                                    (e) => FlSpot(
+                                      e.key.toDouble(),
+                                      e.value.balance,
+                                    ),
+                                  )
+                                  .toList(),
                           isCurved: true,
                           color: Colors.green,
                           barWidth: 3,
@@ -172,10 +173,7 @@ class CalculationChart extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 4),
-        Text(
-          label,
-          style: Theme.of(context).textTheme.bodySmall,
-        ),
+        Text(label, style: Theme.of(context).textTheme.bodySmall),
       ],
     );
   }

@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
-import 'package:flutter_riverpod/legacy.dart';
 
 import '../../domain/entities/achievement_entity.dart';
 import '../../domain/usecases/track_achievements_usecase.dart';
@@ -39,8 +38,8 @@ class AchievementsController extends StateNotifier<AchievementsState> {
 
   AchievementsController({
     required TrackAchievementsUseCase trackAchievementsUseCase,
-  })  : _trackAchievementsUseCase = trackAchievementsUseCase,
-        super(AchievementsState.initial()) {
+  }) : _trackAchievementsUseCase = trackAchievementsUseCase,
+       super(AchievementsState.initial()) {
     _load();
   }
 
@@ -64,8 +63,9 @@ class AchievementsController extends StateNotifier<AchievementsState> {
   }
 }
 
-final achievementsProvider = StateNotifierProvider<AchievementsController, AchievementsState>((ref) {
-  return AchievementsController(
-    trackAchievementsUseCase: ref.watch(trackAchievementsUseCaseProvider),
-  );
-});
+final achievementsProvider =
+    StateNotifierProvider<AchievementsController, AchievementsState>((ref) {
+      return AchievementsController(
+        trackAchievementsUseCase: ref.watch(trackAchievementsUseCaseProvider),
+      );
+    });

@@ -53,16 +53,14 @@ class _MyAppState extends ConsumerState<MyApp> with WidgetsBindingObserver {
 
     return prefsAsync.when(
       data: (_) => const _AppRoot(),
-      loading: () => const MaterialApp(
-        home: Scaffold(
-          body: Center(child: CircularProgressIndicator()),
-        ),
-      ),
-      error: (error, _) => const MaterialApp(
-        home: Scaffold(
-          body: Center(child: Icon(Icons.error_outline)),
-        ),
-      ),
+      loading:
+          () => const MaterialApp(
+            home: Scaffold(body: Center(child: CircularProgressIndicator())),
+          ),
+      error:
+          (error, _) => const MaterialApp(
+            home: Scaffold(body: Center(child: Icon(Icons.error_outline))),
+          ),
     );
   }
 }

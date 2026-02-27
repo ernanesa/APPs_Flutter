@@ -72,9 +72,7 @@ class AdService {
     }
 
     // Check if ad is available and not expired (4 hours)
-    if (_appOpenAd == null ||
-        _isShowingAppOpenAd ||
-        _isAdExpired()) {
+    if (_appOpenAd == null || _isShowingAppOpenAd || _isAdExpired()) {
       loadAppOpenAd();
       return;
     }
@@ -107,14 +105,17 @@ class AdService {
   }
 
   /// Create adaptive banner ad
-  static Future<BannerAd> createAdaptiveBanner(int width, {
+  static Future<BannerAd> createAdaptiveBanner(
+    int width, {
     required Function(Ad) onLoaded,
     required Function(Ad, LoadAdError) onFailed,
   }) async {
-    final anchoredSize = await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(width);
-    final AdSize size = anchoredSize != null 
-        ? AdSize(width: anchoredSize.width, height: anchoredSize.height)
-        : AdSize.banner;
+    final anchoredSize =
+        await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(width);
+    final AdSize size =
+        anchoredSize != null
+            ? AdSize(width: anchoredSize.width, height: anchoredSize.height)
+            : AdSize.banner;
 
     return BannerAd(
       adUnitId: bannerAdUnitId,

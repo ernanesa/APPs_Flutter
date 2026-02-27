@@ -12,8 +12,8 @@ class DailyGoal extends Equatable {
   });
 
   bool get isCompleted => completedCalculations >= targetCalculations;
-  
-  double get progress => 
+
+  double get progress =>
       targetCalculations > 0 ? completedCalculations / targetCalculations : 0;
 
   DailyGoal copyWith({
@@ -23,7 +23,8 @@ class DailyGoal extends Equatable {
   }) {
     return DailyGoal(
       targetCalculations: targetCalculations ?? this.targetCalculations,
-      completedCalculations: completedCalculations ?? this.completedCalculations,
+      completedCalculations:
+          completedCalculations ?? this.completedCalculations,
       date: date ?? this.date,
     );
   }

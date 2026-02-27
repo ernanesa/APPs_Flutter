@@ -34,11 +34,13 @@ class TimerDisplay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final color = primaryColor ?? 
-        (isFocusSession 
-            ? theme.colorScheme.primary 
+    final color =
+        primaryColor ??
+        (isFocusSession
+            ? theme.colorScheme.primary
             : theme.colorScheme.secondary);
-    final bgColor = backgroundColor ?? theme.colorScheme.surfaceContainerHighest;
+    final bgColor =
+        backgroundColor ?? theme.colorScheme.surfaceContainerHighest;
 
     return SizedBox(
       width: 280,
@@ -148,12 +150,13 @@ class _CircularProgressPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final center = Offset(size.width / 2, size.height / 2);
     final radius = (size.width - strokeWidth) / 2;
-    
-    final paint = Paint()
-      ..color = color
-      ..strokeWidth = strokeWidth
-      ..style = PaintingStyle.stroke
-      ..strokeCap = StrokeCap.round;
+
+    final paint =
+        Paint()
+          ..color = color
+          ..strokeWidth = strokeWidth
+          ..style = PaintingStyle.stroke
+          ..strokeCap = StrokeCap.round;
 
     // Draw arc from top (-90 degrees)
     const startAngle = -math.pi / 2;

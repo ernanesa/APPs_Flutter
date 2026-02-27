@@ -22,15 +22,13 @@ class CalculationLocalDataSource {
     final prefs = await _prefs;
     final calculations = await getCalculations();
     calculations.insert(0, calculation); // Add to beginning
-    
+
     // Keep only last 50 calculations
     if (calculations.length > 50) {
       calculations.removeRange(50, calculations.length);
     }
 
-    final jsonString = jsonEncode(
-      calculations.map((c) => c.toJson()).toList(),
-    );
+    final jsonString = jsonEncode(calculations.map((c) => c.toJson()).toList());
     await prefs.setString(_key, jsonString);
   }
 
@@ -38,10 +36,8 @@ class CalculationLocalDataSource {
     final prefs = await _prefs;
     final calculations = await getCalculations();
     calculations.removeWhere((c) => c.id == id);
-    
-    final jsonString = jsonEncode(
-      calculations.map((c) => c.toJson()).toList(),
-    );
+
+    final jsonString = jsonEncode(calculations.map((c) => c.toJson()).toList());
     await prefs.setString(_key, jsonString);
   }
 

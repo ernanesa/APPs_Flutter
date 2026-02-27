@@ -25,12 +25,12 @@ class SettingsScreen extends ConsumerWidget {
     final isColorful = settings.colorfulMode;
 
     return PomodoroScaffold(
-      appBar: AppBar(
-        title: Text(l10n.settings),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: Text(l10n.settings), centerTitle: true),
       body: ListView(
-        padding: EdgeInsets.symmetric(vertical: 8, horizontal: isColorful ? 16 : 0),
+        padding: EdgeInsets.symmetric(
+          vertical: 8,
+          horizontal: isColorful ? 16 : 0,
+        ),
         children: [
           // Timer settings section
           _buildGroup(
@@ -46,7 +46,9 @@ class SettingsScreen extends ConsumerWidget {
                 min: 1,
                 max: 60,
                 onChanged: (value) {
-                  ref.read(settingsProvider.notifier).updateFocusDuration(value);
+                  ref
+                      .read(settingsProvider.notifier)
+                      .updateFocusDuration(value);
                 },
                 l10n: l10n,
               ),
@@ -58,7 +60,9 @@ class SettingsScreen extends ConsumerWidget {
                 min: 1,
                 max: 30,
                 onChanged: (value) {
-                  ref.read(settingsProvider.notifier).updateShortBreakDuration(value);
+                  ref
+                      .read(settingsProvider.notifier)
+                      .updateShortBreakDuration(value);
                 },
                 l10n: l10n,
               ),
@@ -70,7 +74,9 @@ class SettingsScreen extends ConsumerWidget {
                 min: 5,
                 max: 60,
                 onChanged: (value) {
-                  ref.read(settingsProvider.notifier).updateLongBreakDuration(value);
+                  ref
+                      .read(settingsProvider.notifier)
+                      .updateLongBreakDuration(value);
                 },
                 l10n: l10n,
               ),
@@ -83,15 +89,20 @@ class SettingsScreen extends ConsumerWidget {
                 max: 8,
                 suffix: l10n.sessions.toLowerCase(),
                 onChanged: (value) {
-                  ref.read(settingsProvider.notifier).updateSessionsUntilLongBreak(value);
+                  ref
+                      .read(settingsProvider.notifier)
+                      .updateSessionsUntilLongBreak(value);
                 },
                 l10n: l10n,
               ),
             ],
           ),
-          
-          if (!isColorful) const Divider(height: 32) else const SizedBox(height: 16),
-          
+
+          if (!isColorful)
+            const Divider(height: 32)
+          else
+            const SizedBox(height: 16),
+
           // Auto-start section
           _buildGroup(
             context,
@@ -117,7 +128,10 @@ class SettingsScreen extends ConsumerWidget {
             ],
           ),
 
-          if (!isColorful) const Divider(height: 32) else const SizedBox(height: 16),
+          if (!isColorful)
+            const Divider(height: 32)
+          else
+            const SizedBox(height: 16),
 
           // Feedback section
           _buildGroup(
@@ -144,7 +158,10 @@ class SettingsScreen extends ConsumerWidget {
             ],
           ),
 
-          if (!isColorful) const Divider(height: 32) else const SizedBox(height: 16),
+          if (!isColorful)
+            const Divider(height: 32)
+          else
+            const SizedBox(height: 16),
 
           // Appearance section
           _buildGroup(
@@ -164,15 +181,16 @@ class SettingsScreen extends ConsumerWidget {
                       ref.read(localeProvider.notifier).setLocale(code);
                     }
                   },
-                  items: LocaleNotifier.supportedLocales.entries.map((entry) {
-                    return DropdownMenuItem<String>(
-                      value: entry.key,
-                      child: Text(
-                        entry.value,
-                        style: theme.textTheme.bodyMedium,
-                      ),
-                    );
-                  }).toList(),
+                  items:
+                      LocaleNotifier.supportedLocales.entries.map((entry) {
+                        return DropdownMenuItem<String>(
+                          value: entry.key,
+                          child: Text(
+                            entry.value,
+                            style: theme.textTheme.bodyMedium,
+                          ),
+                        );
+                      }).toList(),
                 ),
               ),
               SwitchListTile(
@@ -186,13 +204,16 @@ class SettingsScreen extends ConsumerWidget {
               SwitchListTile(
                 secondary: Icon(
                   Icons.palette_outlined,
-                  color: (settings.colorfulMode && !isColorful) ? theme.colorScheme.primary : null,
+                  color:
+                      (settings.colorfulMode && !isColorful)
+                          ? theme.colorScheme.primary
+                          : null,
                 ),
                 title: Text(l10n.colorfulMode),
                 subtitle: Text(
                   l10n.colorfulModeDesc,
                   style: theme.textTheme.bodySmall?.copyWith(
-                    color: isColorful ? Colors.white70 : null
+                    color: isColorful ? Colors.white70 : null,
                   ),
                 ),
                 value: settings.colorfulMode,
@@ -203,7 +224,10 @@ class SettingsScreen extends ConsumerWidget {
             ],
           ),
 
-          if (!isColorful) const Divider(height: 32) else const SizedBox(height: 16),
+          if (!isColorful)
+            const Divider(height: 32)
+          else
+            const SizedBox(height: 16),
 
           // Theme section
           _buildGroup(
@@ -213,7 +237,10 @@ class SettingsScreen extends ConsumerWidget {
             children: [const ThemeSelector()],
           ),
 
-          if (!isColorful) const Divider(height: 32) else const SizedBox(height: 16),
+          if (!isColorful)
+            const Divider(height: 32)
+          else
+            const SizedBox(height: 16),
 
           // Ambient sounds section
           _buildGroup(
@@ -223,7 +250,10 @@ class SettingsScreen extends ConsumerWidget {
             children: [const AmbientSoundSelector()],
           ),
 
-          if (!isColorful) const Divider(height: 32) else const SizedBox(height: 16),
+          if (!isColorful)
+            const Divider(height: 32)
+          else
+            const SizedBox(height: 16),
 
           // Daily goal section
           _buildGroup(
@@ -233,7 +263,10 @@ class SettingsScreen extends ConsumerWidget {
             children: [const DailyGoalSetter()],
           ),
 
-          if (!isColorful) const Divider(height: 32) else const SizedBox(height: 16),
+          if (!isColorful)
+            const Divider(height: 32)
+          else
+            const SizedBox(height: 16),
 
           // Achievements section
           _buildGroup(
@@ -241,28 +274,34 @@ class SettingsScreen extends ConsumerWidget {
             isColorful,
             title: l10n.achievements,
             children: [
-              Builder(builder: (context) {
-                final achievements = ref.watch(achievementsProvider);
-                final unlocked = achievements.where((a) => a.unlockedAt != null).length;
-                final total = achievements.length;
-                return ListTile(
-                  leading: const Icon(Icons.emoji_events_outlined),
-                  title: Text(l10n.achievementsProgress(unlocked, total)),
-                  trailing: const Icon(Icons.chevron_right),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const AchievementsScreen(),
-                      ),
-                    );
-                  },
-                );
-              }),
+              Builder(
+                builder: (context) {
+                  final achievements = ref.watch(achievementsProvider);
+                  final unlocked =
+                      achievements.where((a) => a.unlockedAt != null).length;
+                  final total = achievements.length;
+                  return ListTile(
+                    leading: const Icon(Icons.emoji_events_outlined),
+                    title: Text(l10n.achievementsProgress(unlocked, total)),
+                    trailing: const Icon(Icons.chevron_right),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const AchievementsScreen(),
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
             ],
           ),
 
-          if (!isColorful) const Divider(height: 32) else const SizedBox(height: 16),
+          if (!isColorful)
+            const Divider(height: 32)
+          else
+            const SizedBox(height: 16),
 
           // About section
           _buildGroup(
@@ -276,7 +315,10 @@ class SettingsScreen extends ConsumerWidget {
                 trailing: Text(
                   '1.0.0',
                   style: theme.textTheme.bodyMedium?.copyWith(
-                    color: isColorful ? Colors.white70 : theme.colorScheme.onSurfaceVariant,
+                    color:
+                        isColorful
+                            ? Colors.white70
+                            : theme.colorScheme.onSurfaceVariant,
                   ),
                 ),
               ),
@@ -315,14 +357,19 @@ class SettingsScreen extends ConsumerWidget {
               ),
             ],
           ),
-          
+
           const SizedBox(height: 24),
         ],
       ),
     );
   }
 
-  Widget _buildGroup(BuildContext context, bool isColorful, {required String title, required List<Widget> children}) {
+  Widget _buildGroup(
+    BuildContext context,
+    bool isColorful, {
+    required String title,
+    required List<Widget> children,
+  }) {
     if (isColorful) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -342,19 +389,14 @@ class SettingsScreen extends ConsumerWidget {
           GlassContainer(
             borderRadius: BorderRadius.circular(16),
             padding: EdgeInsets.zero,
-            child: Column(
-              children: children,
-            ),
+            child: Column(children: children),
           ),
         ],
       );
     } else {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildSectionHeader(context, title),
-          ...children,
-        ],
+        children: [_buildSectionHeader(context, title), ...children],
       );
     }
   }
@@ -388,7 +430,7 @@ class SettingsScreen extends ConsumerWidget {
         return current.languageCode;
       }
     } catch (_) {}
-    
+
     return 'en'; // Ultimate fallback
   }
 
@@ -404,7 +446,7 @@ class SettingsScreen extends ConsumerWidget {
     String? suffix,
   }) {
     final theme = Theme.of(context);
-    
+
     return ListTile(
       leading: Icon(icon),
       title: Text(title),
@@ -413,9 +455,7 @@ class SettingsScreen extends ConsumerWidget {
         children: [
           IconButton(
             icon: const Icon(Icons.remove_circle_outline),
-            onPressed: value > min
-                ? () => onChanged(value - 1)
-                : null,
+            onPressed: value > min ? () => onChanged(value - 1) : null,
           ),
           SizedBox(
             width: 60,
@@ -429,9 +469,7 @@ class SettingsScreen extends ConsumerWidget {
           ),
           IconButton(
             icon: const Icon(Icons.add_circle_outline),
-            onPressed: value < max
-                ? () => onChanged(value + 1)
-                : null,
+            onPressed: value < max ? () => onChanged(value + 1) : null,
           ),
         ],
       ),

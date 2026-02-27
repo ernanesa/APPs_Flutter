@@ -27,25 +27,27 @@ class Calculation extends Equatable {
     }
 
     final monthlyRate = interestRate / 100 / 12;
-    
+
     // Future value of initial capital
     final fvInitial = initialCapital * _pow(1 + monthlyRate, months);
-    
+
     // Future value of monthly contributions (ordinary annuity)
-    final fvContributions = monthlyContribution * 
+    final fvContributions =
+        monthlyContribution *
         ((_pow(1 + monthlyRate, months) - 1) / monthlyRate);
-    
+
     return fvInitial + fvContributions;
   }
 
   /// Total amount contributed (initial + all monthly contributions)
-  double get totalContributed => initialCapital + (monthlyContribution * months);
+  double get totalContributed =>
+      initialCapital + (monthlyContribution * months);
 
   /// Total interest earned
   double get totalInterest => totalAmount - totalContributed;
 
   /// Percentage gain
-  double get percentageGain => 
+  double get percentageGain =>
       totalContributed > 0 ? (totalInterest / totalContributed) * 100 : 0;
 
   /// Generate monthly breakdown for chart
@@ -62,18 +64,21 @@ class Calculation extends Equatable {
         totalInvested = initialCapital;
       } else {
         final fvInitial = initialCapital * _pow(1 + monthlyRate, month);
-        final fvContributions = monthlyContribution * 
+        final fvContributions =
+            monthlyContribution *
             ((_pow(1 + monthlyRate, month) - 1) / monthlyRate);
         balance = fvInitial + fvContributions;
         totalInvested = initialCapital + (monthlyContribution * month);
       }
 
-      data.add(MonthlyData(
-        month: month,
-        balance: balance,
-        totalInvested: totalInvested,
-        interest: balance - totalInvested,
-      ));
+      data.add(
+        MonthlyData(
+          month: month,
+          balance: balance,
+          totalInvested: totalInvested,
+          interest: balance - totalInvested,
+        ),
+      );
     }
 
     return data;
@@ -109,14 +114,14 @@ class Calculation extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        initialCapital,
-        interestRate,
-        months,
-        monthlyContribution,
-        createdAt,
-        name,
-      ];
+    id,
+    initialCapital,
+    interestRate,
+    months,
+    monthlyContribution,
+    createdAt,
+    name,
+  ];
 }
 
 /// Data point for monthly chart

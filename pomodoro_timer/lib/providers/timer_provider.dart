@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
-import 'package:flutter_riverpod/legacy.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../logic/pomodoro_logic.dart';
 import '../models/pomodoro_session.dart';
@@ -18,7 +17,8 @@ final timerProvider = StateNotifierProvider<TimerNotifier, TimerState>((ref) {
 });
 
 /// Callback type for session completion.
-typedef SessionCompleteCallback = void Function(SessionType type, bool wasCompleted);
+typedef SessionCompleteCallback =
+    void Function(SessionType type, bool wasCompleted);
 
 /// Notifier for managing the Pomodoro timer.
 class TimerNotifier extends StateNotifier<TimerState> {
@@ -31,10 +31,12 @@ class TimerNotifier extends StateNotifier<TimerState> {
   static const _sessionsKey = 'pomodoro_sessions';
 
   TimerNotifier(this._settings, this._prefs, this._ref)
-      : super(PomodoroLogic.createStateForSession(
+    : super(
+        PomodoroLogic.createStateForSession(
           SessionType.focus,
           const PomodoroSettings(),
-        )) {
+        ),
+      ) {
     // Initialize with current settings
     _initializeWithSettings();
   }
@@ -66,20 +68,14 @@ class TimerNotifier extends StateNotifier<TimerState> {
     if (!state.isRunning) return;
 
     _timer?.cancel();
-    state = state.copyWith(
-      isRunning: false,
-      isPaused: true,
-    );
+    state = state.copyWith(isRunning: false, isPaused: true);
   }
 
   /// Resumes a paused timer.
   void resume() {
     if (!state.isPaused) return;
 
-    state = state.copyWith(
-      isRunning: true,
-      isPaused: false,
-    );
+    state = state.copyWith(isRunning: true, isPaused: false);
 
     _startTicking();
   }
@@ -87,7 +83,7 @@ class TimerNotifier extends StateNotifier<TimerState> {
   /// Resets the timer to initial state for current session type.
   void reset() {
     _timer?.cancel();
-    
+
     final duration = PomodoroLogic.getDurationForSessionType(
       state.currentSessionType,
       _settings,
@@ -105,10 +101,10 @@ class TimerNotifier extends StateNotifier<TimerState> {
   /// Skips to the next session.
   void skip() {
     _timer?.cancel();
-    
+
     final wasCompleted = state.remainingSeconds == 0;
     _recordSession(wasCompleted: wasCompleted);
-    
+
     _moveToNextSession();
   }
 
@@ -117,9 +113,7 @@ class TimerNotifier extends StateNotifier<TimerState> {
     _timer?.cancel();
     _timer = Timer.periodic(const Duration(seconds: 1), (_) {
       if (state.remainingSeconds > 0) {
-        state = state.copyWith(
-          remainingSeconds: state.remainingSeconds - 1,
-        );
+        state = state.copyWith(remainingSeconds: state.remainingSeconds - 1);
       } else {
         _onTimerComplete();
       }
@@ -129,16 +123,17 @@ class TimerNotifier extends StateNotifier<TimerState> {
   /// Handles timer completion.
   void _onTimerComplete() {
     _timer?.cancel();
-    
+
     _recordSession(wasCompleted: true);
-    
+
     // Notify listeners
     onSessionComplete?.call(state.currentSessionType, true);
 
     // Check auto-start settings
-    final shouldAutoStart = state.isFocusSession
-        ? _settings.autoStartBreaks
-        : _settings.autoStartFocus;
+    final shouldAutoStart =
+        state.isFocusSession
+            ? _settings.autoStartBreaks
+            : _settings.autoStartFocus;
 
     _moveToNextSession();
 
@@ -150,7 +145,7 @@ class TimerNotifier extends StateNotifier<TimerState> {
   /// Moves to the next session type.
   void _moveToNextSession() {
     final currentSettings = _ref.read(settingsProvider);
-    
+
     int newCompletedPomodoros = state.completedPomodoros;
     if (state.currentSessionType == SessionType.focus) {
       newCompletedPomodoros++;
@@ -198,11 +193,12 @@ class TimerNotifier extends StateNotifier<TimerState> {
   Future<void> _saveSession(PomodoroSession session) async {
     final sessions = await getSessions();
     sessions.add(session);
-    
+
     // Keep only last 30 days of sessions
     final cutoff = DateTime.now().subtract(const Duration(days: 30));
-    final filtered = sessions.where((s) => s.startTime.isAfter(cutoff)).toList();
-    
+    final filtered =
+        sessions.where((s) => s.startTime.isAfter(cutoff)).toList();
+
     final json = filtered.map((s) => s.toJson()).toList();
     await _prefs.setString(_sessionsKey, jsonEncode(json));
   }

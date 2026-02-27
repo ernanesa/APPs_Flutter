@@ -53,8 +53,8 @@ class TrackAchievementsUseCase {
 
     for (final achievement in sessionsAchievements) {
       if (!achievement.isUnlocked && totalSessions >= achievement.requirement) {
-        final unlockedAchievement =
-            await achievementRepository.unlockAchievement(achievement.id);
+        final unlockedAchievement = await achievementRepository
+            .unlockAchievement(achievement.id);
         unlocked.add(unlockedAchievement);
       }
     }
@@ -71,8 +71,8 @@ class TrackAchievementsUseCase {
 
     for (final achievement in timeAchievements) {
       if (!achievement.isUnlocked && totalTime >= achievement.requirement) {
-        final unlockedAchievement =
-            await achievementRepository.unlockAchievement(achievement.id);
+        final unlockedAchievement = await achievementRepository
+            .unlockAchievement(achievement.id);
         unlocked.add(unlockedAchievement);
       }
     }
@@ -89,8 +89,8 @@ class TrackAchievementsUseCase {
 
     for (final achievement in streakAchievements) {
       if (!achievement.isUnlocked && currentStreak >= achievement.requirement) {
-        final unlockedAchievement =
-            await achievementRepository.unlockAchievement(achievement.id);
+        final unlockedAchievement = await achievementRepository
+            .unlockAchievement(achievement.id);
         unlocked.add(unlockedAchievement);
       }
     }
@@ -119,8 +119,8 @@ class TrackAchievementsUseCase {
         }
 
         if (shouldUnlock) {
-          final unlockedAchievement =
-              await achievementRepository.unlockAchievement(achievement.id);
+          final unlockedAchievement = await achievementRepository
+              .unlockAchievement(achievement.id);
           unlocked.add(unlockedAchievement);
         }
       }
@@ -152,8 +152,8 @@ class TrackAchievementsUseCase {
         }
 
         if (shouldUnlock) {
-          final unlockedAchievement =
-              await achievementRepository.unlockAchievement(achievement.id);
+          final unlockedAchievement = await achievementRepository
+              .unlockAchievement(achievement.id);
           unlocked.add(unlockedAchievement);
         }
       }

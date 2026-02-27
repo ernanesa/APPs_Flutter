@@ -22,7 +22,7 @@ class FastingTimerWidget extends ConsumerWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         final size = math.min(constraints.maxWidth, 320.0);
-        
+
         return SizedBox(
           width: size,
           height: size,
@@ -74,10 +74,7 @@ class FastingTimerWidget extends ConsumerWidget {
                       color: theme.colorScheme.primary,
                     ),
                     const SizedBox(height: 8),
-                    Text(
-                      l10n.readyToFast,
-                      style: theme.textTheme.titleLarge,
-                    ),
+                    Text(l10n.readyToFast, style: theme.textTheme.titleLarge),
                     const SizedBox(height: 4),
                     Text(
                       '${protocol.icon} ${protocol.ratioString}',
@@ -104,11 +101,12 @@ class FastingTimerWidget extends ConsumerWidget {
     final theme = Theme.of(context);
     final progress = session?.progress ?? 0.0;
     final clampedProgress = progress.clamp(0.0, 1.0);
-    
+
     // Stage colors
-    final stageColor = session != null
-        ? _getStageColor(session.currentStage, theme)
-        : theme.colorScheme.surfaceContainerHighest;
+    final stageColor =
+        session != null
+            ? _getStageColor(session.currentStage, theme)
+            : theme.colorScheme.surfaceContainerHighest;
 
     return [
       // Progress section
@@ -145,9 +143,13 @@ class FastingTimerWidget extends ConsumerWidget {
     }
   }
 
-  Widget _buildStageChip(BuildContext context, FastingStage stage, AppLocalizations l10n) {
+  Widget _buildStageChip(
+    BuildContext context,
+    FastingStage stage,
+    AppLocalizations l10n,
+  ) {
     final color = _getStageColor(stage, Theme.of(context));
-    
+
     String stageName;
     switch (stage) {
       case FastingStage.fed:
@@ -169,7 +171,7 @@ class FastingTimerWidget extends ConsumerWidget {
         stageName = l10n.stageAutophagy;
         break;
     }
-    
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(

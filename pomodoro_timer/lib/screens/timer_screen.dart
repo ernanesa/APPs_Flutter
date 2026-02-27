@@ -36,12 +36,11 @@ class TimerScreen extends ConsumerStatefulWidget {
 
 class _TimerScreenState extends ConsumerState<TimerScreen>
     with WidgetsBindingObserver {
-  
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    
+
     // Set up session complete callback
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(timerProvider.notifier).onSessionComplete = _onSessionComplete;
@@ -64,7 +63,7 @@ class _TimerScreenState extends ConsumerState<TimerScreen>
   void _onSessionComplete(SessionType type, bool wasCompleted) {
     // ...existing code...
     final settings = ref.read(settingsProvider);
-    
+
     // Play sound and vibrate
     if (settings.soundEnabled) {
       SoundService.instance.playTimerComplete();
@@ -72,24 +71,26 @@ class _TimerScreenState extends ConsumerState<TimerScreen>
     if (settings.vibrationEnabled) {
       SoundService.instance.vibrateOnComplete();
     }
-    
+
     // Update gamification data for focus sessions
     if (type == SessionType.focus && wasCompleted) {
       // Record streak
       ref.read(streakProvider.notifier).recordFocusSessionCompleted();
-      
+
       // Record daily goal progress
       final focusDuration = ref.read(settingsProvider).focusDurationMinutes;
-      ref.read(dailyGoalProvider.notifier).recordFocusSessionCompleted(focusDuration);
-      
+      ref
+          .read(dailyGoalProvider.notifier)
+          .recordFocusSessionCompleted(focusDuration);
+
       // Check achievements
       ref.read(timerProvider.notifier).getSessions().then((sessions) {
         ref.read(achievementsProvider.notifier).onSessionCompleted(sessions);
       });
-      
+
       // Stop ambient sound
       ref.read(ambientSoundServiceProvider).stop();
-      
+
       // Show interstitial ad
       AdService.instance.incrementActionAndShowIfNeeded();
     }
@@ -100,15 +101,13 @@ class _TimerScreenState extends ConsumerState<TimerScreen>
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            type == SessionType.focus
-                ? l10n.sessionComplete
-                : l10n.breakOver,
+            type == SessionType.focus ? l10n.sessionComplete : l10n.breakOver,
           ),
           behavior: SnackBarBehavior.floating,
           duration: const Duration(seconds: 2),
         ),
       );
-      
+
       // Check for newly unlocked achievement
       final newAchievement = ref.read(newlyUnlockedAchievementProvider);
       if (newAchievement != null) {
@@ -143,7 +142,7 @@ class _TimerScreenState extends ConsumerState<TimerScreen>
     final timerState = ref.watch(timerProvider);
     final settings = ref.watch(settingsProvider);
     final isColorful = settings.colorfulMode;
-    
+
     final sessionColor = _getSessionColor(timerState.currentSessionType, theme);
 
     return PomodoroScaffold(
@@ -190,9 +189,7 @@ class _TimerScreenState extends ConsumerState<TimerScreen>
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                  builder: (context) => const SettingsScreen(),
-                ),
+                MaterialPageRoute(builder: (context) => const SettingsScreen()),
               );
             },
           ),
@@ -202,9 +199,24 @@ class _TimerScreenState extends ConsumerState<TimerScreen>
         child: Column(
           children: [
             Expanded(
-              child: isColorful 
-                  ? _buildColorfulBody(context, timerState, settings, sessionColor, l10n, theme)
-                  : _buildMinimalBody(context, timerState, settings, sessionColor, l10n, theme),
+              child:
+                  isColorful
+                      ? _buildColorfulBody(
+                        context,
+                        timerState,
+                        settings,
+                        sessionColor,
+                        l10n,
+                        theme,
+                      )
+                      : _buildMinimalBody(
+                        context,
+                        timerState,
+                        settings,
+                        sessionColor,
+                        l10n,
+                        theme,
+                      ),
             ),
             // Banner ad at bottom
             const AdBannerWidget(),
@@ -300,7 +312,7 @@ class _TimerScreenState extends ConsumerState<TimerScreen>
   ) {
     final isRunning = timerState.isRunning && !timerState.isPaused;
     const whiteColor = Colors.white;
-    
+
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -314,7 +326,10 @@ class _TimerScreenState extends ConsumerState<TimerScreen>
                 children: [
                   // Session type indicator
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 8,
+                    ),
                     decoration: BoxDecoration(
                       color: whiteColor.withValues(alpha: 0.2),
                       borderRadius: BorderRadius.circular(20),
@@ -323,15 +338,18 @@ class _TimerScreenState extends ConsumerState<TimerScreen>
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Icon(
-                          timerState.currentSessionType == SessionType.focus 
-                              ? Icons.psychology 
+                          timerState.currentSessionType == SessionType.focus
+                              ? Icons.psychology
                               : Icons.coffee,
                           color: whiteColor,
                           size: 20,
                         ),
                         const SizedBox(width: 8),
                         Text(
-                          _getSessionTypeName(timerState.currentSessionType, l10n),
+                          _getSessionTypeName(
+                            timerState.currentSessionType,
+                            l10n,
+                          ),
                           style: const TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
@@ -361,9 +379,9 @@ class _TimerScreenState extends ConsumerState<TimerScreen>
               ),
             ),
           ),
-          
+
           const SizedBox(height: 16),
-          
+
           // Daily Goal Card (Glass)
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 16),
@@ -372,9 +390,9 @@ class _TimerScreenState extends ConsumerState<TimerScreen>
               child: DailyGoalProgress(compact: false),
             ),
           ),
-          
+
           const SizedBox(height: 32),
-          
+
           // Control Buttons
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -416,7 +434,8 @@ class _TimerScreenState extends ConsumerState<TimerScreen>
                     ),
                     child: Icon(
                       isRunning ? Icons.pause : Icons.play_arrow,
-                      color: sessionColor, // Use theme color for the main button
+                      color:
+                          sessionColor, // Use theme color for the main button
                       size: 44,
                     ),
                   ),
@@ -432,9 +451,9 @@ class _TimerScreenState extends ConsumerState<TimerScreen>
               ],
             ),
           ),
-          
+
           const SizedBox(height: 32),
-          
+
           // Quote
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 16),
@@ -461,7 +480,6 @@ class _TimerScreenState extends ConsumerState<TimerScreen>
   }
 
   String _getSessionTypeName(SessionType type, AppLocalizations l10n) {
-
     switch (type) {
       case SessionType.focus:
         return l10n.focusSession;

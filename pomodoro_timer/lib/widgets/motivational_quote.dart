@@ -7,10 +7,7 @@ import '../models/quote.dart';
 class MotivationalQuote extends StatefulWidget {
   final bool showRefreshButton;
 
-  const MotivationalQuote({
-    super.key,
-    this.showRefreshButton = false,
-  });
+  const MotivationalQuote({super.key, this.showRefreshButton = false});
 
   @override
   State<MotivationalQuote> createState() => _MotivationalQuoteState();

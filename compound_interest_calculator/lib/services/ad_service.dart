@@ -40,7 +40,7 @@ class AdService {
 
   static Future<void> initialize() async {
     if (_initialized) return;
-    
+
     await MobileAds.instance.initialize();
     _initialized = true;
     logDebug('AdMob initialized');
@@ -73,7 +73,7 @@ class AdService {
 
   static void showAppOpenAdIfAvailable() {
     _appOpenCount++;
-    
+
     // Don't show on first 2 app opens
     if (_appOpenCount < 2) {
       loadAppOpenAd();

@@ -63,16 +63,19 @@ class EvolutionScreen extends ConsumerWidget {
                 borderData: FlBorderData(show: true),
                 lineBarsData: [
                   LineChartBarData(
-                    spots: history.asMap().entries.map((e) {
-                      return FlSpot(e.key.toDouble(), e.value.bmi);
-                    }).toList(),
+                    spots:
+                        history.asMap().entries.map((e) {
+                          return FlSpot(e.key.toDouble(), e.value.bmi);
+                        }).toList(),
                     isCurved: true,
                     color: Theme.of(context).primaryColor,
                     barWidth: 4,
                     dotData: const FlDotData(show: true),
                     belowBarData: BarAreaData(
                       show: true,
-                      color: Theme.of(context).primaryColor.withValues(alpha: 0.2),
+                      color: Theme.of(
+                        context,
+                      ).primaryColor.withValues(alpha: 0.2),
                     ),
                   ),
                 ],

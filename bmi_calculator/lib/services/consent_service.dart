@@ -14,13 +14,14 @@ class ConsentService {
 
   static Future<void> gatherConsent() async {
     final params = ConsentRequestParameters(
-      consentDebugSettings: kDebugMode
-          ? const ConsentDebugSettings(
-              // Mantém neutro; se quiser forçar UE em debug, altere para debugGeographyEea.
-              debugGeography: DebugGeography.debugGeographyDisabled,
-              testIdentifiers: <String>[],
-            )
-          : null,
+      consentDebugSettings:
+          kDebugMode
+              ? const ConsentDebugSettings(
+                // Mantém neutro; se quiser forçar UE em debug, altere para debugGeographyEea.
+                debugGeography: DebugGeography.debugGeographyDisabled,
+                testIdentifiers: <String>[],
+              )
+              : null,
       tagForUnderAgeOfConsent: false,
     );
 
@@ -39,7 +40,7 @@ class ConsentService {
       ConsentInformation.instance.canRequestAds();
 
   static Future<PrivacyOptionsRequirementStatus>
-      privacyOptionsRequirementStatus() {
+  privacyOptionsRequirementStatus() {
     return ConsentInformation.instance.getPrivacyOptionsRequirementStatus();
   }
 
@@ -66,7 +67,8 @@ class ConsentService {
   static Future<void> resetForTesting() => ConsentInformation.instance.reset();
 
   static Future<void> _loadAndShowConsentFormIfRequired() async {
-    final isAvailable = await ConsentInformation.instance.isConsentFormAvailable();
+    final isAvailable =
+        await ConsentInformation.instance.isConsentFormAvailable();
     if (!isAvailable) return;
 
     var attempts = 0;
@@ -84,7 +86,8 @@ class ConsentService {
                 debugPrint('Consent form error: ${error.message}');
               }
 
-              final canRequest = await ConsentInformation.instance.canRequestAds();
+              final canRequest =
+                  await ConsentInformation.instance.canRequestAds();
               if (!canRequest && attempts < _maxFormShowAttempts) {
                 await load();
               }

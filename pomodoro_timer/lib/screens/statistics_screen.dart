@@ -23,10 +23,7 @@ class StatisticsScreen extends ConsumerWidget {
     final isColorful = settings.colorfulMode;
 
     return PomodoroScaffold(
-      appBar: AppBar(
-        title: Text(l10n.statistics),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: Text(l10n.statistics), centerTitle: true),
       body: RefreshIndicator(
         onRefresh: () async {
           ref.invalidate(sessionsProvider);
@@ -38,10 +35,22 @@ class StatisticsScreen extends ConsumerWidget {
             _buildTodayCard(context, todayStatsAsync, l10n, theme, isColorful),
             const SizedBox(height: 16),
             // Weekly chart card
-            _buildWeeklyCard(context, weeklyStatsAsync, l10n, theme, isColorful),
+            _buildWeeklyCard(
+              context,
+              weeklyStatsAsync,
+              l10n,
+              theme,
+              isColorful,
+            ),
             const SizedBox(height: 16),
             // Weekly summary card
-            _buildWeeklySummaryCard(context, weeklyStatsAsync, l10n, theme, isColorful),
+            _buildWeeklySummaryCard(
+              context,
+              weeklyStatsAsync,
+              l10n,
+              theme,
+              isColorful,
+            ),
           ],
         ),
       ),
@@ -63,10 +72,7 @@ class StatisticsScreen extends ConsumerWidget {
       children: [
         Row(
           children: [
-            Icon(
-              Icons.today_outlined,
-              color: iconColor,
-            ),
+            Icon(Icons.today_outlined, color: iconColor),
             const SizedBox(width: 8),
             Text(
               l10n.todayStats,
@@ -80,50 +86,51 @@ class StatisticsScreen extends ConsumerWidget {
         const SizedBox(height: 20),
         statsAsync.when(
           loading: () => const Center(child: CircularProgressIndicator()),
-          error: (_, __) => Text(l10n.noSessionsYet, style: TextStyle(color: titleColor)),
-          data: (stats) => Row(
-            children: [
-              Expanded(
-                child: _buildStatItem(
-                  context,
-                  icon: Icons.check_circle_outline,
-                  value: stats.completedPomodoros.toString(),
-                  label: l10n.sessions,
-                  color: isColorful ? Colors.white : theme.colorScheme.primary,
-                  isColorful: isColorful,
-                ),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: _buildStatItem(
-                  context,
-                  icon: Icons.timer_outlined,
-                  value: PomodoroLogic.formatMinutesAsHoursAndMinutes(
-                    stats.totalFocusMinutes,
+          error:
+              (_, __) =>
+                  Text(l10n.noSessionsYet, style: TextStyle(color: titleColor)),
+          data:
+              (stats) => Row(
+                children: [
+                  Expanded(
+                    child: _buildStatItem(
+                      context,
+                      icon: Icons.check_circle_outline,
+                      value: stats.completedPomodoros.toString(),
+                      label: l10n.sessions,
+                      color:
+                          isColorful ? Colors.white : theme.colorScheme.primary,
+                      isColorful: isColorful,
+                    ),
                   ),
-                  label: l10n.totalFocusTime,
-                  color: isColorful ? Colors.white : theme.colorScheme.secondary,
-                  isColorful: isColorful,
-                ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: _buildStatItem(
+                      context,
+                      icon: Icons.timer_outlined,
+                      value: PomodoroLogic.formatMinutesAsHoursAndMinutes(
+                        stats.totalFocusMinutes,
+                      ),
+                      label: l10n.totalFocusTime,
+                      color:
+                          isColorful
+                              ? Colors.white
+                              : theme.colorScheme.secondary,
+                      isColorful: isColorful,
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
         ),
       ],
     );
 
     if (isColorful) {
-      return GlassContainer(
-        padding: const EdgeInsets.all(20),
-        child: content,
-      );
+      return GlassContainer(padding: const EdgeInsets.all(20), child: content);
     }
-    
+
     return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: content,
-      ),
+      child: Padding(padding: const EdgeInsets.all(20), child: content),
     );
   }
 
@@ -142,10 +149,7 @@ class StatisticsScreen extends ConsumerWidget {
       children: [
         Row(
           children: [
-            Icon(
-              Icons.bar_chart_rounded,
-              color: iconColor,
-            ),
+            Icon(Icons.bar_chart_rounded, color: iconColor),
             const SizedBox(width: 8),
             Text(
               l10n.weeklyStats,
@@ -158,34 +162,36 @@ class StatisticsScreen extends ConsumerWidget {
         ),
         const SizedBox(height: 20),
         statsAsync.when(
-          loading: () => const SizedBox(
-            height: 200,
-            child: Center(child: CircularProgressIndicator()),
-          ),
-          error: (_, __) => SizedBox(
-            height: 200,
-            child: Center(child: Text(l10n.noSessionsYet, style: TextStyle(color: titleColor))),
-          ),
-          data: (stats) => SizedBox(
-            height: 200,
-            child: _buildBarChart(context, stats, theme, isColorful),
-          ),
+          loading:
+              () => const SizedBox(
+                height: 200,
+                child: Center(child: CircularProgressIndicator()),
+              ),
+          error:
+              (_, __) => SizedBox(
+                height: 200,
+                child: Center(
+                  child: Text(
+                    l10n.noSessionsYet,
+                    style: TextStyle(color: titleColor),
+                  ),
+                ),
+              ),
+          data:
+              (stats) => SizedBox(
+                height: 200,
+                child: _buildBarChart(context, stats, theme, isColorful),
+              ),
         ),
       ],
     );
 
     if (isColorful) {
-      return GlassContainer(
-        padding: const EdgeInsets.all(20),
-        child: content,
-      );
+      return GlassContainer(padding: const EdgeInsets.all(20), child: content);
     }
 
     return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: content,
-      ),
+      child: Padding(padding: const EdgeInsets.all(20), child: content),
     );
   }
 
@@ -215,7 +221,10 @@ class StatisticsScreen extends ConsumerWidget {
             Container(
               width: 1,
               height: 60,
-              color: isColorful ? Colors.white24 : theme.colorScheme.outlineVariant,
+              color:
+                  isColorful
+                      ? Colors.white24
+                      : theme.colorScheme.outlineVariant,
             ),
             Expanded(
               child: _buildStatItem(
@@ -240,10 +249,7 @@ class StatisticsScreen extends ConsumerWidget {
         }
 
         return Card(
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: content,
-          ),
+          child: Padding(padding: const EdgeInsets.all(20), child: content),
         );
       },
     );
@@ -258,8 +264,9 @@ class StatisticsScreen extends ConsumerWidget {
     required bool isColorful,
   }) {
     final theme = Theme.of(context);
-    final labelColor = isColorful ? Colors.white70 : theme.colorScheme.onSurfaceVariant;
-    
+    final labelColor =
+        isColorful ? Colors.white70 : theme.colorScheme.onSurfaceVariant;
+
     return Column(
       children: [
         Icon(icon, color: color, size: 28),
@@ -274,9 +281,7 @@ class StatisticsScreen extends ConsumerWidget {
         const SizedBox(height: 4),
         Text(
           label,
-          style: theme.textTheme.bodySmall?.copyWith(
-            color: labelColor,
-          ),
+          style: theme.textTheme.bodySmall?.copyWith(color: labelColor),
           textAlign: TextAlign.center,
         ),
       ],
@@ -290,15 +295,20 @@ class StatisticsScreen extends ConsumerWidget {
     bool isColorful,
   ) {
     final weekDays = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
-    final maxY = stats.dailyStats
-        .map((d) => d.completedPomodoros.toDouble())
-        .reduce((a, b) => a > b ? a : b)
-        .clamp(4, 20)
-        .toDouble();
-    
+    final maxY =
+        stats.dailyStats
+            .map((d) => d.completedPomodoros.toDouble())
+            .reduce((a, b) => a > b ? a : b)
+            .clamp(4, 20)
+            .toDouble();
+
     final barColor = isColorful ? Colors.white : theme.colorScheme.primary;
-    final gridColor = isColorful ? Colors.white24 : theme.colorScheme.outlineVariant.withValues(alpha: 0.5);
-    final textColor = isColorful ? Colors.white70 : theme.colorScheme.onSurfaceVariant;
+    final gridColor =
+        isColorful
+            ? Colors.white24
+            : theme.colorScheme.outlineVariant.withValues(alpha: 0.5);
+    final textColor =
+        isColorful ? Colors.white70 : theme.colorScheme.onSurfaceVariant;
 
     return BarChart(
       BarChartData(
@@ -361,43 +371,43 @@ class StatisticsScreen extends ConsumerWidget {
               },
             ),
           ),
-          topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-          rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+          topTitles: const AxisTitles(
+            sideTitles: SideTitles(showTitles: false),
+          ),
+          rightTitles: const AxisTitles(
+            sideTitles: SideTitles(showTitles: false),
+          ),
         ),
         gridData: FlGridData(
           show: true,
           drawVerticalLine: false,
           horizontalInterval: 2,
           getDrawingHorizontalLine: (value) {
-            return FlLine(
-              color: gridColor,
-              strokeWidth: 1,
-            );
+            return FlLine(color: gridColor, strokeWidth: 1);
           },
         ),
         borderData: FlBorderData(show: false),
-        barGroups: stats.dailyStats.asMap().entries.map((entry) {
-          final index = entry.key;
-          final daily = entry.value;
-          final isToday = index == DateTime.now().weekday - 1;
-          
-          return BarChartGroupData(
-            x: index,
-            barRods: [
-              BarChartRodData(
-                toY: daily.completedPomodoros.toDouble(),
-                color: isToday
-                    ? barColor
-                    : barColor.withValues(alpha: 0.5),
-                width: 20,
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(6),
-                  topRight: Radius.circular(6),
-                ),
-              ),
-            ],
-          );
-        }).toList(),
+        barGroups:
+            stats.dailyStats.asMap().entries.map((entry) {
+              final index = entry.key;
+              final daily = entry.value;
+              final isToday = index == DateTime.now().weekday - 1;
+
+              return BarChartGroupData(
+                x: index,
+                barRods: [
+                  BarChartRodData(
+                    toY: daily.completedPomodoros.toDouble(),
+                    color: isToday ? barColor : barColor.withValues(alpha: 0.5),
+                    width: 20,
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(6),
+                      topRight: Radius.circular(6),
+                    ),
+                  ),
+                ],
+              );
+            }).toList(),
       ),
     );
   }

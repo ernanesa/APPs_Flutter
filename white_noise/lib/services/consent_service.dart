@@ -32,24 +32,22 @@ class ConsentService {
   }
 
   static Future<void> _loadAndShowConsentForm() async {
-    await ConsentForm.loadConsentForm(
-      (form) async {
-        final status = await ConsentInformation.instance.getConsentStatus();
-        if (status == ConsentStatus.required) {
-          form.show((error) => _updateCanRequestAds());
-        } else {
-          await _updateCanRequestAds();
-        }
-      },
-      (error) => logError('Consent form error: ${error.message}'),
-    );
+    await ConsentForm.loadConsentForm((form) async {
+      final status = await ConsentInformation.instance.getConsentStatus();
+      if (status == ConsentStatus.required) {
+        form.show((error) => _updateCanRequestAds());
+      } else {
+        await _updateCanRequestAds();
+      }
+    }, (error) => logError('Consent form error: ${error.message}'));
   }
 
   static Future<void> _updateCanRequestAds() async {
     _canRequestAds = await ConsentInformation.instance.canRequestAds();
     _isPrivacyOptionsRequired =
-        await ConsentInformation.instance.getPrivacyOptionsRequirementStatus() ==
-            PrivacyOptionsRequirementStatus.required;
+        await ConsentInformation.instance
+            .getPrivacyOptionsRequirementStatus() ==
+        PrivacyOptionsRequirementStatus.required;
   }
 
   static Future<void> showPrivacyOptions() async {

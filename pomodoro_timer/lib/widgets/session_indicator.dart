@@ -21,37 +21,36 @@ class SessionIndicator extends StatelessWidget {
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: List.generate(
-        sessionsUntilLongBreak,
-        (index) {
-          final isCompleted = index < currentInCycle;
-          final isCurrent = index == currentInCycle && 
-              currentSessionType == SessionType.focus;
+      children: List.generate(sessionsUntilLongBreak, (index) {
+        final isCompleted = index < currentInCycle;
+        final isCurrent =
+            index == currentInCycle && currentSessionType == SessionType.focus;
 
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 4),
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 300),
-              width: isCurrent ? 32 : 12,
-              height: 12,
-              decoration: BoxDecoration(
-                color: isCompleted
-                    ? theme.colorScheme.primary
-                    : (isCurrent
-                        ? theme.colorScheme.primary.withValues(alpha: 0.5)
-                        : theme.colorScheme.surfaceContainerHighest),
-                borderRadius: BorderRadius.circular(6),
-                border: Border.all(
-                  color: isCompleted || isCurrent
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 4),
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 300),
+            width: isCurrent ? 32 : 12,
+            height: 12,
+            decoration: BoxDecoration(
+              color:
+                  isCompleted
                       ? theme.colorScheme.primary
-                      : theme.colorScheme.outline.withValues(alpha: 0.3),
-                  width: 1.5,
-                ),
+                      : (isCurrent
+                          ? theme.colorScheme.primary.withValues(alpha: 0.5)
+                          : theme.colorScheme.surfaceContainerHighest),
+              borderRadius: BorderRadius.circular(6),
+              border: Border.all(
+                color:
+                    isCompleted || isCurrent
+                        ? theme.colorScheme.primary
+                        : theme.colorScheme.outline.withValues(alpha: 0.3),
+                width: 1.5,
               ),
             ),
-          );
-        },
-      ),
+          ),
+        );
+      }),
     );
   }
 }

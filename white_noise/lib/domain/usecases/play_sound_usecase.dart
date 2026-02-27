@@ -57,23 +57,13 @@ class PlaySoundResult {
   final SoundEntity? sound;
   final String? errorMessage;
 
-  PlaySoundResult._({
-    required this.isSuccess,
-    this.sound,
-    this.errorMessage,
-  });
+  PlaySoundResult._({required this.isSuccess, this.sound, this.errorMessage});
 
   factory PlaySoundResult.success(SoundEntity sound) {
-    return PlaySoundResult._(
-      isSuccess: true,
-      sound: sound,
-    );
+    return PlaySoundResult._(isSuccess: true, sound: sound);
   }
 
   factory PlaySoundResult.failure(String message) {
-    return PlaySoundResult._(
-      isSuccess: false,
-      errorMessage: message,
-    );
+    return PlaySoundResult._(isSuccess: false, errorMessage: message);
   }
 }

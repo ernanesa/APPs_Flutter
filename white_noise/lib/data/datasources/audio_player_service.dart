@@ -5,7 +5,7 @@ import 'package:audioplayers/audioplayers.dart';
 class AudioPlayerService {
   // Map of asset paths to their player instances
   final Map<String, AudioPlayer> _players = {};
-  
+
   // Map to track which sounds are currently playing
   final Map<String, bool> _playingStates = {};
 
@@ -13,15 +13,21 @@ class AudioPlayerService {
   /// [assetPath] - Path to audio asset (e.g., 'audio/rain_light.mp3')
   /// [volume] - Volume level from 0.0 to 1.0
   /// [loop] - Whether to loop the sound (default: true for sleep app)
-  Future<void> play(String assetPath, {double volume = 1.0, bool loop = true}) async {
+  Future<void> play(
+    String assetPath, {
+    double volume = 1.0,
+    bool loop = true,
+  }) async {
     try {
       // Get or create player for this asset
       final player = _getOrCreatePlayer(assetPath);
-      
+
       // Configure player
       await player.setVolume(volume);
-      await player.setReleaseMode(loop ? ReleaseMode.loop : ReleaseMode.release);
-      
+      await player.setReleaseMode(
+        loop ? ReleaseMode.loop : ReleaseMode.release,
+      );
+
       // Play the sound
       await player.play(AssetSource(assetPath));
       _playingStates[assetPath] = true;
@@ -96,11 +102,12 @@ class AudioPlayerService {
 
   /// Dispose all players and clean up resources
   Future<void> dispose() async {
-    final futures = _players.values.map((player) async {
-      await player.stop();
-      await player.dispose();
-    }).toList();
-    
+    final futures =
+        _players.values.map((player) async {
+          await player.stop();
+          await player.dispose();
+        }).toList();
+
     await Future.wait(futures);
     _players.clear();
     _playingStates.clear();
@@ -127,7 +134,8 @@ class AudioPlayerService {
   int get activePlayersCount => _players.length;
 
   /// Get count of currently playing sounds
-  int get playingCount => _playingStates.values.where((playing) => playing).length;
+  int get playingCount =>
+      _playingStates.values.where((playing) => playing).length;
 
   /// Check if service can accept more sounds (max 3 for mix)
   bool canAddSound() => playingCount < 3;
@@ -135,7 +143,10 @@ class AudioPlayerService {
   /// Set global volume for all active sounds
   Future<void> setGlobalVolume(double volume) async {
     final clampedVolume = volume.clamp(0.0, 1.0);
-    final futures = _players.values.map((player) => player.setVolume(clampedVolume)).toList();
+    final futures =
+        _players.values
+            .map((player) => player.setVolume(clampedVolume))
+            .toList();
     await Future.wait(futures);
   }
 }

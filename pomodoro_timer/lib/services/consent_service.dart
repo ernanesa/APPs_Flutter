@@ -7,15 +7,15 @@ import 'ad_service.dart';
 class ConsentService {
   static ConsentService? _instance;
   static ConsentService get instance => _instance ??= ConsentService._();
-  
+
   ConsentService._();
 
   bool _canRequestAds = false;
   bool _isPrivacyOptionsRequired = false;
-  
+
   /// Whether ads can be requested after consent.
   bool get canRequestAds => _canRequestAds;
-  
+
   /// Whether privacy options button should be shown.
   bool get isPrivacyOptionsRequired => _isPrivacyOptionsRequired;
 
@@ -25,7 +25,7 @@ class ConsentService {
     bool forceTest = false,
   }) async {
     final params = ConsentRequestParameters();
-    
+
     // For testing: enable debug settings
     if (kDebugMode && forceTest) {
       final debugSettings = ConsentDebugSettings(
@@ -60,7 +60,7 @@ class ConsentService {
     ConsentForm.loadConsentForm(
       (ConsentForm consentForm) async {
         final status = await ConsentInformation.instance.getConsentStatus();
-        
+
         if (status == ConsentStatus.required) {
           consentForm.show((FormError? formError) {
             _updateCanRequestAds();
@@ -82,10 +82,11 @@ class ConsentService {
   /// Updates the ad request capability based on consent status.
   void _updateCanRequestAds() async {
     _canRequestAds = await ConsentInformation.instance.canRequestAds();
-    _isPrivacyOptionsRequired = await ConsentInformation.instance
-        .getPrivacyOptionsRequirementStatus() ==
+    _isPrivacyOptionsRequired =
+        await ConsentInformation.instance
+            .getPrivacyOptionsRequirementStatus() ==
         PrivacyOptionsRequirementStatus.required;
-    
+
     // Update AdService with consent status
     AdService.instance.setCanShowAds(_canRequestAds);
   }

@@ -163,9 +163,4 @@ class Achievement {
   ];
 }
 
-enum AchievementCategory {
-  sessions,
-  streak,
-  time,
-  special,
-}
+enum AchievementCategory { sessions, streak, time, special }

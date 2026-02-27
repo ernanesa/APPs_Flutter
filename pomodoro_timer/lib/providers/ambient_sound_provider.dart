@@ -1,16 +1,16 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
-import 'package:flutter_riverpod/legacy.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/ambient_sound.dart';
 import 'settings_provider.dart';
 
 /// Provider for the currently selected ambient sound.
-final selectedAmbientSoundProvider = StateNotifierProvider<AmbientSoundNotifier, AmbientSound>((ref) {
-  final prefs = ref.watch(sharedPreferencesProvider);
-  return AmbientSoundNotifier(prefs);
-});
+final selectedAmbientSoundProvider =
+    StateNotifierProvider<AmbientSoundNotifier, AmbientSound>((ref) {
+      final prefs = ref.watch(sharedPreferencesProvider);
+      return AmbientSoundNotifier(prefs);
+    });
 
 /// Provider for the audio player (singleton).
 final ambientAudioPlayerProvider = Provider<AudioPlayer>((ref) {
@@ -57,7 +57,7 @@ class AmbientSoundService {
   /// Starts playing the selected ambient sound.
   Future<void> play() async {
     final sound = _ref.read(selectedAmbientSoundProvider);
-    
+
     if (sound.assetPath == null) {
       // Silence - stop any playing audio
       await stop();
@@ -67,7 +67,9 @@ class AmbientSoundService {
     try {
       await _player.setReleaseMode(ReleaseMode.loop);
       await _player.setVolume(0.5);
-      await _player.play(AssetSource(sound.assetPath!.replaceFirst('assets/', '')));
+      await _player.play(
+        AssetSource(sound.assetPath!.replaceFirst('assets/', '')),
+      );
       _ref.read(isAmbientPlayingProvider.notifier).state = true;
     } catch (e) {
       // Handle error silently - sound files may not exist yet

@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
-import 'package:flutter_riverpod/legacy.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/streak_data.dart';
 import 'settings_provider.dart';
@@ -42,7 +41,7 @@ class StreakNotifier extends StateNotifier<StreakData> {
   void recordFocusSessionCompleted() {
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
-    
+
     // If already recorded today, don't update streak
     if (state.wasActiveToday) {
       return;
@@ -74,9 +73,8 @@ class StreakNotifier extends StateNotifier<StreakData> {
       }
     }
 
-    final newBestStreak = newStreak > state.bestStreak 
-        ? newStreak 
-        : state.bestStreak;
+    final newBestStreak =
+        newStreak > state.bestStreak ? newStreak : state.bestStreak;
 
     state = state.copyWith(
       currentStreak: newStreak,

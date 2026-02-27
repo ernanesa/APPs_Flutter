@@ -30,7 +30,7 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
   final _rateController = TextEditingController();
   final _monthsController = TextEditingController();
   final _contributionController = TextEditingController();
-  
+
   bool _isYearsMode = false;
 
   @override
@@ -59,45 +59,52 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
 
   Future<void> _calculate() async {
     if (!_formKey.currentState!.validate()) return;
-    
+
     final calculationNotifier = ref.read(calculationProvider.notifier);
     final streakNotifier = ref.read(streakProvider.notifier);
     final dailyGoalNotifier = ref.read(dailyGoalProvider.notifier);
     final achievementNotifier = ref.read(achievementProvider.notifier);
     final historyNotifier = ref.read(historyProvider.notifier);
-    
-    calculationNotifier.setInitialCapital(double.parse(_initialCapitalController.text));
+
+    calculationNotifier.setInitialCapital(
+      double.parse(_initialCapitalController.text),
+    );
     calculationNotifier.setAnnualRate(double.parse(_rateController.text));
-    final months = _isYearsMode 
-        ? int.parse(_monthsController.text) * 12
-        : int.parse(_monthsController.text);
+    final months =
+        _isYearsMode
+            ? int.parse(_monthsController.text) * 12
+            : int.parse(_monthsController.text);
     calculationNotifier.setMonths(months);
-    calculationNotifier.setMonthlyContribution(double.parse(_contributionController.text));
-    
+    calculationNotifier.setMonthlyContribution(
+      double.parse(_contributionController.text),
+    );
+
     await calculationNotifier.calculate();
-    
+
     // Update streak and daily goal
     await streakNotifier.recordActivity();
     await dailyGoalNotifier.incrementCompleted();
-    
+
     // Check achievements
     final calcState = ref.read(calculationProvider);
     final streak = ref.read(streakProvider);
     final history = ref.read(historyProvider).valueOrNull ?? [];
-    
+
     final newAchievements = await achievementNotifier.checkAndUnlock(
       totalCalculations: history.length + 1,
       currentStreak: streak.currentStreak,
       totalAmount: calcState.result?.totalAmount ?? 0,
       months: months,
     );
-    
+
     // Show achievement toast
     if (newAchievements.isNotEmpty && mounted) {
       final l10n = AppLocalizations.of(context)!;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('${l10n.achievementUnlocked}: ${newAchievements.first.titleKey}'),
+          content: Text(
+            '${l10n.achievementUnlocked}: ${newAchievements.first.titleKey}',
+          ),
           backgroundColor: Colors.green,
         ),
       );
@@ -107,43 +114,46 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
   Future<void> _saveCalculation() async {
     final calcState = ref.read(calculationProvider);
     if (calcState.result == null) return;
-    
+
     final l10n = AppLocalizations.of(context)!;
     final nameController = TextEditingController();
-    
+
     final saved = await showDialog<bool>(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text(l10n.save),
-        content: TextField(
-          controller: nameController,
-          decoration: InputDecoration(
-            labelText: l10n.calculationName,
-            hintText: l10n.calculationNameHint,
+      builder:
+          (context) => AlertDialog(
+            title: Text(l10n.save),
+            content: TextField(
+              controller: nameController,
+              decoration: InputDecoration(
+                labelText: l10n.calculationName,
+                hintText: l10n.calculationNameHint,
+              ),
+              autofocus: true,
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context, false),
+                child: Text(l10n.cancel),
+              ),
+              FilledButton(
+                onPressed: () => Navigator.pop(context, true),
+                child: Text(l10n.save),
+              ),
+            ],
           ),
-          autofocus: true,
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context, false),
-            child: Text(l10n.cancel),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.pop(context, true),
-            child: Text(l10n.save),
-          ),
-        ],
-      ),
     );
-    
+
     if (saved == true && nameController.text.isNotEmpty) {
-      await ref.read(calculationProvider.notifier).saveCalculation(nameController.text);
+      await ref
+          .read(calculationProvider.notifier)
+          .saveCalculation(nameController.text);
       await ref.read(historyProvider.notifier).loadHistory();
-      
+
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.calculationSaved)),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(l10n.calculationSaved)));
       }
     }
   }
@@ -152,7 +162,7 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final calcState = ref.watch(calculationProvider);
-    
+
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.appTitle),
@@ -186,9 +196,12 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
                 ],
               ),
               const SizedBox(height: 24),
-              
+
               // Preset selector
-              Text(l10n.investmentPresets, style: Theme.of(context).textTheme.titleMedium),
+              Text(
+                l10n.investmentPresets,
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
               const SizedBox(height: 8),
               SizedBox(
                 height: 80,
@@ -209,7 +222,10 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
                             children: [
                               Text(
                                 _presetName(l10n, preset),
-                                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12,
+                                ),
                                 textAlign: TextAlign.center,
                               ),
                               const SizedBox(height: 4),
@@ -229,7 +245,7 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
                 ),
               ),
               const SizedBox(height: 24),
-              
+
               // Input fields
               TextFormField(
                 controller: _initialCapitalController,
@@ -238,8 +254,12 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
                   prefixText: 'R\$ ',
                   border: const OutlineInputBorder(),
                 ),
-                keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}'))],
+                keyboardType: const TextInputType.numberWithOptions(
+                  decimal: true,
+                ),
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+                ],
                 validator: (value) {
                   if (value == null || value.isEmpty) return l10n.requiredField;
                   if (double.tryParse(value) == null) return l10n.invalidNumber;
@@ -247,7 +267,7 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
                 },
               ),
               const SizedBox(height: 16),
-              
+
               TextFormField(
                 controller: _rateController,
                 decoration: InputDecoration(
@@ -255,17 +275,22 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
                   suffixText: '%',
                   border: const OutlineInputBorder(),
                 ),
-                keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}'))],
+                keyboardType: const TextInputType.numberWithOptions(
+                  decimal: true,
+                ),
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+                ],
                 validator: (value) {
                   if (value == null || value.isEmpty) return l10n.requiredField;
                   final rate = double.tryParse(value);
-                  if (rate == null || rate < 0 || rate > 100) return l10n.invalidRate;
+                  if (rate == null || rate < 0 || rate > 100)
+                    return l10n.invalidRate;
                   return null;
                 },
               ),
               const SizedBox(height: 16),
-              
+
               Row(
                 children: [
                   Expanded(
@@ -278,8 +303,10 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
                       keyboardType: TextInputType.number,
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       validator: (value) {
-                        if (value == null || value.isEmpty) return l10n.requiredField;
-                        if (int.tryParse(value) == null) return l10n.invalidNumber;
+                        if (value == null || value.isEmpty)
+                          return l10n.requiredField;
+                        if (int.tryParse(value) == null)
+                          return l10n.invalidNumber;
                         return null;
                       },
                     ),
@@ -300,7 +327,7 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
                 ],
               ),
               const SizedBox(height: 16),
-              
+
               TextFormField(
                 controller: _contributionController,
                 decoration: InputDecoration(
@@ -309,27 +336,32 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
                   helperText: l10n.optional,
                   border: const OutlineInputBorder(),
                 ),
-                keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}'))],
+                keyboardType: const TextInputType.numberWithOptions(
+                  decimal: true,
+                ),
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+                ],
               ),
               const SizedBox(height: 24),
-              
+
               // Calculate button
               FilledButton.icon(
                 onPressed: calcState.isLoading ? null : _calculate,
-                icon: calcState.isLoading 
-                    ? const SizedBox(
-                        width: 20,
-                        height: 20,
-                        child: CircularProgressIndicator(strokeWidth: 2),
-                      )
-                    : const Icon(Icons.calculate),
+                icon:
+                    calcState.isLoading
+                        ? const SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        )
+                        : const Icon(Icons.calculate),
                 label: Text(l10n.calculate),
                 style: FilledButton.styleFrom(
                   padding: const EdgeInsets.all(16),
                 ),
               ),
-              
+
               // Results
               if (calcState.result != null) ...[
                 const SizedBox(height: 24),
@@ -339,7 +371,10 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(l10n.result, style: Theme.of(context).textTheme.titleMedium),
+                        Text(
+                          l10n.result,
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
                         const SizedBox(height: 16),
                         Text(
                           l10n.totalAmount,
@@ -347,7 +382,9 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
                         ),
                         Text(
                           formatCurrency(calcState.result!.totalAmount),
-                          style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                          style: Theme.of(
+                            context,
+                          ).textTheme.headlineLarge?.copyWith(
                             color: Colors.green,
                             fontWeight: FontWeight.bold,
                           ),
@@ -358,8 +395,12 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
                           children: [
                             Text('${l10n.totalContributed}:'),
                             Text(
-                              formatCurrency(calcState.result!.totalContributed),
-                              style: const TextStyle(fontWeight: FontWeight.bold),
+                              formatCurrency(
+                                calcState.result!.totalContributed,
+                              ),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ],
                         ),
@@ -371,9 +412,10 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
                               formatCurrency(calcState.result!.totalInterest),
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: calcState.result!.percentageGain > 10 
-                                    ? Colors.green 
-                                    : Colors.orange,
+                                color:
+                                    calcState.result!.percentageGain > 10
+                                        ? Colors.green
+                                        : Colors.orange,
                               ),
                             ),
                           ],
@@ -384,12 +426,16 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
                             showModalBottomSheet(
                               context: context,
                               isScrollControlled: true,
-                              builder: (context) => SizedBox(
-                                height: MediaQuery.of(context).size.height * 0.8,
-                                child: CalculationChart(
-                                  monthlyData: calcState.result!.monthlyBreakdown,
-                                ),
-                              ),
+                              builder:
+                                  (context) => SizedBox(
+                                    height:
+                                        MediaQuery.of(context).size.height *
+                                        0.8,
+                                    child: CalculationChart(
+                                      monthlyData:
+                                          calcState.result!.monthlyBreakdown,
+                                    ),
+                                  ),
                             );
                           },
                           child: Text(l10n.viewChart),
@@ -405,7 +451,7 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
                   ),
                 ),
               ],
-              
+
               // Banner ad
               const SizedBox(height: 80), // Space for banner
             ],
@@ -415,9 +461,10 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
       bottomNavigationBar: SafeArea(
         child: SizedBox(
           height: 60,
-          child: AdService.createBannerAd() != null
-              ? AdWidget(ad: AdService.createBannerAd()!..load())
-              : const SizedBox.shrink(),
+          child:
+              AdService.createBannerAd() != null
+                  ? AdWidget(ad: AdService.createBannerAd()!..load())
+                  : const SizedBox.shrink(),
         ),
       ),
     );

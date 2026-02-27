@@ -120,8 +120,9 @@ class AdService {
   }
 
   static Future<BannerAd> createAdaptiveBannerAd(double width) async {
-    final size =
-        await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(width.truncate());
+    final size = await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(
+      width.truncate(),
+    );
 
     final bannerAd = BannerAd(
       adUnitId: bannerAdUnitId,

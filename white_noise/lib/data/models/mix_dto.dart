@@ -6,10 +6,7 @@ class MixSoundDto {
   final String soundId; // Reference by ID, not full object
   final double volume;
 
-  const MixSoundDto({
-    required this.soundId,
-    required this.volume,
-  });
+  const MixSoundDto({required this.soundId, required this.volume});
 
   /// Convert to entity (requires sound catalog for lookup)
   MixSound toEntity(List<SoundEntity> soundCatalog) {
@@ -21,17 +18,11 @@ class MixSoundDto {
   }
 
   factory MixSoundDto.fromEntity(MixSound mixSound) {
-    return MixSoundDto(
-      soundId: mixSound.sound.id,
-      volume: mixSound.volume,
-    );
+    return MixSoundDto(soundId: mixSound.sound.id, volume: mixSound.volume);
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'soundId': soundId,
-      'volume': volume,
-    };
+    return {'soundId': soundId, 'volume': volume};
   }
 
   factory MixSoundDto.fromJson(Map<String, dynamic> json) {
@@ -47,10 +38,7 @@ class MixDto {
   final List<MixSoundDto> sounds;
   final bool isPlaying;
 
-  const MixDto({
-    required this.sounds,
-    required this.isPlaying,
-  });
+  const MixDto({required this.sounds, required this.isPlaying});
 
   /// Convert to entity (requires sound catalog)
   MixEntity toEntity(List<SoundEntity> soundCatalog) {
@@ -76,7 +64,8 @@ class MixDto {
 
   factory MixDto.fromJson(Map<String, dynamic> json) {
     return MixDto(
-      sounds: (json['sounds'] as List<dynamic>?)
+      sounds:
+          (json['sounds'] as List<dynamic>?)
               ?.map((s) => MixSoundDto.fromJson(s as Map<String, dynamic>))
               .toList() ??
           [],

@@ -12,22 +12,22 @@ import 'presentation/providers/theme_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   // Lock orientation to portrait
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
-  
+
   // GDPR consent FIRST
   await ConsentService.gatherConsent();
-  
+
   // Initialize ads only if consent allows
   if (ConsentService.canRequestAds) {
     await AdService.initialize();
     AdService.loadAppOpenAd();
   }
-  
+
   runApp(const ProviderScope(child: MyApp()));
 }
 
@@ -61,7 +61,7 @@ class _MyAppState extends ConsumerState<MyApp> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     final selectedTheme = ref.watch(selectedThemeProvider);
-    
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Compound Interest Calculator',

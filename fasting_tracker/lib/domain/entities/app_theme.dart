@@ -13,6 +13,6 @@ enum AppThemeType {
 
   final Color primaryColor;
   final Color secondaryColor;
-  
+
   const AppThemeType(this.primaryColor, this.secondaryColor);
 }

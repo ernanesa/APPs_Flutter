@@ -8,10 +8,7 @@ import '../providers/daily_goal_provider.dart';
 class DailyGoalProgress extends ConsumerWidget {
   final bool compact;
 
-  const DailyGoalProgress({
-    super.key,
-    this.compact = false,
-  });
+  const DailyGoalProgress({super.key, this.compact = false});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -35,14 +32,16 @@ class DailyGoalProgress extends ConsumerWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
-        color: dailyGoal.isGoalReached
-            ? Colors.green.withValues(alpha: 0.2)
-            : theme.colorScheme.primaryContainer.withValues(alpha: 0.3),
+        color:
+            dailyGoal.isGoalReached
+                ? Colors.green.withValues(alpha: 0.2)
+                : theme.colorScheme.primaryContainer.withValues(alpha: 0.3),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: dailyGoal.isGoalReached
-              ? Colors.green
-              : theme.colorScheme.primary.withValues(alpha: 0.3),
+          color:
+              dailyGoal.isGoalReached
+                  ? Colors.green
+                  : theme.colorScheme.primary.withValues(alpha: 0.3),
           width: 1.5,
         ),
       ),
@@ -51,9 +50,10 @@ class DailyGoalProgress extends ConsumerWidget {
         children: [
           Icon(
             dailyGoal.isGoalReached ? Icons.check_circle : Icons.flag,
-            color: dailyGoal.isGoalReached
-                ? Colors.green
-                : theme.colorScheme.primary,
+            color:
+                dailyGoal.isGoalReached
+                    ? Colors.green
+                    : theme.colorScheme.primary,
             size: 18,
           ),
           const SizedBox(width: 6),
@@ -61,9 +61,10 @@ class DailyGoalProgress extends ConsumerWidget {
             '${dailyGoal.completedSessions}/${dailyGoal.targetSessions}',
             style: theme.textTheme.bodyMedium?.copyWith(
               fontWeight: FontWeight.bold,
-              color: dailyGoal.isGoalReached
-                  ? Colors.green
-                  : theme.colorScheme.onSurface,
+              color:
+                  dailyGoal.isGoalReached
+                      ? Colors.green
+                      : theme.colorScheme.onSurface,
             ),
           ),
         ],
@@ -88,11 +89,7 @@ class DailyGoalProgress extends ConsumerWidget {
         children: [
           Row(
             children: [
-              Icon(
-                Icons.flag,
-                color: theme.colorScheme.primary,
-                size: 20,
-              ),
+              Icon(Icons.flag, color: theme.colorScheme.primary, size: 20),
               const SizedBox(width: 8),
               Text(
                 l10n.dailyGoal,
@@ -149,12 +146,13 @@ class DailyGoalProgress extends ConsumerWidget {
                   height: 12,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      colors: dailyGoal.isGoalReached
-                          ? [Colors.green, Colors.greenAccent]
-                          : [
-                              theme.colorScheme.primary,
-                              theme.colorScheme.secondary,
-                            ],
+                      colors:
+                          dailyGoal.isGoalReached
+                              ? [Colors.green, Colors.greenAccent]
+                              : [
+                                theme.colorScheme.primary,
+                                theme.colorScheme.secondary,
+                              ],
                     ),
                     borderRadius: BorderRadius.circular(6),
                   ),
@@ -208,21 +206,20 @@ class DailyGoalSetter extends ConsumerWidget {
     final theme = Theme.of(context);
 
     return ListTile(
-      leading: Icon(
-        Icons.flag,
-        color: theme.colorScheme.primary,
-      ),
+      leading: Icon(Icons.flag, color: theme.colorScheme.primary),
       title: Text(l10n.sessionsPerDay(dailyGoal.targetSessions)),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           IconButton(
-            onPressed: dailyGoal.targetSessions > 1
-                ? () {
-                    ref.read(dailyGoalProvider.notifier)
-                        .setTargetSessions(dailyGoal.targetSessions - 1);
-                  }
-                : null,
+            onPressed:
+                dailyGoal.targetSessions > 1
+                    ? () {
+                      ref
+                          .read(dailyGoalProvider.notifier)
+                          .setTargetSessions(dailyGoal.targetSessions - 1);
+                    }
+                    : null,
             icon: const Icon(Icons.remove_circle_outline),
           ),
           Text(
@@ -232,12 +229,14 @@ class DailyGoalSetter extends ConsumerWidget {
             ),
           ),
           IconButton(
-            onPressed: dailyGoal.targetSessions < 20
-                ? () {
-                    ref.read(dailyGoalProvider.notifier)
-                        .setTargetSessions(dailyGoal.targetSessions + 1);
-                  }
-                : null,
+            onPressed:
+                dailyGoal.targetSessions < 20
+                    ? () {
+                      ref
+                          .read(dailyGoalProvider.notifier)
+                          .setTargetSessions(dailyGoal.targetSessions + 1);
+                    }
+                    : null,
             icon: const Icon(Icons.add_circle_outline),
           ),
         ],

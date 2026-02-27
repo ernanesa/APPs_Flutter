@@ -48,7 +48,9 @@ class HealthInfoSheet extends StatelessWidget {
               width: 40,
               height: 4,
               decoration: BoxDecoration(
-                color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.4),
+                color: theme.colorScheme.onSurfaceVariant.withValues(
+                  alpha: 0.4,
+                ),
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
@@ -100,16 +102,18 @@ class HealthInfoSheet extends StatelessWidget {
                     Colors.green,
                   ),
                   const SizedBox(height: 8),
-                  ...HealthInfo.benefits.map((info) => _buildInfoCard(
-                    context,
-                    info,
-                    l10n,
-                    Colors.green.shade50,
-                    Colors.green,
-                  )),
-                  
+                  ...HealthInfo.benefits.map(
+                    (info) => _buildInfoCard(
+                      context,
+                      info,
+                      l10n,
+                      Colors.green.shade50,
+                      Colors.green,
+                    ),
+                  ),
+
                   const SizedBox(height: 24),
-                  
+
                   // Warnings section
                   _buildSectionHeader(
                     context,
@@ -118,16 +122,18 @@ class HealthInfoSheet extends StatelessWidget {
                     Colors.orange,
                   ),
                   const SizedBox(height: 8),
-                  ...HealthInfo.warnings.map((info) => _buildInfoCard(
-                    context,
-                    info,
-                    l10n,
-                    Colors.orange.shade50,
-                    Colors.orange,
-                  )),
-                  
+                  ...HealthInfo.warnings.map(
+                    (info) => _buildInfoCard(
+                      context,
+                      info,
+                      l10n,
+                      Colors.orange.shade50,
+                      Colors.orange,
+                    ),
+                  ),
+
                   const SizedBox(height: 24),
-                  
+
                   // Tips section
                   _buildSectionHeader(
                     context,
@@ -136,16 +142,18 @@ class HealthInfoSheet extends StatelessWidget {
                     Colors.blue,
                   ),
                   const SizedBox(height: 8),
-                  ...HealthInfo.tips.map((info) => _buildInfoCard(
-                    context,
-                    info,
-                    l10n,
-                    Colors.blue.shade50,
-                    Colors.blue,
-                  )),
-                  
+                  ...HealthInfo.tips.map(
+                    (info) => _buildInfoCard(
+                      context,
+                      info,
+                      l10n,
+                      Colors.blue.shade50,
+                      Colors.blue,
+                    ),
+                  ),
+
                   const SizedBox(height: 24),
-                  
+
                   // Sources
                   Card(
                     child: Padding(
@@ -180,14 +188,16 @@ class HealthInfoSheet extends StatelessWidget {
                       ),
                     ),
                   ),
-                  
+
                   const SizedBox(height: 16),
-                  
+
                   // Disclaimer
                   Container(
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: theme.colorScheme.errorContainer.withValues(alpha: 0.3),
+                      color: theme.colorScheme.errorContainer.withValues(
+                        alpha: 0.3,
+                      ),
                       borderRadius: BorderRadius.circular(8),
                       border: Border.all(
                         color: theme.colorScheme.error.withValues(alpha: 0.3),
@@ -213,7 +223,7 @@ class HealthInfoSheet extends StatelessWidget {
                       ],
                     ),
                   ),
-                  
+
                   const SizedBox(height: 32),
                 ],
               ),
@@ -254,11 +264,11 @@ class HealthInfoSheet extends StatelessWidget {
     Color accentColor,
   ) {
     final theme = Theme.of(context);
-    
+
     // Get localized strings
     final title = _getLocalizedTitle(info.titleKey, l10n);
     final description = _getLocalizedDescription(info.descriptionKey, l10n);
-    
+
     return Card(
       color: backgroundColor,
       elevation: 0,
@@ -268,10 +278,7 @@ class HealthInfoSheet extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              info.icon,
-              style: const TextStyle(fontSize: 24),
-            ),
+            Text(info.icon, style: const TextStyle(fontSize: 24)),
             const SizedBox(width: 12),
             Expanded(
               child: Column(
@@ -284,10 +291,7 @@ class HealthInfoSheet extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 4),
-                  Text(
-                    description,
-                    style: theme.textTheme.bodySmall,
-                  ),
+                  Text(description, style: theme.textTheme.bodySmall),
                 ],
               ),
             ),
@@ -300,56 +304,96 @@ class HealthInfoSheet extends StatelessWidget {
   String _getLocalizedTitle(String key, AppLocalizations l10n) {
     switch (key) {
       // Benefits
-      case 'benefitWeightTitle': return l10n.benefitWeightTitle;
-      case 'benefitBloodPressureTitle': return l10n.benefitBloodPressureTitle;
-      case 'benefitHeartHealthTitle': return l10n.benefitHeartHealthTitle;
-      case 'benefitDiabetesTitle': return l10n.benefitDiabetesTitle;
-      case 'benefitCognitiveTitle': return l10n.benefitCognitiveTitle;
-      case 'benefitTissueTitle': return l10n.benefitTissueTitle;
-      case 'benefitMetabolicTitle': return l10n.benefitMetabolicTitle;
-      case 'benefitCellularTitle': return l10n.benefitCellularTitle;
+      case 'benefitWeightTitle':
+        return l10n.benefitWeightTitle;
+      case 'benefitBloodPressureTitle':
+        return l10n.benefitBloodPressureTitle;
+      case 'benefitHeartHealthTitle':
+        return l10n.benefitHeartHealthTitle;
+      case 'benefitDiabetesTitle':
+        return l10n.benefitDiabetesTitle;
+      case 'benefitCognitiveTitle':
+        return l10n.benefitCognitiveTitle;
+      case 'benefitTissueTitle':
+        return l10n.benefitTissueTitle;
+      case 'benefitMetabolicTitle':
+        return l10n.benefitMetabolicTitle;
+      case 'benefitCellularTitle':
+        return l10n.benefitCellularTitle;
       // Warnings
-      case 'warningChildrenTitle': return l10n.warningChildrenTitle;
-      case 'warningPregnantTitle': return l10n.warningPregnantTitle;
-      case 'warningBreastfeedingTitle': return l10n.warningBreastfeedingTitle;
-      case 'warningType1DiabetesTitle': return l10n.warningType1DiabetesTitle;
-      case 'warningEatingDisordersTitle': return l10n.warningEatingDisordersTitle;
-      case 'warningMuscleLossTitle': return l10n.warningMuscleLossTitle;
-      case 'warningConsultDoctorTitle': return l10n.warningConsultDoctorTitle;
+      case 'warningChildrenTitle':
+        return l10n.warningChildrenTitle;
+      case 'warningPregnantTitle':
+        return l10n.warningPregnantTitle;
+      case 'warningBreastfeedingTitle':
+        return l10n.warningBreastfeedingTitle;
+      case 'warningType1DiabetesTitle':
+        return l10n.warningType1DiabetesTitle;
+      case 'warningEatingDisordersTitle':
+        return l10n.warningEatingDisordersTitle;
+      case 'warningMuscleLossTitle':
+        return l10n.warningMuscleLossTitle;
+      case 'warningConsultDoctorTitle':
+        return l10n.warningConsultDoctorTitle;
       // Tips
-      case 'tipHydrationTitle': return l10n.tipHydrationTitle;
-      case 'tipGradualStartTitle': return l10n.tipGradualStartTitle;
-      case 'tipBalancedMealsTitle': return l10n.tipBalancedMealsTitle;
-      case 'tipExerciseTitle': return l10n.tipExerciseTitle;
-      default: return key;
+      case 'tipHydrationTitle':
+        return l10n.tipHydrationTitle;
+      case 'tipGradualStartTitle':
+        return l10n.tipGradualStartTitle;
+      case 'tipBalancedMealsTitle':
+        return l10n.tipBalancedMealsTitle;
+      case 'tipExerciseTitle':
+        return l10n.tipExerciseTitle;
+      default:
+        return key;
     }
   }
 
   String _getLocalizedDescription(String key, AppLocalizations l10n) {
     switch (key) {
       // Benefits
-      case 'benefitWeightDesc': return l10n.benefitWeightDesc;
-      case 'benefitBloodPressureDesc': return l10n.benefitBloodPressureDesc;
-      case 'benefitHeartHealthDesc': return l10n.benefitHeartHealthDesc;
-      case 'benefitDiabetesDesc': return l10n.benefitDiabetesDesc;
-      case 'benefitCognitiveDesc': return l10n.benefitCognitiveDesc;
-      case 'benefitTissueDesc': return l10n.benefitTissueDesc;
-      case 'benefitMetabolicDesc': return l10n.benefitMetabolicDesc;
-      case 'benefitCellularDesc': return l10n.benefitCellularDesc;
+      case 'benefitWeightDesc':
+        return l10n.benefitWeightDesc;
+      case 'benefitBloodPressureDesc':
+        return l10n.benefitBloodPressureDesc;
+      case 'benefitHeartHealthDesc':
+        return l10n.benefitHeartHealthDesc;
+      case 'benefitDiabetesDesc':
+        return l10n.benefitDiabetesDesc;
+      case 'benefitCognitiveDesc':
+        return l10n.benefitCognitiveDesc;
+      case 'benefitTissueDesc':
+        return l10n.benefitTissueDesc;
+      case 'benefitMetabolicDesc':
+        return l10n.benefitMetabolicDesc;
+      case 'benefitCellularDesc':
+        return l10n.benefitCellularDesc;
       // Warnings
-      case 'warningChildrenDesc': return l10n.warningChildrenDesc;
-      case 'warningPregnantDesc': return l10n.warningPregnantDesc;
-      case 'warningBreastfeedingDesc': return l10n.warningBreastfeedingDesc;
-      case 'warningType1DiabetesDesc': return l10n.warningType1DiabetesDesc;
-      case 'warningEatingDisordersDesc': return l10n.warningEatingDisordersDesc;
-      case 'warningMuscleLossDesc': return l10n.warningMuscleLossDesc;
-      case 'warningConsultDoctorDesc': return l10n.warningConsultDoctorDesc;
+      case 'warningChildrenDesc':
+        return l10n.warningChildrenDesc;
+      case 'warningPregnantDesc':
+        return l10n.warningPregnantDesc;
+      case 'warningBreastfeedingDesc':
+        return l10n.warningBreastfeedingDesc;
+      case 'warningType1DiabetesDesc':
+        return l10n.warningType1DiabetesDesc;
+      case 'warningEatingDisordersDesc':
+        return l10n.warningEatingDisordersDesc;
+      case 'warningMuscleLossDesc':
+        return l10n.warningMuscleLossDesc;
+      case 'warningConsultDoctorDesc':
+        return l10n.warningConsultDoctorDesc;
       // Tips
-      case 'tipHydrationDesc': return l10n.tipHydrationDesc;
-      case 'tipGradualStartDesc': return l10n.tipGradualStartDesc;
-      case 'tipBalancedMealsDesc': return l10n.tipBalancedMealsDesc;
-      case 'tipExerciseDesc': return l10n.tipExerciseDesc;
-      default: return key;
+      case 'tipHydrationDesc':
+        return l10n.tipHydrationDesc;
+      case 'tipGradualStartDesc':
+        return l10n.tipGradualStartDesc;
+      case 'tipBalancedMealsDesc':
+        return l10n.tipBalancedMealsDesc;
+      case 'tipExerciseDesc':
+        return l10n.tipExerciseDesc;
+      default:
+        return key;
     }
   }
 }

@@ -7,10 +7,7 @@ import '../../utils/i18n_keys.dart';
 class AchievementTile extends StatelessWidget {
   final AchievementEntity achievement;
 
-  const AchievementTile({
-    super.key,
-    required this.achievement,
-  });
+  const AchievementTile({super.key, required this.achievement});
 
   @override
   Widget build(BuildContext context) {
@@ -25,14 +22,15 @@ class AchievementTile extends StatelessWidget {
       ),
       title: Text(achievementTitle(loc, achievement.titleKey)),
       subtitle: Text(achievementDescription(loc, achievement.descriptionKey)),
-      trailing: isUnlocked
-          ? Text(
-              loc.achievementUnlocked,
-              style: theme.textTheme.labelSmall?.copyWith(
-                color: theme.colorScheme.primary,
-              ),
-            )
-          : null,
+      trailing:
+          isUnlocked
+              ? Text(
+                loc.achievementUnlocked,
+                style: theme.textTheme.labelSmall?.copyWith(
+                  color: theme.colorScheme.primary,
+                ),
+              )
+              : null,
     );
   }
 }

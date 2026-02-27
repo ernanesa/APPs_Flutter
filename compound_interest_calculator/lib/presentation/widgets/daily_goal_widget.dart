@@ -11,9 +11,9 @@ class DailyGoalWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
     final goal = ref.watch(dailyGoalProvider);
-    
+
     final progress = goal.completedCalculations / goal.targetCalculations;
-    
+
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(12),

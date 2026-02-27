@@ -26,14 +26,18 @@ class AchievementBadge extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(6),
         decoration: BoxDecoration(
-          color: isUnlocked
-              ? achievement.color.withValues(alpha: 0.15)
-              : theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
+          color:
+              isUnlocked
+                  ? achievement.color.withValues(alpha: 0.15)
+                  : theme.colorScheme.surfaceContainerHighest.withValues(
+                    alpha: 0.5,
+                  ),
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: isUnlocked
-                ? achievement.color.withValues(alpha: 0.5)
-                : theme.colorScheme.outline.withValues(alpha: 0.2),
+            color:
+                isUnlocked
+                    ? achievement.color.withValues(alpha: 0.5)
+                    : theme.colorScheme.outline.withValues(alpha: 0.2),
             width: 1.5,
           ),
         ),
@@ -48,17 +52,19 @@ class AchievementBadge extends StatelessWidget {
                   width: 36,
                   height: 36,
                   decoration: BoxDecoration(
-                    color: isUnlocked
-                        ? achievement.color.withValues(alpha: 0.2)
-                        : theme.colorScheme.surfaceContainerHighest,
+                    color:
+                        isUnlocked
+                            ? achievement.color.withValues(alpha: 0.2)
+                            : theme.colorScheme.surfaceContainerHighest,
                     shape: BoxShape.circle,
                   ),
                   child: Icon(
                     achievement.icon,
                     size: 20,
-                    color: isUnlocked
-                        ? achievement.color
-                        : theme.colorScheme.outline.withValues(alpha: 0.5),
+                    color:
+                        isUnlocked
+                            ? achievement.color
+                            : theme.colorScheme.outline.withValues(alpha: 0.5),
                   ),
                 ),
                 if (!isUnlocked)
@@ -91,9 +97,12 @@ class AchievementBadge extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                     fontSize: 9,
                     height: 1.1,
-                    color: isUnlocked
-                        ? theme.colorScheme.onSurface
-                        : theme.colorScheme.onSurface.withValues(alpha: 0.5),
+                    color:
+                        isUnlocked
+                            ? theme.colorScheme.onSurface
+                            : theme.colorScheme.onSurface.withValues(
+                              alpha: 0.5,
+                            ),
                   ),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
@@ -132,10 +141,7 @@ class AchievementBadge extends StatelessWidget {
 class AchievementUnlockedDialog extends StatelessWidget {
   final Achievement achievement;
 
-  const AchievementUnlockedDialog({
-    super.key,
-    required this.achievement,
-  });
+  const AchievementUnlockedDialog({super.key, required this.achievement});
 
   @override
   Widget build(BuildContext context) {
@@ -157,11 +163,7 @@ class AchievementUnlockedDialog extends StatelessWidget {
                 color: achievement.color.withValues(alpha: 0.2),
                 shape: BoxShape.circle,
               ),
-              child: Icon(
-                achievement.icon,
-                size: 48,
-                color: achievement.color,
-              ),
+              child: Icon(achievement.icon, size: 48, color: achievement.color),
             ),
             const SizedBox(height: 16),
             Text(
@@ -234,6 +236,7 @@ class AchievementUnlockedDialog extends StatelessWidget {
       'achievementNightOwlDesc': l10n.achievementNightOwlDesc,
       'achievementWeekendWarriorDesc': l10n.achievementWeekendWarriorDesc,
     };
-    return descriptions[achievement.descriptionKey] ?? achievement.descriptionKey;
+    return descriptions[achievement.descriptionKey] ??
+        achievement.descriptionKey;
   }
 }

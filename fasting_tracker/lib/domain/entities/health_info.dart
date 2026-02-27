@@ -25,7 +25,8 @@ class HealthInfo {
       descriptionKey: 'benefitWeightDesc',
       type: HealthInfoType.benefit,
       icon: '⚖️',
-      sourceUrl: 'https://www.hopkinsmedicine.org/health/wellness-and-prevention/intermittent-fasting-what-is-it-and-how-does-it-work',
+      sourceUrl:
+          'https://www.hopkinsmedicine.org/health/wellness-and-prevention/intermittent-fasting-what-is-it-and-how-does-it-work',
     ),
     HealthInfo(
       id: 'blood_pressure',
@@ -33,7 +34,8 @@ class HealthInfo {
       descriptionKey: 'benefitBloodPressureDesc',
       type: HealthInfoType.benefit,
       icon: '❤️',
-      sourceUrl: 'https://www.hopkinsmedicine.org/health/wellness-and-prevention/intermittent-fasting-what-is-it-and-how-does-it-work',
+      sourceUrl:
+          'https://www.hopkinsmedicine.org/health/wellness-and-prevention/intermittent-fasting-what-is-it-and-how-does-it-work',
     ),
     HealthInfo(
       id: 'heart_health',
@@ -41,7 +43,8 @@ class HealthInfo {
       descriptionKey: 'benefitHeartHealthDesc',
       type: HealthInfoType.benefit,
       icon: '💓',
-      sourceUrl: 'https://www.hopkinsmedicine.org/health/wellness-and-prevention/intermittent-fasting-what-is-it-and-how-does-it-work',
+      sourceUrl:
+          'https://www.hopkinsmedicine.org/health/wellness-and-prevention/intermittent-fasting-what-is-it-and-how-does-it-work',
     ),
     HealthInfo(
       id: 'diabetes_management',
@@ -49,7 +52,8 @@ class HealthInfo {
       descriptionKey: 'benefitDiabetesDesc',
       type: HealthInfoType.benefit,
       icon: '🩺',
-      sourceUrl: 'https://www.health.harvard.edu/blog/intermittent-fasting-surprising-update-2018062914156',
+      sourceUrl:
+          'https://www.health.harvard.edu/blog/intermittent-fasting-surprising-update-2018062914156',
     ),
     HealthInfo(
       id: 'cognitive_function',
@@ -57,7 +61,8 @@ class HealthInfo {
       descriptionKey: 'benefitCognitiveDesc',
       type: HealthInfoType.benefit,
       icon: '🧠',
-      sourceUrl: 'https://www.hopkinsmedicine.org/health/wellness-and-prevention/intermittent-fasting-what-is-it-and-how-does-it-work',
+      sourceUrl:
+          'https://www.hopkinsmedicine.org/health/wellness-and-prevention/intermittent-fasting-what-is-it-and-how-does-it-work',
     ),
     HealthInfo(
       id: 'tissue_health',
@@ -65,7 +70,8 @@ class HealthInfo {
       descriptionKey: 'benefitTissueDesc',
       type: HealthInfoType.benefit,
       icon: '🔬',
-      sourceUrl: 'https://www.hopkinsmedicine.org/health/wellness-and-prevention/intermittent-fasting-what-is-it-and-how-does-it-work',
+      sourceUrl:
+          'https://www.hopkinsmedicine.org/health/wellness-and-prevention/intermittent-fasting-what-is-it-and-how-does-it-work',
     ),
     HealthInfo(
       id: 'metabolic_switch',
@@ -73,7 +79,8 @@ class HealthInfo {
       descriptionKey: 'benefitMetabolicDesc',
       type: HealthInfoType.benefit,
       icon: '🔄',
-      sourceUrl: 'https://www.health.harvard.edu/blog/intermittent-fasting-surprising-update-2018062914156',
+      sourceUrl:
+          'https://www.health.harvard.edu/blog/intermittent-fasting-surprising-update-2018062914156',
     ),
     HealthInfo(
       id: 'cellular_repair',
@@ -81,7 +88,8 @@ class HealthInfo {
       descriptionKey: 'benefitCellularDesc',
       type: HealthInfoType.benefit,
       icon: '🧬',
-      sourceUrl: 'https://www.health.harvard.edu/blog/intermittent-fasting-surprising-update-2018062914156',
+      sourceUrl:
+          'https://www.health.harvard.edu/blog/intermittent-fasting-surprising-update-2018062914156',
     ),
   ];
 
@@ -171,8 +179,4 @@ class HealthInfo {
   ];
 }
 
-enum HealthInfoType {
-  benefit,
-  warning,
-  tip,
-}
+enum HealthInfoType { benefit, warning, tip }
