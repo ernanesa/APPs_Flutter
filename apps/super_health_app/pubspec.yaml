@@ -1,0 +1,37 @@
+name: super_health_app
+description: "The Ultimate Health & Body PRO Superapp (Fasting, BMI, Water Tracking)"
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.4.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  core_ui:
+    path: ../../packages/core_ui
+  core_logic:
+    path: ../../packages/core_logic
+  feature_bmi:
+    path: ../../packages/features/feature_bmi
+  feature_water:
+    path: ../../packages/features/feature_water
+  feature_fasting:
+    path: ../../packages/features/feature_fasting
+  flutter_riverpod: ^2.5.1
+  google_mobile_ads: ^5.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+  integration_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/

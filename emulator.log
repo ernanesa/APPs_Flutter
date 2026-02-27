@@ -110,3 +110,8 @@ INFO         | Created extended window in 401.399ms
 INFO         | Activated packet streamer for bluetooth emulation
 INFO         | Boot completed in 13187 ms
 INFO         | Increasing screen off timeout, logcat buffer size to 2M.
+INFO         | Wait for emulator (pid 282086) 20 seconds to shutdown gracefully before kill;you can set environment variable ANDROID_EMULATOR_WAIT_TIME_BEFORE_KILL(in seconds) to change the default value (20 seconds)
+
+INFO         | Saving with gfxstream=1
+INFO         | Saving snapshot 'default_boot' using 2301 ms
+ERROR        | stop: Not implemented

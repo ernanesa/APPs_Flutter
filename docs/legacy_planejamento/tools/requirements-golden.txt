@@ -1,0 +1,4 @@
+Pillow>=9.0.0
+numpy>=1.22
+scikit-image>=0.19
+matplotlib>=3.5

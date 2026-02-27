@@ -1,0 +1,11 @@
+Opening AdMob (Chromium, headed)...
+When Google asks for login, do it in the browser window.
+IMPORTANT: use the Chrome window opened by THIS script (Playwright profile).
+Goal: open Apps -> (your app) -> Ad units (list).
+This script will auto-scan the current page every 2s for ca-app-pub-* IDs (timeout: 60 min).
+When it finds enough IDs (App ID + 3+ ad units), it will print them and exit.
+Browser channel: chrome
+Trying persistent profile: C:\Users\Ernane\Personal\APPs_Flutter_2\tools\admob\.pw-profile
+
+URL: https://admob.google.com/v2/apps/list
+Found 0 unique ca-app-pub-* IDs on this page.

@@ -1,0 +1,66 @@
+{
+  "apps": [
+    {
+      "id": "bmi_calculator",
+      "path": "apps/health/bmi_calculator",
+      "packageId": "sa.rezende.bmi_calculator",
+      "prefs": {
+        "localeKey": "selected_locale",
+        "themeModeKey": "app_theme_mode"
+      },
+      "variants": [
+        { "id": "default", "extraPrefs": {} }
+      ]
+    },
+    {
+      "id": "fasting_tracker",
+      "path": "apps/health/fasting_tracker",
+      "packageId": "sa.rezende.fasting_tracker",
+      "prefs": {
+        "localeKey": "app_locale",
+        "themeModeKey": "app_theme_mode"
+      },
+      "variants": [
+        { "id": "default", "extraPrefs": {} }
+      ]
+    },
+    {
+      "id": "pomodoro_timer",
+      "path": "apps/productivity/pomodoro_timer",
+      "packageId": "sa.rezende.pomodoro_timer",
+      "prefs": {
+        "localeKey": "selected_locale",
+        "themeModeKey": "app_theme_mode"
+      },
+      "variants": [
+        { "id": "default", "extraPrefs": { "pomodoro_settings": "{\"colorfulMode\":false,\"darkMode\":false}" } },
+        { "id": "colorful", "extraPrefs": { "pomodoro_settings": "{\"colorfulMode\":true,\"darkMode\":false}" } }
+      ]
+    },
+    {
+      "id": "white_noise",
+      "path": "apps/media/white_noise",
+      "packageId": "sa.rezende.white_noise",
+      "prefs": {
+        "localeKey": "app_locale",
+        "themeModeKey": "app_theme_mode"
+      },
+      "variants": [
+        { "id": "default", "extraPrefs": {} }
+      ]
+    },
+    {
+      "id": "compound_interest_calculator",
+      "path": "apps/finance/compound_interest_calculator",
+      "packageId": "sa.rezende.compound_interest_calculator",
+      "prefs": {
+        "localeKey": "app_locale",
+        "themeModeKey": "app_theme_mode"
+      },
+      "variants": [
+        { "id": "default", "extraPrefs": {} }
+      ]
+    }
+  ]
+}
+

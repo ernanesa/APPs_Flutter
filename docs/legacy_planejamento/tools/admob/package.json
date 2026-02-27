@@ -1,0 +1,12 @@
+{
+  "name": "admob-tools",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "playwright": "1.58.1"
+  },
+  "scripts": {
+    "scrape": "node scrape_admob_ids.mjs"
+  }
+}
+
