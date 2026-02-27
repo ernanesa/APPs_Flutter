@@ -74,26 +74,30 @@ class _WaterTrackerAppState extends ConsumerState<WaterTrackerApp>
 }
 
 // Simple State Management
-final waterIntakeProvider = StateNotifierProvider<WaterNotifier, int>((ref) {
-  final prefs = ref.watch(sharedPreferencesProvider);
-  return WaterNotifier(prefs);
+final waterIntakeProvider = NotifierProvider<WaterNotifier, int>(() {
+  return WaterNotifier();
 });
 
-class WaterNotifier extends StateNotifier<int> {
-  final SharedPreferences _prefs;
+class WaterNotifier extends Notifier<int> {
   static const _key = 'daily_water';
 
-  WaterNotifier(this._prefs) : super(_prefs.getInt(_key) ?? 0);
+  @override
+  int build() {
+    final prefs = ref.watch(sharedPreferencesProvider);
+    return prefs.getInt(_key) ?? 0;
+  }
 
   Future<void> addGlass() async {
     state += 1;
-    await _prefs.setInt(_key, state);
+    final prefs = ref.read(sharedPreferencesProvider);
+    await prefs.setInt(_key, state);
     AdService.incrementActionAndShowIfNeeded();
   }
   
   Future<void> reset() async {
     state = 0;
-    await _prefs.setInt(_key, state);
+    final prefs = ref.read(sharedPreferencesProvider);
+    await prefs.setInt(_key, state);
   }
 }
 
@@ -151,11 +155,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         slivers: [
           SliverToBoxAdapter(
             child: Padding(
-              padding: AppSpacing.all16,
+              padding: const EdgeInsets.all(Spacing.m),
               child: Column(
                 children: [
                   BaseCard(
-                    padding: AppSpacing.all24,
+                    padding: const EdgeInsets.all(Spacing.l),
                     child: Column(
                       children: [
                         Text(
@@ -209,8 +213,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   const SizedBox(height: 32),
                   PrimaryButton(
                     onPressed: () => ref.read(waterIntakeProvider.notifier).addGlass(),
-                    label: 'Drink a Glass (+250ml)',
-                    icon: Icons.add,
+                    text: 'Drink a Glass (+250ml)',
                   ),
                   const SizedBox(height: 16),
                   if (intake >= goal)
