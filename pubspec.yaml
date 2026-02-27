@@ -6,4 +6,18 @@ environment:
   sdk: ">=3.11.0 <4.0.0"
 
 dev_dependencies:
+  core_ui:
+    path: ../../packages/core_ui
+  core_logic:
+    path: ../../packages/core_logic
   melos: ^6.2.0
+dependencies:
+  core_ui:
+    path: ../../packages/core_ui
+  core_logic:
+    path: ../../packages/core_logic
+  flutter_localizations:
+    sdk: flutter
+  flutter_riverpod: ^3.2.1
+  google_mobile_ads: ^7.0.0
+  shared_preferences: ^2.5.4

@@ -18,9 +18,9 @@ class _AdBannerWidgetState extends State<AdBannerWidget> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    if (await ConsentService.canRequestAds()) {
-      _load();
-    }
+    ConsentService.canRequestAds().then((canRequest) {
+      if (canRequest) _load();
+    });
   }
 
   Future<void> _load() async {

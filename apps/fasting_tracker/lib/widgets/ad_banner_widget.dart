@@ -24,8 +24,9 @@ class _AdBannerWidgetState extends State<AdBannerWidget> {
 
   Future<void> _loadAd() async {
     // Only load if consent allows
-    if (!ConsentService.canRequestAds) {
-      return; // Might be null/false if logic allows
+    final canReq = await ConsentService.canRequestAds();
+    if (!canReq) {
+      return; 
     }
 
     // Prevent reloading if already loaded or if width is zero
@@ -34,23 +35,12 @@ class _AdBannerWidgetState extends State<AdBannerWidget> {
     final width = MediaQuery.of(context).size.width.truncate();
     if (width <= 0) return;
 
-    _bannerAd = await AdService.createAdaptiveBannerAd(width: constraints.maxWidth.toInt(),
-      width,
-      onAdLoaded: (ad) {
-        logDebug('Banner Ad loaded');
-        if (mounted) {
-          setState(() {
-            _isLoaded = true;
-          });
-        }
-      },
-      onAdFailedToLoad: (ad, error) {
-        logDebug('Banner Ad failed to load: ${error.message}');
-        ad.dispose();
-      },
-    );
-
-    await _bannerAd?.load();
+    _bannerAd = await AdService.createAdaptiveBannerAd(width: width);
+    if (mounted && _bannerAd != null) {
+      setState(() {
+        _isLoaded = true;
+      });
+    }
   }
 
   @override

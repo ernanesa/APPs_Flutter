@@ -328,23 +328,14 @@ class SettingsScreen extends ConsumerWidget {
                   // TODO: Open privacy policy URL
                 },
               ),
-              if (ConsentService.isPrivacyOptionsRequired)
-                ListTile(
-                  leading: const Icon(Icons.cookie_outlined),
-                  title: const Text('Privacy Options'),
-                  trailing: const Icon(Icons.chevron_right),
-                  onTap: () {
-                    ConsentService.showPrivacyOptionsForm(
-                      onComplete: (error) {
-                        if (error != null) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Error: ${error.message}')),
-                          );
-                        }
-                      },
-                    );
-                  },
-                ),
+              ListTile(
+                leading: const Icon(Icons.cookie_outlined),
+                title: const Text('Privacy Options'),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () async {
+                  await ConsentService.showPrivacyOptionsForm();
+                },
+              ),
               ListTile(
                 leading: const Icon(Icons.star_outline),
                 title: Text(l10n.rateApp),
