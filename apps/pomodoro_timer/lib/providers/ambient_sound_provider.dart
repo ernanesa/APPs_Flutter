@@ -1,17 +1,13 @@
 import 'package:core_logic/core_logic.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_riverpod/legacy.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../models/ambient_sound.dart';
-import 'settings_provider.dart';
 
 /// Provider for the currently selected ambient sound.
 final selectedAmbientSoundProvider =
-    StateNotifierProvider<AmbientSoundNotifier, AmbientSound>((ref) {
-      final prefs = ref.watch(sharedPreferencesProvider);
-      return AmbientSoundNotifier(prefs);
-    });
+    NotifierProvider<AmbientSoundNotifier, AmbientSound>(() {
+  return AmbientSoundNotifier();
+});
 
 /// Provider for the audio player (singleton).
 final ambientAudioPlayerProvider = Provider<AudioPlayer>((ref) {
@@ -23,17 +19,19 @@ final ambientAudioPlayerProvider = Provider<AudioPlayer>((ref) {
 /// Provider for whether ambient sound is currently playing.
 final isAmbientPlayingProvider = StateProvider<bool>((ref) => false);
 
-/// Notifier for managing ambient sound selection.
-class AmbientSoundNotifier extends StateNotifier<AmbientSound> {
-  final SharedPreferences _prefs;
+/// Notifier for managing ambient sound selection (Notifier API 2026).
+class AmbientSoundNotifier extends Notifier<AmbientSound> {
   static const _key = 'selected_ambient_sound';
 
-  AmbientSoundNotifier(this._prefs) : super(AmbientSounds.silence) {
+  @override
+  AmbientSound build() {
     _loadSelectedSound();
+    return AmbientSounds.silence;
   }
 
   void _loadSelectedSound() {
-    final soundId = _prefs.getString(_key);
+    final prefs = ref.read(sharedPreferencesProvider);
+    final soundId = prefs.getString(_key);
     if (soundId != null) {
       state = AmbientSounds.all.firstWhere(
         (s) => s.id == soundId,
@@ -44,7 +42,8 @@ class AmbientSoundNotifier extends StateNotifier<AmbientSound> {
 
   Future<void> selectSound(AmbientSound sound) async {
     state = sound;
-    await _prefs.setString(_key, sound.id);
+    final prefs = ref.read(sharedPreferencesProvider);
+    await prefs.setString(_key, sound.id);
   }
 }
 
@@ -60,7 +59,6 @@ class AmbientSoundService {
     final sound = _ref.read(selectedAmbientSoundProvider);
 
     if (sound.assetPath == null) {
-      // Silence - stop any playing audio
       await stop();
       return;
     }
@@ -73,7 +71,7 @@ class AmbientSoundService {
       );
       _ref.read(isAmbientPlayingProvider.notifier).state = true;
     } catch (e) {
-      // Handle error silently - sound files may not exist yet
+      // Handle error silently
     }
   }
 

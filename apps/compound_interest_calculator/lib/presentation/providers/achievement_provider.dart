@@ -1,20 +1,23 @@
-import 'package:flutter_riverpod/legacy.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:core_logic/core_logic.dart';
 
 import '../../domain/entities/achievement.dart';
 
 final achievementProvider =
-    StateNotifierProvider<AchievementNotifier, List<Achievement>>((ref) {
-      return AchievementNotifier();
-    });
+    NotifierProvider<AchievementNotifier, List<Achievement>>(() {
+  return AchievementNotifier();
+});
 
-class AchievementNotifier extends StateNotifier<List<Achievement>> {
-  AchievementNotifier() : super(DefaultAchievements.all) {
+class AchievementNotifier extends Notifier<List<Achievement>> {
+  @override
+  List<Achievement> build() {
     _loadAchievements();
+    return DefaultAchievements.all;
   }
 
   Future<void> _loadAchievements() async {
-    final prefs = await SharedPreferences.getInstance();
+    final prefs = ref.read(sharedPreferencesProvider);
     final unlockedIds = prefs.getStringList('unlocked_achievements') ?? [];
 
     state = DefaultAchievements.all.map((achievement) {
@@ -22,7 +25,7 @@ class AchievementNotifier extends StateNotifier<List<Achievement>> {
       return isUnlocked
           ? achievement.copyWith(
               isUnlocked: true,
-              unlockedAt: DateTime.now(), // Ideally store actual unlock time
+              unlockedAt: DateTime.now(),
             )
           : achievement;
     }).toList();
@@ -93,7 +96,7 @@ class AchievementNotifier extends StateNotifier<List<Achievement>> {
   }
 
   Future<void> _saveAchievements() async {
-    final prefs = await SharedPreferences.getInstance();
+    final prefs = ref.read(sharedPreferencesProvider);
     final unlockedIds = state
         .where((a) => a.isUnlocked)
         .map((a) => a.id)

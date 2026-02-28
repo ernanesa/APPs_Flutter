@@ -16,7 +16,7 @@ class AchievementsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final achievements = null;
-    final settings = ref.watch(settingsProvider);
+    final settings = ref.watch(pomodoroSettingsProvider);
     final unlockedCount = achievements.where((a) => a.isUnlocked).length;
     final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);

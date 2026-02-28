@@ -79,7 +79,7 @@ class _PomodoroAppState extends ConsumerState<PomodoroApp>
 
   @override
   Widget build(BuildContext context) {
-    final settings = ref.watch(settingsProvider);
+    final settings = ref.watch(pomodoroSettingsProvider);
     final selectedTheme = ref.watch(themeProvider);
     final locale = ref.watch(localeProvider);
 

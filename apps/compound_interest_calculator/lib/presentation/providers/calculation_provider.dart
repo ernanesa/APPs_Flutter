@@ -1,6 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_riverpod/legacy.dart';
-
 import '../../domain/entities/calculation.dart';
 import '../../domain/entities/preset.dart';
 import '../../domain/usecases/calculation_usecases.dart';
@@ -12,10 +10,9 @@ final calculationRepositoryProvider = Provider((ref) {
 });
 
 final calculationProvider =
-    StateNotifierProvider<CalculationNotifier, CalculationState>((ref) {
-      final repository = ref.watch(calculationRepositoryProvider);
-      return CalculationNotifier(repository);
-    });
+    NotifierProvider<CalculationNotifier, CalculationState>(() {
+  return CalculationNotifier();
+});
 
 class CalculationState {
   final double initialCapital;
@@ -53,10 +50,13 @@ class CalculationState {
   }
 }
 
-class CalculationNotifier extends StateNotifier<CalculationState> {
-  final CalculationRepositoryImpl _repository;
+class CalculationNotifier extends Notifier<CalculationState> {
+  CalculationRepositoryImpl get _repository => ref.read(calculationRepositoryProvider);
 
-  CalculationNotifier(this._repository) : super(const CalculationState());
+  @override
+  CalculationState build() {
+    return const CalculationState();
+  }
 
   void setInitialCapital(double value) {
     state = state.copyWith(initialCapital: value);

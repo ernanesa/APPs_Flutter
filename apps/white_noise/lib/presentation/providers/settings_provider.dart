@@ -1,4 +1,4 @@
-import 'package:flutter_riverpod/legacy.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:wakelock_plus/wakelock_plus.dart';
 
@@ -60,20 +60,15 @@ class SettingsState {
   }
 }
 
-class SettingsController extends StateNotifier<SettingsState> {
-  final SettingsRepository _settingsRepository;
-  final AudioPlayerService _audioService;
-  final SetTimerUseCase _setTimerUseCase;
+class SettingsController extends Notifier<SettingsState> {
+  SettingsRepository get _settingsRepository => ref.read(settingsRepositoryProvider);
+  AudioPlayerService get _audioService => ref.read(audioPlayerServiceProvider);
+  SetTimerUseCase get _setTimerUseCase => ref.read(setTimerUseCaseProvider);
 
-  SettingsController({
-    required SettingsRepository settingsRepository,
-    required AudioPlayerService audioService,
-    required SetTimerUseCase setTimerUseCase,
-  }) : _settingsRepository = settingsRepository,
-       _audioService = audioService,
-       _setTimerUseCase = setTimerUseCase,
-       super(SettingsState.initial()) {
+  @override
+  SettingsState build() {
     _load();
+    return SettingsState.initial();
   }
 
   Future<void> _load() async {
@@ -153,10 +148,4 @@ class SettingsController extends StateNotifier<SettingsState> {
 }
 
 final settingsProvider =
-    StateNotifierProvider<SettingsController, SettingsState>((ref) {
-      return SettingsController(
-        settingsRepository: ref.watch(settingsRepositoryProvider),
-        audioService: ref.watch(audioPlayerServiceProvider),
-        setTimerUseCase: ref.watch(setTimerUseCaseProvider),
-      );
-    });
+    NotifierProvider<SettingsController, SettingsState>(SettingsController.new);

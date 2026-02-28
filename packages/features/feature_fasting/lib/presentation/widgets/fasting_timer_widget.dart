@@ -1,7 +1,7 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_riverpod/legacy.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fl_chart/fl_chart.dart';
 import '../../domain/entities/fasting_session.dart';
 import '../providers/fasting_provider.dart';

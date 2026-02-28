@@ -79,6 +79,7 @@ class _SuperHealthHubState extends ConsumerState<SuperHealthHub> {
         children: _features,
       ),
       bottomNavigationBar: NavigationBar(
+        backgroundColor: Theme.of(context).colorScheme.surfaceContainerHigh,
         selectedIndex: _currentIndex,
         onDestinationSelected: (index) {
           setState(() {

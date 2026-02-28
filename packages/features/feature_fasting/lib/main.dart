@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:core_logic/core_logic.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_riverpod/legacy.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:core_ui/core_ui.dart';

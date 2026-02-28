@@ -1,28 +1,26 @@
-import 'package:flutter_riverpod/legacy.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:core_logic/core_logic.dart';
 
 import '../../domain/entities/daily_goal.dart';
 
-final dailyGoalProvider = StateNotifierProvider<DailyGoalNotifier, DailyGoal>((
-  ref,
-) {
+final dailyGoalProvider = NotifierProvider<DailyGoalNotifier, DailyGoal>(() {
   return DailyGoalNotifier();
 });
 
-class DailyGoalNotifier extends StateNotifier<DailyGoal> {
-  DailyGoalNotifier()
-    : super(
-        DailyGoal(
-          targetCalculations: 3,
-          completedCalculations: 0,
-          date: DateTime.now(),
-        ),
-      ) {
+class DailyGoalNotifier extends Notifier<DailyGoal> {
+  @override
+  DailyGoal build() {
     _loadGoal();
+    return DailyGoal(
+      targetCalculations: 3,
+      completedCalculations: 0,
+      date: DateTime.now(),
+    );
   }
 
   Future<void> _loadGoal() async {
-    final prefs = await SharedPreferences.getInstance();
+    final prefs = ref.read(sharedPreferencesProvider);
     final target = prefs.getInt('daily_goal_target') ?? 3;
     final completed = prefs.getInt('daily_goal_completed') ?? 0;
     final lastResetMs = prefs.getInt('daily_goal_last_reset');
@@ -35,7 +33,6 @@ class DailyGoalNotifier extends StateNotifier<DailyGoal> {
           : DateTime.now(),
     );
 
-    // Reset if new day
     if (!_isSameDay(goal.date, DateTime.now())) {
       goal = DailyGoal(
         targetCalculations: target,
@@ -55,7 +52,6 @@ class DailyGoalNotifier extends StateNotifier<DailyGoal> {
   }
 
   Future<void> incrementCompleted() async {
-    // Reset if new day
     if (!_isSameDay(state.date, DateTime.now())) {
       state = DailyGoal(
         targetCalculations: state.targetCalculations,
@@ -83,7 +79,7 @@ class DailyGoalNotifier extends StateNotifier<DailyGoal> {
   }
 
   Future<void> _saveGoal(DailyGoal goal) async {
-    final prefs = await SharedPreferences.getInstance();
+    final prefs = ref.read(sharedPreferencesProvider);
     await prefs.setInt('daily_goal_target', goal.targetCalculations);
     await prefs.setInt('daily_goal_completed', goal.completedCalculations);
     await prefs.setInt(

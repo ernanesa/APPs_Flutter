@@ -27,16 +27,16 @@ class BmiEntry {
 
   factory BmiEntry.fromMap(Map<String, dynamic> map) {
     return BmiEntry(
-      id: map['id'],
-      weight: map['weight'],
-      height: map['height'],
-      bmi: map['bmi'],
-      date: DateTime.parse(map['date']),
+      id: map['id'] ?? '',
+      weight: (map['weight'] ?? 0).toDouble(),
+      height: (map['height'] ?? 0).toDouble(),
+      bmi: (map['bmi'] ?? 0).toDouble(),
+      date: map['date'] != null ? DateTime.parse(map['date']) : DateTime.now(),
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory BmiEntry.fromJson(String source) =>
-      BmiEntry.fromMap(json.decode(source));
+  // Performance 2026: fromJson string factory removed to prevent main-thread decoding.
+  // Use BmiEntry.fromMap() after decoding JSON in an Isolate.
 }

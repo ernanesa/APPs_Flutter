@@ -21,7 +21,7 @@ class SettingsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
-    final settings = ref.watch(settingsProvider);
+    final settings = ref.watch(pomodoroSettingsProvider);
     final isColorful = settings.colorfulMode;
 
     return PomodoroScaffold(
@@ -47,7 +47,7 @@ class SettingsScreen extends ConsumerWidget {
                 max: 60,
                 onChanged: (value) {
                   ref
-                      .read(settingsProvider.notifier)
+                      .read(pomodoroSettingsProvider.notifier)
                       .updateFocusDuration(value);
                 },
                 l10n: l10n,
@@ -61,7 +61,7 @@ class SettingsScreen extends ConsumerWidget {
                 max: 30,
                 onChanged: (value) {
                   ref
-                      .read(settingsProvider.notifier)
+                      .read(pomodoroSettingsProvider.notifier)
                       .updateShortBreakDuration(value);
                 },
                 l10n: l10n,
@@ -75,7 +75,7 @@ class SettingsScreen extends ConsumerWidget {
                 max: 60,
                 onChanged: (value) {
                   ref
-                      .read(settingsProvider.notifier)
+                      .read(pomodoroSettingsProvider.notifier)
                       .updateLongBreakDuration(value);
                 },
                 l10n: l10n,
@@ -90,7 +90,7 @@ class SettingsScreen extends ConsumerWidget {
                 suffix: l10n.sessions.toLowerCase(),
                 onChanged: (value) {
                   ref
-                      .read(settingsProvider.notifier)
+                      .read(pomodoroSettingsProvider.notifier)
                       .updateSessionsUntilLongBreak(value);
                 },
                 l10n: l10n,
@@ -114,7 +114,7 @@ class SettingsScreen extends ConsumerWidget {
                 title: Text(l10n.autoStartBreaks),
                 value: settings.autoStartBreaks,
                 onChanged: (_) {
-                  ref.read(settingsProvider.notifier).toggleAutoStartBreaks();
+                  ref.read(pomodoroSettingsProvider.notifier).toggleAutoStartBreaks();
                 },
               ),
               SwitchListTile(
@@ -122,7 +122,7 @@ class SettingsScreen extends ConsumerWidget {
                 title: Text(l10n.autoStartFocus),
                 value: settings.autoStartFocus,
                 onChanged: (_) {
-                  ref.read(settingsProvider.notifier).toggleAutoStartFocus();
+                  ref.read(pomodoroSettingsProvider.notifier).toggleAutoStartFocus();
                 },
               ),
             ],
@@ -144,7 +144,7 @@ class SettingsScreen extends ConsumerWidget {
                 title: Text(l10n.soundEnabled),
                 value: settings.soundEnabled,
                 onChanged: (_) {
-                  ref.read(settingsProvider.notifier).toggleSound();
+                  ref.read(pomodoroSettingsProvider.notifier).toggleSound();
                 },
               ),
               SwitchListTile(
@@ -152,7 +152,7 @@ class SettingsScreen extends ConsumerWidget {
                 title: Text(l10n.vibrationEnabled),
                 value: settings.vibrationEnabled,
                 onChanged: (_) {
-                  ref.read(settingsProvider.notifier).toggleVibration();
+                  ref.read(pomodoroSettingsProvider.notifier).toggleVibration();
                 },
               ),
             ],
@@ -197,7 +197,7 @@ class SettingsScreen extends ConsumerWidget {
                 title: Text(l10n.darkMode),
                 value: settings.darkMode,
                 onChanged: (_) {
-                  ref.read(settingsProvider.notifier).toggleDarkMode();
+                  ref.read(pomodoroSettingsProvider.notifier).toggleDarkMode();
                 },
               ),
               SwitchListTile(
@@ -216,7 +216,7 @@ class SettingsScreen extends ConsumerWidget {
                 ),
                 value: settings.colorfulMode,
                 onChanged: (_) {
-                  ref.read(settingsProvider.notifier).toggleColorfulMode();
+                  ref.read(pomodoroSettingsProvider.notifier).toggleColorfulMode();
                 },
               ),
             ],

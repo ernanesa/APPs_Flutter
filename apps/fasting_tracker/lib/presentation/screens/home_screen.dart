@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_riverpod/legacy.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fasting_tracker/l10n/app_localizations.dart';
 import '../../widgets/ad_banner_widget.dart';
 import '../providers/fasting_provider.dart';
@@ -133,7 +133,7 @@ class HomeScreen extends ConsumerWidget {
               ProtocolSelector(
                 selectedProtocol: fastingState.selectedProtocol,
                 onProtocolSelected: (protocol) {
-                  HapticFeedback.selectionClick();
+                  HapticService.selectionClick(ref);
                   ref.read(fastingProvider.notifier).selectProtocol(protocol);
                 },
                 enabled: !fastingState.isFasting,
@@ -178,7 +178,7 @@ class HomeScreen extends ConsumerWidget {
           Expanded(
             child: OutlinedButton.icon(
               onPressed: () {
-                HapticFeedback.mediumImpact();
+                HapticService.mediumImpact(ref);
                 _showCancelDialog(context, ref, l10n);
               },
               icon: const Icon(Icons.close),
@@ -194,7 +194,7 @@ class HomeScreen extends ConsumerWidget {
             flex: 2,
             child: FilledButton.icon(
               onPressed: () {
-                HapticFeedback.heavyImpact();
+                HapticService.heavyImpact(ref);
                 ref.read(fastingProvider.notifier).endFasting();
               },
               icon: Icon(goalAchieved ? Icons.check : Icons.stop),
@@ -215,7 +215,7 @@ class HomeScreen extends ConsumerWidget {
       width: double.infinity,
       child: FilledButton.icon(
         onPressed: () {
-          HapticFeedback.heavyImpact();
+          HapticService.heavyImpact(ref);
           ref
               .read(fastingProvider.notifier)
               .startFasting(

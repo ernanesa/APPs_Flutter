@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_riverpod/legacy.dart';
 import '../../domain/entities/fasting_session.dart';
 import '../../domain/entities/fasting_protocol.dart';
 import '../../data/repositories/fasting_repository_impl.dart';
@@ -50,14 +49,19 @@ class FastingState {
   }
 }
 
-/// Fasting state notifier
-class FastingNotifier extends StateNotifier<FastingState> {
-  final FastingRepositoryImpl _repository;
-  final Ref _ref;
+/// Fasting state notifier (Notifier API 2026)
+class FastingNotifier extends Notifier<FastingState> {
   Timer? _updateTimer;
 
-  FastingNotifier(this._repository, this._ref) : super(const FastingState()) {
+  FastingRepositoryImpl get _repository {
+    final prefs = ref.watch(sharedPreferencesProvider);
+    return FastingRepositoryImpl(prefs);
+  }
+
+  @override
+  FastingState build() {
     _loadCurrentSession();
+    return const FastingState();
   }
 
   Future<void> _loadCurrentSession() async {
@@ -78,7 +82,6 @@ class FastingNotifier extends StateNotifier<FastingState> {
   void _startUpdateTimer() {
     _updateTimer?.cancel();
     _updateTimer = Timer.periodic(const Duration(seconds: 1), (_) {
-      // Force UI rebuild by creating new state with same session
       if (state.currentSession != null) {
         state = state.copyWith(
           currentSession: state.currentSession!.copyWith(),
@@ -103,11 +106,10 @@ class FastingNotifier extends StateNotifier<FastingState> {
 
       _startUpdateTimer();
 
-      // Schedule notification
       final endTime = session.startTime.add(
         Duration(hours: session.targetHours),
       );
-      await _ref
+      await ref
           .read(notificationServiceProvider)
           .scheduleFastingEndNotification(
             endTime,
@@ -128,18 +130,13 @@ class FastingNotifier extends StateNotifier<FastingState> {
     try {
       final completedSession = await _repository.endSession();
       _updateTimer?.cancel();
-      await _ref.read(notificationServiceProvider).cancelAll();
+      await ref.read(notificationServiceProvider).cancelAll();
 
       state = state.copyWith(isLoading: false, clearSession: true);
 
       if (completedSession != null) {
         // Update streak
-        await _ref
-            .read(streakProvider.notifier)
-            .recordCompletedFast(completedSession.elapsedMinutes);
-
-        // Check achievements
-        await _null.checkAndUnlock();
+        ref.read(streakProvider.notifier).reportActivity(xpReward: 30);
       }
     } catch (e) {
       state = state.copyWith(isLoading: false, errorMessage: e.toString());
@@ -151,7 +148,7 @@ class FastingNotifier extends StateNotifier<FastingState> {
 
     try {
       await _repository.cancelSession();
-      await _ref.read(notificationServiceProvider).cancelAll();
+      await ref.read(notificationServiceProvider).cancelAll();
       _updateTimer?.cancel();
 
       state = state.copyWith(isLoading: false, clearSession: true);
@@ -161,23 +158,14 @@ class FastingNotifier extends StateNotifier<FastingState> {
   }
 
   void selectProtocol(FastingProtocol protocol) {
-    if (state.isFasting) return; // Can't change protocol while fasting
+    if (state.isFasting) return; 
     state = state.copyWith(selectedProtocol: protocol);
-  }
-
-  @override
-  void dispose() {
-    _updateTimer?.cancel();
-    super.dispose();
   }
 }
 
 /// Fasting provider
-final fastingProvider = StateNotifierProvider<FastingNotifier, FastingState>((
-  ref,
-) {
-  final prefs = ref.watch(sharedPreferencesProvider);
-  return FastingNotifier(FastingRepositoryImpl(prefs), ref);
+final fastingProvider = NotifierProvider<FastingNotifier, FastingState>(() {
+  return FastingNotifier();
 });
 
 /// History provider

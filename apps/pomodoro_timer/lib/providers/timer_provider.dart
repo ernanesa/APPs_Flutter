@@ -2,7 +2,7 @@ import 'package:core_logic/core_logic.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_riverpod/legacy.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../logic/pomodoro_logic.dart';
 import '../models/pomodoro_session.dart';
@@ -11,35 +11,32 @@ import '../models/timer_state.dart';
 import 'settings_provider.dart';
 
 /// Provider for the timer state.
-final timerProvider = StateNotifierProvider<TimerNotifier, TimerState>((ref) {
-  final settings = ref.watch(settingsProvider);
-  final prefs = ref.watch(sharedPreferencesProvider);
-  return TimerNotifier(settings, prefs, ref);
-});
+final timerProvider = NotifierProvider<TimerNotifier, TimerState>(TimerNotifier.new);
 
 /// Callback type for session completion.
 typedef SessionCompleteCallback =
     void Function(SessionType type, bool wasCompleted);
 
 /// Notifier for managing the Pomodoro timer.
-class TimerNotifier extends StateNotifier<TimerState> {
-  final PomodoroSettings _settings;
-  final SharedPreferences _prefs;
-  final Ref _ref;
+class TimerNotifier extends Notifier<TimerState> {
+  PomodoroSettings get _settings => ref.watch(pomodoroSettingsProvider);
+  SharedPreferences get _prefs => ref.watch(sharedPreferencesProvider);
   Timer? _timer;
   SessionCompleteCallback? onSessionComplete;
 
   static const _sessionsKey = 'pomodoro_sessions';
 
-  TimerNotifier(this._settings, this._prefs, this._ref)
-    : super(
-        PomodoroLogic.createStateForSession(
-          SessionType.focus,
-          const PomodoroSettings(),
-        ),
-      ) {
+  @override
+  TimerState build() {
+    ref.onDispose(() {
+      _timer?.cancel();
+    });
+
     // Initialize with current settings
-    _initializeWithSettings();
+    return PomodoroLogic.createStateForSession(
+      SessionType.focus,
+      ref.watch(pomodoroSettingsProvider),
+    );
   }
 
   void _initializeWithSettings() {
@@ -144,7 +141,7 @@ class TimerNotifier extends StateNotifier<TimerState> {
 
   /// Moves to the next session type.
   void _moveToNextSession() {
-    final currentSettings = _ref.read(settingsProvider);
+    final currentSettings = ref.read(pomodoroSettingsProvider);
 
     int newCompletedPomodoros = state.completedPomodoros;
     if (state.currentSessionType == SessionType.focus) {
@@ -217,12 +214,6 @@ class TimerNotifier extends StateNotifier<TimerState> {
     } catch (_) {
       return [];
     }
-  }
-
-  @override
-  void dispose() {
-    _timer?.cancel();
-    super.dispose();
   }
 }
 

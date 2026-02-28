@@ -1,20 +1,22 @@
 import 'dart:convert';
 import 'dart:isolate';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:core_logic/core_logic.dart'; // Import for sharedPreferencesProvider
 import '../models/bmi_entry.dart';
 
 final bmiHistoryProvider =
-    StateNotifierProvider<BmiHistoryNotifier, List<BmiEntry>>((ref) {
+    NotifierProvider<BmiHistoryNotifier, List<BmiEntry>>(() {
   return BmiHistoryNotifier();
 });
 
-class BmiHistoryNotifier extends StateNotifier<List<BmiEntry>> {
-  BmiHistoryNotifier() : super([]) {
-    loadHistory();
-  }
-
+class BmiHistoryNotifier extends Notifier<List<BmiEntry>> {
   static const String _storageKey = 'bmi_history';
+
+  @override
+  List<BmiEntry> build() {
+    loadHistory();
+    return [];
+  }
 
   // Executado na Background Isolate (Zero Latency na UI)
   static List<BmiEntry> _parseHistoryInIsolate(String historyJson) {
@@ -30,7 +32,7 @@ class BmiHistoryNotifier extends StateNotifier<List<BmiEntry>> {
   }
 
   Future<void> loadHistory() async {
-    final prefs = await SharedPreferences.getInstance();
+    final prefs = ref.read(sharedPreferencesProvider);
     final String? historyJson = prefs.getString(_storageKey);
     
     if (historyJson != null) {
@@ -50,9 +52,9 @@ class BmiHistoryNotifier extends StateNotifier<List<BmiEntry>> {
   }
 
   Future<void> _saveToDisk() async {
-    final prefs = await SharedPreferences.getInstance();
+    final prefs = ref.read(sharedPreferencesProvider);
     
-    // Preparar dados puros para enviar para a Isolate (evitar envio de instâncias complexas)
+    // Preparar dados puros para enviar para a Isolate
     final rawData = state.map((entry) => entry.toMap()).toList();
     
     // Processamento de texto longo (encoding) em thread separada

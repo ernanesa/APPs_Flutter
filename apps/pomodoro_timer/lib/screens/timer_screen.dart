@@ -62,7 +62,7 @@ class _TimerScreenState extends ConsumerState<TimerScreen>
 
   void _onSessionComplete(SessionType type, bool wasCompleted) {
     // ...existing code...
-    final settings = ref.read(settingsProvider);
+    final settings = ref.read(pomodoroSettingsProvider);
 
     // Play sound and vibrate
     if (settings.soundEnabled) {
@@ -78,7 +78,7 @@ class _TimerScreenState extends ConsumerState<TimerScreen>
       ref.read(streakProvider.notifier).recordFocusSessionCompleted();
 
       // Record daily goal progress
-      final focusDuration = ref.read(settingsProvider).focusDurationMinutes;
+      final focusDuration = ref.read(pomodoroSettingsProvider).focusDurationMinutes;
       ref
           .read(dailyGoalProvider.notifier)
           .recordFocusSessionCompleted(focusDuration);
@@ -140,7 +140,7 @@ class _TimerScreenState extends ConsumerState<TimerScreen>
     final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     final timerState = ref.watch(timerProvider);
-    final settings = ref.watch(settingsProvider);
+    final settings = ref.watch(pomodoroSettingsProvider);
     final isColorful = settings.colorfulMode;
 
     final sessionColor = _getSessionColor(timerState.currentSessionType, theme);

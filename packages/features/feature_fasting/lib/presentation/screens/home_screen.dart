@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_riverpod/legacy.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../widgets/ad_banner_widget.dart';
 import '../providers/fasting_provider.dart';
 import '../widgets/fasting_timer_widget.dart';

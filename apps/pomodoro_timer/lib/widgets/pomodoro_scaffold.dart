@@ -23,7 +23,7 @@ class PomodoroScaffold extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final settings = ref.watch(settingsProvider);
+    final settings = ref.watch(pomodoroSettingsProvider);
     final selectedTheme = ref.watch(selectedThemeProvider);
     final isColorful = settings.colorfulMode;
 

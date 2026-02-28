@@ -1,23 +1,20 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_riverpod/legacy.dart';
-
 import '../../domain/entities/calculation.dart';
 import '../../domain/usecases/calculation_usecases.dart';
 import 'calculation_provider.dart';
 
 final historyProvider =
-    StateNotifierProvider<HistoryNotifier, AsyncValue<List<Calculation>>>((
-      ref,
-    ) {
-      final repository = ref.watch(calculationRepositoryProvider);
-      return HistoryNotifier(repository);
-    });
+    NotifierProvider<HistoryNotifier, AsyncValue<List<Calculation>>>(() {
+  return HistoryNotifier();
+});
 
-class HistoryNotifier extends StateNotifier<AsyncValue<List<Calculation>>> {
-  final dynamic _repository;
+class HistoryNotifier extends Notifier<AsyncValue<List<Calculation>>> {
+  dynamic get _repository => ref.read(calculationRepositoryProvider);
 
-  HistoryNotifier(this._repository) : super(const AsyncValue.loading()) {
+  @override
+  AsyncValue<List<Calculation>> build() {
     loadHistory();
+    return const AsyncValue.loading();
   }
 
   Future<void> loadHistory() async {
@@ -35,7 +32,7 @@ class HistoryNotifier extends StateNotifier<AsyncValue<List<Calculation>>> {
     try {
       final usecase = DeleteCalculationUseCase(_repository);
       await usecase.execute(id);
-      await loadHistory(); // Reload
+      await loadHistory();
     } catch (e) {
       // Handle error
     }

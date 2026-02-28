@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_riverpod/legacy.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fasting_tracker/l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import '../../domain/entities/fasting_session.dart';

@@ -1,3 +1,4 @@
+import 'dart:isolate';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -55,7 +56,7 @@ class LocalDataSource {
     if (jsonString == null) return null;
 
     try {
-      return json.decode(jsonString) as Map<String, dynamic>;
+      return await Isolate.run(() => json.decode(jsonString)) as Map<String, dynamic>;
     } catch (e) {
       return null;
     }

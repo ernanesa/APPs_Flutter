@@ -1,43 +1,40 @@
 import 'package:core_logic/core_logic.dart';
 import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_riverpod/legacy.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../models/pomodoro_settings.dart';
 
-/// Provider for SharedPreferences instance.
-
-
-/// Provider for Pomodoro settings.
-final settingsProvider =
-    StateNotifierProvider<SettingsNotifier, PomodoroSettings>((ref) {
-      final prefs = ref.watch(sharedPreferencesProvider);
-      return SettingsNotifier(prefs);
-    });
+/// Provider for Pomodoro settings (Notifier API 2026).
+final pomodoroSettingsProvider =
+    NotifierProvider<PomodoroSettingsNotifier, PomodoroSettings>(() {
+  return PomodoroSettingsNotifier();
+});
 
 /// Notifier for managing Pomodoro settings.
-class SettingsNotifier extends StateNotifier<PomodoroSettings> {
-  final SharedPreferences _prefs;
+class PomodoroSettingsNotifier extends Notifier<PomodoroSettings> {
   static const _key = 'pomodoro_settings';
 
-  SettingsNotifier(this._prefs) : super(const PomodoroSettings()) {
+  @override
+  PomodoroSettings build() {
     _loadSettings();
+    return const PomodoroSettings();
   }
 
   void _loadSettings() {
-    final json = _prefs.getString(_key);
+    final prefs = ref.read(sharedPreferencesProvider);
+    final json = prefs.getString(_key);
     if (json != null) {
       try {
         final map = jsonDecode(json) as Map<String, dynamic>;
         state = PomodoroSettings.fromJson(map);
       } catch (_) {
-        // Use default settings on error
+        // Use default settings
       }
     }
   }
 
   Future<void> _saveSettings() async {
-    await _prefs.setString(_key, jsonEncode(state.toJson()));
+    final prefs = ref.read(sharedPreferencesProvider);
+    await prefs.setString(_key, jsonEncode(state.toJson()));
   }
 
   void updateFocusDuration(int minutes) {

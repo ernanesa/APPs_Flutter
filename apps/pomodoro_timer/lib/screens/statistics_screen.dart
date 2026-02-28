@@ -18,7 +18,7 @@ class StatisticsScreen extends ConsumerWidget {
     final theme = Theme.of(context);
     final todayStatsAsync = ref.watch(todayStatsProvider);
     final weeklyStatsAsync = ref.watch(weeklyStatsProvider);
-    final settings = ref.watch(settingsProvider);
+    final settings = ref.watch(pomodoroSettingsProvider);
     final isColorful = settings.colorfulMode;
 
     return PomodoroScaffold(

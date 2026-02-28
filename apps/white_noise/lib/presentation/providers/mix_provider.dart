@@ -1,7 +1,7 @@
 import 'package:core_logic/core_logic.dart';
 import 'dart:async';
 
-import 'package:flutter_riverpod/legacy.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/entities/timer_entity.dart';
 import '../../domain/entities/mix_entity.dart';
@@ -44,24 +44,22 @@ class MixState {
   }
 }
 
-class MixController extends StateNotifier<MixState> {
-  final MixSoundsUseCase _mixSoundsUseCase;
-  final SetTimerUseCase _setTimerUseCase;
-  final TrackAchievementsUseCase _trackAchievementsUseCase;
-  final UpdateStreakUseCase _updateStreakUseCase;
+class MixController extends Notifier<MixState> {
+  MixSoundsUseCase get _mixSoundsUseCase => ref.read(mixSoundsUseCaseProvider);
+  SetTimerUseCase get _setTimerUseCase => ref.read(setTimerUseCaseProvider);
+  TrackAchievementsUseCase get _trackAchievementsUseCase =>
+      ref.read(trackAchievementsUseCaseProvider);
+  UpdateStreakUseCase get _updateStreakUseCase =>
+      ref.read(updateStreakUseCaseProvider);
   Timer? _autoStopTimer;
 
-  MixController({
-    required MixSoundsUseCase mixSoundsUseCase,
-    required SetTimerUseCase setTimerUseCase,
-    required TrackAchievementsUseCase trackAchievementsUseCase,
-    required UpdateStreakUseCase updateStreakUseCase,
-  }) : _mixSoundsUseCase = mixSoundsUseCase,
-       _setTimerUseCase = setTimerUseCase,
-       _trackAchievementsUseCase = trackAchievementsUseCase,
-       _updateStreakUseCase = updateStreakUseCase,
-       super(MixState.initial()) {
+  @override
+  MixState build() {
+    ref.onDispose(() {
+      _autoStopTimer?.cancel();
+    });
     _load();
+    return MixState.initial();
   }
 
   Future<void> _load() async {
@@ -152,19 +150,6 @@ class MixController extends StateNotifier<MixState> {
       state = state.copyWith(isPlaying: false);
     });
   }
-
-  @override
-  void dispose() {
-    _autoStopTimer?.cancel();
-    super.dispose();
-  }
 }
 
-final mixProvider = StateNotifierProvider<MixController, MixState>((ref) {
-  return MixController(
-    mixSoundsUseCase: ref.watch(mixSoundsUseCaseProvider),
-    setTimerUseCase: ref.watch(setTimerUseCaseProvider),
-    trackAchievementsUseCase: ref.watch(trackAchievementsUseCaseProvider),
-    updateStreakUseCase: ref.watch(updateStreakUseCaseProvider),
-  );
-});
+final mixProvider = NotifierProvider<MixController, MixState>(MixController.new);
