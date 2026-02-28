@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Modern Launch Theme using Material 3 DayNight -->
     <style name="LaunchTheme" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:windowBackground">@drawable/launch_background</item>
         <item name="android:windowTranslucentStatus">true</item>
@@ -8,7 +7,6 @@
         <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
     </style>
 
-    <!-- Normal Theme: Material 3 for Premium Visuals and Latency-free transitions -->
     <style name="NormalTheme" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:windowBackground">?android:colorBackground</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>

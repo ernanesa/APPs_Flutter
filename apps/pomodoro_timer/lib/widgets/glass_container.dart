@@ -26,6 +26,7 @@ class GlassContainer extends StatelessWidget {
       child: ClipRRect(
         borderRadius: borderRadius ?? BorderRadius.circular(16),
         child: BackdropFilter(
+          // Otimização Crítica 2026: BackdropFilter é pesado.
           filter: ImageFilter.blur(sigmaX: blur, sigmaY: blur),
           child: Container(
             padding: padding,
@@ -37,7 +38,9 @@ class GlassContainer extends StatelessWidget {
                 width: 1.5,
               ),
             ),
-            child: child,
+            // RepaintBoundary impede que o blur seja re-renderizado
+            // quando o conteúdo filho (ex: timer) atualiza.
+            child: RepaintBoundary(child: child),
           ),
         ),
       ),

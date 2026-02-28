@@ -48,20 +48,22 @@ class TimerDisplay extends StatelessWidget {
       child: Stack(
         alignment: Alignment.center,
         children: [
-          // Background circle
-          SizedBox(
-            width: 260,
-            height: 260,
-            child: CircularProgressIndicator(
-              value: 1.0,
-              strokeWidth: 12,
-              backgroundColor: Colors.transparent,
-              valueColor: AlwaysStoppedAnimation<Color>(
-                bgColor.withValues(alpha: 0.3),
+          // Background circle isolated
+          RepaintBoundary(
+            child: SizedBox(
+              width: 260,
+              height: 260,
+              child: CircularProgressIndicator(
+                value: 1.0,
+                strokeWidth: 12,
+                backgroundColor: Colors.transparent,
+                valueColor: AlwaysStoppedAnimation<Color>(
+                  bgColor.withValues(alpha: 0.3),
+                ),
               ),
             ),
           ),
-          // Progress circle
+          // Progress circle (Animates 60/120fps)
           SizedBox(
             width: 260,
             height: 260,
@@ -79,55 +81,57 @@ class TimerDisplay extends StatelessWidget {
               },
             ),
           ),
-          // Time text
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                formattedTime,
-                style: theme.textTheme.displayLarge?.copyWith(
-                  fontWeight: FontWeight.w300,
-                  fontSize: 64,
-                  color: theme.colorScheme.onSurface,
-                  fontFeatures: const [FontFeature.tabularFigures()],
-                ),
-              ),
-              if (isRunning)
-                Container(
-                  margin: const EdgeInsets.only(top: 8),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 4,
-                  ),
-                  decoration: BoxDecoration(
-                    color: color.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        width: 8,
-                        height: 8,
-                        decoration: BoxDecoration(
-                          color: color,
-                          shape: BoxShape.circle,
-                        ),
-                      ),
-                      const SizedBox(width: 6),
-                      Text(
-                        isRunning ? 'RUNNING' : 'PAUSED',
-                        style: TextStyle(
-                          color: color,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600,
-                          letterSpacing: 1,
-                        ),
-                      ),
-                    ],
+          // Time text isolated from animation
+          RepaintBoundary(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  formattedTime,
+                  style: theme.textTheme.displayLarge?.copyWith(
+                    fontWeight: FontWeight.w300,
+                    fontSize: 64,
+                    color: theme.colorScheme.onSurface,
+                    fontFeatures: const [FontFeature.tabularFigures()],
                   ),
                 ),
-            ],
+                if (isRunning)
+                  Container(
+                    margin: const EdgeInsets.only(top: 8),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 4,
+                    ),
+                    decoration: BoxDecoration(
+                      color: color.withValues(alpha: 0.1),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          width: 8,
+                          height: 8,
+                          decoration: BoxDecoration(
+                            color: color,
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+                        const SizedBox(width: 6),
+                        Text(
+                          isRunning ? 'RUNNING' : 'PAUSED',
+                          style: TextStyle(
+                            color: color,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: 1,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+              ],
+            ),
           ),
         ],
       ),

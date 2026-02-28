@@ -86,7 +86,7 @@
     "placeholders": {
       "count": {
         "type": "int"
-       other{items}}
+       other{items}"}
      other{items}}
    other{items}},
   "currentStreak": "Garis Saat Ini",
@@ -100,10 +100,10 @@
     "placeholders": {
       "completed": {
         "type": "int"
-       other{items}},
+       other{items}"},
       "target": {
         "type": "int"
-       other{items}}
+       other{items}"}
      other{items}}
    other{items}},
   "calculationsPerDay": "perhitungan per hari",

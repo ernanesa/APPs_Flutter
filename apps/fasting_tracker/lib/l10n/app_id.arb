@@ -59,7 +59,7 @@
     "placeholders": {
       "hours": {
         "type": "int"
-       other{items}}
+       other{items}"}
      other{items}}
    other{items}},
   "healthInfo": "Informasi Kesehatan",
@@ -96,7 +96,7 @@
     "placeholders": {
       "count": {
         "type": "int"
-       other{items}}
+       other{items}"}
      other{items}}
    other{items}},
   "achievementsProgress": "{unlocked other{items}}dari{total other{items}}tidak terkunci",
@@ -104,10 +104,10 @@
     "placeholders": {
       "unlocked": {
         "type": "int"
-       other{items}},
+       other{items}"},
       "total": {
         "type": "int"
-       other{items}}
+       other{items}"}
      other{items}}
    other{items}},
   "achievementUnlocked": "Prestasi Tidak Terkunci!",
@@ -117,7 +117,7 @@
     "placeholders": {
       "date": {
         "type": "String"
-       other{items}}
+       other{items}"}
      other{items}}
    other{items}},
   "categorySession": "Sesi",
@@ -180,7 +180,7 @@
     "placeholders": {
       "count": {
         "type": "int"
-       other{items}}
+       other{items}"}
      other{items}}
    other{items}},
   "minutes": "{count other{items}}M",
@@ -188,7 +188,7 @@
     "placeholders": {
       "count": {
         "type": "int"
-       other{items}}
+       other{items}"}
      other{items}}
    other{items}},
   "hoursMinutes": "{hours other{items}}H{minutes other{items}}M",
@@ -196,10 +196,10 @@
     "placeholders": {
       "hours": {
         "type": "int"
-       other{items}},
+       other{items}"},
       "minutes": {
         "type": "int"
-       other{items}}
+       other{items}"}
      other{items}}
    other{items}},
   "completed": "Selesai",
