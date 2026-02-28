@@ -23,14 +23,37 @@
 - **Always Verify Current Date:** Before performing any research, proposing any SDK versions, or outlining any App Store/Play Store publication policies, you MUST check the current date provided in your system metadata context.
 - **No Outdated Tech:** We are operating in the year **2026**. Never propose deprecated 2023/2024 solutions, APIs, or policy compliance checklists. Always ensure information is current relative to the present day.
 
-### 🌌 SUPERAPP ARCHITECTURE RAG (MANDATORY INSTRUCTION)
+### 🌌 DUAL-TRACK ARCHITECTURE (MANDATORY INSTRUCTION)
 > **AI INSTRUCTION: CRITICAL PROTOCOL FOR ALL FUTURE DEVELOPMENTS**
 
-The legacy "152 Standalone Apps" strategy has been DEPRECATED in favor of the **Superapp Ecosystem**. Do NOT blindly follow legacy `.md` files in planning directories that suggest building micro-apps.
+This project uses a **Dual-Track Strategy**: every feature lives BOTH as a standalone Play Store app AND as a module inside a SuperApp. This is deliberate — both tracks are active and generate independent revenue.
+
+```
+apps/
+├── <app_name>          ← Standalone app (published on Play Store individually)
+└── super_<domain>_app  ← SuperApp Hub (aggregates feature packages)
+
+packages/
+├── core_ui             ← Shared design system
+├── core_logic          ← Shared logic (AdService, ConsentService, gamification)
+└── features/
+    └── feature_<name>  ← Modular version consumed by the SuperApp
+```
 
 **When the user asks you to "create an app" or "add a feature", YOU MUST FOLLOW THIS FLOW:**
-1. **Modules, not Apps:** Every functional utility (e.g., BMI Calculator, Pomodoro, Fasting, Mortgage) MUST be built as an isolated feature package inside `packages/features/<feature_name>`.
-2. **The Shells (Superapps):** The `apps/` directory is reserved STRICTLY for Superapp Hubs (e.g., `apps/super_health_app`, `apps/super_finance_app`, `apps/super_productivity`).
-3. **Integration:** You inject the feature packages into the Superapp shells. The Superapps provide the routing, premium paywalls, and tab bars to navigate between features.
-4. **Gamification First:** Before writing business logic, ensure that the feature hooks into the universal Gamification patterns (Streaks, Badges, Fire/FOMO loops) defined in `core_logic`/`core_ui`. Utility without retention is strictly forbidden.
-5. **Cross-Promotion:** Emphasize internal synergy (e.g., The Productivity Superapp should offer White Noise directly inside the Pomodoro timer).
+
+1. **Standalone First:** Build the feature as a complete standalone app in `apps/<feature_name>` with full AdMob, i18n (11 languages), gamification, and Play Store assets. This generates immediate revenue.
+2. **Then Modularize:** Extract the core logic into `packages/features/feature_<name>` so it can be consumed by the SuperApp shell without code duplication.
+3. **SuperApp Shells:** `apps/super_<domain>_app` is a thin hub that imports feature packages and provides unified navigation (GoRouter), premium paywalls, and cross-promotion.
+4. **Shared Infrastructure:** ALL apps MUST use `core_logic` (AdService, ConsentService, streak/gamification providers) and `core_ui` (AppTheme, BaseCard, GlobalStreakBadge). Never reimplement these locally.
+5. **Gamification Mandatory:** Every app MUST include: Streak Counter, Achievements/Badges, Daily Goals. Hook into `core_logic` providers. Utility without retention is forbidden.
+6. **Cross-Promotion:** The SuperApp should surface related standalone apps (e.g., Pomodoro timer integrated with White Noise, BMI Calculator alongside Water Tracker).
+
+**Current Published App Portfolio:**
+- `bmi_calculator` ✅ PUBLISHED
+- `pomodoro_timer` ✅ Ready to submit
+- `fasting_tracker` 🟠 In progress
+- `white_noise` 🟠 In progress
+- `compound_interest_calculator` 🔴 Setup needed
+- `water_tracker` 🔴 Development needed
+- `super_health_app` 🔧 Hub (aggregates BMI, Water, Fasting features)
