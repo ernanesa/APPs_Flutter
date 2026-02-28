@@ -9,11 +9,14 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
   core_logic:
     path: ../../core_logic
   core_ui:
     path: ../../core_ui
   flutter_riverpod: ^2.5.1
+  intl: ^0.19.0
 
 dev_dependencies:
   flutter_test:

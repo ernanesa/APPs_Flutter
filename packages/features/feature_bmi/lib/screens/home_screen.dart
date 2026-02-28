@@ -6,6 +6,9 @@ import 'history_screen.dart';
 import 'evolution_screen.dart';
 import '../widgets/info_dialog.dart';
 import '../providers/locale_provider.dart';
+import '../providers/theme_provider.dart';
+import '../providers/streak_provider.dart';
+import '../domain/entities/app_theme.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -31,6 +34,31 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       appBar: AppBar(
         title: Text(l10n.appTitle),
         actions: [
+          Consumer(
+            builder: (context, ref, child) {
+              final streakData = ref.watch(bmiStreakProvider);
+              return streakData.currentStreak > 0
+                ? Chip(
+                    avatar: const Icon(Icons.local_fire_department, color: Colors.orange, size: 16),
+                    label: Text('${streakData.currentStreak}'),
+                    backgroundColor: Colors.orange.withOpacity(0.2),
+                    side: BorderSide(color: Colors.orange.withOpacity(0.5)),
+                  )
+                : const SizedBox.shrink();
+            },
+          ),
+          PopupMenuButton<AppThemeType>(
+            icon: const Icon(Icons.palette),
+            onSelected: (AppThemeType themeType) {
+              ref.read(themeProvider.notifier).setTheme(themeType);
+            },
+            itemBuilder: (BuildContext context) => AppThemeType.values
+                .map((themeType) => PopupMenuItem<AppThemeType>(
+                      value: themeType,
+                      child: Text(themeType.name.toUpperCase()),
+                    ))
+                .toList(),
+          ),
           PopupMenuButton<String>(
             icon: const Icon(Icons.language),
             onSelected: (String code) {

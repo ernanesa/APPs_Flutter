@@ -5,6 +5,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'l10n/app_localizations.dart';
 import 'screens/home_screen.dart';
 import 'providers/locale_provider.dart';
+import 'providers/theme_provider.dart';
 import 'package:core_ui/core_ui.dart';
 
 void main() async {
@@ -62,12 +63,13 @@ class _MyAppState extends ConsumerState<MyApp> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     final locale = ref.watch(localeProvider);
+    final selectedTheme = ref.watch(themeProvider);
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,
-      theme: AppTheme.lightTheme(Colors.deepPurple),
-      darkTheme: AppTheme.darkTheme(Colors.deepPurple),
+      theme: AppTheme.lightTheme(selectedTheme.primaryColor),
+      darkTheme: AppTheme.darkTheme(selectedTheme.primaryColor),
       locale: locale,
       localizationsDelegates: const [
         AppLocalizations.delegate,

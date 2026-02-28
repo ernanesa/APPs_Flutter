@@ -16,6 +16,8 @@ import '../providers/history_provider.dart';
 import '../widgets/streak_widget.dart';
 import '../widgets/daily_goal_widget.dart';
 import '../widgets/calculation_chart.dart';
+import '../../providers/theme_provider.dart';
+import '../../providers/locale_provider.dart';
 
 class CalculatorScreen extends ConsumerStatefulWidget {
   const CalculatorScreen({super.key});
@@ -164,6 +166,28 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
       appBar: AppBar(
         title: Text(l10n.appTitle),
         actions: [
+          PopupMenuButton<AppThemeType>(
+            icon: const Icon(Icons.palette),
+            onSelected: (AppThemeType themeType) {
+              ref.read(themeProvider.notifier).setTheme(themeType);
+            },
+            itemBuilder: (BuildContext context) => AppThemeType.values
+                .map((themeType) => PopupMenuItem<AppThemeType>(
+                      value: themeType,
+                      child: Text(themeType.name.toUpperCase()),
+                    ))
+                .toList(),
+          ),
+          PopupMenuButton<String>(
+            icon: const Icon(Icons.language),
+            onSelected: (String code) {
+              ref.read(localeProvider.notifier).setLocale(Locale(code));
+            },
+            itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+              const PopupMenuItem<String>(value: 'en', child: Text('English')),
+              const PopupMenuItem<String>(value: 'pt', child: Text('Português')),
+            ],
+          ),
           IconButton(
             icon: const Icon(Icons.history),
             onPressed: () {
