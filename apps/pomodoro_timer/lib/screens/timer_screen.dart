@@ -5,9 +5,9 @@ import '../l10n/app_localizations.dart';
 import '../models/pomodoro_session.dart';
 import '../providers/settings_provider.dart';
 import '../providers/timer_provider.dart';
-import '../providers/streak_provider.dart';
+
 import '../providers/daily_goal_provider.dart';
-import '../providers/achievements_provider.dart';
+
 import '../providers/ambient_sound_provider.dart';
 
 import '../services/sound_service.dart';

@@ -3,10 +3,10 @@ import '../entities/app_theme.dart';
 /// Repository interface for settings
 abstract class ISettingsRepository {
   /// Get selected theme
-  Future<AppThemeType> getTheme();
+  Future<ThemeMode> getTheme();
 
   /// Set theme
-  Future<void> setTheme(AppThemeType theme);
+  Future<void> setTheme(ThemeMode theme);
 
   /// Get selected protocol ID
   Future<String> getSelectedProtocolId();

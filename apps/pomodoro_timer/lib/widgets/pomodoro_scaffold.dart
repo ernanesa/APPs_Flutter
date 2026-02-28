@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/settings_provider.dart';
-import '../providers/theme_provider.dart';
+
 import 'colorful_background.dart';
+import 'package:core_logic/core_logic.dart';
 
 class PomodoroScaffold extends ConsumerWidget {
   final Widget body;
@@ -39,7 +40,7 @@ class PomodoroScaffold extends ConsumerWidget {
     // In colorful mode, we wrap with ColorfulBackground
 
     return ColorfulBackground(
-      primaryColor: selectedTheme.primaryColor,
+      primaryColor: selectedTheme.seedColor,
       secondaryColor: selectedTheme.secondaryColor,
       accentColor: selectedTheme.accentColor,
       child: Scaffold(

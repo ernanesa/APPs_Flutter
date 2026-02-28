@@ -32,15 +32,20 @@ Future<void> main() async {
   );
 }
 
-class SuperHealthApp extends StatelessWidget {
+class SuperHealthApp extends ConsumerWidget {
   const SuperHealthApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final themeState = ref.watch(themeProvider);
+    final locale = ref.watch(localeProvider);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Super Health App',
-      theme: AppTheme.lightTheme(Colors.deepPurple), // Can be made dynamic
+      themeMode: themeState.mode,
+      theme: AppTheme.lightTheme(themeState.seedColor),
+      darkTheme: AppTheme.darkTheme(themeState.seedColor),
+      locale: locale, // Can be made dynamic
       home: const SuperHealthHub(),
     );
   }
@@ -63,7 +68,9 @@ class _SuperHealthHubState extends State<SuperHealthHub> {
   ];
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final themeState = ref.watch(themeProvider);
+    final locale = ref.watch(localeProvider);
     return Scaffold(
       body: IndexedStack(
         index: _currentIndex,

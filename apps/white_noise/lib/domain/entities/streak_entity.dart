@@ -5,8 +5,8 @@ class StreakEntity {
   final DateTime? lastActiveDate;
 
   const StreakEntity({
-    this.currentStreak = 0,
-    this.bestStreak = 0,
+    this.streak = 0,
+    this.xp = 0,
     this.lastActiveDate,
   });
 
@@ -16,8 +16,8 @@ class StreakEntity {
     DateTime? lastActiveDate,
   }) {
     return StreakEntity(
-      currentStreak: currentStreak ?? this.currentStreak,
-      bestStreak: bestStreak ?? this.bestStreak,
+      currentStreak: currentStreak ?? this.streak,
+      bestStreak: bestStreak ?? this.xp,
       lastActiveDate: lastActiveDate ?? this.lastActiveDate,
     );
   }
@@ -87,8 +87,8 @@ class StreakEntity {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is StreakEntity &&
-        other.currentStreak == currentStreak &&
-        other.bestStreak == bestStreak &&
+        other.streak == currentStreak &&
+        other.xp == bestStreak &&
         other.lastActiveDate == lastActiveDate;
   }
 

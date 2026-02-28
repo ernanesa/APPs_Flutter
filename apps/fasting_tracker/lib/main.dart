@@ -7,8 +7,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fasting_tracker/l10n/app_localizations.dart';
 import 'package:core_ui/core_ui.dart';
 
-import 'presentation/providers/theme_provider.dart';
-import 'presentation/providers/locale_provider.dart';
+
+
 import 'presentation/screens/home_screen.dart';
 
 
@@ -80,8 +80,8 @@ class _FastingTrackerAppState extends ConsumerState<FastingTrackerApp>
       debugShowCheckedModeBanner: false,
       title: 'Fasting Tracker',
       locale: selectedLocale,
-      theme: AppTheme.lightTheme(selectedTheme.primaryColor),
-      darkTheme: AppTheme.darkTheme(selectedTheme.primaryColor),
+      theme: AppTheme.lightTheme(selectedTheme.seedColor),
+      darkTheme: AppTheme.darkTheme(selectedTheme.seedColor),
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,

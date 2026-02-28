@@ -7,8 +7,8 @@ class StreakDto {
   final String? lastActiveDate; // DateTime as ISO8601 string
 
   const StreakDto({
-    required this.currentStreak,
-    required this.bestStreak,
+    required this.streak,
+    required this.xp,
     this.lastActiveDate,
   });
 
@@ -24,8 +24,8 @@ class StreakDto {
 
   factory StreakDto.fromEntity(StreakEntity entity) {
     return StreakDto(
-      currentStreak: entity.currentStreak,
-      bestStreak: entity.bestStreak,
+      currentStreak: entity.streak,
+      bestStreak: entity.xp,
       lastActiveDate: entity.lastActiveDate?.toIso8601String(),
     );
   }

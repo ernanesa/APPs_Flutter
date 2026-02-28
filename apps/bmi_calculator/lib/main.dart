@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'l10n/app_localizations.dart';
 import 'screens/home_screen.dart';
-import 'providers/locale_provider.dart';
+
 import 'package:core_ui/core_ui.dart';
 
 void main() async {

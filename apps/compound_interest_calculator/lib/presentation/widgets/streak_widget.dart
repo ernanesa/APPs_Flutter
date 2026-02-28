@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../l10n/app_localizations.dart';
-import '../providers/streak_provider.dart';
+import 'package:core_logic/core_logic.dart';
+
 
 class StreakWidget extends ConsumerWidget {
   const StreakWidget({super.key});
@@ -28,14 +29,14 @@ class StreakWidget extends ConsumerWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    '${streak.currentStreak} ${l10n.days}',
+                    '${streak.streak} ${l10n.days}',
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
-                    l10n.currentStreak,
+                    l10n.streak,
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                 ],

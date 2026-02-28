@@ -3,8 +3,8 @@ import 'package:core_logic/core_logic.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../l10n/app_localizations.dart';
 import '../providers/settings_provider.dart';
-import '../providers/locale_provider.dart';
-import '../providers/achievements_provider.dart';
+
+
 
 import '../widgets/theme_selector.dart';
 import '../widgets/ambient_sound_selector.dart';

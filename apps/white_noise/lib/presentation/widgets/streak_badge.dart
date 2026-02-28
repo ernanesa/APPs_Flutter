@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:core_logic/core_logic.dart';
 
-import '../providers/streak_provider.dart';
+
 
 class StreakBadge extends ConsumerWidget {
   const StreakBadge({super.key});
@@ -15,7 +16,7 @@ class StreakBadge extends ConsumerWidget {
       radius: 16,
       backgroundColor: theme.colorScheme.primaryContainer,
       child: Text(
-        '${streak.currentStreak}',
+        '${streak.streak}',
         style: theme.textTheme.labelMedium?.copyWith(
           color: theme.colorScheme.onPrimaryContainer,
           fontWeight: FontWeight.bold,

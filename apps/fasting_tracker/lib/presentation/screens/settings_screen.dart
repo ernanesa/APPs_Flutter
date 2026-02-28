@@ -3,8 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:fasting_tracker/l10n/app_localizations.dart';
 import '../../domain/entities/app_theme.dart';
-import '../providers/theme_provider.dart';
-import '../providers/locale_provider.dart';
+
+
+import 'package:core_logic/core_logic.dart';
 
 /// Settings screen
 class SettingsScreen extends ConsumerWidget {
@@ -33,13 +34,13 @@ class SettingsScreen extends ConsumerWidget {
             child: Wrap(
               spacing: 8,
               runSpacing: 8,
-              children: AppThemeType.values.map((themeType) {
+              children: ThemeMode.values.map((themeType) {
                 final isSelected = themeType == currentTheme;
                 return _ThemeChip(
                   themeType: themeType,
                   isSelected: isSelected,
                   onTap: () =>
-                      ref.read(themeProvider.notifier).setTheme(themeType),
+                      ref.read(themeProvider.notifier).setThemeMode(themeType),
                   l10n: l10n,
                 );
               }).toList(),
@@ -229,7 +230,7 @@ class SettingsScreen extends ConsumerWidget {
 }
 
 class _ThemeChip extends StatelessWidget {
-  final AppThemeType themeType;
+  final ThemeMode themeType;
   final bool isSelected;
   final VoidCallback onTap;
   final AppLocalizations l10n;
@@ -253,11 +254,11 @@ class _ThemeChip extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
           color: isSelected
-              ? themeType.primaryColor
-              : themeType.primaryColor.withValues(alpha: 0.2),
+              ? Colors.blue
+              : Colors.blue.withValues(alpha: 0.2),
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: themeType.primaryColor,
+            color: Colors.blue,
             width: isSelected ? 2 : 1,
           ),
         ),
@@ -268,7 +269,7 @@ class _ThemeChip extends StatelessWidget {
               width: 16,
               height: 16,
               decoration: BoxDecoration(
-                color: themeType.primaryColor,
+                color: Colors.blue,
                 shape: BoxShape.circle,
                 border: Border.all(color: Colors.white, width: 2),
               ),
@@ -277,7 +278,7 @@ class _ThemeChip extends StatelessWidget {
             Text(
               _getThemeName(themeType.name, l10n),
               style: TextStyle(
-                color: isSelected ? Colors.white : themeType.primaryColor,
+                color: isSelected ? Colors.white : Colors.blue,
                 fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
               ),
             ),

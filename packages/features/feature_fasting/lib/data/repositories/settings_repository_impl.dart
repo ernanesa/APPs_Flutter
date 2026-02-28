@@ -13,22 +13,22 @@ class SettingsRepositoryImpl implements ISettingsRepository {
   SettingsRepositoryImpl(this._prefs);
 
   @override
-  Future<AppThemeType> getTheme() async {
+  Future<ThemeMode> getTheme() async {
     final themeName = _prefs.getString(_themeKey);
-    if (themeName == null) return AppThemeType.forest;
+    if (themeName == null) return ThemeMode.forest;
 
     try {
-      return AppThemeType.values.firstWhere(
+      return ThemeMode.values.firstWhere(
         (t) => t.name == themeName,
-        orElse: () => AppThemeType.forest,
+        orElse: () => ThemeMode.forest,
       );
     } catch (_) {
-      return AppThemeType.forest;
+      return ThemeMode.forest;
     }
   }
 
   @override
-  Future<void> setTheme(AppThemeType theme) async {
+  Future<void> setTheme(ThemeMode theme) async {
     await _prefs.setString(_themeKey, theme.name);
   }
 

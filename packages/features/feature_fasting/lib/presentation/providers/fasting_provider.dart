@@ -5,8 +5,8 @@ import '../../domain/entities/fasting_session.dart';
 import '../../domain/entities/fasting_protocol.dart';
 import '../../data/repositories/fasting_repository_impl.dart';
 import 'package:core_logic/core_logic.dart';
-import 'streak_provider.dart';
-import 'achievements_provider.dart';
+
+
 import '../../services/notification_service.dart';
 
 /// Current fasting session state

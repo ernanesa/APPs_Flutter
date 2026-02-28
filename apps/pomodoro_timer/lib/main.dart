@@ -7,8 +7,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:core_ui/core_ui.dart';
 import 'l10n/app_localizations.dart';
 import 'providers/settings_provider.dart';
-import 'providers/theme_provider.dart';
-import 'providers/locale_provider.dart';
+
+
 import 'screens/timer_screen.dart';
 
 
@@ -90,8 +90,8 @@ class _PomodoroAppState extends ConsumerState<PomodoroApp>
       debugShowCheckedModeBanner: false,
       title: 'Pomodoro Timer',
       locale: locale,
-      theme: AppTheme.lightTheme(selectedTheme.primaryColor),
-      darkTheme: AppTheme.darkTheme(selectedTheme.primaryColor),
+      theme: AppTheme.lightTheme(selectedTheme.seedColor),
+      darkTheme: AppTheme.darkTheme(selectedTheme.seedColor),
       themeMode: settings.darkMode ? ThemeMode.dark : ThemeMode.light,
       localizationsDelegates: const [
         AppLocalizations.delegate,

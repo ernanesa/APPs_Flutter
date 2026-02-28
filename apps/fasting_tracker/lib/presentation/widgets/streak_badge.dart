@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:fasting_tracker/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
-import '../providers/streak_provider.dart';
+import 'package:core_logic/core_logic.dart';
+
 
 
 /// Streak badge widget showing current streak
@@ -19,7 +20,7 @@ class StreakBadge extends ConsumerWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: streakData.currentStreak > 0
+        color: streakData.streak > 0
             ? theme.colorScheme.primaryContainer
             : theme.colorScheme.surfaceContainerHighest,
         borderRadius: BorderRadius.circular(16),
@@ -28,15 +29,15 @@ class StreakBadge extends ConsumerWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            streakData.currentStreak > 0 ? '🔥' : '💤',
+            streakData.streak > 0 ? '🔥' : '💤',
             style: const TextStyle(fontSize: 14),
           ),
           const SizedBox(width: 2),
           Text(
-            '${streakData.currentStreak}',
+            '${streakData.streak}',
             style: theme.textTheme.labelLarge?.copyWith(
               fontWeight: FontWeight.bold,
-              color: streakData.currentStreak > 0
+              color: streakData.streak > 0
                   ? theme.colorScheme.onPrimaryContainer
                   : theme.colorScheme.onSurfaceVariant,
             ),

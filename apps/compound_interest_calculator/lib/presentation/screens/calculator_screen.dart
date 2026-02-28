@@ -9,15 +9,15 @@ import '../../domain/entities/preset.dart';
 
 import '../../utils/formatters.dart';
 import '../providers/calculation_provider.dart';
-import '../providers/streak_provider.dart';
+
 import '../providers/daily_goal_provider.dart';
 import '../providers/achievement_provider.dart';
 import '../providers/history_provider.dart';
 import '../widgets/streak_widget.dart';
 import '../widgets/daily_goal_widget.dart';
 import '../widgets/calculation_chart.dart';
-import '../../providers/theme_provider.dart';
-import '../../providers/locale_provider.dart';
+
+
 
 class CalculatorScreen extends ConsumerStatefulWidget {
   const CalculatorScreen({super.key});
@@ -92,7 +92,7 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
 
     final newAchievements = await achievementNotifier.checkAndUnlock(
       totalCalculations: history.length + 1,
-      currentStreak: streak.currentStreak,
+      currentStreak: streak.streak,
       totalAmount: calcState.result?.totalAmount ?? 0,
       months: months,
     );
@@ -166,13 +166,13 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
       appBar: AppBar(
         title: Text(l10n.appTitle),
         actions: [
-          PopupMenuButton<AppThemeType>(
+          PopupMenuButton<ThemeMode>(
             icon: const Icon(Icons.palette),
-            onSelected: (AppThemeType themeType) {
-              ref.read(themeProvider.notifier).setTheme(themeType);
+            onSelected: (ThemeMode themeType) {
+              ref.read(themeProvider.notifier).setThemeMode(themeType);
             },
-            itemBuilder: (BuildContext context) => AppThemeType.values
-                .map((themeType) => PopupMenuItem<AppThemeType>(
+            itemBuilder: (BuildContext context) => ThemeMode.values
+                .map((themeType) => PopupMenuItem<ThemeMode>(
                       value: themeType,
                       child: Text(themeType.name.toUpperCase()),
                     ))

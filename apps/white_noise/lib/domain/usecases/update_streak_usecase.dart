@@ -21,7 +21,7 @@ class UpdateStreakUseCase {
       final updatedStreak = await streakRepository.updateStreak();
 
       // Determine if this is a new milestone
-      final milestone = _checkMilestone(updatedStreak.currentStreak);
+      final milestone = _checkMilestone(updatedStreak.streak);
 
       return StreakResult.updated(updatedStreak, milestone);
     } catch (e) {

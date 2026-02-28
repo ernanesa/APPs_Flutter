@@ -47,16 +47,16 @@ class StreakRepositoryImpl implements StreakRepository {
 
       if (difference == 1) {
         // Consecutive day
-        newStreak = current.currentStreak + 1;
+        newStreak = current.streak + 1;
       } else if (difference > 1) {
         // Broke the streak
         newStreak = 1;
       }
     }
 
-    final newBest = newStreak > current.bestStreak
+    final newBest = newStreak > current.xp
         ? newStreak
-        : current.bestStreak;
+        : current.xp;
 
     final updated = StreakEntity(
       currentStreak: newStreak,
@@ -87,12 +87,12 @@ class StreakRepositoryImpl implements StreakRepository {
   @override
   Future<int> getCurrentStreak() async {
     final streak = await getStreak();
-    return streak.currentStreak;
+    return streak.streak;
   }
 
   @override
   Future<int> getBestStreak() async {
     final streak = await getStreak();
-    return streak.bestStreak;
+    return streak.xp;
   }
 }

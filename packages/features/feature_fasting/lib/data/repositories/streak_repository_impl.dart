@@ -28,7 +28,7 @@ class StreakRepositoryImpl implements IStreakRepository {
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
 
-    int newStreak = current.currentStreak;
+    int newStreak = current.streak;
 
     if (current.lastCompletedDate != null) {
       final lastDate = DateTime(
@@ -40,10 +40,10 @@ class StreakRepositoryImpl implements IStreakRepository {
 
       if (difference == 0) {
         // Already completed today, don't increment streak
-        newStreak = current.currentStreak;
+        newStreak = current.streak;
       } else if (difference == 1) {
         // Consecutive day
-        newStreak = current.currentStreak + 1;
+        newStreak = current.streak + 1;
       } else {
         // Streak broken
         newStreak = 1;
@@ -53,9 +53,9 @@ class StreakRepositoryImpl implements IStreakRepository {
       newStreak = 1;
     }
 
-    final newBest = newStreak > current.bestStreak
+    final newBest = newStreak > current.xp
         ? newStreak
-        : current.bestStreak;
+        : current.xp;
 
     final updated = StreakDataModel(
       currentStreak: newStreak,

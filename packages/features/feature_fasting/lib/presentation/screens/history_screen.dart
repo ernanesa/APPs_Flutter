@@ -5,7 +5,8 @@ import 'package:fasting_tracker/l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import '../../domain/entities/fasting_session.dart';
 import '../providers/fasting_provider.dart';
-import '../providers/streak_provider.dart';
+import 'package:core_logic/core_logic.dart';
+
 
 /// History screen
 class HistoryScreen extends ConsumerWidget {
@@ -31,13 +32,13 @@ class HistoryScreen extends ConsumerWidget {
               children: [
                 _StatItem(
                   icon: '🔥',
-                  value: '${streakData.currentStreak}',
-                  label: l10n.currentStreak,
+                  value: '${streakData.streak}',
+                  label: l10n.streak,
                 ),
                 _StatItem(
                   icon: '🏆',
-                  value: '${streakData.bestStreak}',
-                  label: l10n.bestStreak,
+                  value: '${streakData.xp}',
+                  label: l10n.xp,
                 ),
                 _StatItem(
                   icon: '⏱️',

@@ -3,7 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:fasting_tracker/l10n/app_localizations.dart';
 import '../../domain/entities/achievement.dart';
-import '../providers/achievements_provider.dart';
+import 'package:core_logic/core_logic.dart';
+
 
 /// Achievements screen
 class AchievementsScreen extends ConsumerWidget {

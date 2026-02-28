@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../l10n/app_localizations.dart';
 import '../models/achievement.dart';
-import '../providers/achievements_provider.dart';
+
 import '../providers/settings_provider.dart';
 import '../widgets/achievement_badge.dart';
 import '../widgets/pomodoro_scaffold.dart';
 import '../widgets/glass_container.dart';
+import 'package:core_logic/core_logic.dart';
 
 /// Screen displaying all achievements.
 class AchievementsScreen extends ConsumerWidget {

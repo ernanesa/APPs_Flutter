@@ -5,9 +5,9 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:core_logic/core_logic.dart';
 import '../providers/water_intake_provider.dart';
 import '../domain/entities/app_theme.dart';
-import '../providers/theme_provider.dart';
-import '../providers/locale_provider.dart';
-import '../providers/streak_provider.dart';
+
+
+
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -56,23 +56,23 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           Consumer(
             builder: (context, ref, child) {
               final streakData = ref.watch(waterStreakProvider);
-              return streakData.currentStreak > 0
+              return streakData.streak > 0
                 ? Chip(
                     avatar: const Icon(Icons.water_drop, color: Colors.blue, size: 16),
-                    label: Text('${streakData.currentStreak}'),
+                    label: Text('${streakData.streak}'),
                     backgroundColor: Colors.blue.withOpacity(0.2),
                     side: BorderSide(color: Colors.blue.withOpacity(0.5)),
                   )
                 : const SizedBox.shrink();
             },
           ),
-          PopupMenuButton<AppThemeType>(
+          PopupMenuButton<ThemeMode>(
             icon: const Icon(Icons.palette),
-            onSelected: (AppThemeType themeType) {
-              ref.read(themeProvider.notifier).setTheme(themeType);
+            onSelected: (ThemeMode themeType) {
+              ref.read(themeProvider.notifier).setThemeMode(themeType);
             },
-            itemBuilder: (BuildContext context) => AppThemeType.values
-                .map((themeType) => PopupMenuItem<AppThemeType>(
+            itemBuilder: (BuildContext context) => ThemeMode.values
+                .map((themeType) => PopupMenuItem<ThemeMode>(
                       value: themeType,
                       child: Text(themeType.name.toUpperCase()),
                     ))

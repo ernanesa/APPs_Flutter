@@ -5,7 +5,7 @@ import 'calculator_screen.dart';
 import 'history_screen.dart';
 import 'evolution_screen.dart';
 import '../widgets/info_dialog.dart';
-import '../providers/locale_provider.dart';
+
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});

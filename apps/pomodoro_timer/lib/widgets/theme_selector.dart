@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../l10n/app_localizations.dart';
 import '../models/app_theme.dart';
-import '../providers/theme_provider.dart';
+import 'package:core_logic/core_logic.dart';
+
 
 /// Widget for selecting app themes.
 class ThemeSelector extends ConsumerWidget {

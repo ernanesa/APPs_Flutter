@@ -8,7 +8,7 @@ import 'l10n/app_localizations.dart';
 
 
 import 'presentation/screens/calculator_screen.dart';
-import 'presentation/providers/theme_provider.dart';
+
 import 'package:core_ui/core_ui.dart';
 
 void main() async {
@@ -71,8 +71,8 @@ class _MyAppState extends ConsumerState<MyApp> with WidgetsBindingObserver {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Compound Interest Calculator',
-      theme: AppTheme.lightTheme(selectedTheme.primaryColor),
-      darkTheme: AppTheme.darkTheme(selectedTheme.primaryColor),
+      theme: AppTheme.lightTheme(selectedTheme.seedColor),
+      darkTheme: AppTheme.darkTheme(selectedTheme.seedColor),
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
