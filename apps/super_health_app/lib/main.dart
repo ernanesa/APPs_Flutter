@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:core_logic/core_logic.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:dynamic_color/dynamic_color.dart';
 import 'package:core_ui/core_ui.dart';
 
 import 'package:feature_bmi/screens/home_screen.dart' as bmi;
@@ -38,14 +39,18 @@ class SuperHealthApp extends ConsumerWidget {
     final themeState = ref.watch(themeProvider);
     final locale = ref.watch(localeProvider);
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Super Health App',
-      themeMode: themeState.mode,
-      theme: ThemeData.light().copyWith(primaryColor: themeState.seedColor),
-      darkTheme: ThemeData.dark().copyWith(primaryColor: themeState.seedColor),
-      locale: locale,
-      home: const SuperHealthHub(),
+    return DynamicColorBuilder(
+      builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Super Health App',
+          themeMode: themeState.mode,
+          theme: AppTheme.lightTheme(themeState.seedColor, dynamicColorScheme: lightDynamic),
+          darkTheme: AppTheme.darkTheme(themeState.seedColor, dynamicColorScheme: darkDynamic),
+          locale: locale,
+          home: const SuperHealthHub(),
+        );
+      },
     );
   }
 }

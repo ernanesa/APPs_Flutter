@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:core_logic/core_logic.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:core_ui/core_ui.dart';
+import 'package:dynamic_color/dynamic_color.dart';
 
 import 'l10n/app_localizations.dart';
 import 'presentation/providers/settings_provider.dart';
@@ -65,18 +66,23 @@ class _AppRoot extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final settings = ref.watch(settingsProvider);
+    final themeState = ref.watch(themeProvider);
     final locale = Locale(settings.languageCode);
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,
-      theme: AppTheme.lightTheme(Colors.teal),
-      darkTheme: AppTheme.darkTheme(Colors.teal),
-      themeMode: settings.isDarkMode ? ThemeMode.dark : ThemeMode.light,
-      locale: locale,
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
-      home: const HomeScreen(),
+    return DynamicColorBuilder(
+      builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,
+          theme: AppTheme.lightTheme(themeState.seedColor, dynamicColorScheme: lightDynamic),
+          darkTheme: AppTheme.darkTheme(themeState.seedColor, dynamicColorScheme: darkDynamic),
+          themeMode: settings.isDarkMode ? ThemeMode.dark : ThemeMode.light,
+          locale: locale,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: const HomeScreen(),
+        );
+      },
     );
   }
 }

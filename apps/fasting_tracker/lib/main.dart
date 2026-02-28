@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:core_logic/core_logic.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_riverpod/legacy.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:dynamic_color/dynamic_color.dart';
 import 'package:fasting_tracker/l10n/app_localizations.dart';
 import 'package:core_ui/core_ui.dart';
 
@@ -76,20 +76,24 @@ class _FastingTrackerAppState extends ConsumerState<FastingTrackerApp>
     final selectedTheme = ref.watch(themeProvider);
     final selectedLocale = ref.watch(localeProvider);
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Fasting Tracker',
-      locale: selectedLocale,
-      theme: AppTheme.lightTheme(selectedTheme.seedColor),
-      darkTheme: AppTheme.darkTheme(selectedTheme.seedColor),
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: AppLocalizations.supportedLocales,
-      home: const HomeScreen(),
+    return DynamicColorBuilder(
+      builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Fasting Tracker',
+          locale: selectedLocale,
+          theme: AppTheme.lightTheme(selectedTheme.seedColor, dynamicColorScheme: lightDynamic),
+          darkTheme: AppTheme.darkTheme(selectedTheme.seedColor, dynamicColorScheme: darkDynamic),
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: const HomeScreen(),
+        );
+      },
     );
   }
 }

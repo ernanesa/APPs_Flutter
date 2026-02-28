@@ -3,6 +3,7 @@ import 'package:core_logic/core_logic.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:dynamic_color/dynamic_color.dart';
 import 'l10n/app_localizations.dart';
 
 
@@ -68,32 +69,36 @@ class _MyAppState extends ConsumerState<MyApp> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     final selectedTheme = ref.watch(themeProvider);
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Compound Interest Calculator',
-      theme: AppTheme.lightTheme(selectedTheme.seedColor),
-      darkTheme: AppTheme.darkTheme(selectedTheme.seedColor),
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: const [
-        Locale('en'), // English
-        Locale('pt'), // Portuguese
-        Locale('es'), // Spanish
-        Locale('de'), // German
-        Locale('fr'), // French
-        Locale('zh'), // Chinese
-        Locale('ru'), // Russian
-        Locale('ja'), // Japanese
-        Locale('ar'), // Arabic
-        Locale('hi'), // Hindi
-        Locale('bn'), // Bengali
-        Locale('it'), // Italian
-      ],
-      home: const CalculatorScreen(),
+    return DynamicColorBuilder(
+      builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Compound Interest Calculator',
+          theme: AppTheme.lightTheme(selectedTheme.seedColor, dynamicColorScheme: lightDynamic),
+          darkTheme: AppTheme.darkTheme(selectedTheme.seedColor, dynamicColorScheme: darkDynamic),
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: const [
+            Locale('en'), // English
+            Locale('pt'), // Portuguese
+            Locale('es'), // Spanish
+            Locale('de'), // German
+            Locale('fr'), // French
+            Locale('zh'), // Chinese
+            Locale('ru'), // Russian
+            Locale('ja'), // Japanese
+            Locale('ar'), // Arabic
+            Locale('hi'), // Hindi
+            Locale('bn'), // Bengali
+            Locale('it'), // Italian
+          ],
+          home: const CalculatorScreen(),
+        );
+      },
     );
   }
 }

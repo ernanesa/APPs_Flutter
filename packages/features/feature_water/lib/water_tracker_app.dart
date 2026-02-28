@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:core_logic/core_logic.dart';
 import 'package:core_ui/core_ui.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:dynamic_color/dynamic_color.dart';
 import 'presentation/screens/home_screen.dart';
 
 class WaterTrackerApp extends ConsumerStatefulWidget {
@@ -39,13 +39,19 @@ class _WaterTrackerAppState extends ConsumerState<WaterTrackerApp>
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Water Tracker',
-      theme: AppTheme.lightTheme(Colors.blue),
-      darkTheme: AppTheme.darkTheme(Colors.blue),
-      themeMode: ThemeMode.system,
-      home: const HomeScreen(),
+    final themeState = ref.watch(themeProvider);
+
+    return DynamicColorBuilder(
+      builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Water Tracker',
+          theme: AppTheme.lightTheme(themeState.seedColor, dynamicColorScheme: lightDynamic),
+          darkTheme: AppTheme.darkTheme(themeState.seedColor, dynamicColorScheme: darkDynamic),
+          themeMode: themeState.mode,
+          home: const HomeScreen(),
+        );
+      },
     );
   }
 }

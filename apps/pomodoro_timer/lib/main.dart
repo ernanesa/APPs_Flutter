@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:dynamic_color/dynamic_color.dart';
 import 'package:core_ui/core_ui.dart';
 import 'l10n/app_localizations.dart';
 import 'providers/settings_provider.dart';
@@ -86,21 +87,25 @@ class _PomodoroAppState extends ConsumerState<PomodoroApp>
     SoundService.instance.setSoundEnabled(settings.soundEnabled);
     SoundService.instance.setVibrationEnabled(settings.vibrationEnabled);
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Pomodoro Timer',
-      locale: locale,
-      theme: ThemeData.light().copyWith(primaryColor: selectedTheme.seedColor),
-      darkTheme: ThemeData.dark().copyWith(primaryColor: selectedTheme.seedColor),
-      themeMode: settings.darkMode ? ThemeMode.dark : ThemeMode.light,
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: AppLocalizations.supportedLocales,
-      home: const TimerScreen(),
+    return DynamicColorBuilder(
+      builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Pomodoro Timer',
+          locale: locale,
+          theme: AppTheme.lightTheme(selectedTheme.seedColor, dynamicColorScheme: lightDynamic),
+          darkTheme: AppTheme.darkTheme(selectedTheme.seedColor, dynamicColorScheme: darkDynamic),
+          themeMode: settings.darkMode ? ThemeMode.dark : ThemeMode.light,
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: const TimerScreen(),
+        );
+      },
     );
   }
 }
