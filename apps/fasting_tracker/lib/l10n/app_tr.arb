@@ -54,14 +54,14 @@
   "stageAutophagy": "Otofaji",
   "stageAutophagyDesc": "Hücresel temizleme ve yenilenme",
   "currentStage": "Mevcut Aşama",
-  "stageStartsAt": "Başlangıç ​​tarihi:{hours}H",
+  "stageStartsAt": "Başlangıç ​​tarihi:{hours other{items}}H",
   "@stageStartsAt": {
     "placeholders": {
       "hours": {
         "type": "int"
-      }
-    }
-  },
+       other{items}}
+     other{items}}
+   other{items}},
   "healthInfo": "Sağlık Bilgileri",
   "benefits": "Faydalar",
   "warnings": "Uyarılar ve Önlemler",
@@ -91,35 +91,35 @@
   "totalFasts": "Toplam Oruç",
   "daysUnit": "günler",
   "dayUnit": "gün",
-  "streakDays": "{count} {count, plural, =1{day}diğer{days}}",
+  "streakDays": "{count other{items}} {count, plural, =1{day other{items}}diğer{days other{items}} other{items}}",
   "@streakDays": {
     "placeholders": {
       "count": {
         "type": "int"
-      }
-    }
-  },
-  "achievementsProgress": "{unlocked}ile ilgili{total}kilidi açık",
+       other{items}}
+     other{items}}
+   other{items}},
+  "achievementsProgress": "{unlocked other{items}}ile ilgili{total other{items}}kilidi açık",
   "@achievementsProgress": {
     "placeholders": {
       "unlocked": {
         "type": "int"
-      },
+       other{items}},
       "total": {
         "type": "int"
-      }
-    }
-  },
+       other{items}}
+     other{items}}
+   other{items}},
   "achievementUnlocked": "Başarı Kilidi Açıldı!",
   "notUnlockedYet": "Henüz kilidi açılmadı",
-  "unlockedOn": "Kilit açma tarihi{date}",
+  "unlockedOn": "Kilit açma tarihi{date other{items}}",
   "@unlockedOn": {
     "placeholders": {
       "date": {
         "type": "String"
-      }
-    }
-  },
+       other{items}}
+     other{items}}
+   other{items}},
   "categorySession": "Oturumlar",
   "categoryStreak": "Çizgiler",
   "categoryTime": "Zaman",
@@ -175,33 +175,33 @@
   "totalFastingTime": "Toplam Oruç Süresi",
   "averageFastDuration": "Ortalama Süre",
   "longestFast": "En Uzun Hızlı",
-  "hours": "{count}H",
+  "hours": "{count other{items}}H",
   "@hours": {
     "placeholders": {
       "count": {
         "type": "int"
-      }
-    }
-  },
-  "minutes": "{count}M",
+       other{items}}
+     other{items}}
+   other{items}},
+  "minutes": "{count other{items}}M",
   "@minutes": {
     "placeholders": {
       "count": {
         "type": "int"
-      }
-    }
-  },
-  "hoursMinutes": "{hours}H{minutes}M",
+       other{items}}
+     other{items}}
+   other{items}},
+  "hoursMinutes": "{hours other{items}}H{minutes other{items}}M",
   "@hoursMinutes": {
     "placeholders": {
       "hours": {
         "type": "int"
-      },
+       other{items}},
       "minutes": {
         "type": "int"
-      }
-    }
-  },
+       other{items}}
+     other{items}}
+   other{items}},
   "completed": "Tamamlanmış",
   "cancelled": "İptal edildi",
   "inProgress": "Devam etmekte",
@@ -264,4 +264,4 @@
   "tipBalancedMealsDesc": "Yemek yeme pencereniz sırasında besleyici, bütün gıdalara odaklanın. Proteinleri, sağlıklı yağları ve sebzeleri ekleyin.",
   "tipExerciseTitle": "Hafif Egzersiz",
   "tipExerciseDesc": "Oruç sırasında hafif ila orta şiddette egzersiz iyidir. Uyum sağlayana kadar yoğun egzersizlerden kaçının."
-}
+ other{items}}

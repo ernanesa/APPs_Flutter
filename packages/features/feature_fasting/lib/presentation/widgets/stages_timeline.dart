@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fasting_tracker/l10n/app_localizations.dart';
 import '../../domain/entities/fasting_session.dart';
-import 'package:fasting_tracker/l10n/app_localizations.dart';
 
 /// Widget showing all fasting stages as a timeline
 class StagesTimeline extends StatelessWidget {
@@ -12,38 +10,38 @@ class StagesTimeline extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final l10n = AppLocalizations.of(context)!;
+    // '' removed
     final currentHours = currentSession?.elapsedHours ?? 0;
 
     final stages = [
-      _StageInfo(FastingStage.fed, l10n.stageFed, '0-4h', Colors.grey),
+      _StageInfo(FastingStage.fed, "stageFed", '0-4h', Colors.grey),
       _StageInfo(
         FastingStage.earlyFasting,
-        l10n.stageEarlyFasting,
+        "stageEarlyFasting",
         '4-12h',
         Colors.blue,
       ),
       _StageInfo(
         FastingStage.fatBurning,
-        l10n.stageFatBurning,
+        "stageFatBurning",
         '12-18h',
         Colors.orange,
       ),
       _StageInfo(
         FastingStage.ketosis,
-        l10n.stageKetosis,
+        "stageKetosis",
         '18-24h',
         Colors.deepOrange,
       ),
       _StageInfo(
         FastingStage.deepKetosis,
-        l10n.stageDeepKetosis,
+        "stageDeepKetosis",
         '24-48h',
         Colors.red,
       ),
       _StageInfo(
         FastingStage.autophagy,
-        l10n.stageAutophagy,
+        "stageAutophagy",
         '48h+',
         Colors.purple,
       ),
@@ -56,7 +54,7 @@ class StagesTimeline extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              l10n.metabolicStages,
+              "metabolicStages",
               style: theme.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.bold,
               ),

@@ -5,7 +5,6 @@ import 'package:flutter_riverpod/legacy.dart';
 import 'package:fl_chart/fl_chart.dart';
 import '../../domain/entities/fasting_session.dart';
 import '../providers/fasting_provider.dart';
-import 'package:fasting_tracker/l10n/app_localizations.dart';
 
 /// Circular timer widget showing fasting progress
 class FastingTimerWidget extends ConsumerWidget {
@@ -17,7 +16,7 @@ class FastingTimerWidget extends ConsumerWidget {
     final session = fastingState.currentSession;
     final protocol = fastingState.selectedProtocol;
     final theme = Theme.of(context);
-    final l10n = AppLocalizations.of(context)!;
+    // '' removed
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -60,13 +59,13 @@ class FastingTimerWidget extends ConsumerWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      '${l10n.ofPreposition} ${protocol.fastingHours}h',
+                      '${"ofPreposition"} ${protocol.fastingHours}h',
                       style: theme.textTheme.bodyMedium?.copyWith(
                         color: theme.colorScheme.onSurfaceVariant,
                       ),
                     ),
                     const SizedBox(height: 8),
-                    _buildStageChip(context, session.currentStage, l10n),
+                    _buildStageChip(context, session.currentStage),
                   ] else ...[
                     Icon(
                       Icons.restaurant_menu,
@@ -74,7 +73,7 @@ class FastingTimerWidget extends ConsumerWidget {
                       color: theme.colorScheme.primary,
                     ),
                     const SizedBox(height: 8),
-                    Text(l10n.readyToFast, style: theme.textTheme.titleLarge),
+                    Text("readyToFast", style: theme.textTheme.titleLarge),
                     const SizedBox(height: 4),
                     Text(
                       '${protocol.icon} ${protocol.ratioString}',
@@ -145,29 +144,29 @@ class FastingTimerWidget extends ConsumerWidget {
   Widget _buildStageChip(
     BuildContext context,
     FastingStage stage,
-    AppLocalizations l10n,
+    
   ) {
     final color = _getStageColor(stage, Theme.of(context));
 
     String stageName;
     switch (stage) {
       case FastingStage.fed:
-        stageName = l10n.stageFed;
+        stageName = "stageFed";
         break;
       case FastingStage.earlyFasting:
-        stageName = l10n.stageEarlyFasting;
+        stageName = "stageEarlyFasting";
         break;
       case FastingStage.fatBurning:
-        stageName = l10n.stageFatBurning;
+        stageName = "stageFatBurning";
         break;
       case FastingStage.ketosis:
-        stageName = l10n.stageKetosis;
+        stageName = "stageKetosis";
         break;
       case FastingStage.deepKetosis:
-        stageName = l10n.stageDeepKetosis;
+        stageName = "stageDeepKetosis";
         break;
       case FastingStage.autophagy:
-        stageName = l10n.stageAutophagy;
+        stageName = "stageAutophagy";
         break;
     }
 

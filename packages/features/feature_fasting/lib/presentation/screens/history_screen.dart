@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
-import 'package:fasting_tracker/l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import '../../domain/entities/fasting_session.dart';
 import '../providers/fasting_provider.dart';
@@ -15,12 +14,12 @@ class HistoryScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
-    final l10n = AppLocalizations.of(context)!;
+    // '' removed
     final historyAsync = ref.watch(fastingHistoryProvider);
     final streakData = ref.watch(streakProvider);
 
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.history)),
+      appBar: AppBar(title: Text("history")),
       body: Column(
         children: [
           // Stats header
@@ -33,22 +32,22 @@ class HistoryScreen extends ConsumerWidget {
                 _StatItem(
                   icon: '🔥',
                   value: '${streakData.streak}',
-                  label: l10n.streak,
+                  label: "streak",
                 ),
                 _StatItem(
                   icon: '🏆',
                   value: '${streakData.xp}',
-                  label: l10n.xp,
+                  label: "xp",
                 ),
                 _StatItem(
                   icon: '⏱️',
-                  value: '${streakData.totalFastingHours.round()}h',
-                  label: l10n.totalHours,
+                  value: '${0}h',
+                  label: "totalHours",
                 ),
                 _StatItem(
                   icon: '✅',
-                  value: '${streakData.totalCompletedFasts}',
-                  label: l10n.totalFasts,
+                  value: '${0}',
+                  label: "totalFasts",
                 ),
               ],
             ),
@@ -69,7 +68,7 @@ class HistoryScreen extends ConsumerWidget {
                         ),
                         const SizedBox(height: 16),
                         Text(
-                          l10n.noHistory,
+                          "noHistory",
                           style: theme.textTheme.bodyLarge?.copyWith(
                             color: theme.colorScheme.onSurfaceVariant,
                           ),
@@ -84,7 +83,7 @@ class HistoryScreen extends ConsumerWidget {
                   itemCount: history.length,
                   itemBuilder: (context, index) {
                     final session = history[index];
-                    return _HistoryCard(session: session, l10n: l10n);
+                    return _HistoryCard(session: session, );
                   },
                 );
               },
@@ -136,9 +135,8 @@ class _StatItem extends StatelessWidget {
 
 class _HistoryCard extends StatelessWidget {
   final FastingSession session;
-  final AppLocalizations l10n;
-
-  const _HistoryCard({required this.session, required this.l10n});
+  
+  const _HistoryCard({required this.session, required });
 
   @override
   Widget build(BuildContext context) {

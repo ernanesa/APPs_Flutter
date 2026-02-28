@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:core_logic/core_logic.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:dynamic_color/dynamic_color.dart';
 import 'l10n/app_localizations.dart';
 import 'screens/home_screen.dart';
 
@@ -63,32 +64,36 @@ class _MyAppState extends ConsumerState<MyApp> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     final locale = ref.watch(localeProvider);
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,
-      theme: AppTheme.lightTheme(Colors.deepPurple),
-      darkTheme: AppTheme.darkTheme(Colors.deepPurple),
-      locale: locale,
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: const [
-        Locale('en'), // English
-        Locale('zh'), // Chinese (Mandarin)
-        Locale('hi'), // Hindi
-        Locale('es'), // Spanish
-        Locale('fr'), // French
-        Locale('ar'), // Arabic
-        Locale('bn'), // Bengali
-        Locale('ru'), // Russian
-        Locale('pt'), // Portuguese
-        Locale('ja'), // Japanese
-        Locale('de'), // German
-      ],
-      home: const HomeScreen(),
+    return DynamicColorBuilder(
+      builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,
+          theme: AppTheme.lightTheme(Colors.blue, dynamicColorScheme: lightDynamic),
+          darkTheme: AppTheme.darkTheme(Colors.blue, dynamicColorScheme: darkDynamic),
+          locale: locale,
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: const [
+            Locale('en'), // English
+            Locale('zh'), // Chinese (Mandarin)
+            Locale('hi'), // Hindi
+            Locale('es'), // Spanish
+            Locale('fr'), // French
+            Locale('ar'), // Arabic
+            Locale('bn'), // Bengali
+            Locale('ru'), // Russian
+            Locale('pt'), // Portuguese
+            Locale('ja'), // Japanese
+            Locale('de'), // German
+          ],
+          home: const HomeScreen(),
+        );
+      },
     );
   }
 }

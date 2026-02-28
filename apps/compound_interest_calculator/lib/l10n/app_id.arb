@@ -81,31 +81,31 @@
   "achievementTenMillionDesc": "Hitung mencapai R$ 10.000.000",
   "achievementLongTerm": "Pemikir Jangka Panjang",
   "achievementLongTermDesc": "Hitung investasi 10+ tahun",
-  "streakDays": "{count, plural, =1{1 day}lainnya{{count}hari}}",
+  "streakDays": "{count, plural, =1{1 day other{items}}lainnya{{count other{items}}hari other{items}} other{items}}",
   "@streakDays": {
     "placeholders": {
       "count": {
         "type": "int"
-      }
-    }
-  },
+       other{items}}
+     other{items}}
+   other{items}},
   "currentStreak": "Garis Saat Ini",
   "bestStreak": "Garis Terbaik",
   "days": "hari",
   "dailyGoal": "Tujuan Harian",
   "dailyGoalTarget": "Perhitungan Sasaran",
   "goalReached": "Tujuan Tercapai!",
-  "calculationsProgress": "{completed}/{target}perhitungan",
+  "calculationsProgress": "{completed other{items}}/{target other{items}}perhitungan",
   "@calculationsProgress": {
     "placeholders": {
       "completed": {
         "type": "int"
-      },
+       other{items}},
       "target": {
         "type": "int"
-      }
-    }
-  },
+       other{items}}
+     other{items}}
+   other{items}},
   "calculationsPerDay": "perhitungan per hari",
   "colorTheme": "Tema Warna",
   "themeGreen": "Hijau",
@@ -116,4 +116,4 @@
   "themeIndigo": "Nila",
   "themeRed": "Merah",
   "themeAmber": "Amber"
-}
+ other{items}}

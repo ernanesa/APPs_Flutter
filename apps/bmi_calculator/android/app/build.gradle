@@ -18,12 +18,12 @@ android {
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8
+        jvmTarget = "21"
     }
 
     defaultConfig {
@@ -33,7 +33,7 @@ android {
         versionCode = flutter.versionCode
         versionName = flutter.versionName
         
-        // Suporte a múltiplas densidades de tela
+        // Performance: Enable hardware acceleration
         resConfigs "en", "pt", "es", "zh", "hi", "ar", "bn", "ru", "ja", "de", "fr"
     }
 

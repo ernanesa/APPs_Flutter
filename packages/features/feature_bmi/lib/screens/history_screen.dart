@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import '../providers/bmi_provider.dart';
 import '../logic/bmi_logic.dart';
@@ -11,7 +10,7 @@ class HistoryScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final history = ref.watch(bmiHistoryProvider);
-    final l10n = AppLocalizations.of(context)!;
+    // l10n removed
 
     if (history.isEmpty) {
       return Center(
@@ -20,7 +19,7 @@ class HistoryScreen extends ConsumerWidget {
           children: [
             const Icon(Icons.history, size: 64, color: Colors.grey),
             const SizedBox(height: 16),
-            Text(l10n.noHistory, style: const TextStyle(color: Colors.grey)),
+            Text("noHistory", style: const TextStyle(color: Colors.grey)),
           ],
         ),
       );

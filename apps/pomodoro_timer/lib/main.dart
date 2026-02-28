@@ -79,7 +79,7 @@ class _PomodoroAppState extends ConsumerState<PomodoroApp>
   @override
   Widget build(BuildContext context) {
     final settings = ref.watch(settingsProvider);
-    final selectedTheme = ref.watch(selectedThemeProvider);
+    final selectedTheme = ref.watch(themeProvider);
     final locale = ref.watch(localeProvider);
 
     // Update sound service with settings
@@ -90,8 +90,8 @@ class _PomodoroAppState extends ConsumerState<PomodoroApp>
       debugShowCheckedModeBanner: false,
       title: 'Pomodoro Timer',
       locale: locale,
-      theme: AppTheme.lightTheme(selectedTheme.seedColor),
-      darkTheme: AppTheme.darkTheme(selectedTheme.seedColor),
+      theme: ThemeData.light().copyWith(primaryColor: selectedTheme.seedColor),
+      darkTheme: ThemeData.dark().copyWith(primaryColor: selectedTheme.seedColor),
       themeMode: settings.darkMode ? ThemeMode.dark : ThemeMode.light,
       localizationsDelegates: const [
         AppLocalizations.delegate,

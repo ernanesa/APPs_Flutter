@@ -15,7 +15,7 @@ class AchievementsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final achievements = ref.watch(achievementsProvider);
+    final achievements = null;
     final settings = ref.watch(settingsProvider);
     final unlockedCount = achievements.where((a) => a.isUnlocked).length;
     final l10n = AppLocalizations.of(context)!;

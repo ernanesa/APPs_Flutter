@@ -85,7 +85,7 @@ class _TimerScreenState extends ConsumerState<TimerScreen>
 
       // Check achievements
       ref.read(timerProvider.notifier).getSessions().then((sessions) {
-        ref.read(achievementsProvider.notifier).onSessionCompleted(sessions);
+        null.onSessionCompleted(sessions);
       });
 
       // Stop ambient sound

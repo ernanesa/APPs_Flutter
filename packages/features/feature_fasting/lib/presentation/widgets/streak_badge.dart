@@ -1,45 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:fasting_tracker/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_riverpod/legacy.dart';
 import 'package:core_logic/core_logic.dart';
 
-
-
-/// Streak badge widget showing current streak
 class StreakBadge extends ConsumerWidget {
   const StreakBadge({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final streakData = ref.watch(streakProvider);
-    final theme = Theme.of(context);
-    // ignore: unused_local_variable - kept for future i18n use
-    final _ = AppLocalizations.of(context)!;
-
+    final isActive = streakData.streak > 0;
+    
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
-        color: streakData.streak > 0
-            ? theme.colorScheme.primaryContainer
-            : theme.colorScheme.surfaceContainerHighest,
-        borderRadius: BorderRadius.circular(16),
+        color: isActive ? Colors.orange.withOpacity(0.2) : Colors.grey.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: isActive ? Colors.orange : Colors.grey,
+          width: 1,
+        ),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(
-            streakData.streak > 0 ? '🔥' : '💤',
-            style: const TextStyle(fontSize: 14),
+          Icon(
+            Icons.local_fire_department,
+            color: isActive ? Colors.orange : Colors.grey,
+            size: 16,
           ),
-          const SizedBox(width: 2),
+          const SizedBox(width: 4),
           Text(
             '${streakData.streak}',
-            style: theme.textTheme.labelLarge?.copyWith(
+            style: TextStyle(
+              color: isActive ? Colors.orange : Colors.grey,
               fontWeight: FontWeight.bold,
-              color: streakData.streak > 0
-                  ? theme.colorScheme.onPrimaryContainer
-                  : theme.colorScheme.onSurfaceVariant,
             ),
           ),
         ],

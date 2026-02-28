@@ -8,7 +8,7 @@ class GlobalStreakBadge extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final streak = ref.watch(streakProvider);
-    final isActive = streak > 0;
+    final isActive = streak.streak > 0;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
@@ -22,7 +22,7 @@ class GlobalStreakBadge extends ConsumerWidget {
           Icon(Icons.local_fire_department, color: isActive ? Colors.orange : Colors.grey, size: 20),
           const SizedBox(width: 4),
           Text(
-            '$streak',
+            '${streak.streak}',
             style: TextStyle(
               fontWeight: FontWeight.bold,
               color: isActive ? Colors.orange : Colors.grey,

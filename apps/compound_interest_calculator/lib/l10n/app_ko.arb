@@ -81,31 +81,31 @@
   "achievementTenMillionDesc": "R$ 10,000,000 도달 계산",
   "achievementLongTerm": "장기 사상가",
   "achievementLongTermDesc": "10년 이상의 투자 금액 계산",
-  "streakDays": "{count, plural, =1{1 day}다른{{count}날}}",
+  "streakDays": "{count, plural, =1{1 day other{items}}다른{{count other{items}}날 other{items}} other{items}}",
   "@streakDays": {
     "placeholders": {
       "count": {
         "type": "int"
-      }
-    }
-  },
+       other{items}}
+     other{items}}
+   other{items}},
   "currentStreak": "현재 연속",
   "bestStreak": "최고의 연속",
   "days": "날",
   "dailyGoal": "일일 목표",
   "dailyGoalTarget": "목표 계산",
   "goalReached": "목표 달성!",
-  "calculationsProgress": "{completed}/{target}계산",
+  "calculationsProgress": "{completed other{items}}/{target other{items}}계산",
   "@calculationsProgress": {
     "placeholders": {
       "completed": {
         "type": "int"
-      },
+       other{items}},
       "target": {
         "type": "int"
-      }
-    }
-  },
+       other{items}}
+     other{items}}
+   other{items}},
   "calculationsPerDay": "하루 계산",
   "colorTheme": "색상 테마",
   "themeGreen": "녹색",
@@ -116,4 +116,4 @@
   "themeIndigo": "남빛",
   "themeRed": "빨간색",
   "themeAmber": "호박색"
-}
+ other{items}}

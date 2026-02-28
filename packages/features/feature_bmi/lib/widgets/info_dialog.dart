@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:core_logic/core_logic.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import '../l10n/app_localizations.dart';
 
 
 class InfoDialog extends StatelessWidget {
@@ -9,51 +8,51 @@ class InfoDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+    // l10n removed
 
     return AlertDialog(
-      title: Text(l10n.infoTitle),
+      title: Text("infoTitle"),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(l10n.infoDescription),
+            Text("infoDescription"),
             const SizedBox(height: 16),
-            _buildCategoryRow(context, '< 18.5', l10n.underweight, Colors.blue),
+            _buildCategoryRow(context, '< 18.5', "underweight", Colors.blue),
             _buildCategoryRow(
               context,
               '18.5 - 24.9',
-              l10n.normal,
+              "normal",
               Colors.green,
             ),
             _buildCategoryRow(
               context,
               '25.0 - 29.9',
-              l10n.overweight,
+              "overweight",
               Colors.orange,
             ),
             _buildCategoryRow(
               context,
               '30.0 - 34.9',
-              l10n.obesity1,
+              "obesity1",
               Colors.deepOrange,
             ),
             _buildCategoryRow(
               context,
               '35.0 - 39.9',
-              l10n.obesity2,
+              "obesity2",
               Colors.red,
             ),
             _buildCategoryRow(
               context,
               '> 40.0',
-              l10n.obesity3,
+              "obesity3",
               Colors.red.shade900,
             ),
             const SizedBox(height: 16),
             Text(
-              l10n.source,
+              "source",
               style: const TextStyle(fontStyle: FontStyle.italic, fontSize: 12),
             ),
           ],

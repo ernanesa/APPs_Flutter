@@ -5,14 +5,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:core_ui/core_ui.dart';
 
-// Import feature modules
 import 'package:feature_bmi/screens/home_screen.dart' as bmi;
 import 'package:feature_water/presentation/screens/home_screen.dart' as water;
 import 'package:feature_fasting/presentation/screens/home_screen.dart' as fasting;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
   final prefs = await SharedPreferences.getInstance();
   await ConsentService.gatherConsent();
   
@@ -39,26 +37,27 @@ class SuperHealthApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final themeState = ref.watch(themeProvider);
     final locale = ref.watch(localeProvider);
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Super Health App',
       themeMode: themeState.mode,
-      theme: AppTheme.lightTheme(themeState.seedColor),
-      darkTheme: AppTheme.darkTheme(themeState.seedColor),
-      locale: locale, // Can be made dynamic
+      theme: ThemeData.light().copyWith(primaryColor: themeState.seedColor),
+      darkTheme: ThemeData.dark().copyWith(primaryColor: themeState.seedColor),
+      locale: locale,
       home: const SuperHealthHub(),
     );
   }
 }
 
-class SuperHealthHub extends StatefulWidget {
+class SuperHealthHub extends ConsumerStatefulWidget {
   const SuperHealthHub({super.key});
 
   @override
-  State<SuperHealthHub> createState() => _SuperHealthHubState();
+  ConsumerState<SuperHealthHub> createState() => _SuperHealthHubState();
 }
 
-class _SuperHealthHubState extends State<SuperHealthHub> {
+class _SuperHealthHubState extends ConsumerState<SuperHealthHub> {
   int _currentIndex = 0;
 
   final List<Widget> _features = [
@@ -68,9 +67,7 @@ class _SuperHealthHubState extends State<SuperHealthHub> {
   ];
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final themeState = ref.watch(themeProvider);
-    final locale = ref.watch(localeProvider);
+  Widget build(BuildContext context) {
     return Scaffold(
       body: IndexedStack(
         index: _currentIndex,

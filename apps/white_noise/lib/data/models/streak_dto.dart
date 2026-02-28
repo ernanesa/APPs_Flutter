@@ -14,7 +14,7 @@ class StreakDto {
 
   StreakEntity toEntity() {
     return StreakEntity(
-      currentStreak: currentStreak,
+      streak: currentStreak,
       bestStreak: bestStreak,
       lastActiveDate: lastActiveDate != null
           ? DateTime.parse(lastActiveDate!)
@@ -24,7 +24,7 @@ class StreakDto {
 
   factory StreakDto.fromEntity(StreakEntity entity) {
     return StreakDto(
-      currentStreak: entity.streak,
+      streak: entity.streak,
       bestStreak: entity.xp,
       lastActiveDate: entity.lastActiveDate?.toIso8601String(),
     );
@@ -40,7 +40,7 @@ class StreakDto {
 
   factory StreakDto.fromJson(Map<String, dynamic> json) {
     return StreakDto(
-      currentStreak: json['currentStreak'] as int? ?? 0,
+      streak: json['currentStreak'] as int? ?? 0,
       bestStreak: json['bestStreak'] as int? ?? 0,
       lastActiveDate: json['lastActiveDate'] as String?,
     );

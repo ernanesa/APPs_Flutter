@@ -81,31 +81,31 @@
   "achievementTenMillionDesc": "10.000.000 R$'a ulaşmayı hesaplayın",
   "achievementLongTerm": "Uzun Vadeli Düşünen",
   "achievementLongTermDesc": "10+ yıllık yatırımı hesaplayın",
-  "streakDays": "{count, plural, =1{1 day}diğer{{count}günler}}",
+  "streakDays": "{count, plural, =1{1 day other{items}}diğer{{count other{items}}günler other{items}} other{items}}",
   "@streakDays": {
     "placeholders": {
       "count": {
         "type": "int"
-      }
-    }
-  },
+       other{items}}
+     other{items}}
+   other{items}},
   "currentStreak": "Mevcut Seri",
   "bestStreak": "En İyi Seri",
   "days": "günler",
   "dailyGoal": "Günlük Hedef",
   "dailyGoalTarget": "Hedef Hesaplamaları",
   "goalReached": "Hedefe Ulaşıldı!",
-  "calculationsProgress": "{completed}/{target}hesaplamalar",
+  "calculationsProgress": "{completed other{items}}/{target other{items}}hesaplamalar",
   "@calculationsProgress": {
     "placeholders": {
       "completed": {
         "type": "int"
-      },
+       other{items}},
       "target": {
         "type": "int"
-      }
-    }
-  },
+       other{items}}
+     other{items}}
+   other{items}},
   "calculationsPerDay": "günlük hesaplamalar",
   "colorTheme": "Renk Teması",
   "themeGreen": "Yeşil",
@@ -116,4 +116,4 @@
   "themeIndigo": "Çivit mavisi",
   "themeRed": "Kırmızı",
   "themeAmber": "kehribar"
-}
+ other{items}}

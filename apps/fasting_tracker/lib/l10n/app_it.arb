@@ -54,14 +54,14 @@
   "stageAutophagy": "Autofagia",
   "stageAutophagyDesc": "Pulizia e rigenerazione cellulare",
   "currentStage": "Fase attuale",
-  "stageStartsAt": "Inizia alle{hours}H",
+  "stageStartsAt": "Inizia alle{hours other{items}}H",
   "@stageStartsAt": {
     "placeholders": {
       "hours": {
         "type": "int"
-      }
-    }
-  },
+       other{items}}
+     other{items}}
+   other{items}},
   "healthInfo": "Informazioni sanitarie",
   "benefits": "Vantaggi",
   "warnings": "Avvertenze e precauzioni",
@@ -91,35 +91,35 @@
   "totalFasts": "Digiuni totali",
   "daysUnit": "giorni",
   "dayUnit": "giorno",
-  "streakDays": "{count} {count, plural, =1{day}altro{days}}",
+  "streakDays": "{count other{items}} {count, plural, =1{day other{items}}altro{days other{items}} other{items}}",
   "@streakDays": {
     "placeholders": {
       "count": {
         "type": "int"
-      }
-    }
-  },
-  "achievementsProgress": "{unlocked}Di{total}sbloccato",
+       other{items}}
+     other{items}}
+   other{items}},
+  "achievementsProgress": "{unlocked other{items}}Di{total other{items}}sbloccato",
   "@achievementsProgress": {
     "placeholders": {
       "unlocked": {
         "type": "int"
-      },
+       other{items}},
       "total": {
         "type": "int"
-      }
-    }
-  },
+       other{items}}
+     other{items}}
+   other{items}},
   "achievementUnlocked": "Obiettivo sbloccato!",
   "notUnlockedYet": "Non ancora sbloccato",
-  "unlockedOn": "Sbloccato{date}",
+  "unlockedOn": "Sbloccato{date other{items}}",
   "@unlockedOn": {
     "placeholders": {
       "date": {
         "type": "String"
-      }
-    }
-  },
+       other{items}}
+     other{items}}
+   other{items}},
   "categorySession": "Sessioni",
   "categoryStreak": "Strisce",
   "categoryTime": "Tempo",
@@ -175,33 +175,33 @@
   "totalFastingTime": "Tempo di digiuno totale",
   "averageFastDuration": "Durata media",
   "longestFast": "Il digiuno più lungo",
-  "hours": "{count}H",
+  "hours": "{count other{items}}H",
   "@hours": {
     "placeholders": {
       "count": {
         "type": "int"
-      }
-    }
-  },
-  "minutes": "{count}M",
+       other{items}}
+     other{items}}
+   other{items}},
+  "minutes": "{count other{items}}M",
   "@minutes": {
     "placeholders": {
       "count": {
         "type": "int"
-      }
-    }
-  },
-  "hoursMinutes": "{hours}H{minutes}M",
+       other{items}}
+     other{items}}
+   other{items}},
+  "hoursMinutes": "{hours other{items}}H{minutes other{items}}M",
   "@hoursMinutes": {
     "placeholders": {
       "hours": {
         "type": "int"
-      },
+       other{items}},
       "minutes": {
         "type": "int"
-      }
-    }
-  },
+       other{items}}
+     other{items}}
+   other{items}},
   "completed": "Completato",
   "cancelled": "Annullato",
   "inProgress": "In corso",
@@ -264,4 +264,4 @@
   "tipBalancedMealsDesc": "Concentrati su cibi nutrienti e integrali durante la finestra alimentare. Includi proteine, grassi sani e verdure.",
   "tipExerciseTitle": "Esercizio leggero",
   "tipExerciseDesc": "L’esercizio da leggero a moderato va bene durante il digiuno. Evita allenamenti intensi finché non ti adatti."
-}
+ other{items}}

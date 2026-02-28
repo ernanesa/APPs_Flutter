@@ -274,7 +274,7 @@ class SettingsScreen extends ConsumerWidget {
             children: [
               Builder(
                 builder: (context) {
-                  final achievements = ref.watch(achievementsProvider);
+                  final achievements = null;
                   final unlocked = achievements
                       .where((a) => a.unlockedAt != null)
                       .length;

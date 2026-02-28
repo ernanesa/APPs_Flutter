@@ -4,7 +4,6 @@ import 'package:core_ui/core_ui.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:core_logic/core_logic.dart';
 import '../providers/water_intake_provider.dart';
-import '../domain/entities/app_theme.dart';
 
 
 
@@ -55,7 +54,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         actions: [
           Consumer(
             builder: (context, ref, child) {
-              final streakData = ref.watch(waterStreakProvider);
+              final streakData = ref.watch(streakProvider);
               return streakData.streak > 0
                 ? Chip(
                     avatar: const Icon(Icons.water_drop, color: Colors.blue, size: 16),
@@ -81,7 +80,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           PopupMenuButton<String>(
             icon: const Icon(Icons.language),
             onSelected: (String code) {
-              ref.read(localeProvider.notifier).setLocale(Locale(code));
+              ref.read(localeProvider.notifier).setLocale(code);
             },
             itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
               const PopupMenuItem<String>(value: 'en', child: Text('English')),

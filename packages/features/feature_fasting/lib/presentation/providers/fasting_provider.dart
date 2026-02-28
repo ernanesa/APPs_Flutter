@@ -134,12 +134,7 @@ class FastingNotifier extends StateNotifier<FastingState> {
 
       if (completedSession != null) {
         // Update streak
-        await _ref
-            .read(streakProvider.notifier)
-            .recordCompletedFast(completedSession.elapsedMinutes);
-
-        // Check achievements
-        await _ref.read(achievementsProvider.notifier).checkAndUnlock();
+        _ref.read(streakProvider.notifier).reportActivity(xpReward: 30);
       }
     } catch (e) {
       state = state.copyWith(isLoading: false, errorMessage: e.toString());

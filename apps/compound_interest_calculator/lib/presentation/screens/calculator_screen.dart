@@ -92,7 +92,7 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
 
     final newAchievements = await achievementNotifier.checkAndUnlock(
       totalCalculations: history.length + 1,
-      currentStreak: streak.streak,
+      streak: streak.streak,
       totalAmount: calcState.result?.totalAmount ?? 0,
       months: months,
     );

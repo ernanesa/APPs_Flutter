@@ -58,7 +58,7 @@ class StreakRepositoryImpl implements IStreakRepository {
         : current.xp;
 
     final updated = StreakDataModel(
-      currentStreak: newStreak,
+      streak: newStreak,
       bestStreak: newBest,
       lastCompletedDate: now,
       totalCompletedFasts: current.totalCompletedFasts + 1,

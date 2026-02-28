@@ -19,21 +19,7 @@ import 'app_localizations_zh.dart';
 
 // ignore_for_file: type=lint
 
-/// Callers can lookup localized strings with an instance of AppLocalizations
-/// returned by `AppLocalizations.of(context)`.
-///
-/// Applications need to include `AppLocalizations.delegate()` in their app's
-/// `localizationDelegates` list, and the locales they support in the app's
-/// `supportedLocales` list. For example:
-///
-/// ```dart
-/// import 'l10n/app_localizations.dart';
-///
-/// return MaterialApp(
-///   localizationsDelegates: AppLocalizations.localizationsDelegates,
-///   supportedLocales: AppLocalizations.supportedLocales,
-///   home: MyApplicationHome(),
-/// );
+/// Callers can lookup localized strings with an instance of 
 /// ```
 ///
 /// ## Update pubspec.yaml
@@ -68,20 +54,14 @@ import 'app_localizations_zh.dart';
 /// Select and expand the newly-created Localizations item then, for each
 /// locale your application supports, add a new item and select the locale
 /// you wish to add from the pop-up menu in the Value field. This list should
-/// be consistent with the languages listed in the AppLocalizations.supportedLocales
-/// property.
-abstract class AppLocalizations {
-  AppLocalizations(String locale)
-    : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+/// be consistent with the languages listed in the 
 
   final String localeName;
 
-  static AppLocalizations? of(BuildContext context) {
-    return Localizations.of<AppLocalizations>(context, AppLocalizations);
+  static 
   }
 
-  static const LocalizationsDelegate<AppLocalizations> delegate =
-      _AppLocalizationsDelegate();
+  static const LocalizationsDelegate<
 
   /// A list of this localizations delegate along with the default localizations
   /// delegates.
@@ -1371,13 +1351,10 @@ abstract class AppLocalizations {
   String get tipExerciseDesc;
 }
 
-class _AppLocalizationsDelegate
-    extends LocalizationsDelegate<AppLocalizations> {
-  const _AppLocalizationsDelegate();
+class _
 
   @override
-  Future<AppLocalizations> load(Locale locale) {
-    return SynchronousFuture<AppLocalizations>(lookupAppLocalizations(locale));
+  Future<
   }
 
   @override
@@ -1396,40 +1373,32 @@ class _AppLocalizationsDelegate
   ].contains(locale.languageCode);
 
   @override
-  bool shouldReload(_AppLocalizationsDelegate old) => false;
+  bool shouldReload(_
 }
 
-AppLocalizations lookupAppLocalizations(Locale locale) {
-  // Lookup logic when only language code is specified.
-  switch (locale.languageCode) {
-    case 'ar':
-      return AppLocalizationsAr();
+
     case 'bn':
-      return AppLocalizationsBn();
+      return 
     case 'de':
-      return AppLocalizationsDe();
+      return 
     case 'en':
-      return AppLocalizationsEn();
+      return 
     case 'es':
-      return AppLocalizationsEs();
+      return 
     case 'fr':
-      return AppLocalizationsFr();
+      return 
     case 'hi':
-      return AppLocalizationsHi();
+      return 
     case 'ja':
-      return AppLocalizationsJa();
+      return 
     case 'pt':
-      return AppLocalizationsPt();
+      return 
     case 'ru':
-      return AppLocalizationsRu();
+      return 
     case 'zh':
-      return AppLocalizationsZh();
+      return 
   }
 
   throw FlutterError(
-    'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
-    'an issue with the localizations generation tool. Please file an issue '
-    'on GitHub with a reproducible sample app and the gen-l10n configuration '
-    'that was used.',
-  );
+    '
 }

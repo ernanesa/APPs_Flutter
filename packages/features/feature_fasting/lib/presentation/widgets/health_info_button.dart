@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../../domain/entities/health_info.dart';
-import 'package:fasting_tracker/l10n/app_localizations.dart';
 
 /// Health information button and dialog
 class HealthInfoButton extends StatelessWidget {
@@ -10,7 +9,7 @@ class HealthInfoButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return IconButton(
       icon: const Icon(Icons.info_outline),
-      tooltip: AppLocalizations.of(context)!.healthInfo,
+      tooltip: 'healthInfo',
       onPressed: () => showHealthInfoSheet(context),
     );
   }
@@ -32,7 +31,7 @@ class HealthInfoSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final l10n = AppLocalizations.of(context)!;
+    // '' removed
 
     return DraggableScrollableSheet(
       initialChildSize: 0.9,
@@ -70,13 +69,13 @@ class HealthInfoSheet extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          l10n.healthInfoTitle,
+                          "healthInfoTitle",
                           style: theme.textTheme.titleLarge?.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         Text(
-                          l10n.healthInfoSubtitle,
+                          "healthInfoSubtitle",
                           style: theme.textTheme.bodySmall?.copyWith(
                             color: theme.colorScheme.onSurfaceVariant,
                           ),
@@ -97,7 +96,7 @@ class HealthInfoSheet extends StatelessWidget {
                   // Benefits section
                   _buildSectionHeader(
                     context,
-                    l10n.benefitsTitle,
+                    "benefitsTitle",
                     Icons.thumb_up,
                     Colors.green,
                   ),
@@ -106,7 +105,6 @@ class HealthInfoSheet extends StatelessWidget {
                     (info) => _buildInfoCard(
                       context,
                       info,
-                      l10n,
                       Colors.green.shade50,
                       Colors.green,
                     ),
@@ -117,7 +115,7 @@ class HealthInfoSheet extends StatelessWidget {
                   // Warnings section
                   _buildSectionHeader(
                     context,
-                    l10n.warningsTitle,
+                    "warningsTitle",
                     Icons.warning_amber,
                     Colors.orange,
                   ),
@@ -126,7 +124,6 @@ class HealthInfoSheet extends StatelessWidget {
                     (info) => _buildInfoCard(
                       context,
                       info,
-                      l10n,
                       Colors.orange.shade50,
                       Colors.orange,
                     ),
@@ -137,7 +134,7 @@ class HealthInfoSheet extends StatelessWidget {
                   // Tips section
                   _buildSectionHeader(
                     context,
-                    l10n.tipsTitle,
+                    "tipsTitle",
                     Icons.lightbulb,
                     Colors.blue,
                   ),
@@ -146,7 +143,6 @@ class HealthInfoSheet extends StatelessWidget {
                     (info) => _buildInfoCard(
                       context,
                       info,
-                      l10n,
                       Colors.blue.shade50,
                       Colors.blue,
                     ),
@@ -170,7 +166,7 @@ class HealthInfoSheet extends StatelessWidget {
                               ),
                               const SizedBox(width: 8),
                               Text(
-                                l10n.sources,
+                                "sources",
                                 style: theme.textTheme.titleSmall?.copyWith(
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -214,7 +210,7 @@ class HealthInfoSheet extends StatelessWidget {
                         const SizedBox(width: 8),
                         Expanded(
                           child: Text(
-                            l10n.disclaimer,
+                            "disclaimer",
                             style: theme.textTheme.bodySmall?.copyWith(
                               color: theme.colorScheme.onErrorContainer,
                             ),
@@ -259,15 +255,15 @@ class HealthInfoSheet extends StatelessWidget {
   Widget _buildInfoCard(
     BuildContext context,
     HealthInfo info,
-    AppLocalizations l10n,
+    
     Color backgroundColor,
     Color accentColor,
   ) {
     final theme = Theme.of(context);
 
     // Get localized strings
-    final title = _getLocalizedTitle(info.titleKey, l10n);
-    final description = _getLocalizedDescription(info.descriptionKey, l10n);
+    final title = _getLocalizedTitle(info.titleKey);
+    final description = _getLocalizedDescription(info.descriptionKey);
 
     return Card(
       color: backgroundColor,
@@ -301,97 +297,97 @@ class HealthInfoSheet extends StatelessWidget {
     );
   }
 
-  String _getLocalizedTitle(String key, AppLocalizations l10n) {
+  String _getLocalizedTitle(String key, ) {
     switch (key) {
       // Benefits
       case 'benefitWeightTitle':
-        return l10n.benefitWeightTitle;
+        return "benefitWeightTitle";
       case 'benefitBloodPressureTitle':
-        return l10n.benefitBloodPressureTitle;
+        return "benefitBloodPressureTitle";
       case 'benefitHeartHealthTitle':
-        return l10n.benefitHeartHealthTitle;
+        return "benefitHeartHealthTitle";
       case 'benefitDiabetesTitle':
-        return l10n.benefitDiabetesTitle;
+        return "benefitDiabetesTitle";
       case 'benefitCognitiveTitle':
-        return l10n.benefitCognitiveTitle;
+        return "benefitCognitiveTitle";
       case 'benefitTissueTitle':
-        return l10n.benefitTissueTitle;
+        return "benefitTissueTitle";
       case 'benefitMetabolicTitle':
-        return l10n.benefitMetabolicTitle;
+        return "benefitMetabolicTitle";
       case 'benefitCellularTitle':
-        return l10n.benefitCellularTitle;
+        return "benefitCellularTitle";
       // Warnings
       case 'warningChildrenTitle':
-        return l10n.warningChildrenTitle;
+        return "warningChildrenTitle";
       case 'warningPregnantTitle':
-        return l10n.warningPregnantTitle;
+        return "warningPregnantTitle";
       case 'warningBreastfeedingTitle':
-        return l10n.warningBreastfeedingTitle;
+        return "warningBreastfeedingTitle";
       case 'warningType1DiabetesTitle':
-        return l10n.warningType1DiabetesTitle;
+        return "warningType1DiabetesTitle";
       case 'warningEatingDisordersTitle':
-        return l10n.warningEatingDisordersTitle;
+        return "warningEatingDisordersTitle";
       case 'warningMuscleLossTitle':
-        return l10n.warningMuscleLossTitle;
+        return "warningMuscleLossTitle";
       case 'warningConsultDoctorTitle':
-        return l10n.warningConsultDoctorTitle;
+        return "warningConsultDoctorTitle";
       // Tips
       case 'tipHydrationTitle':
-        return l10n.tipHydrationTitle;
+        return "tipHydrationTitle";
       case 'tipGradualStartTitle':
-        return l10n.tipGradualStartTitle;
+        return "tipGradualStartTitle";
       case 'tipBalancedMealsTitle':
-        return l10n.tipBalancedMealsTitle;
+        return "tipBalancedMealsTitle";
       case 'tipExerciseTitle':
-        return l10n.tipExerciseTitle;
+        return "tipExerciseTitle";
       default:
         return key;
     }
   }
 
-  String _getLocalizedDescription(String key, AppLocalizations l10n) {
+  String _getLocalizedDescription(String key, ) {
     switch (key) {
       // Benefits
       case 'benefitWeightDesc':
-        return l10n.benefitWeightDesc;
+        return "benefitWeightDesc";
       case 'benefitBloodPressureDesc':
-        return l10n.benefitBloodPressureDesc;
+        return "benefitBloodPressureDesc";
       case 'benefitHeartHealthDesc':
-        return l10n.benefitHeartHealthDesc;
+        return "benefitHeartHealthDesc";
       case 'benefitDiabetesDesc':
-        return l10n.benefitDiabetesDesc;
+        return "benefitDiabetesDesc";
       case 'benefitCognitiveDesc':
-        return l10n.benefitCognitiveDesc;
+        return "benefitCognitiveDesc";
       case 'benefitTissueDesc':
-        return l10n.benefitTissueDesc;
+        return "benefitTissueDesc";
       case 'benefitMetabolicDesc':
-        return l10n.benefitMetabolicDesc;
+        return "benefitMetabolicDesc";
       case 'benefitCellularDesc':
-        return l10n.benefitCellularDesc;
+        return "benefitCellularDesc";
       // Warnings
       case 'warningChildrenDesc':
-        return l10n.warningChildrenDesc;
+        return "warningChildrenDesc";
       case 'warningPregnantDesc':
-        return l10n.warningPregnantDesc;
+        return "warningPregnantDesc";
       case 'warningBreastfeedingDesc':
-        return l10n.warningBreastfeedingDesc;
+        return "warningBreastfeedingDesc";
       case 'warningType1DiabetesDesc':
-        return l10n.warningType1DiabetesDesc;
+        return "warningType1DiabetesDesc";
       case 'warningEatingDisordersDesc':
-        return l10n.warningEatingDisordersDesc;
+        return "warningEatingDisordersDesc";
       case 'warningMuscleLossDesc':
-        return l10n.warningMuscleLossDesc;
+        return "warningMuscleLossDesc";
       case 'warningConsultDoctorDesc':
-        return l10n.warningConsultDoctorDesc;
+        return "warningConsultDoctorDesc";
       // Tips
       case 'tipHydrationDesc':
-        return l10n.tipHydrationDesc;
+        return "tipHydrationDesc";
       case 'tipGradualStartDesc':
-        return l10n.tipGradualStartDesc;
+        return "tipGradualStartDesc";
       case 'tipBalancedMealsDesc':
-        return l10n.tipBalancedMealsDesc;
+        return "tipBalancedMealsDesc";
       case 'tipExerciseDesc':
-        return l10n.tipExerciseDesc;
+        return "tipExerciseDesc";
       default:
         return key;
     }

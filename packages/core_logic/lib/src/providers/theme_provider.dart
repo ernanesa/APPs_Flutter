@@ -3,23 +3,27 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'shared_prefs_provider.dart';
 
-final themeProvider = StateNotifierProvider<ThemeNotifier, ThemeState>((ref) {
-  final prefs = ref.watch(sharedPreferencesProvider);
-  return ThemeNotifier(prefs);
-});
-
 class ThemeState {
   final ThemeMode mode;
   final Color seedColor;
   ThemeState({required this.mode, required this.seedColor});
 }
 
-class ThemeNotifier extends StateNotifier<ThemeState> {
-  final SharedPreferences _prefs;
-  ThemeNotifier(this._prefs) : super(ThemeState(
-    mode: ThemeMode.values[_prefs.getInt('theme_mode') ?? 0],
-    seedColor: Color(_prefs.getInt('theme_color') ?? Colors.deepPurple.value),
-  ));
+final themeProvider = NotifierProvider<ThemeNotifier, ThemeState>(() {
+  return ThemeNotifier();
+});
+
+class ThemeNotifier extends Notifier<ThemeState> {
+  SharedPreferences get _prefs => ref.read(sharedPreferencesProvider);
+
+  @override
+  ThemeState build() {
+    final prefs = ref.watch(sharedPreferencesProvider);
+    return ThemeState(
+      mode: ThemeMode.values[prefs.getInt('theme_mode') ?? 0],
+      seedColor: Color(prefs.getInt('theme_color') ?? Colors.deepPurple.value),
+    );
+  }
 
   void setThemeMode(ThemeMode mode) {
     _prefs.setInt('theme_mode', mode.index);

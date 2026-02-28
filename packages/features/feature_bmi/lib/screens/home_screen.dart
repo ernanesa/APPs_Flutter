@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../l10n/app_localizations.dart';
 import 'calculator_screen.dart';
 import 'history_screen.dart';
 import 'evolution_screen.dart';
@@ -8,7 +7,6 @@ import '../widgets/info_dialog.dart';
 
 
 
-import '../domain/entities/app_theme.dart';
 import 'package:core_logic/core_logic.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
@@ -29,15 +27,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+    // l10n removed
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.appTitle),
+        title: Text("appTitle"),
         actions: [
           Consumer(
             builder: (context, ref, child) {
-              final streakData = ref.watch(bmiStreakProvider);
+              final streakData = ref.watch(streakProvider);
               return streakData.streak > 0
                 ? Chip(
                     avatar: const Icon(Icons.local_fire_department, color: Colors.orange, size: 16),
@@ -123,17 +121,17 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           NavigationDestination(
             icon: const Icon(Icons.calculate_outlined),
             selectedIcon: const Icon(Icons.calculate),
-            label: l10n.calculator,
+            label: "calculator",
           ),
           NavigationDestination(
             icon: const Icon(Icons.history_outlined),
             selectedIcon: const Icon(Icons.history),
-            label: l10n.history,
+            label: "history",
           ),
           NavigationDestination(
             icon: const Icon(Icons.show_chart_outlined),
             selectedIcon: const Icon(Icons.show_chart),
-            label: l10n.evolution,
+            label: "evolution",
           ),
         ],
       ),

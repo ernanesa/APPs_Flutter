@@ -1,4 +1,3 @@
-import '../entities/app_theme.dart';
 
 /// Repository interface for settings
 abstract class ISettingsRepository {

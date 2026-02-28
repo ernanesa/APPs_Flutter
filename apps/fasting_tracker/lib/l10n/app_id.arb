@@ -54,14 +54,14 @@
   "stageAutophagy": "Autofagi",
   "stageAutophagyDesc": "Pembersihan dan regenerasi seluler",
   "currentStage": "Tahap Saat Ini",
-  "stageStartsAt": "Dimulai pada{hours}H",
+  "stageStartsAt": "Dimulai pada{hours other{items}}H",
   "@stageStartsAt": {
     "placeholders": {
       "hours": {
         "type": "int"
-      }
-    }
-  },
+       other{items}}
+     other{items}}
+   other{items}},
   "healthInfo": "Informasi Kesehatan",
   "benefits": "Manfaat",
   "warnings": "Peringatan & Tindakan Pencegahan",
@@ -91,35 +91,35 @@
   "totalFasts": "Puasa Total",
   "daysUnit": "hari",
   "dayUnit": "hari",
-  "streakDays": "{count} {count, plural, =1{day}lainnya{days}}",
+  "streakDays": "{count other{items}} {count, plural, =1{day other{items}}lainnya{days other{items}} other{items}}",
   "@streakDays": {
     "placeholders": {
       "count": {
         "type": "int"
-      }
-    }
-  },
-  "achievementsProgress": "{unlocked}dari{total}tidak terkunci",
+       other{items}}
+     other{items}}
+   other{items}},
+  "achievementsProgress": "{unlocked other{items}}dari{total other{items}}tidak terkunci",
   "@achievementsProgress": {
     "placeholders": {
       "unlocked": {
         "type": "int"
-      },
+       other{items}},
       "total": {
         "type": "int"
-      }
-    }
-  },
+       other{items}}
+     other{items}}
+   other{items}},
   "achievementUnlocked": "Prestasi Tidak Terkunci!",
   "notUnlockedYet": "Belum dibuka kuncinya",
-  "unlockedOn": "Tidak terkunci{date}",
+  "unlockedOn": "Tidak terkunci{date other{items}}",
   "@unlockedOn": {
     "placeholders": {
       "date": {
         "type": "String"
-      }
-    }
-  },
+       other{items}}
+     other{items}}
+   other{items}},
   "categorySession": "Sesi",
   "categoryStreak": "coretan",
   "categoryTime": "Waktu",
@@ -175,33 +175,33 @@
   "totalFastingTime": "Total Waktu Puasa",
   "averageFastDuration": "Durasi Rata-Rata",
   "longestFast": "Cepat Terpanjang",
-  "hours": "{count}H",
+  "hours": "{count other{items}}H",
   "@hours": {
     "placeholders": {
       "count": {
         "type": "int"
-      }
-    }
-  },
-  "minutes": "{count}M",
+       other{items}}
+     other{items}}
+   other{items}},
+  "minutes": "{count other{items}}M",
   "@minutes": {
     "placeholders": {
       "count": {
         "type": "int"
-      }
-    }
-  },
-  "hoursMinutes": "{hours}H{minutes}M",
+       other{items}}
+     other{items}}
+   other{items}},
+  "hoursMinutes": "{hours other{items}}H{minutes other{items}}M",
   "@hoursMinutes": {
     "placeholders": {
       "hours": {
         "type": "int"
-      },
+       other{items}},
       "minutes": {
         "type": "int"
-      }
-    }
-  },
+       other{items}}
+     other{items}}
+   other{items}},
   "completed": "Selesai",
   "cancelled": "Dibatalkan",
   "inProgress": "Sedang Berlangsung",
@@ -264,4 +264,4 @@
   "tipBalancedMealsDesc": "Fokus pada makanan bergizi dan utuh selama jendela makan Anda. Sertakan protein, lemak sehat, dan sayuran.",
   "tipExerciseTitle": "Latihan Ringan",
   "tipExerciseDesc": "Olahraga ringan hingga sedang sah-sah saja dilakukan saat berpuasa. Hindari olahraga yang intens sampai Anda beradaptasi."
-}
+ other{items}}

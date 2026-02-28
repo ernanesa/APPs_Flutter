@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../../domain/entities/fasting_protocol.dart';
-import 'package:fasting_tracker/l10n/app_localizations.dart';
 
 /// Protocol selector widget
 class ProtocolSelector extends StatelessWidget {
@@ -18,7 +17,7 @@ class ProtocolSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final l10n = AppLocalizations.of(context)!;
+    // '' removed
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -26,7 +25,7 @@ class ProtocolSelector extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: Text(
-            l10n.selectProtocol,
+            "selectProtocol",
             style: theme.textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.bold,
             ),
@@ -49,7 +48,7 @@ class ProtocolSelector extends StatelessWidget {
                   isSelected: isSelected,
                   enabled: enabled,
                   onTap: () => onProtocolSelected(protocol),
-                  l10n: l10n,
+                  
                 ),
               );
             },
@@ -65,14 +64,13 @@ class _ProtocolCard extends StatelessWidget {
   final bool isSelected;
   final bool enabled;
   final VoidCallback onTap;
-  final AppLocalizations l10n;
-
+  
   const _ProtocolCard({
     required this.protocol,
     required this.isSelected,
     required this.enabled,
     required this.onTap,
-    required this.l10n,
+    required 
   });
 
   @override
@@ -139,17 +137,17 @@ class _ProtocolCard extends StatelessWidget {
   String _getProtocolName(String nameKey) {
     switch (nameKey) {
       case 'protocol12_12':
-        return l10n.protocol12_12;
+        return "protocol12_12";
       case 'protocol14_10':
-        return l10n.protocol14_10;
+        return "protocol14_10";
       case 'protocol16_8':
-        return l10n.protocol16_8;
+        return "protocol16_8";
       case 'protocol18_6':
-        return l10n.protocol18_6;
+        return "protocol18_6";
       case 'protocol20_4':
-        return l10n.protocol20_4;
+        return "protocol20_4";
       case 'protocol23_1':
-        return l10n.protocol23_1;
+        return "protocol23_1";
       default:
         return nameKey;
     }

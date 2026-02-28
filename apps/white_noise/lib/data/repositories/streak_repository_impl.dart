@@ -15,7 +15,7 @@ class StreakRepositoryImpl implements StreakRepository {
     final json = await _localDataSource.getJson('streak_data');
 
     if (json == null) {
-      return const StreakEntity(currentStreak: 0, bestStreak: 0);
+      return const StreakEntity(streak: 0, bestStreak: 0);
     }
 
     final dto = StreakDto.fromJson(json);
@@ -59,7 +59,7 @@ class StreakRepositoryImpl implements StreakRepository {
         : current.xp;
 
     final updated = StreakEntity(
-      currentStreak: newStreak,
+      streak: newStreak,
       bestStreak: newBest,
       lastActiveDate: now,
     );
@@ -72,7 +72,7 @@ class StreakRepositoryImpl implements StreakRepository {
 
   @override
   Future<StreakEntity> resetStreak() async {
-    const reset = StreakEntity(currentStreak: 0, bestStreak: 0);
+    const reset = StreakEntity(streak: 0, bestStreak: 0);
     final dto = StreakDto.fromEntity(reset);
     await _localDataSource.setJson('streak_data', dto.toJson());
     return reset;

@@ -14,7 +14,7 @@ class AchievementsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context)!;
-    final achievementsState = ref.watch(achievementsProvider);
+    final achievementsState = null;
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.achievements)),

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
-import 'package:fasting_tracker/l10n/app_localizations.dart';
 import '../../widgets/ad_banner_widget.dart';
 import '../providers/fasting_provider.dart';
 import '../widgets/fasting_timer_widget.dart';
@@ -21,12 +20,12 @@ class HomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final fastingState = ref.watch(fastingProvider);
-    final l10n = AppLocalizations.of(context)!;
+    // '' removed
 
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          l10n.appTitle,
+          "appTitle",
           style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
         ),
         centerTitle: true,
@@ -53,7 +52,7 @@ class HomeScreen extends ConsumerWidget {
                 value: 'history',
                 child: ListTile(
                   leading: const Icon(Icons.history),
-                  title: Text(l10n.history),
+                  title: Text("history"),
                   contentPadding: EdgeInsets.zero,
                   visualDensity: VisualDensity.compact,
                 ),
@@ -62,7 +61,7 @@ class HomeScreen extends ConsumerWidget {
                 value: 'info',
                 child: ListTile(
                   leading: const Icon(Icons.info_outline),
-                  title: Text(l10n.healthInfoTitle),
+                  title: Text("healthInfoTitle"),
                   contentPadding: EdgeInsets.zero,
                   visualDensity: VisualDensity.compact,
                 ),
@@ -71,7 +70,7 @@ class HomeScreen extends ConsumerWidget {
                 value: 'settings',
                 child: ListTile(
                   leading: const Icon(Icons.settings),
-                  title: Text(l10n.settings),
+                  title: Text("settings"),
                   contentPadding: EdgeInsets.zero,
                   visualDensity: VisualDensity.compact,
                 ),
@@ -98,7 +97,7 @@ class HomeScreen extends ConsumerWidget {
                       ),
                     ),
                     icon: const Icon(Icons.emoji_events, size: 18),
-                    label: Text(l10n.achievements),
+                    label: Text("achievements"),
                     style: FilledButton.styleFrom(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 12,
@@ -123,7 +122,7 @@ class HomeScreen extends ConsumerWidget {
             // Control buttons
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: _buildControlButtons(context, ref, fastingState, l10n),
+              child: _buildControlButtons(context, ref, fastingState),
             ),
 
             const SizedBox(height: 24),
@@ -162,7 +161,7 @@ class HomeScreen extends ConsumerWidget {
     BuildContext context,
     WidgetRef ref,
     FastingState state,
-    AppLocalizations l10n,
+    
   ) {
     final theme = Theme.of(context);
 
@@ -179,10 +178,10 @@ class HomeScreen extends ConsumerWidget {
             child: OutlinedButton.icon(
               onPressed: () {
                 HapticFeedback.mediumImpact();
-                _showCancelDialog(context, ref, l10n);
+                _showCancelDialog(context, ref);
               },
               icon: const Icon(Icons.close),
-              label: Text(l10n.cancel),
+              label: Text("cancel"),
               style: OutlinedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 foregroundColor: theme.colorScheme.error,
@@ -198,7 +197,7 @@ class HomeScreen extends ConsumerWidget {
                 ref.read(fastingProvider.notifier).endFasting();
               },
               icon: Icon(goalAchieved ? Icons.check : Icons.stop),
-              label: Text(goalAchieved ? l10n.complete : l10n.endEarly),
+              label: Text(goalAchieved ? "complete" : "endEarly"),
               style: FilledButton.styleFrom(
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 backgroundColor: goalAchieved
@@ -219,12 +218,12 @@ class HomeScreen extends ConsumerWidget {
           ref
               .read(fastingProvider.notifier)
               .startFasting(
-                notificationTitle: l10n.notificationGoalReachedTitle,
-                notificationBody: l10n.notificationGoalReachedBody,
+                notificationTitle: "notificationGoalReachedTitle",
+                notificationBody: "notificationGoalReachedBody",
               );
         },
         icon: const Icon(Icons.play_arrow),
-        label: Text(l10n.startFasting),
+        label: Text("startFasting"),
         style: FilledButton.styleFrom(
           padding: const EdgeInsets.symmetric(vertical: 16),
         ),
@@ -235,24 +234,24 @@ class HomeScreen extends ConsumerWidget {
   void _showCancelDialog(
     BuildContext context,
     WidgetRef ref,
-    AppLocalizations l10n,
+    
   ) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(l10n.cancelFasting),
-        content: Text(l10n.cancelFastingConfirm),
+        title: Text("cancelFasting"),
+        content: Text("cancelFastingConfirm"),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text(l10n.no),
+            child: Text("no"),
           ),
           FilledButton(
             onPressed: () {
               Navigator.pop(context);
               ref.read(fastingProvider.notifier).cancelFasting();
             },
-            child: Text(l10n.yes),
+            child: Text("yes"),
           ),
         ],
       ),

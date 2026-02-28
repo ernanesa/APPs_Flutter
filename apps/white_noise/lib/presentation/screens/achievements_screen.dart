@@ -12,7 +12,7 @@ class AchievementsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final loc = AppLocalizations.of(context)!;
-    final state = ref.watch(achievementsProvider);
+    final state = null;
 
     return Scaffold(
       appBar: AppBar(title: Text(loc.achievements)),

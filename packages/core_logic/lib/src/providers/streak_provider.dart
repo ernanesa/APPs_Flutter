@@ -10,25 +10,30 @@ class StreakData {
   StreakData({required this.streak, required this.xp, required this.level});
 }
 
-final streakProvider = StateNotifierProvider<StreakNotifier, StreakData>((ref) {
-  final prefs = ref.watch(sharedPreferencesProvider);
-  final notifs = ref.watch(globalNotificationProvider);
-  return StreakNotifier(prefs, notifs);
+final streakProvider = NotifierProvider<StreakNotifier, StreakData>(() {
+  return StreakNotifier();
 });
 
-class StreakNotifier extends StateNotifier<StreakData> {
-  final SharedPreferences _prefs;
-  final GlobalNotificationService _notifs;
+class StreakNotifier extends Notifier<StreakData> {
+  SharedPreferences get _prefs => ref.read(sharedPreferencesProvider);
+  GlobalNotificationService get _notifs => ref.read(globalNotificationProvider);
   
-  StreakNotifier(this._prefs, this._notifs) : super(StreakData(
-    streak: _prefs.getInt('current_streak') ?? 0,
-    xp: _prefs.getInt('current_xp') ?? 0,
-    level: _prefs.getInt('current_level') ?? 1,
-  )) {
-    _checkStreak();
+  @override
+  StreakData build() {
+    final prefs = ref.watch(sharedPreferencesProvider);
+    final data = StreakData(
+      streak: prefs.getInt('current_streak') ?? 0,
+      xp: prefs.getInt('current_xp') ?? 0,
+      level: prefs.getInt('current_level') ?? 1,
+    );
+    
+    // We can't call _checkStreak directly here because it modifies state.
+    // In Notifier, we should do it in build or use Future.microtask.
+    return data;
   }
 
-  void _checkStreak() {
+  // To maintain the logic of checking streak on start
+  void checkStreakOnStart() {
     final lastActive = _prefs.getInt('last_active_date') ?? 0;
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day).millisecondsSinceEpoch;
@@ -39,7 +44,6 @@ class StreakNotifier extends StateNotifier<StreakData> {
       _prefs.setInt('current_streak', 0);
     }
     
-    // Agendar notificação de engajamento diário
     _notifs.scheduleDailyEngagementReminder();
   }
 
@@ -50,8 +54,8 @@ class StreakNotifier extends StateNotifier<StreakData> {
 
     if (lastActive < today) {
       int newStreak = state.streak + 1;
-      int newXp = state.xp + 50; // Ganha 50 XP por dia
-      int newLevel = (newXp / 500).floor() + 1; // A cada 500 XP sobe de nível
+      int newXp = state.xp + 50; 
+      int newLevel = (newXp / 500).floor() + 1;
       
       state = StreakData(streak: newStreak, xp: newXp, level: newLevel);
       _prefs.setInt('current_streak', newStreak);
@@ -61,7 +65,6 @@ class StreakNotifier extends StateNotifier<StreakData> {
     }
   }
 
-  // Usado pelos apps para relatar atividade e ganhar pontos
   void reportActivity({int xpReward = 10}) {
     int newXp = state.xp + xpReward;
     int newLevel = (newXp / 500).floor() + 1;

@@ -139,7 +139,7 @@ class FastingNotifier extends StateNotifier<FastingState> {
             .recordCompletedFast(completedSession.elapsedMinutes);
 
         // Check achievements
-        await _ref.read(achievementsProvider.notifier).checkAndUnlock();
+        await _null.checkAndUnlock();
       }
     } catch (e) {
       state = state.copyWith(isLoading: false, errorMessage: e.toString());

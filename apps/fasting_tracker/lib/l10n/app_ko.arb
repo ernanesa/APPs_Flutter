@@ -54,14 +54,14 @@
   "stageAutophagy": "자가포식",
   "stageAutophagyDesc": "세포 청소 및 재생",
   "currentStage": "현재 단계",
-  "stageStartsAt": "시작 시간{hours}시간",
+  "stageStartsAt": "시작 시간{hours other{items}}시간",
   "@stageStartsAt": {
     "placeholders": {
       "hours": {
         "type": "int"
-      }
-    }
-  },
+       other{items}}
+     other{items}}
+   other{items}},
   "healthInfo": "건강 정보",
   "benefits": "이익",
   "warnings": "경고 및 주의 사항",
@@ -91,35 +91,35 @@
   "totalFasts": "총 단식 횟수",
   "daysUnit": "날",
   "dayUnit": "낮",
-  "streakDays": "{count} {count, plural, =1{day}다른{days}}",
+  "streakDays": "{count other{items}} {count, plural, =1{day other{items}}다른{days other{items}} other{items}}",
   "@streakDays": {
     "placeholders": {
       "count": {
         "type": "int"
-      }
-    }
-  },
-  "achievementsProgress": "{unlocked}~의{total}잠금 해제됨",
+       other{items}}
+     other{items}}
+   other{items}},
+  "achievementsProgress": "{unlocked other{items}}~의{total other{items}}잠금 해제됨",
   "@achievementsProgress": {
     "placeholders": {
       "unlocked": {
         "type": "int"
-      },
+       other{items}},
       "total": {
         "type": "int"
-      }
-    }
-  },
+       other{items}}
+     other{items}}
+   other{items}},
   "achievementUnlocked": "업적 잠금 해제!",
   "notUnlockedYet": "아직 잠금 해제되지 않음",
-  "unlockedOn": "잠금 해제 날짜{date}",
+  "unlockedOn": "잠금 해제 날짜{date other{items}}",
   "@unlockedOn": {
     "placeholders": {
       "date": {
         "type": "String"
-      }
-    }
-  },
+       other{items}}
+     other{items}}
+   other{items}},
   "categorySession": "세션",
   "categoryStreak": "줄무늬",
   "categoryTime": "시간",
@@ -175,33 +175,33 @@
   "totalFastingTime": "총 단식 시간",
   "averageFastDuration": "평균 기간",
   "longestFast": "가장 긴 빠른",
-  "hours": "{count}시간",
+  "hours": "{count other{items}}시간",
   "@hours": {
     "placeholders": {
       "count": {
         "type": "int"
-      }
-    }
-  },
-  "minutes": "{count}중",
+       other{items}}
+     other{items}}
+   other{items}},
+  "minutes": "{count other{items}}중",
   "@minutes": {
     "placeholders": {
       "count": {
         "type": "int"
-      }
-    }
-  },
-  "hoursMinutes": "{hours}시간{minutes}중",
+       other{items}}
+     other{items}}
+   other{items}},
+  "hoursMinutes": "{hours other{items}}시간{minutes other{items}}중",
   "@hoursMinutes": {
     "placeholders": {
       "hours": {
         "type": "int"
-      },
+       other{items}},
       "minutes": {
         "type": "int"
-      }
-    }
-  },
+       other{items}}
+     other{items}}
+   other{items}},
   "completed": "완전한",
   "cancelled": "취소",
   "inProgress": "진행 중",
@@ -264,4 +264,4 @@
   "tipBalancedMealsDesc": "식사 기간 동안 영양가 있는 전체 식품에 집중하세요. 단백질, 건강한 지방, 야채를 포함하세요.",
   "tipExerciseTitle": "가벼운 운동",
   "tipExerciseDesc": "단식 중에는 가볍거나 중간 정도의 운동을 하는 것이 좋습니다. 적응할 때까지 격렬한 운동은 피하세요."
-}
+ other{items}}

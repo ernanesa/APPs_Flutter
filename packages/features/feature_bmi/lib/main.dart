@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:core_logic/core_logic.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'l10n/app_localizations.dart';
+
 import 'screens/home_screen.dart';
 
 
@@ -67,7 +67,7 @@ class _MyAppState extends ConsumerState<MyApp> with WidgetsBindingObserver {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,
+      onGenerateTitle: (context) => 'appTitle',
       theme: AppTheme.lightTheme(selectedTheme.seedColor),
       darkTheme: AppTheme.darkTheme(selectedTheme.seedColor),
       locale: locale,

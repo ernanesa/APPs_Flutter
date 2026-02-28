@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../l10n/app_localizations.dart';
 import 'package:fl_chart/fl_chart.dart';
 import '../providers/bmi_provider.dart';
 
@@ -10,7 +9,7 @@ class EvolutionScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final history = ref.watch(bmiHistoryProvider).reversed.toList();
-    final l10n = AppLocalizations.of(context)!;
+    // l10n removed
 
     if (history.length < 2) {
       return Center(
@@ -22,7 +21,7 @@ class EvolutionScreen extends ConsumerWidget {
               const Icon(Icons.show_chart, size: 64, color: Colors.grey),
               const SizedBox(height: 16),
               Text(
-                l10n.needTwoEntries,
+                "needTwoEntries",
                 textAlign: TextAlign.center,
                 style: const TextStyle(color: Colors.grey),
               ),
@@ -37,15 +36,15 @@ class EvolutionScreen extends ConsumerWidget {
       child: Column(
         children: [
           Text(
-            l10n.evolutionGraph,
+            "evolutionGraph",
             style: Theme.of(context).textTheme.titleLarge,
           ),
           const SizedBox(height: 32),
           Expanded(
             child: LineChart(
               LineChartData(
-                gridData: const FlGridData(show: true),
-                titlesData: const FlTitlesData(
+                gridData: FlGridData(show: true),
+                titlesData: FlTitlesData(
                   leftTitles: AxisTitles(
                     sideTitles: SideTitles(showTitles: true, reservedSize: 40),
                   ),
@@ -68,7 +67,7 @@ class EvolutionScreen extends ConsumerWidget {
                     isCurved: true,
                     color: Theme.of(context).primaryColor,
                     barWidth: 4,
-                    dotData: const FlDotData(show: true),
+                    dotData: FlDotData(show: true),
                     belowBarData: BarAreaData(
                       show: true,
                       color: Theme.of(
@@ -82,7 +81,7 @@ class EvolutionScreen extends ConsumerWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            l10n.bmiEvolutionTitle,
+            "bmiEvolutionTitle",
             style: const TextStyle(fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 32),

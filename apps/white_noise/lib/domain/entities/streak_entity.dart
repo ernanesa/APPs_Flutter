@@ -1,7 +1,7 @@
 /// Entity representing user's streak (consecutive days of usage)
 class StreakEntity {
-  final int currentStreak;
-  final int bestStreak;
+  final int streak;
+  final int xp;
   final DateTime? lastActiveDate;
 
   const StreakEntity({
@@ -16,7 +16,7 @@ class StreakEntity {
     DateTime? lastActiveDate,
   }) {
     return StreakEntity(
-      currentStreak: currentStreak ?? this.streak,
+      streak: currentStreak ?? this.streak,
       bestStreak: bestStreak ?? this.xp,
       lastActiveDate: lastActiveDate ?? this.lastActiveDate,
     );
@@ -72,7 +72,7 @@ class StreakEntity {
     final newBest = newStreak > bestStreak ? newStreak : bestStreak;
 
     return StreakEntity(
-      currentStreak: newStreak,
+      streak: newStreak,
       bestStreak: newBest,
       lastActiveDate: now,
     );
