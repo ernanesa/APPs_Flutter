@@ -107,6 +107,14 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
   Widget build(BuildContext context) {
     final state = ref.watch(bmiCalculationProvider);
 
+    // Sincroniza controllers se o sistema de unidade mudar externamente
+    ref.listen<BmiCalculationState>(bmiCalculationProvider, (previous, next) {
+      if (previous?.isImperial != next.isImperial) {
+        _weightController.text = next.weight.toStringAsFixed(1);
+        _heightController.text = next.height.toStringAsFixed(0);
+      }
+    });
+
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(24.0),
@@ -118,9 +126,9 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
               context,
               label: "Weight",
               value: state.weight,
-              unit: 'kg',
-              min: 30,
-              max: 200,
+              unit: state.isImperial ? 'lbs' : 'kg',
+              min: state.isImperial ? 66.0 : 30.0,
+              max: state.isImperial ? 440.0 : 200.0,
               controller: _weightController,
               onChanged: (val) {
                 _weightController.text = val.toStringAsFixed(1);
@@ -133,10 +141,11 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
               context,
               label: "Height",
               value: state.height,
-              unit: 'cm',
-              min: 100,
-              max: 250,
+              unit: state.isImperial ? 'in' : 'cm',
+              min: state.isImperial ? 40.0 : 100.0,
+              max: state.isImperial ? 100.0 : 250.0,
               isHeight: true,
+              isImperial: state.isImperial,
               controller: _heightController,
               onChanged: (val) {
                 _heightController.text = val.toStringAsFixed(0);
@@ -219,6 +228,7 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
     required TextEditingController controller,
     required ValueChanged<double> onChanged,
     bool isHeight = false,
+    bool isImperial = false,
   }) {
     final colorScheme = Theme.of(context).colorScheme;
 
@@ -226,7 +236,7 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
     double sliderMin = min;
     double sliderMax = max;
 
-    if (isHeight && value < 3.0) {
+    if (isHeight && !isImperial && value < 3.0) {
       sliderMin = 1.0;
       sliderMax = 2.5;
     }

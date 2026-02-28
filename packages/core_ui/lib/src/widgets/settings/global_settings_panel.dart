@@ -58,6 +58,20 @@ class GlobalSettingsPanel extends ConsumerWidget {
         ),
         const Divider(),
         SwitchListTile(
+          secondary: const Icon(Icons.square_foot),
+          title: const Text('Imperial Units'),
+          subtitle: const Text('Use lbs/inches instead of kg/cm'),
+          value: ref.watch(settingsProvider).useImperialUnits,
+          onChanged: (val) => ref.read(settingsProvider.notifier).setUseImperialUnits(val),
+        ),
+        SwitchListTile(
+          secondary: const Icon(Icons.emoji_events),
+          title: const Text('Gamification'),
+          subtitle: const Text('Show streaks and badges'),
+          value: ref.watch(settingsProvider).enableGamification,
+          onChanged: (val) => ref.read(settingsProvider.notifier).setEnableGamification(val),
+        ),
+        SwitchListTile(
           secondary: const Icon(Icons.vibration),
           title: const Text('Haptic Feedback'),
           subtitle: const Text('Tactile response on interactions'),
