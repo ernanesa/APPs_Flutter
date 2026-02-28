@@ -14,13 +14,15 @@ Todas as aplicações devem seguir rigorosamente as seguintes configurações em
 
 ## 2. Design System Premium (Edge-to-Edge)
 O app não pode parecer "encaixotado". Ele deve se mesclar perfeitamente ao sistema e à escolha do usuário:
-- **Android Native Themes**: O arquivo `styles.xml` deve usar estritamente `Theme.Material3.DayNight.NoActionBar`, com transparência nativa ativada (`<item name="android:windowTranslucentStatus">true</item>`).
-- **Material 3 Dynamic Colors**: Todos os apps devem instalar e utilizar o pacote `dynamic_color`. O `MaterialApp` na raiz deve ser envolvido pelo `DynamicColorBuilder`, repassando o `ColorScheme` do sistema do usuário em tempo real.
+- **Android Native Themes**: O arquivo `styles.xml` deve usar estritamente `Theme.Material3.DayNight.NoActionBar`, com transparência nativa ativada.
+- **Material 3 Dynamic Colors**: Todos os apps devem utilizar o pacote `dynamic_color`. O `MaterialApp` na raiz deve ser envolvido pelo `DynamicColorBuilder`, repassando o `ColorScheme` do sistema do usuário em tempo real.
+- **Sinestesia e Toque (Haptics)**: Qualquer botão de ação principal (Salvar, Calcular, Deletar) **DEVE** acionar `HapticFeedback.lightImpact()` ou `mediumImpact()`. Isso diferencia um app barato de uma experiência Premium.
 
-## 3. Arquitetura "Zero Latency" (Riverpod & UI)
+## 3. Arquitetura "Zero Latency" (Otimização Extrema)
 A interface não pode engasgar. Input de usuário e feedback visual precisam rodar no refresh rate máximo do dispositivo (60/120Hz):
-- **O Fim do `setState`**: Para gerenciar lógicas complexas ou inputs dinâmicos, é terminantemente recomendado o uso de providers reativos (Riverpod 3.x), escutando mudanças via `ref.watch` granular.
-- **Isolamento via `RepaintBoundary`**: Quaisquer áreas pesadas - como blocos do Google AdMob, gradientes complexos, vídeos ou gráficos gerados dinamicamente - devem ser encapsuladas em um `RepaintBoundary`. Isso confina o custo de processamento da GPU a uma "ilha", sem afetar a reatividade de outros componentes da tela.
+- **O Fim do `setState`**: Para gerenciar lógicas complexas ou inputs dinâmicos, use provedores reativos (Riverpod 3.x), escutando mudanças via `ref.watch` granular.
+- **Zero-Cost Isolates (Dart 3.x)**: É PROIBIDO rodar `jsonDecode` ou parsing pesado de Listas no Main Thread. Todo processamento de dados do `SharedPreferences` ou APIs deve ser envolto em `Isolate.run(() => ...)` para não roubar milissegundos da GPU.
+- **Isolamento via `RepaintBoundary`**: Quaisquer áreas pesadas ou complexas (Google AdMob, `BackdropFilter` de Glassmorphism, CustomPainters com animações rápidas, ou Textos que não mudam durante uma animação) devem ser encapsuladas em um `RepaintBoundary`. Isso confina o custo de processamento da GPU a uma "ilha".
 
 ---
-*Este padrão foi ratificado e injetado massivamente no projeto em 2026. A violação destas regras em code reviews será considerada uma quebra de qualidade Premium.*
+*Este padrão foi ratificado e injetado massivamente no projeto em Fevereiro de 2026. A violação destas regras em code reviews será considerada uma quebra de qualidade Premium.*

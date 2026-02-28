@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart'; // Import HapticFeedback
 import 'package:core_logic/core_logic.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
@@ -73,6 +74,7 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
   }
 
   void _reset() {
+    HapticService.lightImpact(ref); // Otimização UX 2026: Tactile response respecting settings
     ref.read(bmiCalculationProvider.notifier).reset();
     final newState = ref.read(bmiCalculationProvider);
     _weightController.text = newState.weight.toStringAsFixed(1);
@@ -82,6 +84,8 @@ class _CalculatorScreenState extends ConsumerState<CalculatorScreen> {
   void _save() {
     final state = ref.read(bmiCalculationProvider);
     if (state.bmi == null) return;
+
+    HapticService.mediumImpact(ref); // Otimização UX 2026: Tactile confirmation respecting settings
 
     final entry = BmiEntry(
       id: const Uuid().v4(),

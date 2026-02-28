@@ -55,7 +55,15 @@ class GlobalSettingsPanel extends ConsumerWidget {
               );
             }).toList(),
           ),
-        )
+        ),
+        const Divider(),
+        SwitchListTile(
+          secondary: const Icon(Icons.vibration),
+          title: const Text('Haptic Feedback'),
+          subtitle: const Text('Tactile response on interactions'),
+          value: ref.watch(settingsProvider).hapticEnabled,
+          onChanged: (val) => ref.read(settingsProvider.notifier).setHapticEnabled(val),
+        ),
       ],
     );
   }
